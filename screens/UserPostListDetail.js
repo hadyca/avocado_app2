@@ -13,7 +13,7 @@ import UserAvatar from "../components/UserAvatar";
 import { Ionicons } from "@expo/vector-icons";
 import Separator from "../components/Separator";
 import { colors } from "../colors";
-import ActionSheet from "react-native-actionsheet";
+import ActionSheet from "@alessiocancian/react-native-actionsheet";
 import CommentForm from "../components/post/CommentForm";
 import { shouldInclude } from "@apollo/client/utilities";
 
@@ -279,8 +279,8 @@ export default function UserPostListDetail({ route: { params } }) {
         style={{
           flex: 1,
         }}
-        behavior="position"
-        keyboardVerticalOffset={Platform.OS === "ios" ? 50 : 0}
+        behavior="height"
+        // keyboardVerticalOffset={Platform.OS === "ios" ? 50 : 0}
       >
         <CommentForm userPostId={parseInt(params.id)} />
       </KeyboardAvoidingView>

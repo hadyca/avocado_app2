@@ -6,7 +6,7 @@ import { colors } from "../../colors";
 import timeForToday from "../../utils";
 import UserAvatar from "../UserAvatar";
 import { Ionicons } from "@expo/vector-icons";
-import ActionSheet from "react-native-actionsheet";
+import ActionSheet from "@alessiocancian/react-native-actionsheet";
 import { gql, useMutation } from "@apollo/client";
 
 const DELETE_USERPOST_MUTATION = gql`
