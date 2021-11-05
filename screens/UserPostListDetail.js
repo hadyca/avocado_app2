@@ -16,6 +16,7 @@ import { colors } from "../colors";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
 import CommentForm from "../components/post/CommentForm";
 import { shouldInclude } from "@apollo/client/utilities";
+import SeeComments from "../components/post/SeeComments";
 
 const POST_DETAIL_QUERY = gql`
   query seeUserPost($userPostId: Int!) {
@@ -94,34 +95,6 @@ const Action = styled.TouchableOpacity`
 
 const Comments = styled.View`
   margin-top: 10px;
-`;
-const Comment = styled.View`
-  margin-top: 2px;
-  margin-left: 35px;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const CommentPayLoad = styled.Text`
-  font-size: 14px;
-`;
-
-const IconView = styled.TouchableOpacity`
-  position: absolute;
-  right: 0px;
-  padding: 10px;
-`;
-
-const CommentContainer = styled.View`
-  margin-bottom: 20px;
-`;
-const NoCommentView = styled.View``;
-
-const NoComment = styled.Text`
-  margin: auto;
-  font-size: 14px;
-  color: ${colors.greyText};
 `;
 
 export default function UserPostListDetail({ route: { params } }) {
@@ -234,36 +207,10 @@ export default function UserPostListDetail({ route: { params } }) {
             </Actions>
             <Separator />
             <Comments>
-              {data?.seeUserPost?.userPostComments[0] ? (
-                data.seeUserPost.userPostComments.map((item, index) => {
-                  return (
-                    <CommentContainer key={index}>
-                      <UserAvatar
-                        username={item.user.username}
-                        uri={item.user.avatar}
-                      />
-                      <Comment key={index}>
-                        <CommentPayLoad>{item.payload}</CommentPayLoad>
-                        {item.isMine ? (
-                          <IconView onPress={showActionSheet}>
-                            <Ionicons
-                              name="ellipsis-vertical"
-                              color="grey"
-                              size={14}
-                            />
-                          </IconView>
-                        ) : null}
-                      </Comment>
-                    </CommentContainer>
-                  );
-                })
-              ) : (
-                <NoCommentView>
-                  <NoComment>
-                    There is no comment. Please write a comment.
-                  </NoComment>
-                </NoCommentView>
-              )}
+              <SeeComments
+                userPostId={parseInt(params.id)}
+                comment={data?.seeUserPost?.userPostComments[0]}
+              />
             </Comments>
           </Container>
           <ActionSheet
@@ -279,11 +226,42 @@ export default function UserPostListDetail({ route: { params } }) {
         style={{
           flex: 1,
         }}
-        behavior="height"
-        // keyboardVerticalOffset={Platform.OS === "ios" ? 50 : 0}
+        behavior="position"
+        keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
       >
         <CommentForm userPostId={parseInt(params.id)} />
       </KeyboardAvoidingView>
     </ScreenLayout>
   );
 }
+
+// {data?.seeUserPost?.userPostComments[0] ? (
+//   data.seeUserPost.userPostComments.map((item, index) => {
+//     return (
+//       <CommentContainer key={index}>
+//         <UserAvatar
+//           username={item.user.username}
+//           uri={item.user.avatar}
+//         />
+//         <Comment key={index}>
+//           <CommentPayLoad>{item.payload}</CommentPayLoad>
+//           {item.isMine ? (
+//             <IconView onPress={showActionSheet}>
+//               <Ionicons
+//                 name="ellipsis-vertical"
+//                 color="grey"
+//                 size={14}
+//               />
+//             </IconView>
+//           ) : null}
+//         </Comment>
+//       </CommentContainer>
+//     );
+//   })
+// ) : (
+//   <NoCommentView>
+//     <NoComment>
+//       There is no comment. Please write a comment.
+//     </NoComment>
+//   </NoCommentView>
+// )}
