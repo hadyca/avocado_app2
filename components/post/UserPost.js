@@ -102,7 +102,7 @@ const Separator = styled.View`
   margin-top: 20px;
 `;
 
-export default function UserPost({
+function UserPost({
   id,
   user,
   file,
@@ -264,3 +264,5 @@ export default function UserPost({
     </Container>
   );
 }
+
+export default React.memo(UserPost);

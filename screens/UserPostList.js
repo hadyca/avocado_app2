@@ -33,7 +33,7 @@ const FetchView = styled.View`
   bottom: 30px;
 `;
 
-function UserPostList() {
+export default function UserPostList() {
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
@@ -97,5 +97,3 @@ function UserPostList() {
     </ScreenLayout>
   );
 }
-
-export default React.memo(UserPostList);

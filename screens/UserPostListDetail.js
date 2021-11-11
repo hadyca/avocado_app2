@@ -13,10 +13,9 @@ import UserAvatar from "../components/UserAvatar";
 import { Ionicons } from "@expo/vector-icons";
 import Separator from "../components/Separator";
 import { colors } from "../colors";
-import ActionSheet from "@alessiocancian/react-native-actionsheet";
 import CommentForm from "../components/post/CommentForm";
-import { shouldInclude } from "@apollo/client/utilities";
 import SeeComments from "../components/post/SeeComments";
+import ActionSheet from "@alessiocancian/react-native-actionsheet";
 
 const POST_DETAIL_QUERY = gql`
   query seeUserPost($userPostId: Int!) {
@@ -210,6 +209,7 @@ export default function UserPostListDetail({ route: { params } }) {
               <SeeComments
                 userPostId={parseInt(params.id)}
                 comment={data?.seeUserPost?.userPostComments[0]}
+                showActionSheet={showActionSheet}
               />
             </Comments>
           </Container>

@@ -5,6 +5,7 @@ import styled from "styled-components/native";
 import UserAvatar from "../UserAvatar";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../../colors";
+import ActionSheet from "@alessiocancian/react-native-actionsheet";
 
 const COMMENTS_QUERY = gql`
   query seeUserPostComments($userPostId: Int!) {
@@ -54,7 +55,7 @@ const NoComment = styled.Text`
   color: ${colors.greyText};
 `;
 
-export default function SeeComments({ userPostId, comment }) {
+export default function SeeComments({ userPostId, comment, showActionSheet }) {
   const { data, loading } = useQuery(COMMENTS_QUERY, {
     variables: {
       userPostId,
