@@ -144,8 +144,6 @@ const NoComment = styled.Text`
 `;
 
 export default function UserPostListDetail({ route: { params } }) {
-  const [commentAry, setCommentAry] = useState([]);
-
   const { data, loading, fetchMore } = useQuery(POST_DETAIL_QUERY, {
     variables: {
       userPostId: parseInt(params.id),
@@ -253,15 +251,9 @@ export default function UserPostListDetail({ route: { params } }) {
     }
   };
 
-  useEffect(() => {
-    setCommentAry(commentData?.seeUserPostComments);
-  }, []);
-
-  console.log(commentAry);
-
   return (
     <ScreenLayout loading={loading}>
-      {commentAry ? (
+      {commentData?.seeUserPostComments[0] ? (
         <PostContainer>
           <FlatList
             ListHeaderComponent={
@@ -307,12 +299,46 @@ export default function UserPostListDetail({ route: { params } }) {
               </>
             }
             showsVerticalScrollIndicator={true}
-            data={commentAry}
+            data={commentData?.seeUserPostComments}
             keyExtractor={(item) => "" + item.id}
             renderItem={renderComment}
           />
         </PostContainer>
-      ) : null}
+      ) : (
+        <PostContainer>
+          <View>
+            {data?.seeUserPost?.file.length !== 0 ? (
+              <ImageSlider data={data} />
+            ) : null}
+            <Container>
+              <Header>
+                <UserAvatar username={params.username} uri={params.avatar} />
+              </Header>
+              <Separator />
+              <Contents>
+                <Title>{data?.seeUserPost?.title}</Title>
+                <Content>{data?.seeUserPost?.content}</Content>
+              </Contents>
+              <Actions>
+                {likeLoading ? (
+                  <ActivityIndicator color="black" />
+                ) : (
+                  <Action onPress={toggleUserPostLike}>
+                    <Ionicons
+                      name={
+                        data?.seeUserPost?.isLiked ? "heart" : "heart-outline"
+                      }
+                      color={data?.seeUserPost?.isLiked ? "tomato" : "black"}
+                      size={22}
+                    />
+                  </Action>
+                )}
+              </Actions>
+              <Separator />
+            </Container>
+          </View>
+        </PostContainer>
+      )}
       <KeyboardAvoidingView
         style={{
           flex: 1,
