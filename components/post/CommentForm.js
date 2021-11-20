@@ -35,7 +35,6 @@ export default function CommentForm({ userPostId }) {
     const {
       data: { createUserPostComment },
     } = result;
-    console.log(createUserPostComment.ok);
     if (createUserPostComment.ok) {
       const UserPostId = `UserPost:${userPostId}`;
       cache.modify({
