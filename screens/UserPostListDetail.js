@@ -19,7 +19,6 @@ import CommentForm from "../components/post/CommentForm";
 import SeeComments from "../components/post/SeeComments";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
 import { getDefaultValues } from "@apollo/client/utilities";
-import PostDetail from "../components/post/PostDetail";
 
 const POST_DETAIL_QUERY = gql`
   query seeUserPost($userPostId: Int!) {
@@ -76,6 +75,37 @@ const TOGGLE_USERPOST_LIKE_MUTATION = gql`
       error
     }
   }
+`;
+
+const PostContainer = styled.View`
+  flex: 7;
+`;
+
+const Container = styled.View`
+  margin: 10px;
+`;
+const Header = styled.View``;
+
+const Contents = styled.View``;
+
+const Title = styled.Text`
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 900;
+`;
+const Content = styled.Text`
+  margin-top: 10px;
+  font-size: 14px;
+`;
+
+const Actions = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10px;
+`;
+
+const Action = styled.TouchableOpacity`
+  margin-right: 10px;
 `;
 
 const Comments = styled.View`
@@ -224,18 +254,56 @@ export default function UserPostListDetail({ route: { params } }) {
   return (
     <ScreenLayout loading={loading}>
       {commentData?.seeUserPostComments[0] ? (
-        <PostDetail
-          file={data?.seeUserPost?.file.length}
-          data={data}
-          username={params.username}
-          uri={params.avatar}
-          title={data?.seeUserPost?.title}
-          content={data?.seeUserPost?.content}
-          likeLoading={likeLoading}
-          toggleUserPostLike={toggleUserPostLike}
-          isLiked={data?.seeUserPost?.isLiked}
-          seeUserPostComments={commentData?.seeUserPostComments}
-        />
+        <PostContainer>
+          <FlatList
+            ListHeaderComponent={
+              <>
+                <View>
+                  {data?.seeUserPost?.file.length !== 0 ? (
+                    <ImageSlider data={data} />
+                  ) : null}
+                  <Container>
+                    <Header>
+                      <UserAvatar
+                        username={params.username}
+                        uri={params.avatar}
+                      />
+                    </Header>
+                    <Separator />
+                    <Contents>
+                      <Title>{data?.seeUserPost?.title}</Title>
+                      <Content>{data?.seeUserPost?.content}</Content>
+                    </Contents>
+                    <Actions>
+                      {likeLoading ? (
+                        <ActivityIndicator color="black" />
+                      ) : (
+                        <Action onPress={toggleUserPostLike}>
+                          <Ionicons
+                            name={
+                              data?.seeUserPost?.isLiked
+                                ? "heart"
+                                : "heart-outline"
+                            }
+                            color={
+                              data?.seeUserPost?.isLiked ? "tomato" : "black"
+                            }
+                            size={22}
+                          />
+                        </Action>
+                      )}
+                    </Actions>
+                    <Separator />
+                  </Container>
+                </View>
+              </>
+            }
+            showsVerticalScrollIndicator={true}
+            data={commentData?.seeUserPostComments}
+            keyExtractor={(item) => "" + item.id}
+            renderItem={renderComment}
+          />
+        </PostContainer>
       ) : (
         <PostContainer>
           <View>
@@ -267,11 +335,6 @@ export default function UserPostListDetail({ route: { params } }) {
                 )}
               </Actions>
               <Separator />
-              <NoCommentView>
-                <NoComment>
-                  There is no comment. Please write a comment.
-                </NoComment>
-              </NoCommentView>
             </Container>
           </View>
         </PostContainer>
