@@ -7,7 +7,6 @@ import {
   Platform,
   FlatList,
   View,
-  NativeModules,
 } from "react-native";
 import ScreenLayout from "../components/ScreenLayout";
 import styled from "styled-components/native";
@@ -17,9 +16,9 @@ import { Ionicons } from "@expo/vector-icons";
 import Separator from "../components/Separator";
 import { colors } from "../colors";
 import CommentForm from "../components/post/CommentForm";
+import SeeComments from "../components/post/SeeComments";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
 import { getDefaultValues } from "@apollo/client/utilities";
-import PostContents from "../components/post/PostContents";
 
 const POST_DETAIL_QUERY = gql`
   query seeUserPost($userPostId: Int!) {
@@ -82,6 +81,43 @@ const PostContainer = styled.View`
   flex: 7;
 `;
 
+const Container = styled.View`
+  margin: 10px;
+`;
+const Header = styled.View``;
+
+const Contents = styled.View``;
+
+const Title = styled.Text`
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 900;
+`;
+const Content = styled.Text`
+  margin-top: 10px;
+  font-size: 14px;
+`;
+
+const Actions = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10px;
+`;
+
+const Action = styled.TouchableOpacity`
+  margin-right: 10px;
+`;
+
+const Comments = styled.View`
+  margin-top: 10px;
+`;
+
+const CommentBigContainer = styled.View``;
+
+const CommentContainer = styled.View`
+  margin-bottom: 20px;
+`;
+
 const Comment = styled.View`
   margin-top: 2px;
   margin-left: 35px;
@@ -108,31 +144,20 @@ const NoComment = styled.Text`
 `;
 
 export default function UserPostListDetail({ route: { params } }) {
-  const { StatusBarManager } = NativeModules;
-  useEffect(() => {
-    Platform.OS == "ios"
-      ? StatusBarManager.getHeight((statusBarFrameData) => {
-          setStatusBarHeight(statusBarFrameData.height);
-        })
-      : null;
-  }, []);
-  const [statusBarHeight, setStatusBarHeight] = useState(0);
-
   const { data, loading, fetchMore } = useQuery(POST_DETAIL_QUERY, {
     variables: {
       userPostId: parseInt(params.id),
     },
   });
 
-  const {
-    data: commentData,
-    loading: commentLoading,
-    refetch,
-  } = useQuery(COMMENTS_QUERY, {
-    variables: {
-      userPostId: parseInt(params.id),
-    },
-  });
+  const { data: commentData, loading: commentLoading } = useQuery(
+    COMMENTS_QUERY,
+    {
+      variables: {
+        userPostId: parseInt(params.id),
+      },
+    }
+  );
 
   let actionsheet = useRef();
   let optionArray = ["Edit", "Delete", "Cancel"];
@@ -232,17 +257,46 @@ export default function UserPostListDetail({ route: { params } }) {
         <PostContainer>
           <FlatList
             ListHeaderComponent={
-              <PostContents
-                file={data?.seeUserPost?.file.length}
-                data={data}
-                username={params.username}
-                avatar={params.avatar}
-                title={data?.seeUserPost?.title}
-                content={data?.seeUserPost?.content}
-                likeLoading={likeLoading}
-                toggleUserPostLike={toggleUserPostLike}
-                isLiked={data?.seeUserPost?.isLiked}
-              />
+              <>
+                <View>
+                  {data?.seeUserPost?.file.length !== 0 ? (
+                    <ImageSlider data={data} />
+                  ) : null}
+                  <Container>
+                    <Header>
+                      <UserAvatar
+                        username={params.username}
+                        uri={params.avatar}
+                      />
+                    </Header>
+                    <Separator />
+                    <Contents>
+                      <Title>{data?.seeUserPost?.title}</Title>
+                      <Content>{data?.seeUserPost?.content}</Content>
+                    </Contents>
+                    <Actions>
+                      {likeLoading ? (
+                        <ActivityIndicator color="black" />
+                      ) : (
+                        <Action onPress={toggleUserPostLike}>
+                          <Ionicons
+                            name={
+                              data?.seeUserPost?.isLiked
+                                ? "heart"
+                                : "heart-outline"
+                            }
+                            color={
+                              data?.seeUserPost?.isLiked ? "tomato" : "black"
+                            }
+                            size={22}
+                          />
+                        </Action>
+                      )}
+                    </Actions>
+                    <Separator />
+                  </Container>
+                </View>
+              </>
             }
             showsVerticalScrollIndicator={true}
             data={commentData?.seeUserPostComments}
@@ -252,34 +306,47 @@ export default function UserPostListDetail({ route: { params } }) {
         </PostContainer>
       ) : (
         <PostContainer>
-          <PostContents
-            file={data?.seeUserPost?.file.length}
-            data={data}
-            username={params.username}
-            avatar={params.avatar}
-            title={data?.seeUserPost?.title}
-            content={data?.seeUserPost?.content}
-            likeLoading={likeLoading}
-            toggleUserPostLike={toggleUserPostLike}
-            isLiked={data?.seeUserPost?.isLiked}
-          />
-          <NoCommentView>
-            <NoComment>There is no comment. Please write a comment.</NoComment>
-          </NoCommentView>
+          <View>
+            {data?.seeUserPost?.file.length !== 0 ? (
+              <ImageSlider data={data} />
+            ) : null}
+            <Container>
+              <Header>
+                <UserAvatar username={params.username} uri={params.avatar} />
+              </Header>
+              <Separator />
+              <Contents>
+                <Title>{data?.seeUserPost?.title}</Title>
+                <Content>{data?.seeUserPost?.content}</Content>
+              </Contents>
+              <Actions>
+                {likeLoading ? (
+                  <ActivityIndicator color="black" />
+                ) : (
+                  <Action onPress={toggleUserPostLike}>
+                    <Ionicons
+                      name={
+                        data?.seeUserPost?.isLiked ? "heart" : "heart-outline"
+                      }
+                      color={data?.seeUserPost?.isLiked ? "tomato" : "black"}
+                      size={22}
+                    />
+                  </Action>
+                )}
+              </Actions>
+              <Separator />
+            </Container>
+          </View>
         </PostContainer>
       )}
       <KeyboardAvoidingView
         style={{
           flex: 1,
         }}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={statusBarHeight + 44}
+        behavior="position"
+        keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
       >
-        <CommentForm
-          userPostId={parseInt(params.id)}
-          refetch={refetch}
-          commentLoading={commentLoading}
-        />
+        <CommentForm userPostId={parseInt(params.id)} />
       </KeyboardAvoidingView>
     </ScreenLayout>
   );

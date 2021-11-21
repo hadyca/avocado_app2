@@ -117,7 +117,6 @@ export default function UserPostUploadForm() {
               numberOfLines={4}
               placeholder="Content"
               autoCapitalize="none"
-              returnKeyType="next"
               onChangeText={(text) => onChange(text)}
               value={value || ""}
             />

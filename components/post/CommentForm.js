@@ -4,6 +4,7 @@ import styled from "styled-components/native";
 import { useForm, Controller } from "react-hook-form";
 import { colors } from "../../colors";
 import AuthButton from "../auth/AuthButton";
+import { Ionicons } from "@expo/vector-icons";
 
 const CREATE_COMMENT_MUTATION = gql`
   mutation createUserPostComment($userPostId: Int!, $payload: String!) {
@@ -16,19 +17,32 @@ const CREATE_COMMENT_MUTATION = gql`
 
 const Container = styled.View`
   border-top-width: 1px;
-  border-top-color: red;
+  border-top-color: ${colors.borderThin};
   border-style: solid;
 `;
 
-const TextInput = styled.TextInput`
-  background-color: white;
-  padding: 15px 7px;
-  border-radius: 4px;
-  color: black;
-  border: 1px solid ${colors.borderThick};
+const Actions = styled.View`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 7px;
 `;
 
-export default function CommentForm({ userPostId }) {
+const TextInput = styled.TextInput`
+  width: 100%;
+  height: 100%;
+  background-color: ${colors.greyBackround};
+  padding: 13px 50px 13px 8px;
+  border-radius: 30px;
+  color: black;
+  border: 1px solid ${colors.borderThin};
+`;
+
+const IconView = styled.TouchableOpacity`
+  position: absolute;
+  right: 10px;
+`;
+export default function CommentForm({ userPostId, refetch, commentLoading }) {
   const { handleSubmit, control, reset } = useForm();
 
   const updateComment = (cache, result) => {
@@ -43,8 +57,12 @@ export default function CommentForm({ userPostId }) {
           userPostComments(prev) {
             return [createUserPostComment, ...prev];
           },
+          totalUserPostComments(prev) {
+            return prev + 1;
+          },
         },
       });
+      refetch();
     }
   };
 
@@ -69,28 +87,32 @@ export default function CommentForm({ userPostId }) {
 
   return (
     <Container>
-      <Controller
-        name="payload"
-        rules={{
-          required: "코멘트를 입력해주세요.",
-        }}
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <TextInput
-            placeholder="Please Write Comment"
-            autoCapitalize="none"
-            returnKeyType="done"
-            onChangeText={(text) => onChange(text)}
-            value={value || ""}
+      <Actions>
+        <Controller
+          name="payload"
+          rules={{
+            required: "코멘트를 입력해주세요.",
+          }}
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              placeholder="Please Write Comment"
+              numberOfLines={4}
+              multiline={true}
+              autoCapitalize="none"
+              onChangeText={(text) => onChange(text)}
+              value={value || ""}
+            />
+          )}
+        />
+        <IconView onPress={handleSubmit(onValid)}>
+          <Ionicons
+            name="arrow-forward-circle-outline"
+            size={40}
+            color="black"
           />
-        )}
-      />
-      <AuthButton
-        text="send"
-        // loading={loading}
-        // disabled={!watch("email") || !watch("password")}
-        onPress={handleSubmit(onValid)}
-      />
+        </IconView>
+      </Actions>
     </Container>
   );
 }
