@@ -19,13 +19,14 @@ const Container = styled.View`
   border-top-width: 1px;
   border-top-color: ${colors.borderThin};
   border-style: solid;
+  margin-bottom: 30px;
 `;
 
 const Actions = styled.View`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin: 7px;
+  margin: 3px;
 `;
 
 const TextInput = styled.TextInput`
@@ -33,7 +34,7 @@ const TextInput = styled.TextInput`
   height: 100%;
   background-color: ${colors.greyBackround};
   padding: 13px 50px 13px 8px;
-  border-radius: 30px;
+  border-radius: 25px;
   color: black;
   border: 1px solid ${colors.borderThin};
 `;
@@ -97,8 +98,9 @@ export default function CommentForm({ userPostId, refetch, commentLoading }) {
           render={({ field: { onChange, value } }) => (
             <TextInput
               placeholder="Please Write Comment"
-              numberOfLines={4}
               multiline={true}
+              // maxLength={120}
+              maxHeight={120}
               autoCapitalize="none"
               onChangeText={(text) => onChange(text)}
               value={value || ""}

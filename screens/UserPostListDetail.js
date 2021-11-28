@@ -79,7 +79,7 @@ const TOGGLE_USERPOST_LIKE_MUTATION = gql`
 `;
 
 const PostContainer = styled.View`
-  flex: 7;
+  flex: 1;
 `;
 
 const Comment = styled.View`
@@ -269,11 +269,9 @@ export default function UserPostListDetail({ route: { params } }) {
         </PostContainer>
       )}
       <KeyboardAvoidingView
-        style={{
-          flex: 1,
-        }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={statusBarHeight + 44}
+        keyboardVerticalOffset={statusBarHeight + 20}
+        // keyboardVerticalOffset={300}
       >
         <CommentForm
           userPostId={parseInt(params.id)}
