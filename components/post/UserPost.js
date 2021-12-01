@@ -130,7 +130,6 @@ function UserPost({
         },
       });
     }
-    navigation.navigate("UserPostList");
   };
 
   const [deleteUserPostMutation, { loading }] = useMutation(
@@ -260,7 +259,7 @@ function UserPost({
         destructiveButtonIndex={1}
         onPress={(index) => handleIndex(index)}
       />
-      {id !== "38" ? <Separator /> : null}
+      <Separator />
     </Container>
   );
 }

@@ -4,6 +4,7 @@ import TabsNav from "./TabsNav";
 import UserPostUploadForm from "../screens/UserPostUploadForm";
 import EditUserPostForm from "../screens/EditUserPostForm";
 import UserPostListDetail from "../screens/UserPostListDetail";
+import EditUserPostCommentForm from "../screens/EditUserPostCommentForm";
 
 const Stack = createStackNavigator();
 
@@ -37,6 +38,13 @@ export default function LoggedInNav() {
           headerBackTitleVisible: false,
         }}
         component={EditUserPostForm}
+      />
+      <Stack.Screen
+        name="EditUserPostCommentForm"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={EditUserPostCommentForm}
       />
     </Stack.Navigator>
   );
