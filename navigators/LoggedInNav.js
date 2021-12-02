@@ -5,6 +5,7 @@ import UserPostUploadForm from "../screens/UserPostUploadForm";
 import EditUserPostForm from "../screens/EditUserPostForm";
 import UserPostListDetail from "../screens/UserPostListDetail";
 import EditUserPostCommentForm from "../screens/EditUserPostCommentForm";
+import Profile from "../screens/Profile";
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,13 @@ export default function LoggedInNav() {
           headerBackTitleVisible: false,
         }}
         component={UserPostListDetail}
+      />
+      <Stack.Screen
+        name="Profile"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={Profile}
       />
       <Stack.Screen
         name="UserPostUploadForm"

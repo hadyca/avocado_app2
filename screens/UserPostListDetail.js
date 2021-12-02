@@ -12,12 +12,14 @@ import { colors } from "../colors";
 import CommentForm from "../components/post/CommentForm";
 import PostContents from "../components/post/PostContents";
 import UserPostComment from "../components/post/UserPostComment";
+import DismissKeyboard from "../components/DismissKeyBoard";
 
 const POST_DETAIL_QUERY = gql`
   query seeUserPost($userPostId: Int!) {
     seeUserPost(userPostId: $userPostId) {
       id
       user {
+        id
         username
         avatar
       }
@@ -49,6 +51,7 @@ const COMMENTS_QUERY = gql`
     seeUserPostComments(userPostId: $userPostId) {
       id
       user {
+        id
         username
         avatar
       }
@@ -145,21 +148,33 @@ export default function UserPostListDetail({ route: { params } }) {
 
   const renderComment = ({ item }) => {
     if (item.deleted === false) {
-      return <UserPostComment {...item} />;
+      return (
+        <UserPostComment
+          userPostId={parseInt(params.id)}
+          id={item.id}
+          user={item.user}
+          payload={item.payload}
+          isMine={item.isMine}
+        />
+      );
     } else {
       return null;
     }
   };
+  const validComment = (item) => item.deleted === true;
+
+  const deletedComment = commentData?.seeUserPostComments.every(validComment);
 
   return (
     <ScreenLayout loading={loading}>
-      {commentData?.seeUserPostComments[0] ? (
+      {commentData?.seeUserPostComments[0] && !deletedComment ? (
         <PostContainer>
           <FlatList
             ListHeaderComponent={
               <PostContents
                 file={data?.seeUserPost?.file.length}
                 data={data}
+                userId={data?.userId}
                 username={params.username}
                 avatar={params.avatar}
                 title={data?.seeUserPost?.title}
@@ -176,22 +191,26 @@ export default function UserPostListDetail({ route: { params } }) {
           />
         </PostContainer>
       ) : (
-        <PostContainer>
-          <PostContents
-            file={data?.seeUserPost?.file.length}
-            data={data}
-            username={params.username}
-            avatar={params.avatar}
-            title={data?.seeUserPost?.title}
-            content={data?.seeUserPost?.content}
-            likeLoading={likeLoading}
-            toggleUserPostLike={toggleUserPostLike}
-            isLiked={data?.seeUserPost?.isLiked}
-          />
-          <NoCommentView>
-            <NoComment>There is no comment. Please write a comment.</NoComment>
-          </NoCommentView>
-        </PostContainer>
+        <DismissKeyboard>
+          <PostContainer>
+            <PostContents
+              file={data?.seeUserPost?.file.length}
+              data={data}
+              username={params.username}
+              avatar={params.avatar}
+              title={data?.seeUserPost?.title}
+              content={data?.seeUserPost?.content}
+              likeLoading={likeLoading}
+              toggleUserPostLike={toggleUserPostLike}
+              isLiked={data?.seeUserPost?.isLiked}
+            />
+            <NoCommentView>
+              <NoComment>
+                There is no comment. Please write a comment.
+              </NoComment>
+            </NoCommentView>
+          </PostContainer>
+        </DismissKeyboard>
       )}
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}

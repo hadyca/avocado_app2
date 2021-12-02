@@ -158,6 +158,7 @@ function UserPost({
   const goToPostDetail = () => {
     navigation.navigate("UserPostListDetail", {
       id,
+      userId: user.id,
       username: user.username,
       avatar: user.avatar,
     });

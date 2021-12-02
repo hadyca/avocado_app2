@@ -13,6 +13,7 @@ import UserAvatar from "../UserAvatar";
 import Separator from "../Separator";
 import { Ionicons } from "@expo/vector-icons";
 import ImageSlider from "./ImageSlider";
+import { useNavigation } from "@react-navigation/native";
 
 const PostContainer = styled.View`
   flex: 7;
@@ -20,7 +21,7 @@ const PostContainer = styled.View`
 const Container = styled.View`
   margin: 10px;
 `;
-const Header = styled.View``;
+const Header = styled.TouchableOpacity``;
 const Contents = styled.View``;
 
 const Title = styled.Text`
@@ -41,9 +42,11 @@ const Actions = styled.View`
 const Action = styled.TouchableOpacity`
   margin-right: 10px;
 `;
+
 export default function PostContents({
   file,
   data,
+  userId,
   username,
   avatar,
   title,
@@ -52,11 +55,20 @@ export default function PostContents({
   likeLoading,
   isLiked,
 }) {
+  const navigation = useNavigation();
+
+  const goToProfile = () => {
+    navigation.navigate("Profile", {
+      id: userId,
+      username,
+    });
+  };
+
   return (
     <View>
       {file !== 0 ? <ImageSlider data={data} /> : null}
       <Container>
-        <Header>
+        <Header onPress={goToProfile}>
           <UserAvatar username={username} uri={avatar} />
         </Header>
         <Separator />

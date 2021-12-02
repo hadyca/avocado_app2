@@ -16,6 +16,11 @@ const DELETE_COMMENT_MUTATION = gql`
   }
 `;
 
+const Container = styled.View`
+  margin: 10px;
+`;
+const Header = styled.TouchableOpacity``;
+
 const Comment = styled.View`
   margin-top: 2px;
   margin-left: 35px;
@@ -34,8 +39,14 @@ const IconView = styled.TouchableOpacity`
   padding: 10px;
 `;
 
-export default function UserPostComment({ id, user, payload, isMine }) {
-  const deleteUserComment = (cache, result) => {
+export default function UserPostComment({
+  userPostId,
+  id,
+  user,
+  payload,
+  isMine,
+}) {
+  const deleteUserComment = async (cache, result) => {
     const {
       data: {
         deleteUserPostComment: { ok },
@@ -43,11 +54,20 @@ export default function UserPostComment({ id, user, payload, isMine }) {
     } = result;
     if (ok) {
       const CommentId = `UserPostComment:${id}`;
-      cache.modify({
+      const UserPostId = `UserPost:${userPostId}`;
+      await cache.modify({
         id: CommentId,
         fields: {
           deleted(prev) {
             return !prev;
+          },
+        },
+      });
+      await cache.modify({
+        id: UserPostId,
+        fields: {
+          totalUserPostComments(prev) {
+            return prev - 1;
           },
         },
       });
@@ -102,9 +122,19 @@ export default function UserPostComment({ id, user, payload, isMine }) {
       return;
     }
   };
+
+  const goToProfile = () => {
+    navigation.navigate("Profile", {
+      id: user.id,
+      username: user.username,
+    });
+  };
+
   return (
-    <View style={{ marginBottom: 20 }}>
-      <UserAvatar username={user.username} uri={user.avatar} />
+    <Container>
+      <Header onPress={goToProfile}>
+        <UserAvatar username={user.username} uri={user.avatar} />
+      </Header>
       <Comment>
         <CommentPayLoad>{payload}</CommentPayLoad>
         {isMine ? (
@@ -120,6 +150,6 @@ export default function UserPostComment({ id, user, payload, isMine }) {
         destructiveButtonIndex={1}
         onPress={(index) => handleIndex(index)}
       />
-    </View>
+    </Container>
   );
 }
