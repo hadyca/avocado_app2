@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import styled from "styled-components/native";
 import { useForm, Controller } from "react-hook-form";
 import { colors } from "../../colors";
 import AuthButton from "../auth/AuthButton";
 import { Ionicons } from "@expo/vector-icons";
+import SendButton from "./SendButton";
 
 const CREATE_COMMENT_MUTATION = gql`
   mutation createUserPostComment($userPostId: Int!, $payload: String!) {
@@ -40,11 +41,13 @@ const TextInput = styled.TextInput`
 `;
 
 const IconView = styled.TouchableOpacity`
+  opacity: ${(props) => (props.disabled ? "0.5" : "1")};
   position: absolute;
   right: 10px;
 `;
 export default function CommentForm({ userPostId, refetch, commentLoading }) {
-  const { handleSubmit, control, reset } = useForm();
+  const [formValue, setFormValue] = useState("");
+  const { handleSubmit, control, reset, watch } = useForm();
 
   const updateComment = (cache, result) => {
     const {
@@ -92,7 +95,7 @@ export default function CommentForm({ userPostId, refetch, commentLoading }) {
         <Controller
           name="payload"
           rules={{
-            required: "코멘트를 입력해주세요.",
+            required: true,
           }}
           control={control}
           render={({ field: { onChange, value } }) => (
@@ -102,18 +105,16 @@ export default function CommentForm({ userPostId, refetch, commentLoading }) {
               // maxLength={120}
               maxHeight={120}
               autoCapitalize="none"
-              onChangeText={(text) => onChange(text)}
-              value={value || ""}
+              onChangeText={onChange}
+              value={value}
             />
           )}
         />
-        <IconView onPress={handleSubmit(onValid)}>
-          <Ionicons
-            name="arrow-forward-circle-outline"
-            size={40}
-            color="black"
-          />
-        </IconView>
+        <SendButton
+          disabled={!watch("payload")}
+          loading={loading}
+          onPress={handleSubmit(onValid)}
+        />
       </Actions>
     </Container>
   );
