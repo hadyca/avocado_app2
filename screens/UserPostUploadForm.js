@@ -1,12 +1,13 @@
 import React, { useRef } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { TextInput } from "../components/auth/AuthShared";
 import AuthButton from "../components/auth/AuthButton";
 import { useNavigation } from "@react-navigation/native";
 import { ReactNativeFile } from "apollo-upload-client";
 import DismissKeyboard from "../components/DismissKeyBoard";
+import styled from "styled-components/native";
 
 const UPLOAD_USER_POST_MUTATION = gql`
   mutation uploadUserPost(
@@ -31,6 +32,8 @@ const UPLOAD_USER_POST_MUTATION = gql`
     }
   }
 `;
+
+const ImagePick = styled.TouchableOpacity``;
 
 export default function UserPostUploadForm() {
   const navigation = useNavigation();
@@ -87,6 +90,9 @@ export default function UserPostUploadForm() {
   return (
     <DismissKeyboard>
       <View>
+        <ImagePick>
+          <Text>이미지 고르기</Text>
+        </ImagePick>
         <Controller
           name="title"
           rules={{
