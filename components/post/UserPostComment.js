@@ -6,6 +6,8 @@ import ActionSheet from "@alessiocancian/react-native-actionsheet";
 import { View, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { gql, useMutation } from "@apollo/client";
+import timeForToday from "../../utils";
+import { colors } from "../../colors";
 
 const DELETE_COMMENT_MUTATION = gql`
   mutation deleteUserPostComment($commentId: Int!) {
@@ -39,12 +41,20 @@ const IconView = styled.TouchableOpacity`
   padding: 10px;
 `;
 
+const Date = styled.Text`
+  margin-top: 3px;
+  margin-left: 35px;
+  color: ${colors.homeText};
+  font-size: 8px;
+`;
+
 export default function UserPostComment({
   userPostId,
   id,
   user,
   payload,
   isMine,
+  createdAt,
 }) {
   const deleteUserComment = async (cache, result) => {
     const {
@@ -129,7 +139,9 @@ export default function UserPostComment({
       username: user.username,
     });
   };
+  const date = new window.Date(parseInt(createdAt));
 
+  const time = timeForToday(date);
   return (
     <Container>
       <Header onPress={goToProfile}>
@@ -143,6 +155,7 @@ export default function UserPostComment({
           </IconView>
         ) : null}
       </Comment>
+      <Date>{time}</Date>
       <ActionSheet
         ref={actionsheet}
         options={optionArray}

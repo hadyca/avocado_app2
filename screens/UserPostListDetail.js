@@ -155,6 +155,7 @@ export default function UserPostListDetail({ route: { params } }) {
           user={item.user}
           payload={item.payload}
           isMine={item.isMine}
+          createdAt={item.createdAt}
         />
       );
     } else {
