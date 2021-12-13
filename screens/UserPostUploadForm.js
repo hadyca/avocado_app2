@@ -87,10 +87,14 @@ export default function UserPostUploadForm() {
     }
   };
 
+  const goToImageSelect = () => {
+    navigation.navigate("SelectPhoto");
+  };
+
   return (
     <DismissKeyboard>
       <View>
-        <ImagePick>
+        <ImagePick onPress={goToImageSelect}>
           <Text>이미지 고르기</Text>
         </ImagePick>
         <Controller
