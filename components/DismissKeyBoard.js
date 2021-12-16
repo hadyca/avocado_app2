@@ -7,7 +7,7 @@ export default function DismissKeyboard({ children }) {
   };
   return (
     <TouchableWithoutFeedback
-      style={{ flex: 1 }}
+      style={{ flex: 1, backgroundColor: "#ffffff" }}
       onPress={dismissKeyboard}
       disabled={Platform.OS === "web"}
     >

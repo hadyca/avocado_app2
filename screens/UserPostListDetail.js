@@ -168,7 +168,7 @@ export default function UserPostListDetail({ route: { params } }) {
 
   return (
     <ScreenLayout loading={loading}>
-      {commentData?.seeUserPostComments[0] && !deletedComment ? (
+      {commentData?.seeUserPostComments.length > 0 && !deletedComment ? (
         <PostContainer>
           <FlatList
             ListHeaderComponent={
@@ -215,7 +215,7 @@ export default function UserPostListDetail({ route: { params } }) {
       )}
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={statusBarHeight + 20}
+        keyboardVerticalOffset={statusBarHeight + 70}
         // keyboardVerticalOffset={300}
       >
         <CommentForm
