@@ -170,6 +170,8 @@ export default function UserPostUploadForm() {
   // };
 
   const onValid = ({ title, content }) => {
+    // fileUrl 자체를 배열로 만들어서 하나씩 넣는걸로
+    // const fileAry = []  if 어쩌고 저쩌고하는식으로 하고 아래 fileUrl 객체를 여기에 push 그리고 변수에 쓰일 fileUrl의 값에 이 배열을 던진다
     const fileUrl = new ReactNativeFile({
       uri: photo.length > 0 ? photo[0].uri : null,
       name: "12.jpg",
