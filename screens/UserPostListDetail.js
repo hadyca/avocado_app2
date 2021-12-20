@@ -215,7 +215,7 @@ export default function UserPostListDetail({ route: { params } }) {
       )}
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={statusBarHeight + 70}
+        keyboardVerticalOffset={statusBarHeight + 20}
         // keyboardVerticalOffset={300}
       >
         <CommentForm

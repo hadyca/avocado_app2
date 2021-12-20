@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { Text, View, TouchableOpacity, Image } from "react-native";
+import { Text, View, TouchableOpacity, Image, ScrollView } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import AuthButton from "../components/auth/AuthButton";
 import { useNavigation } from "@react-navigation/native";
@@ -13,7 +13,7 @@ import * as ImagePicker from "expo-image-picker";
 
 const UPLOAD_USER_POST_MUTATION = gql`
   mutation uploadUserPost(
-    $fileUrl: [Upload]
+    $fileUrl: Upload
     $title: String!
     $content: String!
   ) {
@@ -41,13 +41,14 @@ const Container = styled.View`
 `;
 const ImageTop = styled.View`
   margin: 10px;
-  flex-direction: row;
 `;
+
+const ImageScroll = styled.ScrollView``;
 const InputBottom = styled.View`
   margin: 0px 10px 10px 10px;
 `;
 const ImagePick = styled.TouchableOpacity`
-  margin: 10px;
+  margin: 10px 20px 10px 10px;
   width: 60px;
   height: 60px;
   justify-content: center;
@@ -70,8 +71,32 @@ const TextInput = styled.TextInput`
   padding: 15px 7px;
   color: black;
 `;
+
+const ImageContainer = styled.View`
+  margin-right: 20px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const DeleteBtn = styled.TouchableOpacity`
+  width: 15px;
+  height: 15px;
+  background-color: black;
+  border-radius: 15px;
+  position: absolute;
+  top: 0px;
+  right: -3px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const DeleteText = styled.Text`
+  color: white;
+`;
+
 export default function UserPostUploadForm() {
   const [photo, setPhoto] = useState([]);
+  const [countPhoto, setCountPhoto] = useState(0);
   const navigation = useNavigation();
 
   const HeaderRight = () => (
@@ -127,12 +152,30 @@ export default function UserPostUploadForm() {
     nextRef?.current?.focus();
   };
 
+  // const onValid = ({ title, content }) => {
+  //   const fileUrl = new ReactNativeFile({
+  //     uri: "https://images.unsplash.com/photo-1632766984155-d42dd9affe85?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+  //     name: `1.jpg`,
+  //     type: "image/jpeg",
+  //   });
+  //   if (!loading) {
+  //     uploadUserPostMutation({
+  //       variables: {
+  //         fileUrl,
+  //         title,
+  //         content,
+  //       },
+  //     });
+  //   }
+  // };
+
   const onValid = ({ title, content }) => {
     const fileUrl = new ReactNativeFile({
-      uri: "https://images.unsplash.com/photo-1632766984155-d42dd9affe85?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      name: `1.jpg`,
+      uri: photo.length > 0 ? photo[0].uri : null,
+      name: "12.jpg",
       type: "image/jpeg",
     });
+
     if (!loading) {
       uploadUserPostMutation({
         variables: {
@@ -145,81 +188,102 @@ export default function UserPostUploadForm() {
   };
 
   const goToImageSelect = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [5, 3],
-      quality: 1,
-    });
+    if (countPhoto < 5) {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [5, 3],
+        quality: 1,
+      });
 
-    if (!result.cancelled) {
-      setPhoto((photo) => [...photo, result.uri]);
+      if (!result.cancelled) {
+        const photoObj = {
+          uri: result.uri,
+          name: "1.jpg",
+          type: "image/jpeg",
+        };
+        setPhoto((photo) => [...photo, photoObj]);
+        setCountPhoto(countPhoto + 1);
+      }
+    } else {
+      return null;
     }
   };
 
+  const DeleteImg = (index) => {
+    const newPhoto = photo.filter((_, i) => i !== index);
+    setPhoto(newPhoto);
+    setCountPhoto(countPhoto - 1);
+  };
+
   return (
-    <DismissKeyboard>
-      <Container>
-        <ImageTop>
+    <Container>
+      <ImageTop>
+        <ImageScroll horizontal={true} showsHorizontalScrollIndicator={false}>
           <ImagePick onPress={goToImageSelect}>
             <Ionicons name={"camera"} color={"#868B94"} size={30} />
-            <CameraText>haha</CameraText>
+            <CameraText>{`${countPhoto} / 5`}</CameraText>
           </ImagePick>
           {photo.length > 0
             ? photo.map((item, index) => {
                 return (
-                  <Image
-                    key={index}
-                    source={{ uri: item }}
-                    style={{ height: 55, width: 55 }}
-                  />
+                  <ImageContainer>
+                    <Image
+                      key={index + 1}
+                      source={{ uri: item.uri }}
+                      style={{ height: 60, width: 60 }}
+                    />
+                    <DeleteBtn key={index} onPress={() => DeleteImg(index)}>
+                      <DeleteText>X</DeleteText>
+                    </DeleteBtn>
+                  </ImageContainer>
                 );
               })
             : null}
-        </ImageTop>
-        <InputBottom>
-          <Controller
-            name="title"
-            rules={{
-              required: "title is required",
-            }}
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <TextInput
-                placeholder="Title"
-                autoCapitalize="none"
-                returnKeyType="next"
-                onSubmitEditing={() => onNext(contentRef)}
-                onChangeText={(text) => onChange(text)}
-                value={value}
-              />
-            )}
-          />
-          <Controller
-            name="content"
-            rules={{
-              required: "content is required",
-            }}
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <TextInput
-                ref={contentRef}
-                multiline={true}
-                numberOfLines={4}
-                placeholder="Content"
-                autoCapitalize="none"
-                onChangeText={(text) => onChange(text)}
-                value={value || ""}
-              />
-            )}
-          />
-          <AuthButton
-            text="완료"
-            loading={loading}
-            onPress={handleSubmit(onValid)}
-          />
-        </InputBottom>
-      </Container>
-    </DismissKeyboard>
+        </ImageScroll>
+      </ImageTop>
+      <InputBottom>
+        <Controller
+          name="title"
+          rules={{
+            required: "title is required",
+          }}
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              placeholder="Title"
+              autoCapitalize="none"
+              returnKeyType="next"
+              onSubmitEditing={() => onNext(contentRef)}
+              onChangeText={(text) => onChange(text)}
+              value={value}
+            />
+          )}
+        />
+        <Controller
+          name="content"
+          rules={{
+            required: "content is required",
+          }}
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              ref={contentRef}
+              multiline={true}
+              numberOfLines={4}
+              placeholder="Content"
+              autoCapitalize="none"
+              onChangeText={(text) => onChange(text)}
+              value={value || ""}
+            />
+          )}
+        />
+        <AuthButton
+          text="완료"
+          loading={loading}
+          onPress={handleSubmit(onValid)}
+        />
+      </InputBottom>
+    </Container>
   );
 }
