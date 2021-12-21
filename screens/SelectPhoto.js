@@ -9,7 +9,6 @@ import {
 
 import * as MediaLibrary from "expo-media-library";
 import * as ImageManipulator from "expo-image-manipulator";
-import { ImageBrowser } from "expo-image-picker-multiple";
 import { useNavigation } from "@react-navigation/native";
 
 export default function SelectPhoto() {
