@@ -13,7 +13,7 @@ import * as ImagePicker from "expo-image-picker";
 
 const UPLOAD_USER_POST_MUTATION = gql`
   mutation uploadUserPost(
-    $fileUrl: Upload
+    $fileUrl: [Upload]
     $title: String!
     $content: String!
   ) {
@@ -169,24 +169,22 @@ export default function UserPostUploadForm() {
   //   }
   // };
 
-  const onValid = ({ title, content }) => {
-    // fileUrl 자체를 배열로 만들어서 하나씩 넣는걸로
-    // const fileAry = []  if 어쩌고 저쩌고하는식으로 하고 아래 fileUrl 객체를 여기에 push 그리고 변수에 쓰일 fileUrl의 값에 이 배열을 던진다
-    const fileUrl = new ReactNativeFile({
-      uri: photo.length > 0 ? photo[0].uri : null,
-      name: "12.jpg",
-      type: "image/jpeg",
+  const onValid = async ({ title, content }) => {
+    const fileUrl = await photo.map((_, index) => {
+      return new ReactNativeFile({
+        uri: photo[index].uri,
+        name: "3.jpg",
+        type: "image/jpeg",
+      });
     });
 
-    if (!loading) {
-      uploadUserPostMutation({
-        variables: {
-          fileUrl,
-          title,
-          content,
-        },
-      });
-    }
+    await uploadUserPostMutation({
+      variables: {
+        fileUrl,
+        title,
+        content,
+      },
+    });
   };
 
   const goToImageSelect = async () => {
@@ -195,7 +193,7 @@ export default function UserPostUploadForm() {
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         aspect: [5, 3],
-        quality: 1,
+        quality: 0.1,
       });
 
       if (!result.cancelled) {
@@ -231,7 +229,7 @@ export default function UserPostUploadForm() {
                 return (
                   <ImageContainer>
                     <Image
-                      key={index + 1}
+                      key={index + 10}
                       source={{ uri: item.uri }}
                       style={{ height: 60, width: 60 }}
                     />
