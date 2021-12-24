@@ -152,19 +152,15 @@ export default function UserPostUploadForm() {
     nextRef?.current?.focus();
   };
 
-  const onValid = ({ title, content }) => {
-    const fileUrl1 = new ReactNativeFile({
-      uri: "https://images.unsplash.com/photo-1632766984155-d42dd9affe85?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-      name: `3.jpg`,
-      type: "image/jpeg",
-    });
-    const fileUrl2 = new ReactNativeFile({
-      uri: "https://images.unsplash.com/photo-1640083034965-b6944ebaf3b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
-      name: `3.jpg`,
-      type: "image/jpeg",
+  const onValid = async ({ title, content }) => {
+    const fileUrl = await photo.map((_, index) => {
+      return new ReactNativeFile({
+        uri: photo[index].uri,
+        name: `${index}.jpg`,
+        type: "image/jpeg",
+      });
     });
 
-    const fileUrl = [fileUrl1, fileUrl2];
     console.log(fileUrl);
     if (!loading) {
       uploadUserPostMutation({
@@ -201,7 +197,7 @@ export default function UserPostUploadForm() {
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         aspect: [5, 3],
-        quality: 0.1,
+        quality: 0.2,
       });
 
       if (!result.cancelled) {
