@@ -1,12 +1,17 @@
-import React, { useRef } from "react";
-import { View } from "react-native";
+import React, { useRef, useState } from "react";
+import { View, Image } from "react-native";
+
 import { gql, useMutation } from "@apollo/client";
 import { useForm, Controller } from "react-hook-form";
-import { TextInput } from "../components/auth/AuthShared";
 import AuthButton from "../components/auth/AuthButton";
 import { useNavigation } from "@react-navigation/native";
 import { ReactNativeFile } from "apollo-upload-client";
 import DismissKeyboard from "../components/DismissKeyBoard";
+import styled from "styled-components/native";
+import { Ionicons } from "@expo/vector-icons";
+
+import { colors } from "../colors";
+import * as ImagePicker from "expo-image-picker";
 
 const EDIT_USERPOST_MUTATION = gql`
   mutation editUserPost(
@@ -27,7 +32,68 @@ const EDIT_USERPOST_MUTATION = gql`
   }
 `;
 
+const Container = styled.View`
+  flex: 1;
+  background-color: #ffffff;
+`;
+const ImageTop = styled.View`
+  margin: 10px;
+`;
+
+const ImageScroll = styled.ScrollView``;
+const InputBottom = styled.View`
+  margin: 0px 10px 10px 10px;
+`;
+const ImagePick = styled.TouchableOpacity`
+  margin: 10px 20px 10px 10px;
+  width: 60px;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
+  border: 1px;
+`;
+const CameraText = styled.Text`
+  color: #868b94;
+`;
+
+const HeaderRightText = styled.Text`
+  color: ${colors.black};
+  font-size: 16px;
+  font-weight: 600;
+  margin-right: 7px;
+`;
+
+const TextInput = styled.TextInput`
+  background-color: #ffffff
+  padding: 15px 7px;
+  color: black;
+`;
+
+const ImageContainer = styled.View`
+  margin-right: 20px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const DeleteBtn = styled.TouchableOpacity`
+  width: 15px;
+  height: 15px;
+  background-color: black;
+  border-radius: 15px;
+  position: absolute;
+  top: 0px;
+  right: -3px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const DeleteText = styled.Text`
+  color: white;
+`;
+
 export default function EditUserPostForm({ route: { params } }) {
+  const [photo, setPhoto] = useState([]);
+  const [countPhoto, setCountPhoto] = useState(0);
   const navigation = useNavigation();
   const { control, handleSubmit, getValues } = useForm({
     defaultValues: {
@@ -86,10 +152,55 @@ export default function EditUserPostForm({ route: { params } }) {
       });
     }
   };
+  const goToImageSelect = async () => {
+    if (countPhoto < 5) {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [5, 3],
+        quality: 0.2,
+      });
 
+      if (!result.cancelled) {
+        const photoObj = {
+          uri: result.uri,
+          name: "1.jpg",
+          type: "image/jpeg",
+        };
+        setPhoto((photo) => [...photo, photoObj]);
+        setCountPhoto(countPhoto + 1);
+      }
+    } else {
+      return null;
+    }
+  };
   return (
-    <DismissKeyboard>
-      <View>
+    <Container>
+      <ImageTop>
+        <ImageScroll horizontal={true} showsHorizontalScrollIndicator={false}>
+          <ImagePick onPress={goToImageSelect}>
+            <Ionicons name={"camera"} color={"#868B94"} size={30} />
+            <CameraText>{`${countPhoto} / 5`}</CameraText>
+          </ImagePick>
+          {params.file.length > 0
+            ? params.file.map((item, index) => {
+                return (
+                  <ImageContainer>
+                    <Image
+                      key={index + 10}
+                      source={{ uri: item.fileUrl }}
+                      style={{ height: 60, width: 60 }}
+                    />
+                    <DeleteBtn key={index} onPress={() => DeleteImg(index)}>
+                      <DeleteText>X</DeleteText>
+                    </DeleteBtn>
+                  </ImageContainer>
+                );
+              })
+            : null}
+        </ImageScroll>
+      </ImageTop>
+      <InputBottom>
         <Controller
           name="title"
           rules={{
@@ -103,7 +214,7 @@ export default function EditUserPostForm({ route: { params } }) {
               returnKeyType="next"
               onSubmitEditing={() => onNext(contentRef)}
               onChangeText={(text) => onChange(text)}
-              value={value || ""}
+              value={value}
             />
           )}
         />
@@ -120,7 +231,6 @@ export default function EditUserPostForm({ route: { params } }) {
               numberOfLines={4}
               placeholder="Content"
               autoCapitalize="none"
-              returnKeyType="next"
               onChangeText={(text) => onChange(text)}
               value={value || ""}
             />
@@ -131,7 +241,7 @@ export default function EditUserPostForm({ route: { params } }) {
           loading={loading}
           onPress={handleSubmit(onValid)}
         />
-      </View>
-    </DismissKeyboard>
+      </InputBottom>
+    </Container>
   );
 }
