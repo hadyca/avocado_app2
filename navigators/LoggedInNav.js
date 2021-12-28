@@ -15,16 +15,6 @@ export default function LoggedInNav() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="SelectPhoto"
-        options={{
-          headerBackTitleVisible: false,
-          headerBackImage: ({ tintColor }) => (
-            <Ionicons color={tintColor} name="close" size={28} />
-          ),
-        }}
-        component={SelectPhoto}
-      />
-      <Stack.Screen
         name="TabsNav"
         options={{
           headerShown: false,
@@ -68,6 +58,16 @@ export default function LoggedInNav() {
           headerBackTitleVisible: false,
         }}
         component={EditUserPostCommentForm}
+      />
+      <Stack.Screen
+        name="SelectPhoto"
+        options={{
+          headerBackTitleVisible: false,
+          headerBackImage: ({ tintColor }) => (
+            <Ionicons color={tintColor} name="close" size={28} />
+          ),
+        }}
+        component={SelectPhoto}
       />
     </Stack.Navigator>
   );
