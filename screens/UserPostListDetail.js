@@ -12,7 +12,6 @@ import { colors } from "../colors";
 import CommentForm from "../components/post/CommentForm";
 import PostContents from "../components/post/PostContents";
 import UserPostComment from "../components/post/UserPostComment";
-import DismissKeyboard from "../components/DismissKeyBoard";
 
 const POST_DETAIL_QUERY = gql`
   query seeUserPost($userPostId: Int!) {
@@ -76,7 +75,7 @@ const TOGGLE_USERPOST_LIKE_MUTATION = gql`
 const PostContainer = styled.View`
   flex: 1;
 `;
-
+const NoCommentContainer = styled.ScrollView``;
 const NoCommentView = styled.View``;
 const NoComment = styled.Text`
   margin: auto;
@@ -168,7 +167,7 @@ export default function UserPostListDetail({ route: { params } }) {
 
   return (
     <ScreenLayout loading={loading}>
-      {commentData?.seeUserPostComments[0] && !deletedComment ? (
+      {commentData?.seeUserPostComments.length > 0 && !deletedComment ? (
         <PostContainer>
           <FlatList
             ListHeaderComponent={
@@ -192,26 +191,22 @@ export default function UserPostListDetail({ route: { params } }) {
           />
         </PostContainer>
       ) : (
-        <DismissKeyboard>
-          <PostContainer>
-            <PostContents
-              file={data?.seeUserPost?.file.length}
-              data={data}
-              username={params.username}
-              avatar={params.avatar}
-              title={data?.seeUserPost?.title}
-              content={data?.seeUserPost?.content}
-              likeLoading={likeLoading}
-              toggleUserPostLike={toggleUserPostLike}
-              isLiked={data?.seeUserPost?.isLiked}
-            />
-            <NoCommentView>
-              <NoComment>
-                There is no comment. Please write a comment.
-              </NoComment>
-            </NoCommentView>
-          </PostContainer>
-        </DismissKeyboard>
+        <NoCommentContainer>
+          <PostContents
+            file={data?.seeUserPost?.file.length}
+            data={data}
+            username={params.username}
+            avatar={params.avatar}
+            title={data?.seeUserPost?.title}
+            content={data?.seeUserPost?.content}
+            likeLoading={likeLoading}
+            toggleUserPostLike={toggleUserPostLike}
+            isLiked={data?.seeUserPost?.isLiked}
+          />
+          <NoCommentView>
+            <NoComment>There is no comment. Please write a comment.</NoComment>
+          </NoCommentView>
+        </NoCommentContainer>
       )}
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}

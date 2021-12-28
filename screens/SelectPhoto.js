@@ -1,69 +1,144 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Ionicons } from "@expo/vector-icons";
-import * as MediaLibrary from "expo-media-library";
-import { AssetsSelector } from "expo-images-picker";
-
-import styled from "styled-components/native";
+import React, { useState, useEffect } from "react";
 import {
-  FlatList,
-  Image,
-  Platform,
-  StatusBar,
+  StyleSheet,
+  View,
   Text,
   TouchableOpacity,
-  useWindowDimensions,
-  View,
+  ActivityIndicator,
 } from "react-native";
-import { colors } from "../colors";
 
-const Container = styled.View`
-  flex: 1;
-  background-color: ${colors.backgraound};
-`;
+import * as MediaLibrary from "expo-media-library";
+import * as ImageManipulator from "expo-image-manipulator";
+import { useNavigation } from "@react-navigation/native";
 
 export default function SelectPhoto() {
-  const widgetSettings = useMemo(
-    () => ({
-      getImageMetaData: false,
-      initialLoad: 100,
-      assetsType: ["photo"],
-      minSelection: 1,
-      maxSelection: 3,
-      portraitCols: 4,
-      landscapeCols: 4,
-    }),
-    []
+  const [ok, setOk] = useState(false);
+  const navigation = useNavigation();
+
+  const getIosPermissions = async () => {
+    const { accessPrivileges, canAskAgain } =
+      await MediaLibrary.getPermissionsAsync();
+    if (accessPrivileges === "none" && canAskAgain) {
+      const { accessPrivileges } = await MediaLibrary.requestPermissionsAsync();
+      if (accessPrivileges !== "none") {
+        setOk(true);
+      }
+    } else if (accessPrivileges !== "none") {
+      setOk(true);
+    }
+  };
+  const getAndroidPermissions = async () => {
+    const { status, canAskAgain } = await MediaLibrary.getPermissionsAsync();
+    if (status === "undetermined" && canAskAgain) {
+      const { status } = await MediaLibrary.requestPermissionsAsync();
+      if (status !== "undetermined") {
+        getPhotos();
+      }
+    } else if (status !== "undetermined") {
+      getPhotos();
+    } else {
+      getAndroidPermissions();
+    }
+  };
+  const HeaderRight = () => (
+    <TouchableOpacity>
+      <HeaderRightText>Done</HeaderRightText>
+    </TouchableOpacity>
   );
-  const widgetErrors = useMemo(
-    () => ({
-      errorTextColor: polar_text_2,
-      errorMessages: {
-        hasErrorWithPermissions: translator(T.ERROR.HAS_PERMISSIONS_ERROR),
-        hasErrorWithLoading: translator(T.ERROR.HAS_INTERNAL_ERROR),
-        hasErrorWithResizing: translator(T.ERROR.HAS_INTERNAL_ERROR),
-        hasNoAssets: translator(T.ERROR.HAS_NO_ASSETS),
-      },
-    }),
-    []
+  useEffect(() => {
+    if (Platform.OS === "ios") {
+      getIosPermissions();
+    } else {
+      getAndroidPermissions();
+    }
+  }, []);
+  const getHeaderLoader = () => (
+    <ActivityIndicator size="small" color={"#0580FF"} />
+  );
+  const imagesCallback = (callback) => {
+    navigation.setOptions({
+      headerRight: () => getHeaderLoader(),
+    });
+
+    callback
+      .then(async (photos) => {
+        const cPhotos = [];
+        for (let photo of photos) {
+          const pPhoto = await processImageAsync(photo.uri);
+          cPhotos.push({
+            uri: pPhoto.uri,
+            name: photo.filename,
+            type: "image/jpg",
+          });
+        }
+        navigation.navigate("Main", { photos: cPhotos });
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const processImageAsync = async (uri) => {
+    const file = await ImageManipulator.manipulateAsync(
+      uri,
+      [{ resize: { width: 1000 } }],
+      { compress: 0.8, format: ImageManipulator.SaveFormat.JPEG }
+    );
+    return file;
+  };
+  const renderDoneButton = (count, onSubmit) => {
+    if (!count) return null;
+    return (
+      <TouchableOpacity title={"Done"} onPress={onSubmit}>
+        <Text onPress={onSubmit}>Done</Text>
+      </TouchableOpacity>
+    );
+  };
+  const updateHandler = (count, onSubmit) => {
+    navigation.setOptions({
+      title: `Selected ${count} files`,
+      headerRight: () => renderDoneButton(count, onSubmit),
+    });
+  };
+  const renderSelectedComponent = (number) => (
+    <View style={styles.countBadge}>
+      <Text style={styles.countBadgeText}>{number}</Text>
+    </View>
   );
   return (
-    <Container>
-      <AssetsSelector
-        Settings={widgetSettings}
-        Errors={widgetErrors}
-        Styles={widgetStyles}
-        // Resize={widgetResize} // optional
-        // Navigator={widgetNavigator} // optional
-        // CustomNavigator={{
-        //   // optional
-        //   Component: CustomNavigator,
-        //   props: {
-        //     backFunction: true,
-        //     onSuccess,
-        //     text: T.ACTIONS.SELECT,
-        //   },
-        // }}
+    <View styles={{ flex: 1 }}>
+      <ImageBrowser
+        max={4}
+        onChange={updateHandler}
+        callback={imagesCallback}
+        renderSelectedComponent={renderSelectedComponent}
       />
-    </Container>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
+  container: {
+    position: "relative",
+  },
+  emptyStay: {
+    textAlign: "center",
+  },
+  countBadge: {
+    paddingHorizontal: 8.6,
+    paddingVertical: 5,
+    borderRadius: 50,
+    position: "absolute",
+    right: 3,
+    bottom: 3,
+    justifyContent: "center",
+    backgroundColor: "#0580FF",
+  },
+  countBadgeText: {
+    fontWeight: "bold",
+    alignSelf: "center",
+    padding: "auto",
+    color: "#ffffff",
+  },
+});

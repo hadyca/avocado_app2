@@ -217,7 +217,7 @@ function UserPost({
         ) : null}
       </HeaderContainer>
 
-      {file[0] ? (
+      {file.length > 0 ? (
         <ImgContainer onPress={goToPostDetail}>
           <MainImg
             resizeMode="cover"
