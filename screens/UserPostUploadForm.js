@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { TouchableOpacity, Image, ActivityIndicator } from "react-native";
+import { TouchableOpacity, Image, ActivityIndicator, View } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import AuthButton from "../components/auth/AuthButton";
 import { useNavigation } from "@react-navigation/native";
@@ -10,6 +10,8 @@ import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../colors";
 import * as ImagePicker from "expo-image-picker";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import InputScrollView from "react-native-input-scroll-view";
 
 const UPLOAD_USER_POST_MUTATION = gql`
   mutation uploadUserPost(
@@ -35,12 +37,12 @@ const UPLOAD_USER_POST_MUTATION = gql`
   }
 `;
 
-const Container = styled.View`
+const Container = styled.ScrollView`
   flex: 1;
   background-color: #ffffff;
 `;
 const ImageTop = styled.View`
-  margin: 10px;
+  margin: 10px 10px 0px 10px;
 `;
 
 const ImageScroll = styled.ScrollView`
@@ -69,11 +71,17 @@ const HeaderRightText = styled.Text`
   margin-right: 7px;
 `;
 
-const TextInput = styled.TextInput`
+const TitleInput = styled.TextInput`
   padding: 15px 7px;
   color: black;
   border-bottom-width: 1px;
   border-bottom-color: ${colors.borderThin};
+`;
+
+const ContentInput = styled.TextInput`
+  padding: 15px 7px;
+  color: black;
+  border: 1px blue solid;
 `;
 
 const ImageContainer = styled.View`
@@ -155,7 +163,6 @@ export default function UserPostUploadForm() {
   const onNext = (nextRef) => {
     nextRef?.current?.focus();
   };
-  console.log(photo, "photo어레이0");
 
   const onValid = async ({ title, content }) => {
     const fileUrl = await photo.map((_, index) => {
@@ -166,7 +173,6 @@ export default function UserPostUploadForm() {
       });
     });
 
-    console.log(fileUrl, "fileUrl어레이");
     if (!loading) {
       uploadUserPostMutation({
         variables: {
@@ -245,9 +251,10 @@ export default function UserPostUploadForm() {
           }}
           control={control}
           render={({ field: { onChange, value } }) => (
-            <TextInput
+            <TitleInput
               placeholder="Title"
               autoCapitalize="none"
+              multiline={false}
               returnKeyType="next"
               onSubmitEditing={() => onNext(contentRef)}
               onChangeText={(text) => onChange(text)}
@@ -262,10 +269,9 @@ export default function UserPostUploadForm() {
           }}
           control={control}
           render={({ field: { onChange, value } }) => (
-            <TextInput
+            <ContentInput
               ref={contentRef}
               multiline={true}
-              numberOfLines={4}
               placeholder="Content"
               autoCapitalize="none"
               onChangeText={(text) => onChange(text)}
