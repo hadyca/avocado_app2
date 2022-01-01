@@ -102,10 +102,7 @@ export default function UserPostUploadForm() {
   const [photo, setPhoto] = useState([]);
   const [countPhoto, setCountPhoto] = useState(0);
   const navigation = useNavigation();
-
-  const HeaderRightLoading = () => (
-    <ActivityIndicator size="small" color="black" style={{ marginRight: 10 }} />
-  );
+  const { control, handleSubmit } = useForm();
 
   const HeaderRight = () => (
     <TouchableOpacity
@@ -115,7 +112,9 @@ export default function UserPostUploadForm() {
       <HeaderRightText>Done</HeaderRightText>
     </TouchableOpacity>
   );
-
+  const HeaderRightLoading = () => (
+    <ActivityIndicator size="small" color="black" style={{ marginRight: 10 }} />
+  );
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
@@ -151,19 +150,13 @@ export default function UserPostUploadForm() {
     }
   );
 
-  const { control, handleSubmit } = useForm();
-
   const contentRef = useRef();
 
   const onNext = (nextRef) => {
     nextRef?.current?.focus();
   };
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: loading ? HeaderRightLoading : HeaderRight,
-      ...(loading && { headerLeft: () => null }),
-    });
-  }, [loading]);
+  console.log(photo, "photo어레이0");
+
   const onValid = async ({ title, content }) => {
     const fileUrl = await photo.map((_, index) => {
       return new ReactNativeFile({
@@ -173,6 +166,7 @@ export default function UserPostUploadForm() {
       });
     });
 
+    console.log(fileUrl, "fileUrl어레이");
     if (!loading) {
       uploadUserPostMutation({
         variables: {
@@ -183,24 +177,6 @@ export default function UserPostUploadForm() {
       });
     }
   };
-
-  // const onValid = async ({ title, content }) => {
-  //   const fileUrl = await photo.map((_, index) => {
-  //     return new ReactNativeFile({
-  //       uri: photo[index].uri,
-  //       name: "3.jpg",
-  //       type: "image/jpeg",
-  //     });
-  //   });
-
-  //   await uploadUserPostMutation({
-  //     variables: {
-  //       fileUrl,
-  //       title,
-  //       content,
-  //     },
-  //   });
-  // };
 
   const goToImageSelect = async () => {
     if (countPhoto < 5) {
@@ -214,8 +190,6 @@ export default function UserPostUploadForm() {
       if (!result.cancelled) {
         const photoObj = {
           uri: result.uri,
-          name: "1.jpg",
-          type: "image/jpeg",
         };
         setPhoto((photo) => [...photo, photoObj]);
         setCountPhoto(countPhoto + 1);
@@ -230,6 +204,13 @@ export default function UserPostUploadForm() {
     setPhoto(newPhoto);
     setCountPhoto(countPhoto - 1);
   };
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: loading ? HeaderRightLoading : HeaderRight,
+      ...(loading && { headerLeft: () => null }),
+    });
+  }, [photo, loading]);
 
   return (
     <Container>
