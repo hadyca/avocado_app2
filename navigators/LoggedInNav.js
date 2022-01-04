@@ -6,8 +6,8 @@ import EditUserPostForm from "../screens/EditUserPostForm";
 import UserPostListDetail from "../screens/UserPostListDetail";
 import EditUserPostCommentForm from "../screens/EditUserPostCommentForm";
 import Profile from "../screens/Profile";
-import SelectPhoto from "../screens/SelectPhoto";
 import { Ionicons } from "@expo/vector-icons";
+import PostCategory from "../screens/PostCategory";
 
 const Stack = createStackNavigator();
 
@@ -39,11 +39,18 @@ export default function LoggedInNav() {
         name="UserPostUploadForm"
         options={{
           headerBackTitleVisible: false,
-          headerBackImage: ({ tintColor }) => (
-            <Ionicons color={tintColor} name="close" size={28} />
-          ),
         }}
         component={UserPostUploadForm}
+      />
+      <Stack.Screen
+        name="PostCategory"
+        options={{
+          headerBackTitleVisible: false,
+          headerBackImage: () => (
+            <Ionicons color="black" name="close" size={28} />
+          ),
+        }}
+        component={PostCategory}
       />
       <Stack.Screen
         name="EditUserPostForm"
@@ -58,16 +65,6 @@ export default function LoggedInNav() {
           headerBackTitleVisible: false,
         }}
         component={EditUserPostCommentForm}
-      />
-      <Stack.Screen
-        name="SelectPhoto"
-        options={{
-          headerBackTitleVisible: false,
-          headerBackImage: ({ tintColor }) => (
-            <Ionicons color={tintColor} name="close" size={28} />
-          ),
-        }}
-        component={SelectPhoto}
       />
     </Stack.Navigator>
   );

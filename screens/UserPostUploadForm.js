@@ -1,6 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { Text, View, TouchableOpacity, Image, ScrollView } from "react-native";
+import {
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+  View,
+  Text,
+} from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import AuthButton from "../components/auth/AuthButton";
 import { useNavigation } from "@react-navigation/native";
@@ -16,8 +22,14 @@ const UPLOAD_USER_POST_MUTATION = gql`
     $fileUrl: [Upload]
     $title: String!
     $content: String!
+    $category: String!
   ) {
-    uploadUserPost(fileUrl: $fileUrl, title: $title, content: $content) {
+    uploadUserPost(
+      fileUrl: $fileUrl
+      title: $title
+      content: $content
+      category: $category
+    ) {
       id
       user {
         username
@@ -25,6 +37,7 @@ const UPLOAD_USER_POST_MUTATION = gql`
       }
       title
       content
+      category
       totalUserPostLikes
       createdAt
       isMine
@@ -35,15 +48,18 @@ const UPLOAD_USER_POST_MUTATION = gql`
   }
 `;
 
-const Container = styled.View`
+const Container = styled.ScrollView`
   flex: 1;
   background-color: #ffffff;
 `;
 const ImageTop = styled.View`
-  margin: 10px;
+  margin: 10px 10px 0px 10px;
 `;
 
-const ImageScroll = styled.ScrollView``;
+const ImageScroll = styled.ScrollView`
+  border-bottom-width: 1px;
+  border-bottom-color: ${colors.borderThin};
+`;
 const InputBottom = styled.View`
   margin: 0px 10px 10px 10px;
 `;
@@ -66,10 +82,19 @@ const HeaderRightText = styled.Text`
   margin-right: 7px;
 `;
 
-const TextInput = styled.TextInput`
-  background-color: #ffffff
+const TitleInput = styled.TextInput`
   padding: 15px 7px;
   color: black;
+  border-bottom-width: 1px;
+  border-bottom-color: ${colors.borderThin};
+`;
+
+const CategoryView = styled.TouchableOpacity``;
+
+const ContentInput = styled.TextInput`
+  padding: 15px 7px;
+  color: black;
+  border: 1px blue solid;
 `;
 
 const ImageContainer = styled.View`
@@ -97,18 +122,21 @@ const DeleteText = styled.Text`
 export default function UserPostUploadForm() {
   const [photo, setPhoto] = useState([]);
   const [countPhoto, setCountPhoto] = useState(0);
+  const [category, setCategory] = useState("");
   const navigation = useNavigation();
+  const { control, handleSubmit } = useForm();
 
   const HeaderRight = () => (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={handleSubmit(onValid)}
+      style={{ marginRight: 10 }}
+    >
       <HeaderRightText>Done</HeaderRightText>
     </TouchableOpacity>
   );
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: HeaderRight,
-    });
-  }, []);
+  const HeaderRightLoading = () => (
+    <ActivityIndicator size="small" color="black" style={{ marginRight: 10 }} />
+  );
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
@@ -144,8 +172,6 @@ export default function UserPostUploadForm() {
     }
   );
 
-  const { control, handleSubmit } = useForm();
-
   const contentRef = useRef();
 
   const onNext = (nextRef) => {
@@ -161,35 +187,17 @@ export default function UserPostUploadForm() {
       });
     });
 
-    console.log(fileUrl);
     if (!loading) {
       uploadUserPostMutation({
         variables: {
           fileUrl,
           title,
           content,
+          category,
         },
       });
     }
   };
-
-  // const onValid = async ({ title, content }) => {
-  //   const fileUrl = await photo.map((_, index) => {
-  //     return new ReactNativeFile({
-  //       uri: photo[index].uri,
-  //       name: "3.jpg",
-  //       type: "image/jpeg",
-  //     });
-  //   });
-
-  //   await uploadUserPostMutation({
-  //     variables: {
-  //       fileUrl,
-  //       title,
-  //       content,
-  //     },
-  //   });
-  // };
 
   const goToImageSelect = async () => {
     if (countPhoto < 5) {
@@ -203,8 +211,6 @@ export default function UserPostUploadForm() {
       if (!result.cancelled) {
         const photoObj = {
           uri: result.uri,
-          name: "1.jpg",
-          type: "image/jpeg",
         };
         setPhoto((photo) => [...photo, photoObj]);
         setCountPhoto(countPhoto + 1);
@@ -220,6 +226,15 @@ export default function UserPostUploadForm() {
     setCountPhoto(countPhoto - 1);
   };
 
+  const goToCategory = () => navigation.navigate("PostCategory");
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: loading ? HeaderRightLoading : HeaderRight,
+      ...(loading && { headerLeft: () => null }),
+    });
+  }, [photo, loading]);
+
   return (
     <Container>
       <ImageTop>
@@ -231,13 +246,12 @@ export default function UserPostUploadForm() {
           {photo.length > 0
             ? photo.map((item, index) => {
                 return (
-                  <ImageContainer>
+                  <ImageContainer key={index}>
                     <Image
-                      key={index + 10}
                       source={{ uri: item.uri }}
                       style={{ height: 60, width: 60 }}
                     />
-                    <DeleteBtn key={index} onPress={() => DeleteImg(index)}>
+                    <DeleteBtn onPress={() => DeleteImg(index)}>
                       <DeleteText>X</DeleteText>
                     </DeleteBtn>
                   </ImageContainer>
@@ -254,9 +268,10 @@ export default function UserPostUploadForm() {
           }}
           control={control}
           render={({ field: { onChange, value } }) => (
-            <TextInput
+            <TitleInput
               placeholder="Title"
               autoCapitalize="none"
+              multiline={false}
               returnKeyType="next"
               onSubmitEditing={() => onNext(contentRef)}
               onChangeText={(text) => onChange(text)}
@@ -264,6 +279,9 @@ export default function UserPostUploadForm() {
             />
           )}
         />
+        <CategoryView onPress={goToCategory}>
+          <Text>카테고리 선택</Text>
+        </CategoryView>
         <Controller
           name="content"
           rules={{
@@ -271,21 +289,15 @@ export default function UserPostUploadForm() {
           }}
           control={control}
           render={({ field: { onChange, value } }) => (
-            <TextInput
+            <ContentInput
               ref={contentRef}
               multiline={true}
-              numberOfLines={4}
               placeholder="Content"
               autoCapitalize="none"
               onChangeText={(text) => onChange(text)}
               value={value || ""}
             />
           )}
-        />
-        <AuthButton
-          text="완료"
-          loading={loading}
-          onPress={handleSubmit(onValid)}
         />
       </InputBottom>
     </Container>
