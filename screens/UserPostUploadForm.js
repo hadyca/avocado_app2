@@ -91,6 +91,13 @@ const TitleInput = styled.TextInput`
 
 const CategoryView = styled.TouchableOpacity``;
 
+const CategoryContainer = styled.View`
+  padding: 15px 7px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 const ContentInput = styled.TextInput`
   padding: 15px 7px;
   color: black;
@@ -119,7 +126,7 @@ const DeleteText = styled.Text`
   color: white;
 `;
 
-export default function UserPostUploadForm() {
+export default function UserPostUploadForm({ route }) {
   const [photo, setPhoto] = useState([]);
   const [countPhoto, setCountPhoto] = useState(0);
   const [category, setCategory] = useState("");
@@ -193,7 +200,7 @@ export default function UserPostUploadForm() {
           fileUrl,
           title,
           content,
-          category,
+          category: route?.params?.category,
         },
       });
     }
@@ -280,7 +287,27 @@ export default function UserPostUploadForm() {
           )}
         />
         <CategoryView onPress={goToCategory}>
-          <Text>카테고리 선택</Text>
+          {route?.params?.category ? (
+            <CategoryContainer>
+              <Text>{route.params.category}</Text>
+              <Ionicons
+                name="chevron-forward"
+                color="black"
+                size={17}
+                style={{ marginRight: 35 }}
+              />
+            </CategoryContainer>
+          ) : (
+            <CategoryContainer>
+              <Text>게시글의 주제를 정해주세요.</Text>
+              <Ionicons
+                name="chevron-forward"
+                color="black"
+                size={17}
+                style={{ marginRight: 35 }}
+              />
+            </CategoryContainer>
+          )}
         </CategoryView>
         <Controller
           name="content"

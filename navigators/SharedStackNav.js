@@ -9,7 +9,6 @@ import Me from "../screens/Me";
 import CompanyPostList from "../screens/CompanyPostList";
 import { colors } from "../colors";
 import Profile from "../screens/Profile";
-import UserPostListDetail from "../screens/UserPostListDetail";
 
 const Stack = createStackNavigator();
 
