@@ -129,7 +129,7 @@ const DeleteText = styled.Text`
 export default function UserPostUploadForm({ route }) {
   const [photo, setPhoto] = useState([]);
   const [countPhoto, setCountPhoto] = useState(0);
-  const [category, setCategory] = useState("");
+  // const [category, setCategory] = useState("");
   const navigation = useNavigation();
   const { control, handleSubmit } = useForm();
 
@@ -186,6 +186,7 @@ export default function UserPostUploadForm({ route }) {
   };
 
   const onValid = async ({ title, content }) => {
+    console.log(route?.params?.category, "카테고리명");
     const fileUrl = await photo.map((_, index) => {
       return new ReactNativeFile({
         uri: photo[index].uri,
