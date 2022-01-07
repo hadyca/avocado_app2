@@ -16,6 +16,7 @@ import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../colors";
 import * as ImagePicker from "expo-image-picker";
+import ContentInput from "../components/post/ContentInput";
 
 const UPLOAD_USER_POST_MUTATION = gql`
   mutation uploadUserPost(
@@ -89,19 +90,16 @@ const TitleInput = styled.TextInput`
   border-bottom-color: ${colors.borderThin};
 `;
 
-const CategoryView = styled.TouchableOpacity``;
+const CategoryView = styled.TouchableOpacity`
+  border-bottom-width: 1px;
+  border-bottom-color: ${colors.borderThin};
+`;
 
 const CategoryContainer = styled.View`
   padding: 15px 7px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-`;
-
-const ContentInput = styled.TextInput`
-  padding: 15px 7px;
-  color: black;
-  border: 1px blue solid;
 `;
 
 const ImageContainer = styled.View`
@@ -126,21 +124,34 @@ const DeleteText = styled.Text`
   color: white;
 `;
 
-export default function UserPostUploadForm({ route }) {
+export default function UserPostUploadForm({ route: { params } }) {
   const [photo, setPhoto] = useState([]);
   const [countPhoto, setCountPhoto] = useState(0);
-  // const [category, setCategory] = useState("");
   const navigation = useNavigation();
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit, formState } = useForm({
+    mode: "onChange",
+  });
 
-  const HeaderRight = () => (
+  const NoHeaderRight = () => (
     <TouchableOpacity
+      disabled={true}
       onPress={handleSubmit(onValid)}
-      style={{ marginRight: 10 }}
+      style={{ marginRight: 10, opacity: 0.5 }}
     >
       <HeaderRightText>Done</HeaderRightText>
     </TouchableOpacity>
   );
+
+  const OkHeaderRight = () => (
+    <TouchableOpacity
+      disabled={false}
+      onPress={handleSubmit(onValid)}
+      style={{ marginRight: 10, opacity: 1 }}
+    >
+      <HeaderRightText>Done</HeaderRightText>
+    </TouchableOpacity>
+  );
+
   const HeaderRightLoading = () => (
     <ActivityIndicator size="small" color="black" style={{ marginRight: 10 }} />
   );
@@ -179,14 +190,7 @@ export default function UserPostUploadForm({ route }) {
     }
   );
 
-  const contentRef = useRef();
-
-  const onNext = (nextRef) => {
-    nextRef?.current?.focus();
-  };
-
   const onValid = async ({ title, content }) => {
-    console.log(route?.params?.category, "카테고리명");
     const fileUrl = await photo.map((_, index) => {
       return new ReactNativeFile({
         uri: photo[index].uri,
@@ -194,14 +198,13 @@ export default function UserPostUploadForm({ route }) {
         type: "image/jpeg",
       });
     });
-
     if (!loading) {
       uploadUserPostMutation({
         variables: {
           fileUrl,
           title,
           content,
-          category: route?.params?.category,
+          category: params?.category,
         },
       });
     }
@@ -238,10 +241,14 @@ export default function UserPostUploadForm({ route }) {
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: loading ? HeaderRightLoading : HeaderRight,
+      headerRight: loading
+        ? HeaderRightLoading
+        : !formState.isValid || !params?.category
+        ? NoHeaderRight
+        : OkHeaderRight,
       ...(loading && { headerLeft: () => null }),
     });
-  }, [photo, loading]);
+  }, [photo, loading, params?.category, formState.isValid]);
 
   return (
     <Container>
@@ -272,7 +279,7 @@ export default function UserPostUploadForm({ route }) {
         <Controller
           name="title"
           rules={{
-            required: "title is required",
+            required: true,
           }}
           control={control}
           render={({ field: { onChange, value } }) => (
@@ -281,49 +288,37 @@ export default function UserPostUploadForm({ route }) {
               autoCapitalize="none"
               multiline={false}
               returnKeyType="next"
-              onSubmitEditing={() => onNext(contentRef)}
               onChangeText={(text) => onChange(text)}
               value={value}
             />
           )}
         />
         <CategoryView onPress={goToCategory}>
-          {route?.params?.category ? (
+          {params?.category ? (
             <CategoryContainer>
-              <Text>{route.params.category}</Text>
-              <Ionicons
-                name="chevron-forward"
-                color="black"
-                size={17}
-                style={{ marginRight: 35 }}
-              />
+              <Text>{params?.category}</Text>
+              <Ionicons name="chevron-forward" color="black" size={17} />
             </CategoryContainer>
           ) : (
             <CategoryContainer>
               <Text>게시글의 주제를 정해주세요.</Text>
-              <Ionicons
-                name="chevron-forward"
-                color="black"
-                size={17}
-                style={{ marginRight: 35 }}
-              />
+              <Ionicons name="chevron-forward" color="black" size={17} />
             </CategoryContainer>
           )}
         </CategoryView>
         <Controller
           name="content"
           rules={{
-            required: "content is required",
+            required: true,
           }}
           control={control}
           render={({ field: { onChange, value } }) => (
             <ContentInput
-              ref={contentRef}
               multiline={true}
-              placeholder="Content"
               autoCapitalize="none"
               onChangeText={(text) => onChange(text)}
               value={value || ""}
+              categoryName={params?.category}
             />
           )}
         />

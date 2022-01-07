@@ -4,6 +4,7 @@ import ScreenLayout from "../components/ScreenLayout";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { colors } from "../colors";
+import { categories } from "../constant";
 
 const Container = styled.View``;
 
@@ -17,17 +18,6 @@ const CategoryView2 = styled.TouchableOpacity`
 `;
 
 const CategoryText = styled.Text``;
-const categories = [
-  "일/직업",
-  "질문",
-  "피부 미용",
-  "출산/육아",
-  "동네 정보",
-  "연애/결혼",
-  "요리/음식",
-  "일상",
-  "일반/기타",
-];
 
 export default function PostCategory() {
   const navigation = useNavigation();

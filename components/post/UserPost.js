@@ -57,7 +57,7 @@ const Content = styled.View`
   font-size: 14px;
   margin-top: 5px;
   flex-direction: row;
-  align-items: flex-end;
+  align-items: center;
 `;
 
 const ContentText = styled.Text`
