@@ -8,6 +8,7 @@ import EditUserPostCommentForm from "../screens/EditUserPostCommentForm";
 import Profile from "../screens/Profile";
 import { Ionicons } from "@expo/vector-icons";
 import PostCategory from "../screens/PostCategory";
+import EditPostCategory from "../screens/EditPostCategory";
 import General from "../screens/userCommunity/General";
 import Job from "../screens/userCommunity/Job";
 import Neighborhood from "../screens/userCommunity/Neighborhood";
@@ -57,6 +58,13 @@ export default function LoggedInNav() {
           headerBackTitleVisible: false,
         }}
         component={PostCategory}
+      />
+      <Stack.Screen
+        name="EditPostCategory"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={EditPostCategory}
       />
       <Stack.Screen
         name="EditUserPostForm"

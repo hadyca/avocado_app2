@@ -17,6 +17,7 @@ const POST_QUERY = gql`
       }
       title
       content
+      category
       totalUserPostLikes
       totalUserPostComments
       createdAt

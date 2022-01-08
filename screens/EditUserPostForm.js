@@ -1,6 +1,5 @@
-import React, { useRef, useState } from "react";
-import { View, Image } from "react-native";
-
+import React, { useEffect, useState } from "react";
+import { View, Image, Text } from "react-native";
 import { gql, useMutation } from "@apollo/client";
 import { useForm, Controller } from "react-hook-form";
 import AuthButton from "../components/auth/AuthButton";
@@ -12,6 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { colors } from "../colors";
 import * as ImagePicker from "expo-image-picker";
+import ContentInput from "../components/post/ContentInput";
 
 const EDIT_USERPOST_MUTATION = gql`
   mutation editUserPost(
@@ -19,12 +19,14 @@ const EDIT_USERPOST_MUTATION = gql`
     $fileUrl: [Upload]
     $title: String!
     $content: String!
+    $category: String!
   ) {
     editUserPost(
       userPostId: $userPostId
       fileUrl: $fileUrl
       title: $title
       content: $content
+      category: $category
     ) {
       ok
       error
@@ -32,15 +34,18 @@ const EDIT_USERPOST_MUTATION = gql`
   }
 `;
 
-const Container = styled.View`
+const Container = styled.ScrollView`
   flex: 1;
   background-color: #ffffff;
 `;
 const ImageTop = styled.View`
-  margin: 10px;
+  margin: 10px 10px 0px 10px;
 `;
 
-const ImageScroll = styled.ScrollView``;
+const ImageScroll = styled.ScrollView`
+  border-bottom-width: 1px;
+  border-bottom-color: ${colors.borderThin};
+`;
 const InputBottom = styled.View`
   margin: 0px 10px 10px 10px;
 `;
@@ -63,10 +68,23 @@ const HeaderRightText = styled.Text`
   margin-right: 7px;
 `;
 
-const TextInput = styled.TextInput`
-  background-color: #ffffff
+const TitleInput = styled.TextInput`
   padding: 15px 7px;
   color: black;
+  border-bottom-width: 1px;
+  border-bottom-color: ${colors.borderThin};
+`;
+
+const CategoryView = styled.TouchableOpacity`
+  border-bottom-width: 1px;
+  border-bottom-color: ${colors.borderThin};
+`;
+
+const CategoryContainer = styled.View`
+  padding: 15px 7px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const ImageContainer = styled.View`
@@ -93,6 +111,10 @@ const DeleteText = styled.Text`
 
 export default function EditUserPostForm({ route: { params } }) {
   const [photo, setPhoto] = useState([]);
+  const [form, setForm] = useState({
+    title: "",
+    content: "",
+  });
   const [countPhoto, setCountPhoto] = useState(0);
   const navigation = useNavigation();
   const { control, handleSubmit, getValues } = useForm({
@@ -101,6 +123,7 @@ export default function EditUserPostForm({ route: { params } }) {
       content: params.content,
     },
   });
+
   const updateEditUserPost = (cache, result) => {
     const { title, content } = getValues();
     const {
@@ -110,6 +133,7 @@ export default function EditUserPostForm({ route: { params } }) {
     } = result;
     if (ok) {
       const UserPostId = `UserPost:${params.id}`;
+
       cache.modify({
         id: UserPostId,
         fields: {
@@ -118,6 +142,12 @@ export default function EditUserPostForm({ route: { params } }) {
           },
           content() {
             return content;
+          },
+          category() {
+            return params.category;
+          },
+          file() {
+            return photo[0]?.fileUrl;
           },
         },
       });
@@ -131,23 +161,23 @@ export default function EditUserPostForm({ route: { params } }) {
       update: updateEditUserPost,
     }
   );
-
-  const contentRef = useRef();
-
-  const onValid = ({ title, content }) => {
-    let fileUrl = null;
-    // const fileUrl = new ReactNativeFile({
-    //   uri: "https://images.unsplash.com/photo-1632766984155-d42dd9affe85?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-    //   name: `1.jpg`,
-    //   type: "image/jpeg",
-    // });
+  const onValid = async ({ title, content }) => {
+    const editedFileUrl = await photo.map((_, index) => {
+      return new ReactNativeFile({
+        uri: photo[index].fileUrl,
+        name: `${index}.jpg`,
+        type: "image/jpeg",
+      });
+    });
     if (!loading) {
+      console.log(editedFileUrl);
       editUserPostMutation({
         variables: {
           userPostId: parseInt(params.id),
-          fileUrl,
+          fileUrl: editedFileUrl,
           title,
           content,
+          category: params?.category,
         },
       });
     }
@@ -163,9 +193,7 @@ export default function EditUserPostForm({ route: { params } }) {
 
       if (!result.cancelled) {
         const photoObj = {
-          uri: result.uri,
-          name: "1.jpg",
-          type: "image/jpeg",
+          fileUrl: result.uri,
         };
         setPhoto((photo) => [...photo, photoObj]);
         setCountPhoto(countPhoto + 1);
@@ -174,6 +202,27 @@ export default function EditUserPostForm({ route: { params } }) {
       return null;
     }
   };
+
+  const DeleteImg = (index) => {
+    const newPhoto = photo.filter((_, i) => i !== index);
+    setPhoto(newPhoto);
+    setCountPhoto(countPhoto - 1);
+  };
+
+  useEffect(() => {
+    if (params?.file?.length > 0) {
+      setPhoto(params?.file);
+      setCountPhoto(params?.file?.length);
+    }
+  }, []);
+
+  useEffect(() => {
+    setForm({ title: params.title, content: params.content });
+  }, []);
+
+  const goToCategory = () =>
+    navigation.navigate("EditPostCategory", { id: params.id });
+
   return (
     <Container>
       <ImageTop>
@@ -182,16 +231,15 @@ export default function EditUserPostForm({ route: { params } }) {
             <Ionicons name={"camera"} color={"#868B94"} size={30} />
             <CameraText>{`${countPhoto} / 5`}</CameraText>
           </ImagePick>
-          {params.file.length > 0
-            ? params.file.map((item, index) => {
+          {photo?.length > 0
+            ? photo.map((item, index) => {
                 return (
-                  <ImageContainer>
+                  <ImageContainer key={index}>
                     <Image
-                      key={index + 10}
                       source={{ uri: item.fileUrl }}
                       style={{ height: 60, width: 60 }}
                     />
-                    <DeleteBtn key={index} onPress={() => DeleteImg(index)}>
+                    <DeleteBtn onPress={() => DeleteImg(index)}>
                       <DeleteText>X</DeleteText>
                     </DeleteBtn>
                   </ImageContainer>
@@ -204,38 +252,43 @@ export default function EditUserPostForm({ route: { params } }) {
         <Controller
           name="title"
           rules={{
-            required: "title is required",
+            required: true,
           }}
           control={control}
           render={({ field: { onChange, value } }) => (
-            <TextInput
+            <TitleInput
               placeholder="Title"
               autoCapitalize="none"
+              multiline={false}
               returnKeyType="next"
-              onSubmitEditing={() => onNext(contentRef)}
               onChangeText={(text) => onChange(text)}
               value={value}
             />
           )}
         />
+        <CategoryView onPress={goToCategory}>
+          <CategoryContainer>
+            <Text>{params.category}</Text>
+            <Ionicons name="chevron-forward" color="black" size={17} />
+          </CategoryContainer>
+        </CategoryView>
         <Controller
           name="content"
           rules={{
-            required: "content is required",
+            required: true,
           }}
           control={control}
           render={({ field: { onChange, value } }) => (
-            <TextInput
-              ref={contentRef}
+            <ContentInput
               multiline={true}
-              numberOfLines={4}
-              placeholder="Content"
               autoCapitalize="none"
               onChangeText={(text) => onChange(text)}
               value={value || ""}
+              categoryName={params?.category}
             />
           )}
         />
+
         <AuthButton
           text="완료"
           loading={loading}

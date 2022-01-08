@@ -108,6 +108,7 @@ function UserPost({
   file,
   title,
   content,
+  category,
   totalUserPostLikes,
   totalUserPostComments,
   createdAt,
@@ -173,6 +174,7 @@ function UserPost({
       id,
       title,
       content,
+      category,
       file,
     });
   };
@@ -228,6 +230,7 @@ function UserPost({
         </ImgContainer>
       ) : null}
       <Contents onPress={goToPostDetail}>
+        <Title>{category}</Title>
         <Title>{title}</Title>
         {content.length >= 20 ? (
           <Content>
