@@ -51,6 +51,7 @@ export default function PostContents({
   avatar,
   title,
   content,
+  category,
   toggleUserPostLike,
   likeLoading,
   isLiked,
@@ -69,6 +70,7 @@ export default function PostContents({
       {file !== 0 ? <ImageSlider data={data} /> : null}
       <Container>
         <Header onPress={goToProfile}>
+          <Title>{category}</Title>
           <UserAvatar username={username} uri={avatar} />
         </Header>
         <Separator />

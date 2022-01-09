@@ -9,3 +9,15 @@ export const categories = [
   "일상",
   "일반/기타",
 ];
+
+export const categoriesScreen = [
+  "Job",
+  "Question",
+  "Beauty",
+  "ChildCare",
+  "Neighborhood",
+  "Love",
+  "Food",
+  "DailyLife",
+  "General",
+];

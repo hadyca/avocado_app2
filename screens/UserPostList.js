@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { gql, useQuery } from "@apollo/client";
-import { FlatList, ActivityIndicator } from "react-native";
+import { FlatList, ActivityIndicator, Text } from "react-native";
 import ScreenLayout from "../components/ScreenLayout";
 import UserPost from "../components/post/UserPost";
 import { useNavigation } from "@react-navigation/native";
 import PostFormButton from "../components/post/PostFormButton";
 import styled from "styled-components/native";
+import { ScrollView } from "react-native-gesture-handler";
+import { categories } from "../constant";
+import { categoriesScreen } from "../constant";
 
 const POST_QUERY = gql`
   query seeAllUserPosts($offset: Int!) {
@@ -30,6 +33,10 @@ const POST_QUERY = gql`
   }
 `;
 
+const CategoryView = styled.TouchableOpacity`
+  margin: 10px;
+`;
+const CategoryText = styled.Text``;
 const FetchView = styled.View`
   bottom: 30px;
 `;
@@ -76,8 +83,24 @@ export default function UserPostList() {
     }
   };
 
+  const goToCategoryScreen = (index) => {
+    navigation.navigate(categoriesScreen[index]);
+  };
+
   return (
     <ScreenLayout loading={loading}>
+      <ScrollView
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        style={{ backgroundColor: "grey" }}
+      >
+        {categories.map((item, index) => (
+          <CategoryView key={index} onPress={() => goToCategoryScreen(index)}>
+            <CategoryText>{item}</CategoryText>
+          </CategoryView>
+        ))}
+      </ScrollView>
+
       <FlatList
         onEndReachedThreshold={0.05}
         onEndReached={handleFetch}

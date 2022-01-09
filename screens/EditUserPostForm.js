@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Image, Text } from "react-native";
+import { Image, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import { gql, useMutation } from "@apollo/client";
 import { useForm, Controller } from "react-hook-form";
-import AuthButton from "../components/auth/AuthButton";
 import { useNavigation } from "@react-navigation/native";
 import { ReactNativeFile } from "apollo-upload-client";
-import DismissKeyboard from "../components/DismissKeyBoard";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
-
 import { colors } from "../colors";
 import * as ImagePicker from "expo-image-picker";
 import ContentInput from "../components/post/ContentInput";
@@ -111,17 +108,14 @@ const DeleteText = styled.Text`
 
 export default function EditUserPostForm({ route: { params } }) {
   const [photo, setPhoto] = useState([]);
-  const [form, setForm] = useState({
-    title: "",
-    content: "",
-  });
   const [countPhoto, setCountPhoto] = useState(0);
   const navigation = useNavigation();
-  const { control, handleSubmit, getValues } = useForm({
+  const { control, handleSubmit, getValues, formState } = useForm({
     defaultValues: {
       title: params.title,
       content: params.content,
     },
+    mode: "onChange",
   });
 
   const updateEditUserPost = (cache, result) => {
@@ -170,7 +164,6 @@ export default function EditUserPostForm({ route: { params } }) {
       });
     });
     if (!loading) {
-      console.log(editedFileUrl);
       editUserPostMutation({
         variables: {
           userPostId: parseInt(params.id),
@@ -216,12 +209,40 @@ export default function EditUserPostForm({ route: { params } }) {
     }
   }, []);
 
-  useEffect(() => {
-    setForm({ title: params.title, content: params.content });
-  }, []);
-
   const goToCategory = () =>
     navigation.navigate("EditPostCategory", { id: params.id });
+  const NoHeaderRight = () => (
+    <TouchableOpacity
+      disabled={true}
+      onPress={handleSubmit(onValid)}
+      style={{ marginRight: 10, opacity: 0.5 }}
+    >
+      <HeaderRightText>Done</HeaderRightText>
+    </TouchableOpacity>
+  );
+
+  const OkHeaderRight = () => (
+    <TouchableOpacity
+      disabled={false}
+      onPress={handleSubmit(onValid)}
+      style={{ marginRight: 10, opacity: 1 }}
+    >
+      <HeaderRightText>Done</HeaderRightText>
+    </TouchableOpacity>
+  );
+  const HeaderRightLoading = () => (
+    <ActivityIndicator size="small" color="black" style={{ marginRight: 10 }} />
+  );
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: loading
+        ? HeaderRightLoading
+        : !formState.isValid || !params?.category
+        ? NoHeaderRight
+        : OkHeaderRight,
+      ...(loading && { headerLeft: () => null }),
+    });
+  }, [photo, loading, params?.category, formState.isValid]);
 
   return (
     <Container>
@@ -287,12 +308,6 @@ export default function EditUserPostForm({ route: { params } }) {
               categoryName={params?.category}
             />
           )}
-        />
-
-        <AuthButton
-          text="완료"
-          loading={loading}
-          onPress={handleSubmit(onValid)}
         />
       </InputBottom>
     </Container>

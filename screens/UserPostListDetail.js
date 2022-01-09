@@ -24,6 +24,7 @@ const POST_DETAIL_QUERY = gql`
       }
       title
       content
+      category
       file {
         fileUrl
       }
@@ -179,6 +180,7 @@ export default function UserPostListDetail({ route: { params } }) {
                 avatar={params.avatar}
                 title={data?.seeUserPost?.title}
                 content={data?.seeUserPost?.content}
+                category={data?.seeUserPost?.category}
                 likeLoading={likeLoading}
                 toggleUserPostLike={toggleUserPostLike}
                 isLiked={data?.seeUserPost?.isLiked}
@@ -199,6 +201,7 @@ export default function UserPostListDetail({ route: { params } }) {
             avatar={params.avatar}
             title={data?.seeUserPost?.title}
             content={data?.seeUserPost?.content}
+            category={data?.seeUserPost?.category}
             likeLoading={likeLoading}
             toggleUserPostLike={toggleUserPostLike}
             isLiked={data?.seeUserPost?.isLiked}
