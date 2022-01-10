@@ -1,5 +1,4 @@
 import React from "react";
-import { Text } from "react-native";
 import ScreenLayout from "../components/ScreenLayout";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
@@ -20,9 +19,9 @@ const CategoryView2 = styled.TouchableOpacity`
 const CategoryText = styled.Text``;
 
 export default function PostCategory() {
-  const navigation2 = useNavigation();
+  const navigation = useNavigation();
   const selectCategory = (item) => {
-    navigation2.navigate("UserPostUploadForm", {
+    navigation.navigate("UserPostUploadForm", {
       category: item,
     });
   };

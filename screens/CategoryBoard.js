@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { gql, useQuery } from "@apollo/client";
-import { FlatList, ActivityIndicator, Text } from "react-native";
+import {
+  FlatList,
+  ActivityIndicator,
+  useWindowDimensions,
+  Text,
+} from "react-native";
 import ScreenLayout from "../components/ScreenLayout";
-import UserPost from "../components/post/UserPost";
 import { useNavigation } from "@react-navigation/native";
-import PostFormButton from "../components/post/PostFormButton";
 import styled from "styled-components/native";
-import { ScrollView } from "react-native-gesture-handler";
-import { categories } from "../constant";
-import { categoriesScreen } from "../constant";
+import CategoryUserPost from "../components/post/CategoryUserPost";
 
-const POST_QUERY = gql`
-  query seeAllUserPosts($offset: Int!) {
-    seeAllUserPosts(offset: $offset) {
+const CATEGORY_BOARD_QUERY = gql`
+  query seeUserCategoryPost($category: String!, $offset: Int!) {
+    seeUserCategoryPost(category: $category, offset: $offset) {
       id
       user {
         username
@@ -32,32 +33,36 @@ const POST_QUERY = gql`
     }
   }
 `;
+const ImgContainer = styled.View``;
 
-const CategoryView = styled.TouchableOpacity`
-  margin: 10px;
+const MainImg = styled.Image`
+  margin-top: 5px;
+  width: ${(props) => props.width}px;
+  height: ${(props) => Math.ceil(props.height / 3)}px;
 `;
+
+const CategoryLink = styled.TouchableOpacity``;
 const CategoryText = styled.Text``;
+
 const FetchView = styled.View`
   bottom: 30px;
 `;
 
-export default function UserPostList() {
+export default function CategoryBoard({ route: { params } }) {
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
-  const { data, loading, refetch, fetchMore } = useQuery(POST_QUERY, {
+  const { data, loading, refetch, fetchMore } = useQuery(CATEGORY_BOARD_QUERY, {
     variables: {
+      category: params?.category,
       offset: 0,
     },
   });
-
-  const goToUserPostForm = () => {
-    return navigation.navigate("UserPostUploadForm");
-  };
+  const { width, height } = useWindowDimensions();
 
   const renderPost = ({ item }) => {
     if (item.deleted === false) {
-      return <UserPost {...item} />;
+      return <CategoryUserPost {...item} />;
     } else {
       return null;
     }
@@ -76,41 +81,47 @@ export default function UserPostList() {
       setFetchLoading(true);
       await fetchMore({
         variables: {
-          offset: data?.seeAllUserPosts?.length,
+          offset: data?.seeUserCategoryPost?.length,
         },
       });
       setFetchLoading(false);
     }
   };
 
-  const goToCategoryScreen = (item) => {
-    navigation.navigate("CategoryBoard", {
-      category: item,
+  const goToUserPostForm = () => {
+    return navigation.navigate("UserPostUploadForm", {
+      category: params?.category,
     });
   };
 
   return (
     <ScreenLayout loading={loading}>
-      <ScrollView
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        style={{ backgroundColor: "grey" }}
-      >
-        {categories.map((item, index) => (
-          <CategoryView key={index} onPress={() => goToCategoryScreen(item)}>
-            <CategoryText>{item}</CategoryText>
-          </CategoryView>
-        ))}
-      </ScrollView>
-
       <FlatList
+        ListHeaderComponent={
+          <>
+            <ImgContainer>
+              <MainImg
+                resizeMode="cover"
+                source={{
+                  uri: "https://images.unsplash.com/photo-1641729297455-bf88ac511bc3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzOXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60",
+                }}
+                width={width}
+                height={height}
+              />
+            </ImgContainer>
+            <Text>{params?.category}</Text>
+            <CategoryLink onPress={goToUserPostForm}>
+              <CategoryText>이 주제로 글 쓰러 가기</CategoryText>
+            </CategoryLink>
+          </>
+        }
         onEndReachedThreshold={0.05}
         onEndReached={handleFetch}
         refreshing={refreshing}
         onRefresh={refresh}
         style={{ width: "100%" }}
         showsVerticalScrollIndicator={false}
-        data={data?.seeAllUserPosts}
+        data={data?.seeUserCategoryPost}
         keyExtractor={(post) => "" + post.id}
         renderItem={renderPost}
       />
@@ -119,7 +130,6 @@ export default function UserPostList() {
           <ActivityIndicator color="black" />
         </FetchView>
       ) : null}
-      <PostFormButton onPress={goToUserPostForm} />
     </ScreenLayout>
   );
 }

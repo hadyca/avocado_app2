@@ -8,7 +8,6 @@ const SContentInput = styled.TextInput`
 `;
 
 export default function ContentInput({
-  ref,
   multiline,
   autoCapitalize,
   onChangeText,
