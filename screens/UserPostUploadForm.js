@@ -178,7 +178,7 @@ export default function UserPostUploadForm({ route: { params } }) {
             return [uploadUserPost, ...prev];
           },
           seeUserCategoryPost(prev) {
-            return console.log(prev, "프리브");
+            return console.log(_, prev);
           },
         },
       });
