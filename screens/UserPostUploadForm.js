@@ -8,10 +8,9 @@ import {
   Text,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-import AuthButton from "../components/auth/AuthButton";
 import { useNavigation } from "@react-navigation/native";
 import { ReactNativeFile } from "apollo-upload-client";
-import DismissKeyboard from "../components/DismissKeyBoard";
+
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../colors";
@@ -176,9 +175,6 @@ export default function UserPostUploadForm({ route: { params } }) {
         fields: {
           seeAllUserPosts(prev) {
             return [uploadUserPost, ...prev];
-          },
-          seeUserCategoryPost(prev) {
-            return console.log(_, prev);
           },
         },
       });
