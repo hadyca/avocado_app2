@@ -179,7 +179,7 @@ export default function UserPostUploadForm({ route: { params } }) {
         },
       });
     }
-    navigation.navigate("UserPostList");
+    navigation.navigate("UserPostListDetail", { id: uploadUserPost.id });
   };
 
   const [uploadUserPostMutation, { loading }] = useMutation(

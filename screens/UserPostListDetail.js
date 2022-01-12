@@ -5,6 +5,8 @@ import {
   Platform,
   FlatList,
   NativeModules,
+  TouchableOpacity,
+  Text,
 } from "react-native";
 import ScreenLayout from "../components/ScreenLayout";
 import styled from "styled-components/native";
@@ -12,6 +14,7 @@ import { colors } from "../colors";
 import CommentForm from "../components/post/CommentForm";
 import PostContents from "../components/post/PostContents";
 import UserPostComment from "../components/post/UserPostComment";
+import { useNavigation } from "@react-navigation/native";
 
 const POST_DETAIL_QUERY = gql`
   query seeUserPost($userPostId: Int!) {
@@ -85,6 +88,8 @@ const NoComment = styled.Text`
 `;
 
 export default function UserPostListDetail({ route: { params } }) {
+  const navigation = useNavigation();
+
   const { StatusBarManager } = NativeModules;
   useEffect(() => {
     Platform.OS == "ios"
@@ -166,6 +171,20 @@ export default function UserPostListDetail({ route: { params } }) {
 
   const deletedComment = commentData?.seeUserPostComments.every(validComment);
 
+  const headerLeft = () => (
+    <TouchableOpacity
+      onPress={() => console.log("hi")}
+      style={{ marginLeft: 10, opacity: 1 }}
+    >
+      <Text>뒤로가기</Text>
+    </TouchableOpacity>
+  );
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerLeft,
+    });
+  }, []);
   return (
     <ScreenLayout loading={loading}>
       {commentData?.seeUserPostComments.length > 0 && !deletedComment ? (
