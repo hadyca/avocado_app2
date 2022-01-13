@@ -15,6 +15,7 @@ import CommentForm from "../components/post/CommentForm";
 import PostContents from "../components/post/PostContents";
 import UserPostComment from "../components/post/UserPostComment";
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 
 const POST_DETAIL_QUERY = gql`
   query seeUserPost($userPostId: Int!) {
@@ -76,6 +77,8 @@ const TOGGLE_USERPOST_LIKE_MUTATION = gql`
   }
 `;
 
+const IconView = styled.TouchableOpacity``;
+
 const PostContainer = styled.View`
   flex: 1;
 `;
@@ -88,6 +91,9 @@ const NoComment = styled.Text`
 `;
 
 export default function UserPostListDetail({ route: { params } }) {
+  const [refreshing, setRefreshing] = useState(false);
+  const [statusBarHeight, setStatusBarHeight] = useState(0);
+
   const navigation = useNavigation();
 
   const { StatusBarManager } = NativeModules;
@@ -98,9 +104,8 @@ export default function UserPostListDetail({ route: { params } }) {
         })
       : null;
   }, []);
-  const [statusBarHeight, setStatusBarHeight] = useState(0);
 
-  const { data, loading, fetchMore } = useQuery(POST_DETAIL_QUERY, {
+  const { data, loading, fetchMore, refetch } = useQuery(POST_DETAIL_QUERY, {
     variables: {
       userPostId: parseInt(params.id),
     },
@@ -109,7 +114,7 @@ export default function UserPostListDetail({ route: { params } }) {
   const {
     data: commentData,
     loading: commentLoading,
-    refetch,
+    refetch: commentRefetch,
   } = useQuery(COMMENTS_QUERY, {
     variables: {
       userPostId: parseInt(params.id),
@@ -171,20 +176,52 @@ export default function UserPostListDetail({ route: { params } }) {
 
   const deletedComment = commentData?.seeUserPostComments.every(validComment);
 
-  const headerLeft = () => (
-    <TouchableOpacity
-      onPress={() => console.log("hi")}
-      style={{ marginLeft: 10, opacity: 1 }}
+  const headerLeftUserPostList = () => (
+    <IconView
+      onPress={() => navigation.navigate("UserPostList")}
+      stlye={{ marginLeft: 10 }}
     >
-      <Text>뒤로가기</Text>
-    </TouchableOpacity>
+      <Ionicons name="chevron-back-outline" color="black" size={30} />
+    </IconView>
+  );
+
+  const headerLeftCategory = () => (
+    <IconView
+      onPress={() =>
+        navigation.navigate("CategoryBoard", {
+          category: data?.seeUserPost?.category,
+        })
+      }
+      stlye={{ marginLeft: 10 }}
+    >
+      <Ionicons name="chevron-back-outline" color="black" size={30} />
+    </IconView>
+  );
+
+  const headerLeft = () => (
+    <IconView onPress={() => navigation.pop()} stlye={{ marginLeft: 10 }}>
+      <Ionicons name="chevron-back-outline" color="black" size={30} />
+    </IconView>
   );
 
   useEffect(() => {
     navigation.setOptions({
-      headerLeft,
+      headerLeft:
+        params?.fromWhere === "CategoryBoard"
+          ? headerLeftCategory
+          : params?.fromWhere === "UserPostList"
+          ? headerLeftUserPostList
+          : headerLeft,
     });
-  }, []);
+  }, [params?.screenName, data]);
+
+  const refresh = async () => {
+    setRefreshing(true);
+    await refetch();
+    await commentRefetch();
+    setRefreshing(false);
+  };
+
   return (
     <ScreenLayout loading={loading}>
       {commentData?.seeUserPostComments.length > 0 && !deletedComment ? (
@@ -205,6 +242,8 @@ export default function UserPostListDetail({ route: { params } }) {
                 isLiked={data?.seeUserPost?.isLiked}
               />
             }
+            refreshing={refreshing}
+            onRefresh={refresh}
             showsVerticalScrollIndicator={true}
             data={commentData?.seeUserPostComments}
             keyExtractor={(item) => "" + item.id}
@@ -212,23 +251,55 @@ export default function UserPostListDetail({ route: { params } }) {
           />
         </PostContainer>
       ) : (
-        <NoCommentContainer>
-          <PostContents
-            file={data?.seeUserPost?.file.length}
-            data={data}
-            username={params.username}
-            avatar={params.avatar}
-            title={data?.seeUserPost?.title}
-            content={data?.seeUserPost?.content}
-            category={data?.seeUserPost?.category}
-            likeLoading={likeLoading}
-            toggleUserPostLike={toggleUserPostLike}
-            isLiked={data?.seeUserPost?.isLiked}
+        <PostContainer>
+          <FlatList
+            ListHeaderComponent={
+              <PostContents
+                file={data?.seeUserPost?.file.length}
+                data={data}
+                userId={data?.userId}
+                username={params.username}
+                avatar={params.avatar}
+                title={data?.seeUserPost?.title}
+                content={data?.seeUserPost?.content}
+                category={data?.seeUserPost?.category}
+                likeLoading={likeLoading}
+                toggleUserPostLike={toggleUserPostLike}
+                isLiked={data?.seeUserPost?.isLiked}
+              />
+            }
+            ListFooterComponent={
+              <NoCommentView>
+                <NoComment>
+                  There is no comment. Please write a comment.
+                </NoComment>
+              </NoCommentView>
+            }
+            refreshing={refreshing}
+            onRefresh={refresh}
+            showsVerticalScrollIndicator={true}
+            data={commentData?.seeUserPostComments}
+            keyExtractor={(item) => "" + item.id}
+            renderItem={renderComment}
           />
-          <NoCommentView>
-            <NoComment>There is no comment. Please write a comment.</NoComment>
-          </NoCommentView>
-        </NoCommentContainer>
+        </PostContainer>
+        // <NoCommentContainer>
+        //   <PostContents
+        //     file={data?.seeUserPost?.file.length}
+        //     data={data}
+        //     username={params.username}
+        //     avatar={params.avatar}
+        //     title={data?.seeUserPost?.title}
+        //     content={data?.seeUserPost?.content}
+        //     category={data?.seeUserPost?.category}
+        //     likeLoading={likeLoading}
+        //     toggleUserPostLike={toggleUserPostLike}
+        //     isLiked={data?.seeUserPost?.isLiked}
+        //   />
+        // <NoCommentView>
+        //   <NoComment>There is no comment. Please write a comment.</NoComment>
+        // </NoCommentView>
+        // </NoCommentContainer>
       )}
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -237,7 +308,7 @@ export default function UserPostListDetail({ route: { params } }) {
       >
         <CommentForm
           userPostId={parseInt(params.id)}
-          refetch={refetch}
+          refetch={commentRefetch}
           commentLoading={commentLoading}
         />
       </KeyboardAvoidingView>

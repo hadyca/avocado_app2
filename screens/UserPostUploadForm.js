@@ -126,6 +126,7 @@ const DeleteText = styled.Text`
 export default function UserPostUploadForm({ route: { params } }) {
   const [photo, setPhoto] = useState([]);
   const [countPhoto, setCountPhoto] = useState(0);
+  const [screenName, setScreenName] = useState("");
   const navigation = useNavigation();
   const { control, handleSubmit, formState } = useForm({
     mode: "onChange",
@@ -165,6 +166,7 @@ export default function UserPostUploadForm({ route: { params } }) {
       }
     })();
   }, []);
+
   const updateUploadUserPost = (cache, result) => {
     const {
       data: { uploadUserPost },
@@ -179,7 +181,11 @@ export default function UserPostUploadForm({ route: { params } }) {
         },
       });
     }
-    navigation.navigate("UserPostListDetail", { id: uploadUserPost.id });
+
+    navigation.navigate("UserPostListDetail", {
+      id: uploadUserPost.id,
+      fromWhere: screenName,
+    });
   };
 
   const [uploadUserPostMutation, { loading }] = useMutation(
@@ -248,6 +254,12 @@ export default function UserPostUploadForm({ route: { params } }) {
       ...(loading && { headerLeft: () => null }),
     });
   }, [photo, loading, params?.category, formState.isValid]);
+
+  useEffect(() => {
+    if (params?.screenName) {
+      setScreenName(params?.screenName);
+    }
+  }, []);
 
   return (
     <Container>

@@ -49,7 +49,6 @@ const FetchView = styled.View`
 `;
 
 export default function CategoryBoard({ route: { params } }) {
-  console.log(params);
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
@@ -92,6 +91,7 @@ export default function CategoryBoard({ route: { params } }) {
   const goToUserPostForm = () => {
     return navigation.navigate("UserPostUploadForm", {
       category: params?.category,
+      screenName: "CategoryBoard",
     });
   };
 

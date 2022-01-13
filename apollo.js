@@ -33,7 +33,7 @@ export const logUserOut = async () => {
 // for simulator
 
 const uploadHttpLink = createUploadLink({
-  uri: "http://6095-210-108-196-61.ngrok.io/graphql",
+  uri: "http://ed82-210-108-196-61.ngrok.io/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -59,6 +59,7 @@ export const cache = new InMemoryCache({
     Query: {
       fields: {
         seeAllUserPosts: offsetLimitPagination(),
+        seeUserCategoryPost: offsetLimitPagination(),
       },
     },
   },

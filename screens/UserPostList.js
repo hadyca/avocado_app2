@@ -52,7 +52,9 @@ export default function UserPostList() {
   });
 
   const goToUserPostForm = () => {
-    return navigation.navigate("UserPostUploadForm");
+    return navigation.navigate("UserPostUploadForm", {
+      screenName: "UserPostList",
+    });
   };
 
   const renderPost = ({ item }) => {
