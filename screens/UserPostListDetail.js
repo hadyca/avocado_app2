@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import {
   KeyboardAvoidingView,
@@ -7,6 +7,7 @@ import {
   NativeModules,
   TouchableOpacity,
   Text,
+  Alert,
 } from "react-native";
 import ScreenLayout from "../components/ScreenLayout";
 import styled from "styled-components/native";
@@ -16,6 +17,7 @@ import PostContents from "../components/post/PostContents";
 import UserPostComment from "../components/post/UserPostComment";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import ActionSheet from "@alessiocancian/react-native-actionsheet";
 
 const POST_DETAIL_QUERY = gql`
   query seeUserPost($userPostId: Int!) {
@@ -68,6 +70,15 @@ const COMMENTS_QUERY = gql`
   }
 `;
 
+const DELETE_USERPOST_MUTATION = gql`
+  mutation deleteUserPost($userPostId: Int!) {
+    deleteUserPost(userPostId: $userPostId) {
+      ok
+      error
+    }
+  }
+`;
+
 const TOGGLE_USERPOST_LIKE_MUTATION = gql`
   mutation toggleUserPostLike($userPostId: Int!) {
     toggleUserPostLike(userPostId: $userPostId) {
@@ -93,7 +104,7 @@ const NoComment = styled.Text`
 export default function UserPostListDetail({ route: { params } }) {
   const [refreshing, setRefreshing] = useState(false);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
-
+  const [commentLoading, setCommentLoading] = useState(false);
   const navigation = useNavigation();
 
   const { StatusBarManager } = NativeModules;
@@ -107,19 +118,43 @@ export default function UserPostListDetail({ route: { params } }) {
 
   const { data, loading, fetchMore, refetch } = useQuery(POST_DETAIL_QUERY, {
     variables: {
-      userPostId: parseInt(params.id),
+      userPostId: parseInt(params?.id),
     },
   });
-
-  const {
-    data: commentData,
-    loading: commentLoading,
-    refetch: commentRefetch,
-  } = useQuery(COMMENTS_QUERY, {
-    variables: {
-      userPostId: parseInt(params.id),
-    },
-  });
+  const goDeleteUserPost = (cache, result) => {
+    const {
+      data: {
+        deleteUserPost: { ok },
+      },
+    } = result;
+    if (ok) {
+      const UserPostId = `UserPost:${params?.id}`;
+      cache.modify({
+        id: UserPostId,
+        fields: {
+          deleted(prev) {
+            return !prev;
+          },
+        },
+      });
+    }
+    Alert.alert("게시글이 삭제 되었습니다.");
+    navigation.pop();
+  };
+  const [deleteUserPostMutation, { loading: deleteLoading }] = useMutation(
+    DELETE_USERPOST_MUTATION,
+    {
+      update: goDeleteUserPost,
+    }
+  );
+  const { data: commentData, refetch: commentRefetch } = useQuery(
+    COMMENTS_QUERY,
+    {
+      variables: {
+        userPostId: parseInt(params?.id),
+      },
+    }
+  );
 
   const updateToggleLike = (cache, result) => {
     const {
@@ -129,7 +164,7 @@ export default function UserPostListDetail({ route: { params } }) {
     } = result;
 
     if (ok) {
-      const UserPostId = `UserPost:${params.id}`;
+      const UserPostId = `UserPost:${params?.id}`;
       cache.modify({
         id: UserPostId,
         fields: {
@@ -150,7 +185,7 @@ export default function UserPostListDetail({ route: { params } }) {
     TOGGLE_USERPOST_LIKE_MUTATION,
     {
       variables: {
-        userPostId: parseInt(params.id),
+        userPostId: parseInt(params?.id),
       },
       update: updateToggleLike,
     }
@@ -160,7 +195,7 @@ export default function UserPostListDetail({ route: { params } }) {
     if (item.deleted === false) {
       return (
         <UserPostComment
-          userPostId={parseInt(params.id)}
+          userPostId={parseInt(params?.id)}
           id={item.id}
           user={item.user}
           payload={item.payload}
@@ -186,22 +221,42 @@ export default function UserPostListDetail({ route: { params } }) {
   );
 
   const headerLeftCategory = () => (
-    <IconView
+    <TouchableOpacity
       onPress={() =>
         navigation.navigate("CategoryBoard", {
           category: data?.seeUserPost?.category,
         })
       }
-      stlye={{ marginLeft: 10 }}
     >
-      <Ionicons name="chevron-back-outline" color="black" size={30} />
-    </IconView>
+      <Ionicons
+        name="chevron-back-outline"
+        color="black"
+        size={30}
+        style={{ marginLeft: 8 }}
+      />
+    </TouchableOpacity>
   );
 
   const headerLeft = () => (
-    <IconView onPress={() => navigation.pop()} stlye={{ marginLeft: 10 }}>
-      <Ionicons name="chevron-back-outline" color="black" size={30} />
-    </IconView>
+    <TouchableOpacity onPress={() => navigation.pop()}>
+      <Ionicons
+        name="chevron-back-outline"
+        color="black"
+        size={30}
+        style={{ marginLeft: 8 }}
+      />
+    </TouchableOpacity>
+  );
+
+  const headerRight = () => (
+    <TouchableOpacity onPress={showActionSheet}>
+      <Ionicons
+        name="ellipsis-vertical"
+        color="grey"
+        size={18}
+        style={{ paddingLeft: 10, paddingRight: 10 }}
+      />
+    </TouchableOpacity>
   );
 
   useEffect(() => {
@@ -212,8 +267,9 @@ export default function UserPostListDetail({ route: { params } }) {
           : params?.fromWhere === "UserPostList"
           ? headerLeftUserPostList
           : headerLeft,
+      headerRight: data?.seeUserPost?.isMine ? headerRight : null,
     });
-  }, [params?.screenName, data]);
+  }, [params, data]);
 
   const refresh = async () => {
     setRefreshing(true);
@@ -222,8 +278,49 @@ export default function UserPostListDetail({ route: { params } }) {
     setRefreshing(false);
   };
 
+  let actionsheet = useRef();
+  let optionArray = ["Edit", "Delete", "Cancel"];
+  const showActionSheet = () => {
+    actionsheet.current.show();
+  };
+  const goToEditForm = () => {
+    navigation.navigate("EditUserPostForm", {
+      id: params.id,
+      title: data?.seeUserPost?.title,
+      content: data?.seeUserPost?.content,
+      category: data?.seeUserPost?.category,
+      file: data?.seeUserPost?.file,
+    });
+  };
+
+  const goToDeletePost = () => {
+    deleteUserPostMutation({
+      variables: {
+        userPostId: parseInt(params?.id),
+      },
+    });
+  };
+  const handleIndex = (index) => {
+    if (index === 0) {
+      Alert.alert("Edit", "Do you want edit post?", [
+        { text: "Cancel" },
+        { text: "Ok", onPress: () => goToEditForm() },
+      ]);
+    } else if (index === 1) {
+      Alert.alert("Delete", "Do you want delete post?", [
+        { text: "Cancel" },
+        {
+          text: "Ok",
+          onPress: () => goToDeletePost(),
+        },
+      ]);
+    } else {
+      return;
+    }
+  };
+
   return (
-    <ScreenLayout loading={loading}>
+    <ScreenLayout loading={loading || commentLoading}>
       {commentData?.seeUserPostComments.length > 0 && !deletedComment ? (
         <PostContainer>
           <FlatList
@@ -232,8 +329,8 @@ export default function UserPostListDetail({ route: { params } }) {
                 file={data?.seeUserPost?.file.length}
                 data={data}
                 userId={data?.userId}
-                username={params.username}
-                avatar={params.avatar}
+                username={data?.seeUserPost?.user?.username}
+                avatar={data?.seeUserPost?.user?.avatar}
                 title={data?.seeUserPost?.title}
                 content={data?.seeUserPost?.content}
                 category={data?.seeUserPost?.category}
@@ -258,8 +355,8 @@ export default function UserPostListDetail({ route: { params } }) {
                 file={data?.seeUserPost?.file.length}
                 data={data}
                 userId={data?.userId}
-                username={params.username}
-                avatar={params.avatar}
+                username={data?.seeUserPost?.user?.username}
+                avatar={data?.seeUserPost?.user?.avatar}
                 title={data?.seeUserPost?.title}
                 content={data?.seeUserPost?.content}
                 category={data?.seeUserPost?.category}
@@ -283,23 +380,6 @@ export default function UserPostListDetail({ route: { params } }) {
             renderItem={renderComment}
           />
         </PostContainer>
-        // <NoCommentContainer>
-        //   <PostContents
-        //     file={data?.seeUserPost?.file.length}
-        //     data={data}
-        //     username={params.username}
-        //     avatar={params.avatar}
-        //     title={data?.seeUserPost?.title}
-        //     content={data?.seeUserPost?.content}
-        //     category={data?.seeUserPost?.category}
-        //     likeLoading={likeLoading}
-        //     toggleUserPostLike={toggleUserPostLike}
-        //     isLiked={data?.seeUserPost?.isLiked}
-        //   />
-        // <NoCommentView>
-        //   <NoComment>There is no comment. Please write a comment.</NoComment>
-        // </NoCommentView>
-        // </NoCommentContainer>
       )}
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -307,11 +387,17 @@ export default function UserPostListDetail({ route: { params } }) {
         // keyboardVerticalOffset={300}
       >
         <CommentForm
-          userPostId={parseInt(params.id)}
+          userPostId={parseInt(params?.id)}
           refetch={commentRefetch}
-          commentLoading={commentLoading}
         />
       </KeyboardAvoidingView>
+      <ActionSheet
+        ref={actionsheet}
+        options={optionArray}
+        cancelButtonIndex={2}
+        destructiveButtonIndex={1}
+        onPress={(index) => handleIndex(index)}
+      />
     </ScreenLayout>
   );
 }

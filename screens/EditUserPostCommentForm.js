@@ -1,11 +1,11 @@
-import React from "react";
-import { View } from "react-native";
+import React, { useEffect } from "react";
+import { View, TouchableOpacity, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import { gql, useMutation } from "@apollo/client";
 import DismissKeyboard from "../components/DismissKeyBoard";
-import { TextInput } from "../components/auth/AuthShared";
-import AuthButton from "../components/auth/AuthButton";
+import styled from "styled-components/native";
+import { colors } from "../colors";
 
 const EDIT_COMMENT_MUTATION = gql`
   mutation editUserPostComment($commentId: Int!, $payload: String!) {
@@ -16,12 +16,31 @@ const EDIT_COMMENT_MUTATION = gql`
   }
 `;
 
+const HeaderRightText = styled.Text`
+  color: ${colors.black};
+  font-size: 16px;
+  font-weight: 600;
+  margin-right: 7px;
+`;
+
+const Container = styled.View`
+  margin: 10px;
+`;
+const TextInput = styled.TextInput`
+  width: 100%;
+  height: 100%;
+  background-color: ${colors.backgraound}
+  padding: 13px
+  color: black;
+  border: 1px solid ${colors.borderThin};
+`;
 export default function EditUserPostCommentForm({ route: { params } }) {
   const navigation = useNavigation();
-  const { control, handleSubmit, getValues } = useForm({
+  const { control, handleSubmit, getValues, formState } = useForm({
     defaultValues: {
       payload: params.payload,
     },
+    mode: "onChange",
   });
 
   const updateEditUserPostComment = (cache, result) => {
@@ -61,9 +80,41 @@ export default function EditUserPostCommentForm({ route: { params } }) {
       });
     }
   };
+  const HeaderRightLoading = () => (
+    <ActivityIndicator size="small" color="black" style={{ marginRight: 10 }} />
+  );
+  const NoHeaderRight = () => (
+    <TouchableOpacity
+      disabled={true}
+      onPress={handleSubmit(onValid)}
+      style={{ marginRight: 10, opacity: 0.5 }}
+    >
+      <HeaderRightText>Done</HeaderRightText>
+    </TouchableOpacity>
+  );
+
+  const OkHeaderRight = () => (
+    <TouchableOpacity
+      disabled={false}
+      onPress={handleSubmit(onValid)}
+      style={{ marginRight: 10, opacity: 1 }}
+    >
+      <HeaderRightText>Done</HeaderRightText>
+    </TouchableOpacity>
+  );
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: loading
+        ? HeaderRightLoading
+        : !formState.isValid
+        ? NoHeaderRight
+        : OkHeaderRight,
+      ...(loading && { headerLeft: () => null }),
+    });
+  }, [loading, formState.isValid]);
   return (
     <DismissKeyboard>
-      <View>
+      <Container>
         <Controller
           name="payload"
           rules={{
@@ -72,21 +123,17 @@ export default function EditUserPostCommentForm({ route: { params } }) {
           control={control}
           render={({ field: { onChange, value } }) => (
             <TextInput
+              placeholder="Please Write Comment"
               multiline={true}
-              numberOfLines={4}
-              placeholder="Comment"
+              // maxLength={120}
+              maxHeight={120}
               autoCapitalize="none"
-              onChangeText={(text) => onChange(text)}
-              value={value || ""}
+              onChangeText={onChange}
+              value={value}
             />
           )}
         />
-        <AuthButton
-          text="완료"
-          loading={loading}
-          onPress={handleSubmit(onValid)}
-        />
-      </View>
+      </Container>
     </DismissKeyboard>
   );
 }

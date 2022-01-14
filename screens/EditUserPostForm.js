@@ -25,8 +25,20 @@ const EDIT_USERPOST_MUTATION = gql`
       content: $content
       category: $category
     ) {
-      ok
-      error
+      id
+      user {
+        username
+        avatar
+      }
+      title
+      content
+      category
+      totalUserPostLikes
+      createdAt
+      isMine
+      file {
+        fileUrl
+      }
     }
   }
 `;
@@ -109,6 +121,7 @@ const DeleteText = styled.Text`
 export default function EditUserPostForm({ route: { params } }) {
   const [photo, setPhoto] = useState([]);
   const [countPhoto, setCountPhoto] = useState(0);
+  const [screenName, setScreenName] = useState("");
   const navigation = useNavigation();
   const { control, handleSubmit, getValues, formState } = useForm({
     defaultValues: {
@@ -121,11 +134,9 @@ export default function EditUserPostForm({ route: { params } }) {
   const updateEditUserPost = (cache, result) => {
     const { title, content } = getValues();
     const {
-      data: {
-        editUserPost: { ok },
-      },
+      data: { editUserPost },
     } = result;
-    if (ok) {
+    if (editUserPost.id) {
       const UserPostId = `UserPost:${params.id}`;
 
       cache.modify({
@@ -146,7 +157,10 @@ export default function EditUserPostForm({ route: { params } }) {
         },
       });
     }
-    navigation.navigate("UserPostList");
+    navigation.navigate("UserPostListDetail", {
+      id: editUserPost.id,
+      fromWhere: screenName,
+    });
   };
 
   const [editUserPostMutation, { loading }] = useMutation(
@@ -243,6 +257,12 @@ export default function EditUserPostForm({ route: { params } }) {
       ...(loading && { headerLeft: () => null }),
     });
   }, [photo, loading, params?.category, formState.isValid]);
+
+  useEffect(() => {
+    if (params?.screenName) {
+      setScreenName(params?.screenName);
+    }
+  }, []);
 
   return (
     <Container>

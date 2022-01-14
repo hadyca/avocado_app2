@@ -45,8 +45,7 @@ const IconView = styled.TouchableOpacity`
   position: absolute;
   right: 10px;
 `;
-export default function CommentForm({ userPostId, refetch, commentLoading }) {
-  const [formValue, setFormValue] = useState("");
+export default function CommentForm({ userPostId, refetch }) {
   const { handleSubmit, control, reset, watch } = useForm();
 
   const updateComment = (cache, result) => {

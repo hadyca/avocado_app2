@@ -1,7 +1,6 @@
 import React from "react";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, Text } from "react-native";
 import styled from "styled-components/native";
-import { colors } from "../../colors";
 import { Ionicons } from "@expo/vector-icons";
 
 const IconView = styled.TouchableOpacity`
@@ -10,8 +9,14 @@ const IconView = styled.TouchableOpacity`
   right: 10px;
 `;
 
-export default function SendButton({ disabled, onPress }) {
-  return (
+export default function SendButton({ disabled, onPress, loading }) {
+  return loading ? (
+    <ActivityIndicator
+      size="small"
+      color="black"
+      style={{ position: "absolute", right: 20 }}
+    />
+  ) : (
     <IconView disabled={disabled} onPress={onPress}>
       <Ionicons name="arrow-forward-circle-outline" size={40} color="black" />
     </IconView>

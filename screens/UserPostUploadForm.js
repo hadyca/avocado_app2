@@ -253,7 +253,7 @@ export default function UserPostUploadForm({ route: { params } }) {
         : OkHeaderRight,
       ...(loading && { headerLeft: () => null }),
     });
-  }, [photo, loading, params?.category, formState.isValid]);
+  }, [photo, loading, params, formState.isValid]);
 
   useEffect(() => {
     if (params?.screenName) {

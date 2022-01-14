@@ -3,9 +3,9 @@ import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
 import UserAvatar from "../UserAvatar";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
-import { View, Alert } from "react-native";
+import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import timeForToday from "../../utils";
 import { colors } from "../../colors";
 
@@ -17,22 +17,22 @@ const DELETE_COMMENT_MUTATION = gql`
     }
   }
 `;
-
 const Container = styled.View`
   margin: 10px;
 `;
+const HeaderContainer = styled.View`
+  justify-content: center;
+`;
 const Header = styled.TouchableOpacity``;
 
-const Comment = styled.View`
+const CommentView = styled.View`
   margin-top: 2px;
   margin-left: 35px;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
 `;
 
 const CommentPayLoad = styled.Text`
   font-size: 14px;
+  padding-right: 30px;
 `;
 
 const IconView = styled.TouchableOpacity`
@@ -144,17 +144,19 @@ export default function UserPostComment({
   const time = timeForToday(date);
   return (
     <Container>
-      <Header onPress={goToProfile}>
-        <UserAvatar username={user.username} uri={user.avatar} />
-      </Header>
-      <Comment>
-        <CommentPayLoad>{payload}</CommentPayLoad>
+      <HeaderContainer>
+        <Header onPress={goToProfile}>
+          <UserAvatar username={user.username} uri={user.avatar} />
+        </Header>
         {isMine ? (
           <IconView onPress={showActionSheet}>
             <Ionicons name="ellipsis-vertical" color="grey" size={14} />
           </IconView>
         ) : null}
-      </Comment>
+      </HeaderContainer>
+      <CommentView>
+        <CommentPayLoad>{payload}</CommentPayLoad>
+      </CommentView>
       <Date>{time}</Date>
       <ActionSheet
         ref={actionsheet}
