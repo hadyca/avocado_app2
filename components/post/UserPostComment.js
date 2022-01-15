@@ -41,11 +41,27 @@ const IconView = styled.TouchableOpacity`
   padding: 10px;
 `;
 
+const SubContainer = styled.View`
+  flex-direction: row;
+  align-items: flex-start;
+`;
+
 const Date = styled.Text`
   margin-top: 3px;
   margin-left: 35px;
   color: ${colors.homeText};
-  font-size: 8px;
+  font-size: 12px;
+`;
+
+const ReplyButton = styled.TouchableOpacity`
+  margin-top: 3px;
+  margin-left: 5px;
+`;
+
+const ReplyText = styled.Text`
+  color: ${colors.homeText};
+  font-size: 12px;
+  font-weight: 600;
 `;
 
 export default function UserPostComment({
@@ -139,9 +155,14 @@ export default function UserPostComment({
       username: user.username,
     });
   };
+
+  const goToReComment = () => {
+    navigation.navigate("ReComment");
+  };
   const date = new window.Date(parseInt(createdAt));
 
   const time = timeForToday(date);
+
   return (
     <Container>
       <HeaderContainer>
@@ -157,7 +178,12 @@ export default function UserPostComment({
       <CommentView>
         <CommentPayLoad>{payload}</CommentPayLoad>
       </CommentView>
-      <Date>{time}</Date>
+      <SubContainer>
+        <Date>{time}</Date>
+        <ReplyButton onPress={goToReComment}>
+          <ReplyText>답글 쓰기</ReplyText>
+        </ReplyButton>
+      </SubContainer>
       <ActionSheet
         ref={actionsheet}
         options={optionArray}

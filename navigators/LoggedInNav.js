@@ -10,6 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 import PostCategory from "../screens/PostCategory";
 import EditPostCategory from "../screens/EditPostCategory";
 import CategoryBoard from "../screens/CategoryBoard";
+import ReComment from "../screens/ReComment";
 
 const Stack = createStackNavigator();
 
@@ -78,6 +79,13 @@ export default function LoggedInNav() {
           headerBackTitleVisible: false,
         }}
         component={CategoryBoard}
+      />
+      <Stack.Screen
+        name="ReComment"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={ReComment}
       />
     </Stack.Navigator>
   );
