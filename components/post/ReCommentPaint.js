@@ -1,32 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
 import UserAvatar from "../UserAvatar";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
-import { Alert, FlatList, Text } from "react-native";
+import { Alert, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { gql, useMutation, useQuery } from "@apollo/client";
 import timeForToday from "../../utils";
 import { colors } from "../../colors";
-import ReCommentPaint from "./ReCommentPaint";
 
-const RECOMMENTS_QUERY = gql`
-  query seeUserPostReComments($userPostCommentId: Int!) {
-    seeUserPostReComments(userPostCommentId: $userPostCommentId) {
-      id
-      user {
-        id
-        username
-        avatar
-      }
-      payload
-      createdAt
-      updatedAt
-      deleted
-      isMine
-    }
-  }
-`;
 const DELETE_COMMENT_MUTATION = gql`
   mutation deleteUserPostComment($commentId: Int!) {
     deleteUserPostComment(commentId: $commentId) {
@@ -36,8 +18,9 @@ const DELETE_COMMENT_MUTATION = gql`
   }
 `;
 const Container = styled.View`
-  margin: 10px;
-  border: 1px red solid;
+  margin-left: 35px;
+  margin-top: 20px;
+  border: 1px blue solid;
 `;
 const HeaderContainer = styled.View`
   justify-content: center;
@@ -49,7 +32,7 @@ const CommentView = styled.View`
   margin-left: 35px;
 `;
 
-const CommentPayload = styled.Text`
+const CommentPayLoad = styled.Text`
   font-size: 14px;
   padding-right: 30px;
 `;
@@ -83,21 +66,7 @@ const ReplyText = styled.Text`
   font-weight: 600;
 `;
 
-export default function UserPostComment({
-  userPostId,
-  id,
-  user,
-  payload,
-  isMine,
-  createdAt,
-}) {
-  const [refreshing, setRefreshing] = useState(false);
-
-  const { data, refetch } = useQuery(RECOMMENTS_QUERY, {
-    variables: {
-      userPostCommentId: parseInt(id),
-    },
-  });
+export default function ReCommentPaint({ user, payload, isMine, createdAt }) {
   const deleteUserComment = async (cache, result) => {
     const {
       data: {
@@ -184,8 +153,6 @@ export default function UserPostComment({
 
   const goToReComment = () => {
     navigation.navigate("ReComment", {
-      userPostId,
-      id,
       user,
       payload,
       isMine,
@@ -196,29 +163,6 @@ export default function UserPostComment({
 
   const time = timeForToday(date);
 
-  const renderReComment = ({ item }) => {
-    if (item.deleted === false) {
-      return (
-        <ReCommentPaint
-          user={item.user}
-          payload={item.payload}
-          isMine={item.isMine}
-          createdAt={item.createdAt}
-        />
-      );
-    } else {
-      return null;
-    }
-  };
-
-  const refresh = () => {
-    setRefreshing(true);
-    refetch();
-    commentRefetch();
-    setRefreshing(false);
-  };
-
-  console.log(data?.seeUserPostReComments.length, "2단계");
   return (
     <Container>
       <HeaderContainer>
@@ -232,22 +176,11 @@ export default function UserPostComment({
         ) : null}
       </HeaderContainer>
       <CommentView>
-        <CommentPayload>{payload}</CommentPayload>
+        <CommentPayLoad>{payload}</CommentPayLoad>
       </CommentView>
       <SubContainer>
         <Date>{time}</Date>
-        <ReplyButton onPress={goToReComment}>
-          <ReplyText>답글 쓰기</ReplyText>
-        </ReplyButton>
       </SubContainer>
-      <FlatList
-        refreshing={refreshing}
-        onRefresh={refresh}
-        showsVerticalScrollIndicator={true}
-        data={data?.seeUserPostReComments}
-        keyExtractor={(item) => "" + item.id}
-        renderItem={renderReComment}
-      />
       <ActionSheet
         ref={actionsheet}
         options={optionArray}

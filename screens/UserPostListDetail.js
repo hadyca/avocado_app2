@@ -62,6 +62,19 @@ const COMMENTS_QUERY = gql`
         avatar
       }
       payload
+      userPostReComments {
+        id
+        user {
+          id
+          username
+          avatar
+        }
+        payload
+        createdAt
+        updatedAt
+        deleted
+        isMine
+      }
       createdAt
       updatedAt
       deleted
@@ -121,6 +134,15 @@ export default function UserPostListDetail({ route: { params } }) {
       userPostId: parseInt(params?.id),
     },
   });
+  const { data: commentData, refetch: commentRefetch } = useQuery(
+    COMMENTS_QUERY,
+    {
+      variables: {
+        userPostId: parseInt(params?.id),
+      },
+    }
+  );
+
   const goDeleteUserPost = (cache, result) => {
     const {
       data: {
@@ -145,14 +167,6 @@ export default function UserPostListDetail({ route: { params } }) {
     DELETE_USERPOST_MUTATION,
     {
       update: goDeleteUserPost,
-    }
-  );
-  const { data: commentData, refetch: commentRefetch } = useQuery(
-    COMMENTS_QUERY,
-    {
-      variables: {
-        userPostId: parseInt(params?.id),
-      },
     }
   );
 
@@ -192,6 +206,7 @@ export default function UserPostListDetail({ route: { params } }) {
   );
 
   const renderComment = ({ item }) => {
+    console.log(item.userPostReComments.length, "1단계");
     if (item.deleted === false) {
       return (
         <UserPostComment
@@ -271,10 +286,10 @@ export default function UserPostListDetail({ route: { params } }) {
     });
   }, [params, data]);
 
-  const refresh = async () => {
+  const refresh = () => {
     setRefreshing(true);
-    await refetch();
-    await commentRefetch();
+    refetch();
+    commentRefetch();
     setRefreshing(false);
   };
 

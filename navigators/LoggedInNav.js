@@ -6,7 +6,6 @@ import EditUserPostForm from "../screens/EditUserPostForm";
 import UserPostListDetail from "../screens/UserPostListDetail";
 import EditUserPostCommentForm from "../screens/EditUserPostCommentForm";
 import Profile from "../screens/Profile";
-import { Ionicons } from "@expo/vector-icons";
 import PostCategory from "../screens/PostCategory";
 import EditPostCategory from "../screens/EditPostCategory";
 import CategoryBoard from "../screens/CategoryBoard";
@@ -23,6 +22,13 @@ export default function LoggedInNav() {
           headerShown: false,
         }}
         component={TabsNav}
+      />
+      <Stack.Screen
+        name="UserPostListDetail"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={UserPostListDetail}
       />
       <Stack.Screen
         name="Profile"
