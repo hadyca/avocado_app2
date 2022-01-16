@@ -5,7 +5,6 @@ import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../colors";
 import timeForToday from "../../utils";
 import UserAvatar from "../UserAvatar";
-import { Ionicons } from "@expo/vector-icons";
 
 const Container = styled.View`
   margin-bottom: 10px;

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useRef } from "react";
+import { useScrollToTop } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 import ScreenLayout from "../components/ScreenLayout";
 import styled from "styled-components/native";
@@ -60,11 +61,14 @@ const ButtonText = styled.Text`
 `;
 
 export default function Home() {
+  const ref = useRef(null);
+  useScrollToTop(ref);
   const { height } = useWindowDimensions();
 
   return (
     <ScreenLayout>
       <ScrollView
+        ref={ref}
         style={{
           width: "100%",
         }}

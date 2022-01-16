@@ -1,31 +1,14 @@
-# LoggedOutNav
+# 2022.1.16 To-Be
 
-## Auth
+- [x] 바텀 네비게이터 누르면 화면 가장 상단으로 스크롤 가게 하는 기능
+- [] 게시글, 댓글 ... 부분에 신고 기능 추가 (isMine 연동) , 동시에 ... 백엔드에 신고 부분 추가
 
+# 중기 To-be
+
+- [] 화면 정의서, 각 화면 파일과 component 파일 정의서
 - [] Welcome : 계정 메일 찾기, 비번 찾기 기능 추가 // 페이스북 로그인 기능 추가
-- [x] CreateAccount
-- [x] Login
-- [x] SecretConfirm
-
-# LoggedInNav
-
-## TabsNav
-
-- [] Home(B.T) : 진행 중 // 문구 머리좀 써보자..
-- [] SearchConditionNav(B.T) : 진행 중 (아래 스크린 2개)
-- [] SearchConditionDistrict : 진행 중 // -1급, 2급 행정 구역 2~3개씩 묶기 .. 어떻게 할까? 인구수로,,?
-- [] SearchConditionSector
-- [] UserPostList(B.T)
-- [] FavoritesNav(B.T) : (아래 스크린 2개)
-- [] FavoriteCompanyPost
-- [] FavoriteCompany
-- [] Me(B.T)
-- [] CompanyPostList
-- [] CompanyPostDetail
-- [] Profile
-- [] UserPostDetail
-
-## 공통
-
-- [] 글꼴 설정
-- [] 색 선정 및 조합
+- [] 본인 인증 시 이메일 -> 모바일 번호로 인증 교체
+- [] navigators 폴더 재정립
+- [] useEffect 에 배열부분 맞는지 재확인 (post부분임)
+- [] 글꼴, 색상
+- [] 디자인

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
+import { useScrollToTop } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { colors } from "../colors";
 import SearchSmallDistrict from "../components/search/SearchSmallDistrict";
@@ -35,6 +36,8 @@ const ButtonText = styled.Text`
 `;
 
 export default function SearchConditionDistrict() {
+  const ref = useRef(null);
+  useScrollToTop(ref);
   const [districtCode, setDistrictCode] = useState(0);
 
   const changeDistrictCode = (index) => {
@@ -43,7 +46,7 @@ export default function SearchConditionDistrict() {
 
   return (
     <Container>
-      <FirstScrollView showsVerticalScrollIndicator={false}>
+      <FirstScrollView ref={ref} showsVerticalScrollIndicator={false}>
         {bigDistrict.map((value, index) => (
           <Button
             focus={districtCode === index ? true : false}

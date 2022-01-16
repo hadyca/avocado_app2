@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
+import { useScrollToTop } from "@react-navigation/native";
 import { Text } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 
-const Container = styled.View``;
+const Container = styled.ScrollView``;
 
 const Row = styled.View`
   margin-top: 20px;
@@ -24,6 +25,8 @@ const WorkLogo = styled.Image`
 `;
 
 export default function SearchConditionIndustry() {
+  const ref = useRef(null);
+  useScrollToTop(ref);
   const navigation = useNavigation();
 
   const sendData = (name) => {
@@ -33,7 +36,7 @@ export default function SearchConditionIndustry() {
   };
 
   return (
-    <Container>
+    <Container ref={ref}>
       <Row>
         <Contents onPress={() => sendData("서비스")}>
           <WorkLogo

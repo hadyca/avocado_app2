@@ -56,7 +56,7 @@ export default function SharedStackNav({ screenName }) {
       ) : null}
       {screenName === "Me" ? <Stack.Screen name="Me" component={Me} /> : null}
       <Stack.Screen name="CompanyPostList" component={CompanyPostList} />
-      <Stack.Screen name="Profile" component={Profile} />
+      {/* <Stack.Screen name="Profile" component={Profile} /> */}
     </Stack.Navigator>
   );
 }

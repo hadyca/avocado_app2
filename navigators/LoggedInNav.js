@@ -25,13 +25,6 @@ export default function LoggedInNav() {
         component={TabsNav}
       />
       <Stack.Screen
-        name="UserPostListDetail"
-        options={{
-          headerBackTitleVisible: false,
-        }}
-        component={UserPostListDetail}
-      />
-      <Stack.Screen
         name="Profile"
         options={{
           headerBackTitleVisible: false,

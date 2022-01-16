@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { gql, useQuery } from "@apollo/client";
 import { FlatList, ActivityIndicator, Text } from "react-native";
+import { useScrollToTop } from "@react-navigation/native";
 import ScreenLayout from "../components/ScreenLayout";
 import UserPost from "../components/post/UserPost";
 import { useNavigation } from "@react-navigation/native";
@@ -42,6 +43,8 @@ const FetchView = styled.View`
 `;
 
 export default function UserPostList() {
+  const ref = useRef(null);
+  useScrollToTop(ref);
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
@@ -106,6 +109,7 @@ export default function UserPostList() {
       </ScrollView>
 
       <FlatList
+        ref={ref}
         onEndReachedThreshold={0.05}
         onEndReached={handleFetch}
         refreshing={refreshing}
