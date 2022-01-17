@@ -20,7 +20,6 @@ const DELETE_COMMENT_MUTATION = gql`
 const Container = styled.View`
   margin-left: 35px;
   margin-top: 20px;
-  border: 1px blue solid;
 `;
 const HeaderContainer = styled.View`
   justify-content: center;

@@ -117,7 +117,7 @@ const NoComment = styled.Text`
 export default function UserPostListDetail({ route: { params } }) {
   const [refreshing, setRefreshing] = useState(false);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
-  const [commentLoading, setCommentLoading] = useState(false);
+  const [update, setUpdate] = useState(0);
   const navigation = useNavigation();
 
   const { StatusBarManager } = NativeModules;
@@ -206,7 +206,6 @@ export default function UserPostListDetail({ route: { params } }) {
   );
 
   const renderComment = ({ item }) => {
-    console.log(item.userPostReComments.length, "1단계");
     if (item.deleted === false) {
       return (
         <UserPostComment
@@ -216,6 +215,7 @@ export default function UserPostListDetail({ route: { params } }) {
           payload={item.payload}
           isMine={item.isMine}
           createdAt={item.createdAt}
+          commentUpdate={update}
         />
       );
     } else {
@@ -290,6 +290,7 @@ export default function UserPostListDetail({ route: { params } }) {
     setRefreshing(true);
     refetch();
     commentRefetch();
+    setUpdate(update + 1);
     setRefreshing(false);
   };
 
@@ -335,7 +336,7 @@ export default function UserPostListDetail({ route: { params } }) {
   };
 
   return (
-    <ScreenLayout loading={loading || commentLoading}>
+    <ScreenLayout loading={loading}>
       {commentData?.seeUserPostComments.length > 0 && !deletedComment ? (
         <PostContainer>
           <FlatList

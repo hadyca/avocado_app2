@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
 import UserAvatar from "../UserAvatar";
@@ -37,7 +37,6 @@ const DELETE_COMMENT_MUTATION = gql`
 `;
 const Container = styled.View`
   margin: 10px;
-  border: 1px red solid;
 `;
 const HeaderContainer = styled.View`
   justify-content: center;
@@ -90,6 +89,7 @@ export default function UserPostComment({
   payload,
   isMine,
   createdAt,
+  commentUpdate,
 }) {
   const [refreshing, setRefreshing] = useState(false);
 
@@ -98,6 +98,7 @@ export default function UserPostComment({
       userPostCommentId: parseInt(id),
     },
   });
+
   const deleteUserComment = async (cache, result) => {
     const {
       data: {
@@ -211,14 +212,10 @@ export default function UserPostComment({
     }
   };
 
-  const refresh = () => {
-    setRefreshing(true);
+  useEffect(() => {
     refetch();
-    commentRefetch();
-    setRefreshing(false);
-  };
+  }, [commentUpdate]);
 
-  console.log(data?.seeUserPostReComments.length, "2단계");
   return (
     <Container>
       <HeaderContainer>
@@ -241,8 +238,6 @@ export default function UserPostComment({
         </ReplyButton>
       </SubContainer>
       <FlatList
-        refreshing={refreshing}
-        onRefresh={refresh}
         showsVerticalScrollIndicator={true}
         data={data?.seeUserPostReComments}
         keyExtractor={(item) => "" + item.id}
