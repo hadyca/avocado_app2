@@ -90,9 +90,8 @@ export default function UserPostComment({
   isMine,
   createdAt,
   commentUpdate,
+  screenName,
 }) {
-  const [refreshing, setRefreshing] = useState(false);
-
   const { data, refetch } = useQuery(RECOMMENTS_QUERY, {
     variables: {
       userPostCommentId: parseInt(id),
@@ -233,9 +232,11 @@ export default function UserPostComment({
       </CommentView>
       <SubContainer>
         <Date>{time}</Date>
-        <ReplyButton onPress={goToReComment}>
-          <ReplyText>답글 쓰기</ReplyText>
-        </ReplyButton>
+        {screenName === "ReComment" ? null : (
+          <ReplyButton onPress={goToReComment}>
+            <ReplyText>답글 쓰기</ReplyText>
+          </ReplyButton>
+        )}
       </SubContainer>
       <FlatList
         showsVerticalScrollIndicator={true}
