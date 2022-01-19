@@ -10,6 +10,7 @@ import PostCategory from "../screens/PostCategory";
 import EditPostCategory from "../screens/EditPostCategory";
 import CategoryBoard from "../screens/CategoryBoard";
 import ReComment from "../screens/ReComment";
+import UserPostReportForm from "../screens/reports/UserPostReportForm";
 
 const Stack = createStackNavigator();
 
@@ -85,6 +86,13 @@ export default function LoggedInNav() {
           headerBackTitleVisible: false,
         }}
         component={ReComment}
+      />
+      <Stack.Screen
+        name="UserPostReportForm"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={UserPostReportForm}
       />
     </Stack.Navigator>
   );

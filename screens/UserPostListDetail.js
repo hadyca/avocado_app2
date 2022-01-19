@@ -163,6 +163,7 @@ export default function UserPostListDetail({ route: { params } }) {
     Alert.alert("게시글이 삭제 되었습니다.");
     navigation.pop();
   };
+
   const [deleteUserPostMutation, { loading: deleteLoading }] = useMutation(
     DELETE_USERPOST_MUTATION,
     {
@@ -263,7 +264,7 @@ export default function UserPostListDetail({ route: { params } }) {
     </TouchableOpacity>
   );
 
-  const headerRight = () => (
+  const HeaderRight = () => (
     <TouchableOpacity onPress={showActionSheet}>
       <Ionicons
         name="ellipsis-vertical"
@@ -282,7 +283,7 @@ export default function UserPostListDetail({ route: { params } }) {
           : params?.fromWhere === "UserPostList"
           ? headerLeftUserPostList
           : headerLeft,
-      headerRight: data?.seeUserPost?.isMine ? headerRight : null,
+      headerRight: HeaderRight,
     });
   }, [params, data]);
 
@@ -294,11 +295,19 @@ export default function UserPostListDetail({ route: { params } }) {
     setRefreshing(false);
   };
 
-  let actionsheet = useRef();
-  let optionArray = ["Edit", "Delete", "Cancel"];
+  let myActionsheet = useRef();
+  let notMeActionsheet = useRef();
+  let myOptionArray = ["수정", "삭제", "취소"];
+  let notMineOptionArray = ["신고", "취소"];
+
   const showActionSheet = () => {
-    actionsheet.current.show();
+    if (data?.seeUserPost?.isMine) {
+      return myActionsheet.current.show();
+    } else {
+      return notMeActionsheet.current.show();
+    }
   };
+
   const goToEditForm = () => {
     navigation.navigate("EditUserPostForm", {
       id: params.id,
@@ -309,6 +318,10 @@ export default function UserPostListDetail({ route: { params } }) {
     });
   };
 
+  const goToReportForm = () => {
+    navigation.navigate("UserPostReportForm");
+  };
+
   const goToDeletePost = () => {
     deleteUserPostMutation({
       variables: {
@@ -316,14 +329,27 @@ export default function UserPostListDetail({ route: { params } }) {
       },
     });
   };
-  const handleIndex = (index) => {
+  const myHandleIndex = (index) => {
     if (index === 0) {
-      Alert.alert("Edit", "Do you want edit post?", [
-        { text: "Cancel" },
-        { text: "Ok", onPress: () => goToEditForm() },
-      ]);
+      goToEditForm();
     } else if (index === 1) {
-      Alert.alert("Delete", "Do you want delete post?", [
+      Alert.alert("게시글을 삭제하시겠어요?", "", [
+        { text: "Cancel" },
+        {
+          text: "Ok",
+          onPress: () => goToDeletePost(),
+        },
+      ]);
+    } else {
+      return;
+    }
+  };
+
+  const notMineHandleIndex = (index) => {
+    if (index === 0) {
+      goToReportForm();
+    } else if (index === 1) {
+      Alert.alert("게시글을 삭제하시겠어요?", "", [
         { text: "Cancel" },
         {
           text: "Ok",
@@ -408,11 +434,18 @@ export default function UserPostListDetail({ route: { params } }) {
         />
       </KeyboardAvoidingView>
       <ActionSheet
-        ref={actionsheet}
-        options={optionArray}
+        ref={myActionsheet}
+        options={myOptionArray}
         cancelButtonIndex={2}
         destructiveButtonIndex={1}
-        onPress={(index) => handleIndex(index)}
+        onPress={(index) => myHandleIndex(index)}
+      />
+      <ActionSheet
+        ref={notMeActionsheet}
+        options={notMineOptionArray}
+        cancelButtonIndex={1}
+        destructiveButtonIndex={0}
+        onPress={(index) => notMineHandleIndex(index)}
       />
     </ScreenLayout>
   );

@@ -10,7 +10,7 @@ export const categories = [
   "일반/기타",
 ];
 
-export const categoriesScreen = [
+export const categoriesScreen_ = [
   "Job",
   "Question",
   "Beauty",
@@ -20,4 +20,12 @@ export const categoriesScreen = [
   "Food",
   "DailyLife",
   "General",
+];
+
+export const userPostReportAry = [
+  "요상한 글이에요",
+  "문제가 많은 게시글이에요",
+  "너무 폭력적이에요",
+  "불법 판매 글이에요",
+  "이상한 사이트로 유도해요",
 ];
