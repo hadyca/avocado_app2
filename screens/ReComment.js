@@ -1,18 +1,65 @@
 import React, { useState, useEffect } from "react";
-import { KeyboardAvoidingView, NativeModules } from "react-native";
+import {
+  KeyboardAvoidingView,
+  NativeModules,
+  View,
+  ScrollView,
+  FlatList,
+  RefreshControl,
+} from "react-native";
 import CommentForm from "../components/post/CommentForm";
 import UserPostComment from "../components/post/UserPostComment";
 import ScreenLayout from "../components/ScreenLayout";
 import styled from "styled-components/native";
 import DismissKeyboard from "../components/DismissKeyBoard";
+import { gql, useMutation, useQuery } from "@apollo/client";
+import { colors } from "../colors";
 
+const COMMENT_QUERY = gql`
+  query seeUserPostComment($userPostCommentId: Int!) {
+    seeUserPostComment(userPostCommentId: $userPostCommentId) {
+      id
+      user {
+        id
+        username
+        avatar
+      }
+      payload
+      userPostReComments {
+        id
+        user {
+          id
+          username
+          avatar
+        }
+        payload
+        createdAt
+        updatedAt
+        deleted
+        isMine
+      }
+      createdAt
+      updatedAt
+      deleted
+      isMine
+    }
+  }
+`;
 const Container = styled.View`
   flex: 1;
 `;
 
 export default function ReComment({ route: { params } }) {
+  const [refreshing, setRefreshing] = useState(false);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
   const { StatusBarManager } = NativeModules;
+
+  const { data, refetch, loading } = useQuery(COMMENT_QUERY, {
+    variables: {
+      userPostCommentId: parseInt(params?.id),
+    },
+  });
+
   useEffect(() => {
     Platform.OS == "ios"
       ? StatusBarManager.getHeight((statusBarFrameData) => {
@@ -20,19 +67,33 @@ export default function ReComment({ route: { params } }) {
         })
       : null;
   }, []);
+
+  const refresh = () => {
+    setRefreshing(true);
+    refetch();
+    setRefreshing(false);
+  };
+
   return (
-    <ScreenLayout>
+    <ScreenLayout loading={loading}>
       <DismissKeyboard>
         <Container>
-          <UserPostComment
-            userPostId={params?.userPostId}
-            id={params?.id}
-            user={params?.user}
-            payload={params?.payload}
-            isMine={params?.isMine}
-            createdAt={params?.createdAt}
-            screenName="ReComment"
-          />
+          <ScrollView
+            shshowsVerticalScrollIndicator={true}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={refresh} />
+            }
+          >
+            <UserPostComment
+              userPostId={data?.seeUserPostComment?.userPostId}
+              id={data?.seeUserPostComment?.id}
+              user={data?.seeUserPostComment?.user}
+              payload={data?.seeUserPostComment?.payload}
+              isMine={data?.seeUserPostComment?.isMine}
+              createdAt={data?.seeUserPostComment?.createdAt}
+              reComments={data?.seeUserPostComment?.userPostReComments}
+            />
+          </ScrollView>
         </Container>
       </DismissKeyboard>
       <KeyboardAvoidingView

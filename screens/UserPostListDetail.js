@@ -117,7 +117,6 @@ const NoComment = styled.Text`
 export default function UserPostListDetail({ route: { params } }) {
   const [refreshing, setRefreshing] = useState(false);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
-  const [update, setUpdate] = useState(0);
   const navigation = useNavigation();
 
   const { StatusBarManager } = NativeModules;
@@ -216,7 +215,7 @@ export default function UserPostListDetail({ route: { params } }) {
           payload={item.payload}
           isMine={item.isMine}
           createdAt={item.createdAt}
-          commentUpdate={update}
+          reComments={item.userPostReComments}
         />
       );
     } else {
@@ -291,7 +290,6 @@ export default function UserPostListDetail({ route: { params } }) {
     setRefreshing(true);
     refetch();
     commentRefetch();
-    setUpdate(update + 1);
     setRefreshing(false);
   };
 
@@ -319,7 +317,9 @@ export default function UserPostListDetail({ route: { params } }) {
   };
 
   const goToReportForm = () => {
-    navigation.navigate("UserPostReportForm");
+    navigation.navigate("UserPostReportForm", {
+      id: params.id,
+    });
   };
 
   const goToDeletePost = () => {
@@ -348,14 +348,6 @@ export default function UserPostListDetail({ route: { params } }) {
   const notMineHandleIndex = (index) => {
     if (index === 0) {
       goToReportForm();
-    } else if (index === 1) {
-      Alert.alert("게시글을 삭제하시겠어요?", "", [
-        { text: "Cancel" },
-        {
-          text: "Ok",
-          onPress: () => goToDeletePost(),
-        },
-      ]);
     } else {
       return;
     }

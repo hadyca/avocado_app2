@@ -7,13 +7,11 @@ import { categories } from "../constant";
 
 const Container = styled.View``;
 
-const CategoryView = styled.View`
+const CategoryView = styled.TouchableOpacity`
+  padding: 25px 15px;
+  color: black;
   border-bottom-width: 1px;
   border-bottom-color: ${colors.borderThin};
-`;
-const CategoryView2 = styled.TouchableOpacity`
-  padding: 25px 7px;
-  color: black;
 `;
 
 const CategoryText = styled.Text``;
@@ -29,10 +27,8 @@ export default function PostCategory() {
     <ScreenLayout>
       <Container>
         {categories.map((item, index) => (
-          <CategoryView key={index}>
-            <CategoryView2 onPress={() => selectCategory(item)}>
-              <CategoryText>{item}</CategoryText>
-            </CategoryView2>
+          <CategoryView key={index} onPress={() => selectCategory(item)}>
+            <CategoryText>{item}</CategoryText>
           </CategoryView>
         ))}
       </Container>

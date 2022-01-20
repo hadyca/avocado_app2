@@ -99,7 +99,7 @@ export default function UserPostList() {
       <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        style={{ backgroundColor: "grey" }}
+        style={{ backgroundColor: "grey", maxHeight: 50 }}
       >
         {categories.map((item, index) => (
           <CategoryView key={index} onPress={() => goToCategoryScreen(item)}>

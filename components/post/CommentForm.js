@@ -16,6 +16,18 @@ const CREATE_COMMENT_MUTATION = gql`
   }
 `;
 
+const CREATE_RECOMMENT_MUTATION = gql`
+  mutation createUserRePostComment(
+    $userPostCommentId: Int!
+    $payload: String!
+  ) {
+    createUserPostComment(userPostId: $userPostCommentId, payload: $payload) {
+      ok
+      error
+    }
+  }
+`;
+
 const Container = styled.View`
   border-top-width: 1px;
   border-top-color: ${colors.borderThin};
@@ -45,7 +57,7 @@ const IconView = styled.TouchableOpacity`
   position: absolute;
   right: 10px;
 `;
-export default function CommentForm({ userPostId, refetch }) {
+export default function CommentForm({ userPostId, refetch, reCommentScreen }) {
   const { handleSubmit, control, reset, watch } = useForm();
 
   const updateComment = (cache, result) => {
@@ -68,7 +80,26 @@ export default function CommentForm({ userPostId, refetch }) {
       refetch();
     }
   };
-
+  const updateReComment = (cache, result) => {
+    const {
+      data: { createUserPostComment },
+    } = result;
+    if (createUserPostComment.ok) {
+      const UserPostId = `UserPost:${userPostId}`;
+      cache.modify({
+        id: UserPostId,
+        fields: {
+          userPostComments(prev) {
+            return [createUserPostComment, ...prev];
+          },
+          totalUserPostComments(prev) {
+            return prev + 1;
+          },
+        },
+      });
+      refetch();
+    }
+  };
   const [createCommentMutation, { loading }] = useMutation(
     CREATE_COMMENT_MUTATION,
     {
@@ -76,7 +107,17 @@ export default function CommentForm({ userPostId, refetch }) {
     }
   );
 
+  const [createReCommentMutation, { loading: ReCommentLoading }] = useMutation(
+    CREATE_RECOMMENT_MUTATION,
+    {
+      update: updateReComment,
+    }
+  );
+
   const onValid = ({ payload }) => {
+    if (!ReCommentLoading && reCommentScreen) {
+      console.log("재댓글");
+    }
     if (!loading) {
       createCommentMutation({
         variables: {

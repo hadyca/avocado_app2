@@ -3,13 +3,30 @@ import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
 import UserAvatar from "../UserAvatar";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
-import { Alert, ScrollView } from "react-native";
+import { Alert, FlatList, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import timeForToday from "../../utils";
 import { colors } from "../../colors";
 import ReCommentPaint from "./ReCommentPaint";
 
+const RECOMMENTS_QUERY = gql`
+  query seeUserPostReComments($userPostCommentId: Int!) {
+    seeUserPostReComments(userPostCommentId: $userPostCommentId) {
+      id
+      user {
+        id
+        username
+        avatar
+      }
+      payload
+      createdAt
+      updatedAt
+      deleted
+      isMine
+    }
+  }
+`;
 const DELETE_COMMENT_MUTATION = gql`
   mutation deleteUserPostComment($commentId: Int!) {
     deleteUserPostComment(commentId: $commentId) {
@@ -65,15 +82,22 @@ const ReplyText = styled.Text`
   font-weight: 600;
 `;
 
-export default function UserPostComment({
+export default function CommentHeader({
   userPostId,
   id,
   user,
   payload,
   isMine,
   createdAt,
-  reComments,
+  commentUpdate,
+  screenName,
 }) {
+  const { data, refetch } = useQuery(RECOMMENTS_QUERY, {
+    variables: {
+      userPostCommentId: parseInt(id),
+    },
+  });
+
   const deleteUserComment = async (cache, result) => {
     const {
       data: {
@@ -187,6 +211,10 @@ export default function UserPostComment({
     }
   };
 
+  useEffect(() => {
+    refetch();
+  }, [commentUpdate]);
+
   return (
     <Container>
       <HeaderContainer>
@@ -202,21 +230,18 @@ export default function UserPostComment({
       </CommentView>
       <SubContainer>
         <Date>{time}</Date>
-        <ReplyButton onPress={goToReComment}>
-          <ReplyText>답글 쓰기</ReplyText>
-        </ReplyButton>
+        {screenName === "ReComment" ? null : (
+          <ReplyButton onPress={goToReComment}>
+            <ReplyText>답글 쓰기</ReplyText>
+          </ReplyButton>
+        )}
       </SubContainer>
-      <ScrollView showsVerticalScrollIndicator={true}>
-        {reComments.map((item, index) => (
-          <ReCommentPaint
-            key={index}
-            user={item.user}
-            payload={item.payload}
-            isMine={item.isMine}
-            createdAt={item.createdAt}
-          />
-        ))}
-      </ScrollView>
+      <FlatList
+        showsVerticalScrollIndicator={true}
+        data={data?.seeUserPostReComments}
+        keyExtractor={(item) => "" + item.id}
+        renderItem={renderReComment}
+      />
       <ActionSheet
         ref={actionsheet}
         options={optionArray}

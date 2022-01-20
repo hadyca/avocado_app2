@@ -1,13 +1,15 @@
 import React from "react";
-import { Text } from "react-native";
+import { Alert, Text } from "react-native";
 import ScreenLayout from "../../components/ScreenLayout";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { userPostReportAry } from "../../constant";
 import styled from "styled-components/native";
 import { colors } from "../../colors";
+import { useNavigation } from "@react-navigation/native";
+
 const REPORT_MUTATION = gql`
-  mutation userPostReport($userPostId: Int!) {
-    userPostReport(userPostId: $userPostId) {
+  mutation userPostReport($userPostId: Int!, $reason: String!) {
+    userPostReport(userPostId: $userPostId, reason: $reason) {
       ok
       error
     }
@@ -15,52 +17,62 @@ const REPORT_MUTATION = gql`
 `;
 
 const Container = styled.View``;
-
-const CategoryView = styled.View`
+const TitleView = styled.View`
+  padding: 25px 15px;
   border-bottom-width: 1px;
   border-bottom-color: ${colors.borderThin};
 `;
-const CategoryView2 = styled.TouchableOpacity`
-  padding: 25px 7px;
-  color: black;
+const TitleText = styled.Text`
+  font-weight: bold;
 `;
 
-const CategoryText = styled.Text``;
+const ReportView = styled.TouchableOpacity`
+  padding: 25px 15px;
+  color: black;
+  border-bottom-width: 1px;
+  border-bottom-color: ${colors.borderThin};
+`;
 
-export default function UserPostReportForm() {
-  const goReportUserPost = (cache, result) => {
-    const {
-      data: {
-        deleteUserPost: { ok },
-      },
-    } = result;
-    if (ok) {
-      const UserPostId = `UserPost:${params?.id}`;
-      cache.modify({
-        id: UserPostId,
-        fields: {
-          deleted(prev) {
-            return !prev;
-          },
-        },
-      });
-    }
-    Alert.alert("게시글이 삭제 되었습니다.");
+const ReportText = styled.Text``;
+
+export default function UserPostReportForm({ route: { params } }) {
+  const navigation = useNavigation();
+  const goReportUserPost = () => {
+    Alert.alert("신고해주셔서 감사합니다.");
     navigation.pop();
   };
-  const [reportPostMutation] = useMutation(REPORT_MUTATION, {
+  const [reportPostMutation, { loading }] = useMutation(REPORT_MUTATION, {
     update: goReportUserPost,
   });
+
+  const goToReport = (item) => {
+    reportPostMutation({
+      variables: {
+        userPostId: parseInt(params.id),
+        reason: item,
+      },
+    });
+  };
+  const handleReport = (item) => {
+    Alert.alert("신고하시겠습니까?", "", [
+      { text: "Cancel" },
+      {
+        text: "Ok",
+        onPress: () => goToReport(item),
+      },
+    ]);
+  };
+
   return (
     <ScreenLayout>
       <Container>
-        <Text>신고내용을 써주세요</Text>
+        <TitleView>
+          <TitleText>게시글을 신고하는 이유를 선택해주세요.</TitleText>
+        </TitleView>
         {userPostReportAry.map((item, index) => (
-          <CategoryView key={index}>
-            <CategoryView2 onPress={() => selectCategory(item)}>
-              <CategoryText>{item}</CategoryText>
-            </CategoryView2>
-          </CategoryView>
+          <ReportView key={index} onPress={() => handleReport(item)}>
+            <ReportText>{item}</ReportText>
+          </ReportView>
         ))}
       </Container>
     </ScreenLayout>
