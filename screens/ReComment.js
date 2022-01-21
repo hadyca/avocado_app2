@@ -77,31 +77,35 @@ export default function ReComment({ route: { params } }) {
   return (
     <ScreenLayout loading={loading}>
       <DismissKeyboard>
-        <Container>
-          <ScrollView
-            shshowsVerticalScrollIndicator={true}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={refresh} />
-            }
-          >
-            <UserPostComment
-              userPostId={data?.seeUserPostComment?.userPostId}
-              id={data?.seeUserPostComment?.id}
-              user={data?.seeUserPostComment?.user}
-              payload={data?.seeUserPostComment?.payload}
-              isMine={data?.seeUserPostComment?.isMine}
-              createdAt={data?.seeUserPostComment?.createdAt}
-              reComments={data?.seeUserPostComment?.userPostReComments}
-            />
-          </ScrollView>
-        </Container>
+        <ScrollView
+          shshowsVerticalScrollIndicator={true}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={refresh} />
+          }
+          style={{ flex: 1 }}
+        >
+          <UserPostComment
+            userPostId={data?.seeUserPostComment?.userPostId}
+            id={data?.seeUserPostComment?.id}
+            user={data?.seeUserPostComment?.user}
+            payload={data?.seeUserPostComment?.payload}
+            isMine={data?.seeUserPostComment?.isMine}
+            createdAt={data?.seeUserPostComment?.createdAt}
+            reComments={data?.seeUserPostComment?.userPostReComments}
+            reCommentScreen={true}
+          />
+        </ScrollView>
       </DismissKeyboard>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={statusBarHeight + 20}
         // keyboardVerticalOffset={300}
       >
-        <CommentForm userPostId={parseInt(params?.id)} />
+        <CommentForm
+          userPostId={parseInt(params?.userPostId)}
+          userPostCommentId={parseInt(params?.id)}
+          reCommentScreen={true}
+        />
       </KeyboardAvoidingView>
     </ScreenLayout>
   );

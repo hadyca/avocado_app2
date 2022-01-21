@@ -133,14 +133,15 @@ export default function UserPostListDetail({ route: { params } }) {
       userPostId: parseInt(params?.id),
     },
   });
-  const { data: commentData, refetch: commentRefetch } = useQuery(
-    COMMENTS_QUERY,
-    {
-      variables: {
-        userPostId: parseInt(params?.id),
-      },
-    }
-  );
+  const {
+    data: commentData,
+    loading: commentLoading,
+    refetch: commentRefetch,
+  } = useQuery(COMMENTS_QUERY, {
+    variables: {
+      userPostId: parseInt(params?.id),
+    },
+  });
 
   const goDeleteUserPost = (cache, result) => {
     const {
@@ -354,7 +355,7 @@ export default function UserPostListDetail({ route: { params } }) {
   };
 
   return (
-    <ScreenLayout loading={loading}>
+    <ScreenLayout loading={loading || commentLoading}>
       {commentData?.seeUserPostComments.length > 0 && !deletedComment ? (
         <PostContainer>
           <FlatList
@@ -420,10 +421,7 @@ export default function UserPostListDetail({ route: { params } }) {
         keyboardVerticalOffset={statusBarHeight + 20}
         // keyboardVerticalOffset={300}
       >
-        <CommentForm
-          userPostId={parseInt(params?.id)}
-          refetch={commentRefetch}
-        />
+        <CommentForm userPostId={parseInt(params?.id)} />
       </KeyboardAvoidingView>
       <ActionSheet
         ref={myActionsheet}

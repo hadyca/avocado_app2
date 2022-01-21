@@ -9,7 +9,6 @@ import PostFormButton from "../components/post/PostFormButton";
 import styled from "styled-components/native";
 import { ScrollView } from "react-native-gesture-handler";
 import { categories } from "../constant";
-import { categoriesScreen } from "../constant";
 
 const POST_QUERY = gql`
   query seeAllUserPosts($offset: Int!) {
@@ -45,6 +44,7 @@ const FetchView = styled.View`
 export default function UserPostList() {
   const ref = useRef(null);
   useScrollToTop(ref);
+
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);

@@ -62,7 +62,7 @@ const ReplyButton = styled.TouchableOpacity`
 const ReplyText = styled.Text`
   color: ${colors.homeText};
   font-size: 12px;
-  font-weight: 600;
+  font-weight: bold;
 `;
 
 export default function UserPostComment({
@@ -73,8 +73,10 @@ export default function UserPostComment({
   isMine,
   createdAt,
   reComments,
+  reCommentScreen,
+  refHandler,
 }) {
-  const deleteUserComment = async (cache, result) => {
+  const deleteUserComment = (cache, result) => {
     const {
       data: {
         deleteUserPostComment: { ok },
@@ -83,7 +85,7 @@ export default function UserPostComment({
     if (ok) {
       const CommentId = `UserPostComment:${id}`;
       const UserPostId = `UserPost:${userPostId}`;
-      await cache.modify({
+      cache.modify({
         id: CommentId,
         fields: {
           deleted(prev) {
@@ -91,7 +93,7 @@ export default function UserPostComment({
           },
         },
       });
-      await cache.modify({
+      cache.modify({
         id: UserPostId,
         fields: {
           totalUserPostComments(prev) {
@@ -109,12 +111,20 @@ export default function UserPostComment({
     }
   );
 
-  let actionsheet = useRef();
-  let optionArray = ["Edit", "Delete", "Cancel"];
+  let myActionsheet = useRef();
+  let notMeActionsheet = useRef();
+
+  let myOptionArray = ["수정", "삭제", "취소"];
+  let notMineOptionArray = ["신고", "취소"];
+
   const navigation = useNavigation();
 
   const showActionSheet = () => {
-    actionsheet.current.show();
+    if (isMine) {
+      return myActionsheet.current.show();
+    } else {
+      return notMeActionsheet.current.show();
+    }
   };
 
   const goToEditCommentForm = () => {
@@ -132,20 +142,31 @@ export default function UserPostComment({
     });
   };
 
-  const handleIndex = (index) => {
+  const goToReportForm = () => {
+    navigation.navigate("UserPostCommentReportForm", {
+      id,
+    });
+  };
+
+  const myHandleIndex = (index) => {
     if (index === 0) {
-      Alert.alert("Edit", "Do you want edit comment?", [
-        { text: "Cancel" },
-        { text: "Ok", onPress: () => goToEditCommentForm() },
-      ]);
+      goToEditCommentForm();
     } else if (index === 1) {
-      Alert.alert("Delete", "Do you want delete comment?", [
+      Alert.alert("댓글을 삭제하시겠어요?", "", [
         { text: "Cancel" },
         {
           text: "Ok",
           onPress: () => goToDeleteComment(),
         },
       ]);
+    } else {
+      return;
+    }
+  };
+
+  const notMineHandleIndex = (index) => {
+    if (index === 0) {
+      goToReportForm();
     } else {
       return;
     }
@@ -202,9 +223,11 @@ export default function UserPostComment({
       </CommentView>
       <SubContainer>
         <Date>{time}</Date>
-        <ReplyButton onPress={goToReComment}>
-          <ReplyText>답글 쓰기</ReplyText>
-        </ReplyButton>
+        {!reCommentScreen ? (
+          <ReplyButton onPress={goToReComment}>
+            <ReplyText>답글 쓰기</ReplyText>
+          </ReplyButton>
+        ) : null}
       </SubContainer>
       <ScrollView showsVerticalScrollIndicator={true}>
         {reComments.map((item, index) => (
@@ -218,11 +241,18 @@ export default function UserPostComment({
         ))}
       </ScrollView>
       <ActionSheet
-        ref={actionsheet}
-        options={optionArray}
+        ref={myActionsheet}
+        options={myOptionArray}
         cancelButtonIndex={2}
         destructiveButtonIndex={1}
-        onPress={(index) => handleIndex(index)}
+        onPress={(index) => myHandleIndex(index)}
+      />
+      <ActionSheet
+        ref={notMeActionsheet}
+        options={notMineOptionArray}
+        cancelButtonIndex={1}
+        destructiveButtonIndex={0}
+        onPress={(index) => notMineHandleIndex(index)}
       />
     </Container>
   );

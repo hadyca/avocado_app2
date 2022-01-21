@@ -30,3 +30,10 @@ export const userPostReportAry = [
   "이상한 사이트로 유도해요",
   "유저가 못생겼을 거 같아요",
 ];
+
+export const userPostCommentReportAry = [
+  "악플이에요",
+  "댓글단 사람이 못생겼습니다.",
+  "댓글 test",
+  "댓글 test2",
+];

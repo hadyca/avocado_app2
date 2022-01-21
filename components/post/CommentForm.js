@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { gql, useMutation } from "@apollo/client";
 import styled from "styled-components/native";
 import { useForm, Controller } from "react-hook-form";
 import { colors } from "../../colors";
-import AuthButton from "../auth/AuthButton";
-import { Ionicons } from "@expo/vector-icons";
 import SendButton from "./SendButton";
-
+import { Keyboard } from "react-native";
 const CREATE_COMMENT_MUTATION = gql`
   mutation createUserPostComment($userPostId: Int!, $payload: String!) {
     createUserPostComment(userPostId: $userPostId, payload: $payload) {
@@ -21,7 +19,10 @@ const CREATE_RECOMMENT_MUTATION = gql`
     $userPostCommentId: Int!
     $payload: String!
   ) {
-    createUserPostComment(userPostId: $userPostCommentId, payload: $payload) {
+    createUserPostReComment(
+      userPostCommentId: $userPostCommentId
+      payload: $payload
+    ) {
       ok
       error
     }
@@ -57,10 +58,16 @@ const IconView = styled.TouchableOpacity`
   position: absolute;
   right: 10px;
 `;
-export default function CommentForm({ userPostId, refetch, reCommentScreen }) {
+export default function CommentForm({
+  userPostId,
+  userPostCommentId,
+  reCommentScreen,
+  refHandler,
+  handleCommentFetch,
+}) {
   const { handleSubmit, control, reset, watch } = useForm();
 
-  const updateComment = (cache, result) => {
+  const updateComment = async (cache, result) => {
     const {
       data: { createUserPostComment },
     } = result;
@@ -77,30 +84,38 @@ export default function CommentForm({ userPostId, refetch, reCommentScreen }) {
           },
         },
       });
-      refetch();
     }
+    // handleCommentFetch();
+    Keyboard.dismiss();
   };
+
   const updateReComment = (cache, result) => {
     const {
-      data: { createUserPostComment },
+      data: { createUserPostReComment },
     } = result;
-    if (createUserPostComment.ok) {
+    if (createUserPostReComment.ok) {
+      const UserPostCommentId = `UserPostComment:${userPostCommentId}`;
       const UserPostId = `UserPost:${userPostId}`;
+      cache.modify({
+        id: UserPostCommentId,
+        fields: {
+          userPostReComments(prev) {
+            return [createUserPostReComment, ...prev];
+          },
+        },
+      });
       cache.modify({
         id: UserPostId,
         fields: {
-          userPostComments(prev) {
-            return [createUserPostComment, ...prev];
-          },
           totalUserPostComments(prev) {
             return prev + 1;
           },
         },
       });
-      refetch();
     }
   };
-  const [createCommentMutation, { loading }] = useMutation(
+
+  const [createCommentMutation, { loading, called }] = useMutation(
     CREATE_COMMENT_MUTATION,
     {
       update: updateComment,
@@ -116,17 +131,21 @@ export default function CommentForm({ userPostId, refetch, reCommentScreen }) {
 
   const onValid = ({ payload }) => {
     if (!ReCommentLoading && reCommentScreen) {
-      console.log("재댓글");
-    }
-    if (!loading) {
+      createReCommentMutation({
+        variables: {
+          userPostCommentId,
+          payload,
+        },
+      });
+    } else {
       createCommentMutation({
         variables: {
           userPostId,
           payload,
         },
       });
-      reset();
     }
+    reset();
   };
 
   return (
@@ -152,7 +171,7 @@ export default function CommentForm({ userPostId, refetch, reCommentScreen }) {
         />
         <SendButton
           disabled={!watch("payload")}
-          loading={loading}
+          loading={loading || ReCommentLoading}
           onPress={handleSubmit(onValid)}
         />
       </Actions>
