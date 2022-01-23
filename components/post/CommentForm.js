@@ -58,14 +58,14 @@ const IconView = styled.TouchableOpacity`
   position: absolute;
   right: 10px;
 `;
-function CommentForm({
+
+export default function CommentForm({
   userPostId,
   userPostCommentId,
   reCommentScreen,
   handleRef,
   handleCommentFetch,
   handleComment,
-  commentRefetch,
 }) {
   const { handleSubmit, control, reset, watch } = useForm();
 
@@ -78,16 +78,16 @@ function CommentForm({
       cache.modify({
         id: UserPostId,
         fields: {
-          // userPostComments(prev) {
-          //   return [createUserPostComment, ...prev];
-          // },
+          userPostComments(prev) {
+            return [createUserPostComment, ...prev];
+          },
           totalUserPostComments(prev) {
             return prev + 1;
           },
         },
       });
     }
-    commentRefetch();
+    handleComment();
     // handleCommentFetch();
     Keyboard.dismiss();
   };
@@ -181,5 +181,3 @@ function CommentForm({
     </Container>
   );
 }
-
-export default React.memo(CommentForm);

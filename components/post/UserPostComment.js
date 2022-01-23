@@ -65,7 +65,7 @@ const ReplyText = styled.Text`
   font-weight: bold;
 `;
 
-export default function UserPostComment({
+function UserPostComment({
   userPostId,
   id,
   user,
@@ -257,3 +257,5 @@ export default function UserPostComment({
     </Container>
   );
 }
+
+export default React.memo(UserPostComment);

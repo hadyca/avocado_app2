@@ -117,7 +117,7 @@ const NoComment = styled.Text`
 export default function UserPostListDetail({ route: { params } }) {
   const [refreshing, setRefreshing] = useState(false);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
-  const [commentUpdate, setCommentUpdate] = useState(false);
+  const [updateComment, setUpdateComment] = useState(false);
   const navigation = useNavigation();
 
   const { StatusBarManager } = NativeModules;
@@ -144,8 +144,6 @@ export default function UserPostListDetail({ route: { params } }) {
       userPostId: parseInt(params?.id),
     },
   });
-
-  console.log(commentLoading);
 
   const goDeleteUserPost = (cache, result) => {
     const {
@@ -360,13 +358,17 @@ export default function UserPostListDetail({ route: { params } }) {
 
   let detailRef = useRef();
 
-  const handleCommentRefetch = () => {
-    setCommentUpdate(true);
-    commentRefetch();
-    setCommentUpdate(false);
-    if (!commentUpdate) {
+  const handleRef = () => {
+    if (updateComment) {
       detailRef.current?.scrollToEnd({ animated: true });
+      setUpdateComment(false);
+    } else {
+      return null;
     }
+  };
+
+  const handleComment = () => {
+    setUpdateComment(true);
   };
 
   return (
@@ -389,7 +391,6 @@ export default function UserPostListDetail({ route: { params } }) {
                 isLiked={data?.seeUserPost?.isLiked}
               />
             }
-            initialNumToRender={20}
             refreshing={refreshing}
             onRefresh={refresh}
             showsVerticalScrollIndicator={true}
@@ -397,6 +398,7 @@ export default function UserPostListDetail({ route: { params } }) {
             keyExtractor={(item) => "" + item.id}
             renderItem={renderComment}
             ref={detailRef}
+            onContentSizeChange={handleRef}
           />
         </PostContainer>
       ) : (
@@ -440,7 +442,7 @@ export default function UserPostListDetail({ route: { params } }) {
       >
         <CommentForm
           userPostId={parseInt(params?.id)}
-          commentRefetch={handleCommentRefetch}
+          handleComment={handleComment}
         />
       </KeyboardAvoidingView>
       <ActionSheet
