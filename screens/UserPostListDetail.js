@@ -117,7 +117,7 @@ const NoComment = styled.Text`
 export default function UserPostListDetail({ route: { params } }) {
   const [refreshing, setRefreshing] = useState(false);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
-  const [updateComment, setUpdateComment] = useState(false);
+  const [commentUpdate, setCommentUpdate] = useState(false);
   const navigation = useNavigation();
 
   const { StatusBarManager } = NativeModules;
@@ -144,6 +144,8 @@ export default function UserPostListDetail({ route: { params } }) {
       userPostId: parseInt(params?.id),
     },
   });
+
+  console.log(commentLoading);
 
   const goDeleteUserPost = (cache, result) => {
     const {
@@ -358,20 +360,14 @@ export default function UserPostListDetail({ route: { params } }) {
 
   let detailRef = useRef();
 
-  const handleRef = () => {
-    if (updateComment) {
+  const handleCommentRefetch = () => {
+    setCommentUpdate(true);
+    commentRefetch();
+    setCommentUpdate(false);
+    if (!commentUpdate) {
       detailRef.current?.scrollToEnd({ animated: true });
-      setUpdateComment(false);
-    } else {
-      return null;
     }
   };
-
-  const handleComment = () => {
-    setUpdateComment(true);
-  };
-
-  console.log(updateComment);
 
   return (
     <ScreenLayout loading={loading || commentLoading}>
@@ -393,6 +389,7 @@ export default function UserPostListDetail({ route: { params } }) {
                 isLiked={data?.seeUserPost?.isLiked}
               />
             }
+            initialNumToRender={20}
             refreshing={refreshing}
             onRefresh={refresh}
             showsVerticalScrollIndicator={true}
@@ -400,7 +397,6 @@ export default function UserPostListDetail({ route: { params } }) {
             keyExtractor={(item) => "" + item.id}
             renderItem={renderComment}
             ref={detailRef}
-            onContentSizeChange={handleRef}
           />
         </PostContainer>
       ) : (
@@ -444,7 +440,7 @@ export default function UserPostListDetail({ route: { params } }) {
       >
         <CommentForm
           userPostId={parseInt(params?.id)}
-          handleComment={handleComment}
+          commentRefetch={handleCommentRefetch}
         />
       </KeyboardAvoidingView>
       <ActionSheet

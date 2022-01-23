@@ -65,6 +65,7 @@ function CommentForm({
   handleRef,
   handleCommentFetch,
   handleComment,
+  commentRefetch,
 }) {
   const { handleSubmit, control, reset, watch } = useForm();
 
@@ -77,16 +78,16 @@ function CommentForm({
       cache.modify({
         id: UserPostId,
         fields: {
-          userPostComments(prev) {
-            return [createUserPostComment, ...prev];
-          },
+          // userPostComments(prev) {
+          //   return [createUserPostComment, ...prev];
+          // },
           totalUserPostComments(prev) {
             return prev + 1;
           },
         },
       });
     }
-    handleComment();
+    commentRefetch();
     // handleCommentFetch();
     Keyboard.dismiss();
   };
