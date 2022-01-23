@@ -58,12 +58,13 @@ const IconView = styled.TouchableOpacity`
   position: absolute;
   right: 10px;
 `;
-export default function CommentForm({
+function CommentForm({
   userPostId,
   userPostCommentId,
   reCommentScreen,
-  refHandler,
+  handleRef,
   handleCommentFetch,
+  handleComment,
 }) {
   const { handleSubmit, control, reset, watch } = useForm();
 
@@ -85,6 +86,7 @@ export default function CommentForm({
         },
       });
     }
+    handleComment();
     // handleCommentFetch();
     Keyboard.dismiss();
   };
@@ -178,3 +180,5 @@ export default function CommentForm({
     </Container>
   );
 }
+
+export default React.memo(CommentForm);

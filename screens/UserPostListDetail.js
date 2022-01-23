@@ -117,6 +117,7 @@ const NoComment = styled.Text`
 export default function UserPostListDetail({ route: { params } }) {
   const [refreshing, setRefreshing] = useState(false);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
+  const [updateComment, setUpdateComment] = useState(false);
   const navigation = useNavigation();
 
   const { StatusBarManager } = NativeModules;
@@ -133,6 +134,7 @@ export default function UserPostListDetail({ route: { params } }) {
       userPostId: parseInt(params?.id),
     },
   });
+
   const {
     data: commentData,
     loading: commentLoading,
@@ -354,6 +356,23 @@ export default function UserPostListDetail({ route: { params } }) {
     }
   };
 
+  let detailRef = useRef();
+
+  const handleRef = () => {
+    if (updateComment) {
+      detailRef.current?.scrollToEnd({ animated: true });
+      setUpdateComment(false);
+    } else {
+      return null;
+    }
+  };
+
+  const handleComment = () => {
+    setUpdateComment(true);
+  };
+
+  console.log(updateComment);
+
   return (
     <ScreenLayout loading={loading || commentLoading}>
       {commentData?.seeUserPostComments.length > 0 && !deletedComment ? (
@@ -380,6 +399,8 @@ export default function UserPostListDetail({ route: { params } }) {
             data={commentData?.seeUserPostComments}
             keyExtractor={(item) => "" + item.id}
             renderItem={renderComment}
+            ref={detailRef}
+            onContentSizeChange={handleRef}
           />
         </PostContainer>
       ) : (
@@ -421,7 +442,10 @@ export default function UserPostListDetail({ route: { params } }) {
         keyboardVerticalOffset={statusBarHeight + 20}
         // keyboardVerticalOffset={300}
       >
-        <CommentForm userPostId={parseInt(params?.id)} />
+        <CommentForm
+          userPostId={parseInt(params?.id)}
+          handleComment={handleComment}
+        />
       </KeyboardAvoidingView>
       <ActionSheet
         ref={myActionsheet}
