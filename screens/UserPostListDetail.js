@@ -209,7 +209,8 @@ export default function UserPostListDetail({ route: { params } }) {
     }
   );
 
-  const renderComment = ({ item }) => {
+  let commentIndex = null;
+  const renderComment = ({ item, index }) => {
     if (item.deleted === false) {
       return (
         <UserPostComment
@@ -370,7 +371,7 @@ export default function UserPostListDetail({ route: { params } }) {
 
   const handleComment = async () => {
     await commentRefetch();
-    await setTimeout(() => detailRef.current.scrollToEnd(), 1000);
+    setTimeout(() => detailRef.current.scrollToEnd(), 500);
   };
 
   return (
@@ -444,7 +445,6 @@ export default function UserPostListDetail({ route: { params } }) {
         <CommentForm
           userPostId={parseInt(params?.id)}
           handleComment={handleComment}
-          commentRefetch={commentRefetch}
         />
       </KeyboardAvoidingView>
       <ActionSheet

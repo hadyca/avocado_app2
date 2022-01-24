@@ -64,7 +64,6 @@ export default function CommentForm({
   userPostCommentId,
   reCommentScreen,
   handleComment,
-  commentRefetch,
 }) {
   const { handleSubmit, control, reset, watch } = useForm();
 
