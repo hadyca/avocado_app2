@@ -63,9 +63,8 @@ export default function CommentForm({
   userPostId,
   userPostCommentId,
   reCommentScreen,
-  handleRef,
-  handleCommentFetch,
   handleComment,
+  commentRefetch,
 }) {
   const { handleSubmit, control, reset, watch } = useForm();
 
@@ -78,9 +77,9 @@ export default function CommentForm({
       cache.modify({
         id: UserPostId,
         fields: {
-          userPostComments(prev) {
-            return [createUserPostComment, ...prev];
-          },
+          // userPostComments(prev) {
+          //   return [createUserPostComment, ...prev];
+          // },
           totalUserPostComments(prev) {
             return prev + 1;
           },
@@ -88,7 +87,6 @@ export default function CommentForm({
       });
     }
     handleComment();
-    // handleCommentFetch();
     Keyboard.dismiss();
   };
 
@@ -118,7 +116,7 @@ export default function CommentForm({
     }
   };
 
-  const [createCommentMutation, { loading, called }] = useMutation(
+  const [createCommentMutation, { loading }] = useMutation(
     CREATE_COMMENT_MUTATION,
     {
       update: updateComment,
