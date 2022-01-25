@@ -360,18 +360,9 @@ export default function UserPostListDetail({ route: { params } }) {
 
   let detailRef = useRef();
 
-  // const handleRef = () => {
-  //   if (updateComment) {
-  //     detailRef.current.scrollToEnd({ animated: true });
-  //     setUpdateComment(false);
-  //   } else {
-  //     return null;
-  //   }
-  // };
-
   const handleComment = async () => {
     await commentRefetch();
-    setTimeout(() => detailRef.current.scrollToEnd(), 500);
+    setTimeout(() => detailRef.current?.scrollToEnd(), 1000);
   };
 
   return (

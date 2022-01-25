@@ -64,6 +64,7 @@ export default function CommentForm({
   userPostCommentId,
   reCommentScreen,
   handleComment,
+  handleReComment,
 }) {
   const { handleSubmit, control, reset, watch } = useForm();
 
@@ -112,6 +113,8 @@ export default function CommentForm({
           },
         },
       });
+      handleReComment();
+      Keyboard.dismiss();
     }
   };
 

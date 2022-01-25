@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   KeyboardAvoidingView,
   NativeModules,
   View,
+  Text,
   ScrollView,
   FlatList,
   RefreshControl,
@@ -50,6 +51,7 @@ const Container = styled.View`
 `;
 
 export default function ReComment({ route: { params } }) {
+  const [updateReComment, setUpdateReComment] = useState("");
   const [refreshing, setRefreshing] = useState(false);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
   const { StatusBarManager } = NativeModules;
@@ -74,6 +76,12 @@ export default function ReComment({ route: { params } }) {
     setRefreshing(false);
   };
 
+  let reCommentRef = useRef();
+
+  const handleReComment = (text) => {
+    setTimeout(() => reCommentRef.current?.scrollToEnd(), 1000);
+  };
+
   return (
     <ScreenLayout loading={loading}>
       <DismissKeyboard>
@@ -83,6 +91,7 @@ export default function ReComment({ route: { params } }) {
             <RefreshControl refreshing={refreshing} onRefresh={refresh} />
           }
           style={{ flex: 1 }}
+          ref={reCommentRef}
         >
           <UserPostComment
             userPostId={data?.seeUserPostComment?.userPostId}
@@ -105,6 +114,7 @@ export default function ReComment({ route: { params } }) {
           userPostId={parseInt(params?.userPostId)}
           userPostCommentId={parseInt(params?.id)}
           reCommentScreen={true}
+          handleReComment={handleReComment}
         />
       </KeyboardAvoidingView>
     </ScreenLayout>
