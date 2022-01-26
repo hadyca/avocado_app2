@@ -5,6 +5,7 @@ import UserPostUploadForm from "../screens/UserPostUploadForm";
 import EditUserPostForm from "../screens/EditUserPostForm";
 import UserPostListDetail from "../screens/UserPostListDetail";
 import EditUserPostCommentForm from "../screens/EditUserPostCommentForm";
+import EditUserPostReCommentForm from "../screens/EditUserPostReCommentForm";
 import Profile from "../screens/Profile";
 import PostCategory from "../screens/PostCategory";
 import EditPostCategory from "../screens/EditPostCategory";
@@ -12,6 +13,7 @@ import CategoryBoard from "../screens/CategoryBoard";
 import ReComment from "../screens/ReComment";
 import UserPostReportForm from "../screens/reports/UserPostReportForm";
 import UserPostCommentReportForm from "../screens/reports/UserPostCommentReportForm";
+import UserPostReCommentReportForm from "../screens/reports/UserPostReCommentReportForm";
 
 const Stack = createStackNavigator();
 
@@ -75,6 +77,13 @@ export default function LoggedInNav() {
         component={EditUserPostCommentForm}
       />
       <Stack.Screen
+        name="EditUserPostReCommentForm"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={EditUserPostReCommentForm}
+      />
+      <Stack.Screen
         name="CategoryBoard"
         options={{
           headerBackTitleVisible: false,
@@ -101,6 +110,13 @@ export default function LoggedInNav() {
           headerBackTitleVisible: false,
         }}
         component={UserPostCommentReportForm}
+      />
+      <Stack.Screen
+        name="UserPostReCommentReportForm"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={UserPostReCommentReportForm}
       />
     </Stack.Navigator>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import {
   KeyboardAvoidingView,
@@ -209,7 +209,6 @@ export default function UserPostListDetail({ route: { params } }) {
     }
   );
 
-  let commentIndex = null;
   const renderComment = ({ item, index }) => {
     if (item.deleted === false) {
       return (
@@ -227,6 +226,7 @@ export default function UserPostListDetail({ route: { params } }) {
       return null;
     }
   };
+
   const validComment = (item) => item.deleted === true;
 
   const deletedComment = commentData?.seeUserPostComments.every(validComment);

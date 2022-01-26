@@ -51,7 +51,6 @@ const Container = styled.View`
 `;
 
 export default function ReComment({ route: { params } }) {
-  const [updateReComment, setUpdateReComment] = useState("");
   const [refreshing, setRefreshing] = useState(false);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
   const { StatusBarManager } = NativeModules;

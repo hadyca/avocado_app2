@@ -10,8 +10,8 @@ import timeForToday from "../../utils";
 import { colors } from "../../colors";
 
 const DELETE_COMMENT_MUTATION = gql`
-  mutation deleteUserPostComment($commentId: Int!) {
-    deleteUserPostComment(commentId: $commentId) {
+  mutation deleteUserPostReComment($reCommentId: Int!) {
+    deleteUserPostReComment(reCommentId: $reCommentId) {
       ok
       error
     }
@@ -65,79 +65,103 @@ const ReplyText = styled.Text`
   font-weight: 600;
 `;
 
-export default function ReCommentPaint({ user, payload, isMine, createdAt }) {
+export default function ReCommentPaint({
+  id,
+  user,
+  payload,
+  isMine,
+  createdAt,
+}) {
   const deleteUserComment = async (cache, result) => {
     const {
       data: {
-        deleteUserPostComment: { ok },
+        deleteUserPostReComment: { ok },
       },
     } = result;
     if (ok) {
-      const CommentId = `UserPostComment:${id}`;
-      const UserPostId = `UserPost:${userPostId}`;
+      const ReCommentId = `UserPostReComment:${id}`;
+      // const UserPostId = `UserPost:${userPostId}`;
       await cache.modify({
-        id: CommentId,
+        id: ReCommentId,
         fields: {
           deleted(prev) {
             return !prev;
           },
         },
       });
-      await cache.modify({
-        id: UserPostId,
-        fields: {
-          totalUserPostComments(prev) {
-            return prev - 1;
-          },
-        },
-      });
+      // await cache.modify({
+      //   id: UserPostId,
+      //   fields: {
+      //     totalUserPostComments(prev) {
+      //       return prev - 1;
+      //     },
+      //   },
+      // });
     }
   };
 
-  const [deleteUserCommentMutation, { loading }] = useMutation(
+  const [deleteUserReCommentMutation, { loading }] = useMutation(
     DELETE_COMMENT_MUTATION,
     {
       update: deleteUserComment,
     }
   );
 
-  let actionsheet = useRef();
-  let optionArray = ["Edit", "Delete", "Cancel"];
+  let myActionsheet = useRef();
+  let notMeActionsheet = useRef();
+
+  let myOptionArray = ["수정", "삭제", "취소"];
+  let notMineOptionArray = ["신고", "취소"];
+
   const navigation = useNavigation();
 
   const showActionSheet = () => {
-    actionsheet.current.show();
+    if (isMine) {
+      return myActionsheet.current.show();
+    } else {
+      return notMeActionsheet.current.show();
+    }
   };
 
   const goToEditCommentForm = () => {
-    navigation.navigate("EditUserPostCommentForm", {
-      commentId: id,
+    navigation.navigate("EditUserPostReCommentForm", {
+      reCommentId: id,
       payload,
     });
   };
 
   const goToDeleteComment = () => {
-    deleteUserCommentMutation({
+    deleteUserReCommentMutation({
       variables: {
-        commentId: parseInt(id),
+        reCommentId: parseInt(id),
       },
     });
   };
 
-  const handleIndex = (index) => {
+  const goToReportForm = () => {
+    navigation.navigate("UserPostReCommentReportForm", {
+      id,
+    });
+  };
+  const myHandleIndex = (index) => {
     if (index === 0) {
-      Alert.alert("Edit", "Do you want edit comment?", [
-        { text: "Cancel" },
-        { text: "Ok", onPress: () => goToEditCommentForm() },
-      ]);
+      goToEditCommentForm();
     } else if (index === 1) {
-      Alert.alert("Delete", "Do you want delete comment?", [
+      Alert.alert("댓글을 삭제하시겠어요?", "", [
         { text: "Cancel" },
         {
           text: "Ok",
           onPress: () => goToDeleteComment(),
         },
       ]);
+    } else {
+      return;
+    }
+  };
+
+  const notMineHandleIndex = (index) => {
+    if (index === 0) {
+      goToReportForm();
     } else {
       return;
     }
@@ -158,6 +182,7 @@ export default function ReCommentPaint({ user, payload, isMine, createdAt }) {
       createdAt,
     });
   };
+
   const date = new window.Date(parseInt(createdAt));
 
   const time = timeForToday(date);
@@ -168,11 +193,9 @@ export default function ReCommentPaint({ user, payload, isMine, createdAt }) {
         <Header onPress={goToProfile}>
           <UserAvatar username={user.username} uri={user.avatar} />
         </Header>
-        {isMine ? (
-          <IconView onPress={showActionSheet}>
-            <Ionicons name="ellipsis-vertical" color="grey" size={14} />
-          </IconView>
-        ) : null}
+        <IconView onPress={showActionSheet}>
+          <Ionicons name="ellipsis-vertical" color="grey" size={14} />
+        </IconView>
       </HeaderContainer>
       <CommentView>
         <CommentPayLoad>{payload}</CommentPayLoad>
@@ -181,11 +204,18 @@ export default function ReCommentPaint({ user, payload, isMine, createdAt }) {
         <Date>{time}</Date>
       </SubContainer>
       <ActionSheet
-        ref={actionsheet}
-        options={optionArray}
+        ref={myActionsheet}
+        options={myOptionArray}
         cancelButtonIndex={2}
         destructiveButtonIndex={1}
-        onPress={(index) => handleIndex(index)}
+        onPress={(index) => myHandleIndex(index)}
+      />
+      <ActionSheet
+        ref={notMeActionsheet}
+        options={notMineOptionArray}
+        cancelButtonIndex={1}
+        destructiveButtonIndex={0}
+        onPress={(index) => notMineHandleIndex(index)}
       />
     </Container>
   );
