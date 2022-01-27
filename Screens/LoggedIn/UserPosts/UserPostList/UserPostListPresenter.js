@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useScrollToTop } from "@react-navigation/native";
 import { FlatList, ActivityIndicator, ScrollView } from "react-native";
 import styled from "styled-components/native";
-import PostFormButton from "../../../../components/post/PostFormButton";
+import PostFormButton from "../../../../Components/Post/PostFormButton";
 import { categories } from "../../../../constant";
 
 const Container = styled.View`
@@ -16,7 +16,7 @@ const FetchView = styled.View`
   bottom: 30px;
 `;
 
-function UserPostListPresenter({
+export default function UserPostListPresenter({
   goToUserPostForm,
   refreshing,
   refresh,
@@ -62,5 +62,3 @@ function UserPostListPresenter({
     </Container>
   );
 }
-
-export default UserPostListPresenter;

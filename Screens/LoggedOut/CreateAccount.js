@@ -1,13 +1,13 @@
 import React, { useRef } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { useForm, Controller } from "react-hook-form";
-import AuthButton from "../components/auth/AuthButton";
-import AuthLayout from "../components/auth/AuthLayout";
-import FormError from "../components/auth/FormError";
-import { Subtitle } from "../components/auth/Subtitle";
-import { TextInput } from "../components/auth/AuthShared";
+import AuthButton from "../../Components/Auth/AuthButton";
+import AuthLayout from "../../Components/Auth/AuthLayout";
+import FormError from "../../Components/Auth/FormError";
+import { Subtitle } from "../../Components/Auth/Subtitle";
+import { TextInput } from "../../Components/Auth/AuthShared";
 import { useState } from "react";
-import { emailRule, passwordRule, usernameRule } from "../regExp";
+import { emailRule, passwordRule, usernameRule } from "../../regExp";
 
 const CREATE_ACCOUNT_MUTATION = gql`
   mutation createAccount(

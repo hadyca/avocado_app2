@@ -1,11 +1,11 @@
 import { gql, useMutation } from "@apollo/client";
 import React, { useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { logUserIn } from "../apollo";
-import AuthButton from "../components/auth/AuthButton";
-import AuthLayout from "../components/auth/AuthLayout";
-import { TextInput } from "../components/auth/AuthShared";
-import FormError from "../components/auth/FormError";
+import { logUserIn } from "../../apollo";
+import AuthButton from "../../Components/Auth/AuthButton";
+import AuthLayout from "../../Components/Auth/AuthLayout";
+import { TextInput } from "../../Components/Auth/AuthShared";
+import FormError from "../../Components/Auth/FormError";
 
 const LOGIN_MUTATION = gql`
   mutation login($email: String!, $password: String!) {
@@ -17,7 +17,10 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-export default function Login({ route: { params } }) {
+export default function Login() {
+  const [focus1, setFocus1] = useState(false);
+  const [focus2, setFocus2] = useState(false);
+
   const { handleSubmit, watch, setError, control, formState, clearErrors } =
     useForm({});
 
@@ -55,9 +58,6 @@ export default function Login({ route: { params } }) {
   const clearLoginError = () => {
     clearErrors("result");
   };
-
-  const [focus1, setFocus1] = useState(false);
-  const [focus2, setFocus2] = useState(false);
 
   return (
     <AuthLayout>

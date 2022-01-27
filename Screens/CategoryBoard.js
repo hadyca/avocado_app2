@@ -6,10 +6,10 @@ import {
   useWindowDimensions,
   Text,
 } from "react-native";
-import ScreenLayout from "../components/ScreenLayout";
+import ScreenLayout from "../Components/ScreenLayout";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
-import CategoryUserPost from "../components/post/CategoryUserPost";
+import CategoryUserPost from "../Components/Post/CategoryUserPost";
 
 const CATEGORY_BOARD_QUERY = gql`
   query seeUserCategoryPost($category: String!, $offset: Int!) {

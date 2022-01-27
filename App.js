@@ -4,8 +4,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { ApolloProvider, useReactiveVar } from "@apollo/client";
 import * as Font from "expo-font";
 import { Asset } from "expo-asset";
-import LoggedOutNav from "./navigators/LoggedOutNav";
-import LoggedInNav from "./navigators/LoggedInNav";
+import LoggedOutNav from "./Navigators/LoggedOutNav";
+import LoggedInNav from "./Navigators/LoggedInNav";
 import { NavigationContainer } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import client, { isLoggedInVar, tokenVar, logUserOut } from "./apollo";
@@ -23,7 +23,7 @@ export default function App() {
     return Promise.all([...fontPromises, ...imagePromises]);
   };
   const preload = async () => {
-    logUserOut();
+    // logUserOut();
     const token = await AsyncStorage.getItem("token");
     if (token) {
       isLoggedInVar(true);

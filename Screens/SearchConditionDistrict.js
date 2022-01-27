@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { useScrollToTop } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { colors } from "../colors";
-import SearchSmallDistrict from "../components/search/SearchSmallDistrict";
+import SearchSmallDistrict from "../Components/Search/SearchSmallDistrict";
 import { bigDistrict } from "../districtList";
 
 const Container = styled.View`

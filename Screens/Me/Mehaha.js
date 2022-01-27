@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { useScrollToTop } from "@react-navigation/native";
 import { Text } from "react-native";
-import ScreenLayout from "../../components/ScreenLayout";
-import useMe from "../../hooks/useMe";
+import ScreenLayout from "../../Components/ScreenLayout";
+import useMe from "../../Hooks/useMe";
 
 export default function Mehaha({ navigation }) {
   const ref = useRef(null);

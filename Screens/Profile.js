@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useScrollToTop } from "@react-navigation/native";
 import { Text, View } from "react-native";
-import ScreenLayout from "../components/ScreenLayout";
+import ScreenLayout from "../Components/ScreenLayout";
 
 export default function Profile({ navigation, route }) {
   const ref = useRef(null);

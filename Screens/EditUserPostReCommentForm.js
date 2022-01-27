@@ -3,7 +3,7 @@ import { View, TouchableOpacity, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import { gql, useMutation } from "@apollo/client";
-import DismissKeyboard from "../components/DismissKeyBoard";
+import DismissKeyboard from "../Components/DismissKeyBoard";
 import styled from "styled-components/native";
 import { colors } from "../colors";
 

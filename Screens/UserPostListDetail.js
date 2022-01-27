@@ -10,12 +10,12 @@ import {
   Alert,
   View,
 } from "react-native";
-import ScreenLayout from "../components/ScreenLayout";
+import ScreenLayout from "../Components/ScreenLayout";
 import styled from "styled-components/native";
 import { colors } from "../colors";
-import CommentForm from "../components/post/CommentForm";
-import PostContents from "../components/post/PostContents";
-import UserPostComment from "../components/post/UserPostComment";
+import CommentForm from "../Components/Post/CommentForm";
+import PostContents from "../Components/Post/PostContents";
+import UserPostComment from "../Components/Post/UserPostComment";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";

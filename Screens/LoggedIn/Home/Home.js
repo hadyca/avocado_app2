@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
 import { useScrollToTop } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
-import ScreenLayout from "../components/ScreenLayout";
+import ScreenLayout from "../../../Components/ScreenLayout";
 import styled from "styled-components/native";
 import { useWindowDimensions } from "react-native";
-import { colors } from "../colors";
+import { colors } from "../../../colors";
 
 const Container = styled.View`
   justify-content: center;

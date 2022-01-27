@@ -1,14 +1,14 @@
 import React from "react";
-import AuthButton from "../components/auth/AuthButton";
-import AuthLayout from "../components/auth/AuthLayout";
-import { TextInput } from "../components/auth/AuthShared";
-import { logUserIn } from "../apollo";
+import AuthButton from "../../Components/Auth/AuthButton";
+import AuthLayout from "../../Components/Auth/AuthLayout";
+import { TextInput } from "../../Components/Auth/AuthShared";
+import { logUserIn } from "../../apollo";
 import { useForm, Controller } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
-import FormError from "../components/auth/FormError";
+import FormError from "../../Components/Auth/FormError";
 import { Alert } from "react-native";
-import { Subtitle } from "../components/auth/Subtitle";
+import { Subtitle } from "../../Components/Auth/Subtitle";
 
 const REQUEST_SECRET_MUTATION = gql`
   mutation requestSecret($email: String!) {
@@ -30,8 +30,8 @@ const CONFIRM_SECRET = gql`
 `;
 
 export default function ConfirmSecret({ route: { params } }) {
-  const [minutes, setMinutes] = useState(1);
-  const [seconds, setSeconds] = useState(10);
+  const [minutes, setMinutes] = useState(2);
+  const [seconds, setSeconds] = useState(0);
   const [finish, setFinish] = useState(false);
   const [sendNum, setSendNum] = useState(0);
   const [waitingMail, setWaitingMail] = useState(true);

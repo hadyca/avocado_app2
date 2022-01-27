@@ -1,6 +1,6 @@
 import React from "react";
 import { Text } from "react-native";
-import ScreenLayout from "../components/ScreenLayout";
+import ScreenLayout from "../Components/ScreenLayout";
 
 export default function CompanyPostList({ route }) {
   return (

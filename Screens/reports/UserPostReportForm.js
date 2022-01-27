@@ -1,6 +1,6 @@
 import React from "react";
 import { Alert, Text } from "react-native";
-import ScreenLayout from "../../components/ScreenLayout";
+import ScreenLayout from "../../Components/ScreenLayout";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { userPostReportAry } from "../../constant";
 import styled from "styled-components/native";

@@ -8,11 +8,11 @@ import {
   FlatList,
   RefreshControl,
 } from "react-native";
-import CommentForm from "../components/post/CommentForm";
-import UserPostComment from "../components/post/UserPostComment";
-import ScreenLayout from "../components/ScreenLayout";
+import CommentForm from "../Components/Post/CommentForm";
+import UserPostComment from "../Components/Post/UserPostComment";
+import ScreenLayout from "../Components/ScreenLayout";
 import styled from "styled-components/native";
-import DismissKeyboard from "../components/DismissKeyBoard";
+import DismissKeyboard from "../Components/DismissKeyBoard";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { colors } from "../colors";
 

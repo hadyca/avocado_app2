@@ -8,7 +8,7 @@ import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../colors";
 import * as ImagePicker from "expo-image-picker";
-import ContentInput from "../components/post/ContentInput";
+import ContentInput from "../Components/Post/ContentInput";
 
 const EDIT_USERPOST_MUTATION = gql`
   mutation editUserPost(

@@ -3,8 +3,8 @@ import { useQuery } from "@apollo/client";
 import { POST_QUERY } from "./UserPostListQueries";
 import { useNavigation } from "@react-navigation/native";
 import UserPostListPresenter from "./UserPostListPresenter";
-import UserPost from "../../../../components/post/UserPost";
-import ScreenLayout from "../../../../components/ScreenLayout";
+import UserPost from "../../../../Components/Post/UserPost";
+import ScreenLayout from "../../../../Components/ScreenLayout";
 
 export default function () {
   const navigation = useNavigation();
