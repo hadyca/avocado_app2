@@ -1,8 +1,8 @@
 import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import FavoriteCompanyPost from "../screens/FavoriteCompanyPost";
-import FavoriteCompany from "../screens/FavoriteCompany";
+import FavoriteCompanyPost from "../Screens/FavoriteCompanyPost";
+import FavoriteCompany from "../Screens/FavoriteCompany";
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();

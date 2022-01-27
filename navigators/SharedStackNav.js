@@ -1,14 +1,14 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Image } from "react-native";
-import Home from "../screens/Home";
-import UserPostList from "../screens/UserPostList";
+import Home from "../Screens/Home";
+import UserPostList from "../Screens/LoggedIn/UserPosts/UserPostList";
 import SearchConditionNav from "./SearchConditionNav";
 import FavoritesNav from "./FavoritesNav";
-import Me from "../screens/Me";
-import CompanyPostList from "../screens/CompanyPostList";
+import Me from "../Screens/Me";
+import CompanyPostList from "../Screens/CompanyPostList";
 import { colors } from "../colors";
-import Profile from "../screens/Profile";
+import Profile from "../Screens/Profile";
 
 const Stack = createStackNavigator();
 

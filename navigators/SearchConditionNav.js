@@ -1,7 +1,7 @@
 import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import SearchConditionDistrict from "../screens/SearchConditionDistrict";
-import SearchConditionSector from "../screens/SearchConditionSector";
+import SearchConditionDistrict from "../Screens/SearchConditionDistrict";
+import SearchConditionSector from "../Screens/SearchConditionSector";
 
 const Tab = createMaterialTopTabNavigator();
 

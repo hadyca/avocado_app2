@@ -1,19 +1,19 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import TabsNav from "./TabsNav";
-import UserPostUploadForm from "../screens/UserPostUploadForm";
-import EditUserPostForm from "../screens/EditUserPostForm";
-import UserPostListDetail from "../screens/UserPostListDetail";
-import EditUserPostCommentForm from "../screens/EditUserPostCommentForm";
-import EditUserPostReCommentForm from "../screens/EditUserPostReCommentForm";
-import Profile from "../screens/Profile";
-import PostCategory from "../screens/PostCategory";
-import EditPostCategory from "../screens/EditPostCategory";
-import CategoryBoard from "../screens/CategoryBoard";
-import ReComment from "../screens/ReComment";
-import UserPostReportForm from "../screens/reports/UserPostReportForm";
-import UserPostCommentReportForm from "../screens/reports/UserPostCommentReportForm";
-import UserPostReCommentReportForm from "../screens/reports/UserPostReCommentReportForm";
+import UserPostUploadForm from "../Screens/UserPostUploadForm";
+import EditUserPostForm from "../Screens/EditUserPostForm";
+import UserPostListDetail from "../Screens/UserPostListDetail";
+import EditUserPostCommentForm from "../Screens/EditUserPostCommentForm";
+import EditUserPostReCommentForm from "../Screens/EditUserPostReCommentForm";
+import Profile from "../Screens/Profile";
+import PostCategory from "../Screens/PostCategory";
+import EditPostCategory from "../Screens/EditPostCategory";
+import CategoryBoard from "../Screens/CategoryBoard";
+import ReComment from "../Screens/ReComment";
+import UserPostReportForm from "../Screens/reports/UserPostReportForm";
+import UserPostCommentReportForm from "../Screens/reports/UserPostCommentReportForm";
+import UserPostReCommentReportForm from "../Screens/reports/UserPostReCommentReportForm";
 
 const Stack = createStackNavigator();
 
