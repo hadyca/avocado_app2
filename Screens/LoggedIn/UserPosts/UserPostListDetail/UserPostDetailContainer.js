@@ -5,7 +5,6 @@ import UserPostDetailPresenter from "./UserPostDetailPresenter";
 import { useNavigation } from "@react-navigation/native";
 import {
   POST_DETAIL_QUERY,
-  COMMENTS_QUERY,
   DELETE_USERPOST_MUTATION,
   TOGGLE_USERPOST_LIKE_MUTATION,
 } from "./UserPostDetailQueries";
@@ -17,7 +16,6 @@ import ScreenLayout from "../../../../Components/ScreenLayout";
 export default function ({ route: { params } }) {
   const [refreshing, setRefreshing] = useState(false);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
-  const [updateComment, setUpdateComment] = useState(false);
   const navigation = useNavigation();
 
   const { StatusBarManager } = NativeModules;
@@ -29,60 +27,6 @@ export default function ({ route: { params } }) {
         })
       : null;
   }, []);
-
-  const { data, loading, fetchMore, refetch } = useQuery(POST_DETAIL_QUERY, {
-    variables: {
-      userPostId: parseInt(params?.id),
-    },
-  });
-
-  const {
-    data: commentData,
-    loading: commentLoading,
-    refetch: commentRefetch,
-  } = useQuery(COMMENTS_QUERY, {
-    variables: {
-      userPostId: parseInt(params?.id),
-    },
-  });
-
-  const [deleteUserPostMutation, { loading: deleteLoading }] = useMutation(
-    DELETE_USERPOST_MUTATION,
-    {
-      update: goDeleteUserPost,
-    }
-  );
-
-  const [toggleUserPostLikeMutation, { loading: likeLoading }] = useMutation(
-    TOGGLE_USERPOST_LIKE_MUTATION,
-    {
-      variables: {
-        userPostId: parseInt(params?.id),
-      },
-      update: updateToggleLike,
-    }
-  );
-
-  const goDeleteUserPost = (cache, result) => {
-    const {
-      data: {
-        deleteUserPost: { ok },
-      },
-    } = result;
-    if (ok) {
-      const UserPostId = `UserPost:${params?.id}`;
-      cache.modify({
-        id: UserPostId,
-        fields: {
-          deleted(prev) {
-            return !prev;
-          },
-        },
-      });
-    }
-    Alert.alert("게시글이 삭제 되었습니다.");
-    navigation.pop();
-  };
 
   const updateToggleLike = (cache, result) => {
     const {
@@ -110,6 +54,49 @@ export default function ({ route: { params } }) {
     }
   };
 
+  const goDeleteUserPost = (cache, result) => {
+    const {
+      data: {
+        deleteUserPost: { ok },
+      },
+    } = result;
+    if (ok) {
+      const UserPostId = `UserPost:${params?.id}`;
+      cache.modify({
+        id: UserPostId,
+        fields: {
+          deleted(prev) {
+            return !prev;
+          },
+        },
+      });
+    }
+    Alert.alert("게시글이 삭제 되었습니다.");
+    navigation.pop();
+  };
+  const { data, loading, fetchMore, refetch } = useQuery(POST_DETAIL_QUERY, {
+    variables: {
+      userPostId: parseInt(params?.id),
+    },
+  });
+
+  const [deleteUserPostMutation, { loading: deleteLoading }] = useMutation(
+    DELETE_USERPOST_MUTATION,
+    {
+      update: goDeleteUserPost,
+    }
+  );
+
+  const [toggleUserPostLikeMutation, { loading: likeLoading }] = useMutation(
+    TOGGLE_USERPOST_LIKE_MUTATION,
+    {
+      variables: {
+        userPostId: parseInt(params?.id),
+      },
+      update: updateToggleLike,
+    }
+  );
+
   const renderComment = ({ item, index }) => {
     if (item.deleted === false) {
       return (
@@ -130,17 +117,10 @@ export default function ({ route: { params } }) {
 
   const validComment = (item) => item.deleted === true;
 
-  const deletedComment = commentData?.seeUserPostComments.every(validComment);
+  const deletedComment =
+    data?.seeUserPost?.userPostComments.every(validComment);
 
-  const headerLeftUserPostList = () => (
-    <TouchableOpacity
-      onPress={() => navigation.navigate("UserPostList")}
-      stlye={{ marginLeft: 10 }}
-    >
-      <Ionicons name="chevron-back-outline" color="black" size={30} />
-    </TouchableOpacity>
-  );
-
+  //Header setting
   const headerLeftCategory = () => (
     <TouchableOpacity
       onPress={() =>
@@ -155,6 +135,15 @@ export default function ({ route: { params } }) {
         size={30}
         style={{ marginLeft: 8 }}
       />
+    </TouchableOpacity>
+  );
+
+  const headerLeftUserPostList = () => (
+    <TouchableOpacity
+      onPress={() => navigation.navigate("UserPostList")}
+      stlye={{ marginLeft: 10 }}
+    >
+      <Ionicons name="chevron-back-outline" color="black" size={30} />
     </TouchableOpacity>
   );
 
@@ -180,31 +169,10 @@ export default function ({ route: { params } }) {
     </TouchableOpacity>
   );
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft:
-        params?.fromWhere === "CategoryBoard"
-          ? headerLeftCategory
-          : params?.fromWhere === "UserPostList"
-          ? headerLeftUserPostList
-          : headerLeft,
-      headerRight: HeaderRight,
-    });
-  }, [params, data]);
-
   const refresh = () => {
     setRefreshing(true);
     refetch();
-    commentRefetch();
     setRefreshing(false);
-  };
-
-  const showActionSheet = () => {
-    if (data?.seeUserPost?.isMine) {
-      return myActionsheet.current.show();
-    } else {
-      return notMeActionsheet.current.show();
-    }
   };
 
   const goToEditForm = () => {
@@ -226,14 +194,25 @@ export default function ({ route: { params } }) {
   const goToDeletePost = () => {
     deleteUserPostMutation({
       variables: {
-        userPostId: parseInt(params?.id),
+        userPostId: parseInt(params.id),
       },
     });
   };
+
+  //Action Sheet & UseEffect
   let myActionsheet = useRef();
   let notMeActionsheet = useRef();
   let myOptionArray = ["수정", "삭제", "취소"];
   let notMineOptionArray = ["신고", "취소"];
+
+  const showActionSheet = () => {
+    if (data?.seeUserPost?.isMine) {
+      return myActionsheet.current.show();
+    } else {
+      return notMeActionsheet.current.show();
+    }
+  };
+
   const myHandleIndex = (index) => {
     if (index === 0) {
       goToEditForm();
@@ -258,20 +237,31 @@ export default function ({ route: { params } }) {
     }
   };
 
+  useEffect(() => {
+    navigation.setOptions({
+      headerLeft:
+        params?.fromWhere === "CategoryBoard"
+          ? headerLeftCategory
+          : params?.fromWhere === "UserPostList"
+          ? headerLeftUserPostList
+          : headerLeft,
+      headerRight: HeaderRight,
+    });
+  }, [params, data]);
+
   return (
-    <ScreenLayout loading={loading || commentLoading}>
+    <ScreenLayout loading={loading}>
       <UserPostDetailPresenter
         data={data}
-        commentData={commentData}
         likeLoading={likeLoading}
         deletedComment={deletedComment}
-        toggleUserPostLike={toggleUserPostLikeMutation}
+        toggleUserPostLikeMutation={toggleUserPostLikeMutation}
         renderComment={renderComment}
         refreshing={refreshing}
         refresh={refresh}
         statusBarHeight={statusBarHeight}
         userPostId={params.id}
-        commentRefetch={commentRefetch}
+        refetch={refetch}
         myHandleIndex={myHandleIndex}
         notMineHandleIndex={notMineHandleIndex}
       />

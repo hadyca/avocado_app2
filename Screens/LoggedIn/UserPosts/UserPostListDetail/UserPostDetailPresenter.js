@@ -17,25 +17,25 @@ const NoComment = styled.Text`
 
 export default function UserPostDetailPresenter({
   data,
-  commentData,
   likeLoading,
   deletedComment,
-  toggleUserPostLike,
+  toggleUserPostLikeMutation,
   renderComment,
   refreshing,
   refresh,
   statusBarHeight,
   userPostId,
-  commentRefetch,
+  refetch,
 }) {
   let detailRef = useRef();
   const handleComment = async () => {
-    await commentRefetch();
+    await refetch();
     setTimeout(() => detailRef.current?.scrollToEnd(), 1000);
   };
+
   return (
     <>
-      {commentData?.seeUserPostComments.length > 0 && !deletedComment ? (
+      {data?.seeUserPost?.userPostComments.length > 0 && !deletedComment ? (
         <PostContainer>
           <FlatList
             ListHeaderComponent={
@@ -49,14 +49,14 @@ export default function UserPostDetailPresenter({
                 content={data?.seeUserPost?.content}
                 category={data?.seeUserPost?.category}
                 likeLoading={likeLoading}
-                toggleUserPostLike={toggleUserPostLike}
+                toggleUserPostLikeMutation={toggleUserPostLikeMutation}
                 isLiked={data?.seeUserPost?.isLiked}
               />
             }
             refreshing={refreshing}
             onRefresh={refresh}
             showsVerticalScrollIndicator={true}
-            data={commentData?.seeUserPostComments}
+            data={data?.seeUserPost?.userPostComments}
             keyExtractor={(item) => "" + item.id}
             renderItem={renderComment}
             ref={detailRef}
@@ -76,7 +76,7 @@ export default function UserPostDetailPresenter({
                 content={data?.seeUserPost?.content}
                 category={data?.seeUserPost?.category}
                 likeLoading={likeLoading}
-                toggleUserPostLike={toggleUserPostLike}
+                toggleUserPostLikeMutation={toggleUserPostLikeMutation}
                 isLiked={data?.seeUserPost?.isLiked}
               />
             }
@@ -90,9 +90,9 @@ export default function UserPostDetailPresenter({
             refreshing={refreshing}
             onRefresh={refresh}
             showsVerticalScrollIndicator={true}
-            data={commentData?.seeUserPostComments}
-            keyExtractor={(item) => "" + item.id}
-            renderItem={renderComment}
+            // data={data?.seeUserPost?.userPostComments}
+            // keyExtractor={(item) => "" + item.id}
+            // renderItem={renderComment}
           />
         </PostContainer>
       )}

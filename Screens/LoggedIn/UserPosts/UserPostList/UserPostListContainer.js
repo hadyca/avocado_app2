@@ -16,6 +16,7 @@ export default function () {
       offset: 0,
     },
   });
+
   const goToUserPostForm = () => {
     return navigation.navigate("UserPostUploadForm", {
       screenName: "UserPostList",
@@ -55,6 +56,7 @@ export default function () {
       return null;
     }
   };
+
   return (
     <ScreenLayout loading={loading}>
       <UserPostListPresenter

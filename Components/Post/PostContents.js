@@ -1,13 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { gql, useMutation, useQuery } from "@apollo/client";
-import {
-  ScrollView,
-  ActivityIndicator,
-  KeyboardAvoidingView,
-  Platform,
-  FlatList,
-  View,
-} from "react-native";
+import React from "react";
+import { ActivityIndicator, View } from "react-native";
 import styled from "styled-components/native";
 import UserAvatar from "../UserAvatar";
 import Separator from "../Separator";
@@ -52,7 +44,7 @@ export default function PostContents({
   title,
   content,
   category,
-  toggleUserPostLike,
+  toggleUserPostLikeMutation,
   likeLoading,
   isLiked,
 }) {
@@ -82,7 +74,7 @@ export default function PostContents({
           {likeLoading ? (
             <ActivityIndicator color="black" />
           ) : (
-            <Action onPress={toggleUserPostLike}>
+            <Action onPress={toggleUserPostLikeMutation}>
               <Ionicons
                 name={isLiked ? "heart" : "heart-outline"}
                 color={isLiked ? "tomato" : "black"}

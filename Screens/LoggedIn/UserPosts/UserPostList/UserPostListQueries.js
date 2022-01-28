@@ -13,7 +13,6 @@ export const POST_QUERY = gql`
       category
       totalUserPostLikes
       totalUserPostComments
-      createdAt
       isMine
       file {
         fileUrl
