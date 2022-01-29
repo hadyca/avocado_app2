@@ -24,7 +24,6 @@ export const POST_DETAIL_QUERY = gql`
         payload
         isMine
         createdAt
-        deleted
         userPostReComments {
           id
           user {
@@ -35,7 +34,6 @@ export const POST_DETAIL_QUERY = gql`
           payload
           createdAt
           updatedAt
-          deleted
           isMine
         }
       }

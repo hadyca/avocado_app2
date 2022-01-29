@@ -194,20 +194,16 @@ export default function UserPostComment({
   const time = timeForToday(date);
 
   const renderReComment = ({ item, index }) => {
-    if (item.deleted === false) {
-      return (
-        <ReCommentPaint
-          key={index}
-          user={item.user}
-          payload={item.payload}
-          isMine={item.isMine}
-          createdAt={item.createdAt}
-          id={item.id}
-        />
-      );
-    } else {
-      return null;
-    }
+    return (
+      <ReCommentPaint
+        key={index}
+        user={item.user}
+        payload={item.payload}
+        isMine={item.isMine}
+        createdAt={item.createdAt}
+        id={item.id}
+      />
+    );
   };
   return (
     <Container>

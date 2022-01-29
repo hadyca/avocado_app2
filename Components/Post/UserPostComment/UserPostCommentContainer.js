@@ -1,102 +1,47 @@
 import React, { useRef } from "react";
-import { gql, useMutation, useQuery } from "@apollo/client";
-import { Ionicons } from "@expo/vector-icons";
-import styled from "styled-components/native";
-import UserAvatar from "../UserAvatar";
-import ActionSheet from "@alessiocancian/react-native-actionsheet";
-import { Alert, Text } from "react-native";
+import { useMutation } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
-import timeForToday from "../../utils";
-import { colors } from "../../colors";
+import { Alert } from "react-native";
+import UserPostCommentPresenter from "./UserPostCommentPresenter";
+import ActionSheet from "@alessiocancian/react-native-actionsheet";
+import { DELETE_COMMENT_MUTATION } from "./UserPostCommentQueries";
+import timeForToday from "../../../utils";
+import ReCommentPaint from "../ReCommentPaint";
 
-const DELETE_COMMENT_MUTATION = gql`
-  mutation deleteUserPostReComment($reCommentId: Int!) {
-    deleteUserPostReComment(reCommentId: $reCommentId) {
-      ok
-      error
-    }
-  }
-`;
-const Container = styled.View`
-  margin-left: 35px;
-  margin-top: 20px;
-`;
-const HeaderContainer = styled.View`
-  justify-content: center;
-`;
-const Header = styled.TouchableOpacity``;
-
-const CommentView = styled.View`
-  margin-top: 2px;
-  margin-left: 35px;
-`;
-
-const CommentPayLoad = styled.Text`
-  font-size: 14px;
-  padding-right: 30px;
-`;
-
-const IconView = styled.TouchableOpacity`
-  position: absolute;
-  right: 0px;
-  padding: 10px;
-`;
-
-const SubContainer = styled.View`
-  flex-direction: row;
-  align-items: flex-start;
-`;
-
-const Date = styled.Text`
-  margin-top: 3px;
-  margin-left: 35px;
-  color: ${colors.homeText};
-  font-size: 12px;
-`;
-
-const ReplyButton = styled.TouchableOpacity`
-  margin-top: 3px;
-  margin-left: 5px;
-`;
-
-const ReplyText = styled.Text`
-  color: ${colors.homeText};
-  font-size: 12px;
-  font-weight: 600;
-`;
-
-export default function ReCommentPaint({
-  id,
+export default function ({
   userPostId,
+  id,
   user,
   payload,
   isMine,
   createdAt,
+  reComments,
+  reCommentScreen,
 }) {
   const deleteUserComment = (cache, result) => {
     const {
       data: {
-        deleteUserPostReComment: { ok },
+        deleteUserPostComment: { ok, totalRecomments },
       },
     } = result;
     if (ok) {
-      const ReCommentId = `UserPostReComment:${id}`;
+      const CommentId = `UserPostComment:${id}`;
       const UserPostId = `UserPost:${userPostId}`;
       cache.evict({
-        id: ReCommentId,
+        id: CommentId,
       });
       cache.modify({
         id: UserPostId,
         fields: {
           totalUserPostComments(prev) {
-            return prev - 1;
+            return prev - (1 + totalRecomments);
           },
         },
       });
     }
   };
 
-  const [deleteUserReCommentMutation, { loading }] = useMutation(
+  const [deleteUserCommentMutation, { loading }] = useMutation(
     DELETE_COMMENT_MUTATION,
     {
       update: deleteUserComment,
@@ -120,25 +65,26 @@ export default function ReCommentPaint({
   };
 
   const goToEditCommentForm = () => {
-    navigation.navigate("EditUserPostReCommentForm", {
-      reCommentId: id,
+    navigation.navigate("EditUserPostCommentForm", {
+      commentId: id,
       payload,
     });
   };
 
   const goToDeleteComment = () => {
-    deleteUserReCommentMutation({
+    deleteUserCommentMutation({
       variables: {
-        reCommentId: parseInt(id),
+        commentId: parseInt(id),
       },
     });
   };
 
   const goToReportForm = () => {
-    navigation.navigate("UserPostReCommentReportForm", {
+    navigation.navigate("UserPostCommentReportForm", {
       id,
     });
   };
+
   const myHandleIndex = (index) => {
     if (index === 0) {
       goToEditCommentForm();
@@ -172,33 +118,44 @@ export default function ReCommentPaint({
 
   const goToReComment = () => {
     navigation.navigate("ReComment", {
+      userPostId,
+      id,
       user,
       payload,
       isMine,
       createdAt,
     });
   };
-
   const date = new window.Date(parseInt(createdAt));
 
   const time = timeForToday(date);
 
+  const renderReComment = ({ item, index }) => {
+    return (
+      <ReCommentPaint
+        key={index}
+        user={item.user}
+        payload={item.payload}
+        isMine={item.isMine}
+        createdAt={item.createdAt}
+        id={item.id}
+        userPostId={userPostId}
+      />
+    );
+  };
   return (
-    <Container>
-      <HeaderContainer>
-        <Header onPress={goToProfile}>
-          <UserAvatar username={user.username} uri={user.avatar} />
-        </Header>
-        <IconView onPress={showActionSheet}>
-          <Ionicons name="ellipsis-vertical" color="grey" size={14} />
-        </IconView>
-      </HeaderContainer>
-      <CommentView>
-        <CommentPayLoad>{payload}</CommentPayLoad>
-      </CommentView>
-      <SubContainer>
-        <Date>{time}</Date>
-      </SubContainer>
+    <>
+      <UserPostCommentPresenter
+        goToProfile={goToProfile}
+        user={user}
+        showActionSheet={showActionSheet}
+        payload={payload}
+        time={time}
+        reCommentScreen={reCommentScreen}
+        goToReComment={goToReComment}
+        reComments={reComments}
+        renderReComment={renderReComment}
+      />
       <ActionSheet
         ref={myActionsheet}
         options={myOptionArray}
@@ -213,6 +170,6 @@ export default function ReCommentPaint({
         destructiveButtonIndex={0}
         onPress={(index) => notMineHandleIndex(index)}
       />
-    </Container>
+    </>
   );
 }

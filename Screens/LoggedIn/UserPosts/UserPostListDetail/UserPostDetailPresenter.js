@@ -18,7 +18,6 @@ const NoComment = styled.Text`
 export default function UserPostDetailPresenter({
   data,
   likeLoading,
-  deletedComment,
   toggleUserPostLikeMutation,
   renderComment,
   refreshing,
@@ -35,7 +34,7 @@ export default function UserPostDetailPresenter({
 
   return (
     <>
-      {data?.seeUserPost?.userPostComments.length > 0 && !deletedComment ? (
+      {data?.seeUserPost?.userPostComments.length > 0 ? (
         <PostContainer>
           <FlatList
             ListHeaderComponent={

@@ -36,12 +36,11 @@ const COMMENT_QUERY = gql`
         payload
         createdAt
         updatedAt
-        deleted
         isMine
       }
       createdAt
       updatedAt
-      deleted
+
       isMine
     }
   }

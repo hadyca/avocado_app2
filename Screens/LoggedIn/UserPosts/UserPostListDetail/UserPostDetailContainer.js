@@ -98,27 +98,18 @@ export default function ({ route: { params } }) {
   );
 
   const renderComment = ({ item, index }) => {
-    if (item.deleted === false) {
-      return (
-        <UserPostComment
-          userPostId={parseInt(params?.id)}
-          id={item.id}
-          user={item.user}
-          payload={item.payload}
-          isMine={item.isMine}
-          createdAt={item.createdAt}
-          reComments={item.userPostReComments}
-        />
-      );
-    } else {
-      return null;
-    }
+    return (
+      <UserPostComment
+        userPostId={parseInt(params?.id)}
+        id={item.id}
+        user={item.user}
+        payload={item.payload}
+        isMine={item.isMine}
+        createdAt={item.createdAt}
+        reComments={item.userPostReComments}
+      />
+    );
   };
-
-  const validComment = (item) => item.deleted === true;
-
-  const deletedComment =
-    data?.seeUserPost?.userPostComments.every(validComment);
 
   //Header setting
   const headerLeftCategory = () => (
@@ -254,7 +245,6 @@ export default function ({ route: { params } }) {
       <UserPostDetailPresenter
         data={data}
         likeLoading={likeLoading}
-        deletedComment={deletedComment}
         toggleUserPostLikeMutation={toggleUserPostLikeMutation}
         renderComment={renderComment}
         refreshing={refreshing}
