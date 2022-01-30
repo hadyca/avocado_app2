@@ -124,6 +124,7 @@ export default function ({
       payload,
       isMine,
       createdAt,
+      reComments,
     });
   };
   const date = new window.Date(parseInt(createdAt));

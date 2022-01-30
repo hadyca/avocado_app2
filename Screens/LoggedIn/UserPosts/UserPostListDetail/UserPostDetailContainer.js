@@ -44,7 +44,7 @@ export default function ({ route: { params } }) {
             return !prev;
           },
           totalUserPostLikes(prev) {
-            if (data.seeUserPost.isLiked) {
+            if (data?.seeUserPost?.isLiked) {
               return prev - 1;
             }
             return prev + 1;
@@ -97,7 +97,7 @@ export default function ({ route: { params } }) {
     }
   );
 
-  const renderComment = ({ item, index }) => {
+  const renderComment = ({ item }) => {
     return (
       <UserPostComment
         userPostId={parseInt(params?.id)}

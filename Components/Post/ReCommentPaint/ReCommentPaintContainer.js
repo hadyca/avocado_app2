@@ -1,78 +1,13 @@
 import React, { useRef } from "react";
-import { gql, useMutation, useQuery } from "@apollo/client";
-import { Ionicons } from "@expo/vector-icons";
-import styled from "styled-components/native";
-import UserAvatar from "../UserAvatar";
-import ActionSheet from "@alessiocancian/react-native-actionsheet";
-import { Alert, Text } from "react-native";
+import { useMutation } from "@apollo/client";
+import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import timeForToday from "../../utils";
-import { colors } from "../../colors";
+import ActionSheet from "@alessiocancian/react-native-actionsheet";
+import timeForToday from "../../../utils";
+import ReCommentPaintPresenter from "./ReCommentPaintPresenter";
+import { DELETE_COMMENT_MUTATION } from "./ReCommentPaintQueries";
 
-const DELETE_COMMENT_MUTATION = gql`
-  mutation deleteUserPostReComment($reCommentId: Int!) {
-    deleteUserPostReComment(reCommentId: $reCommentId) {
-      ok
-      error
-    }
-  }
-`;
-const Container = styled.View`
-  margin-left: 35px;
-  margin-top: 20px;
-`;
-const HeaderContainer = styled.View`
-  justify-content: center;
-`;
-const Header = styled.TouchableOpacity``;
-
-const CommentView = styled.View`
-  margin-top: 2px;
-  margin-left: 35px;
-`;
-
-const CommentPayLoad = styled.Text`
-  font-size: 14px;
-  padding-right: 30px;
-`;
-
-const IconView = styled.TouchableOpacity`
-  position: absolute;
-  right: 0px;
-  padding: 10px;
-`;
-
-const SubContainer = styled.View`
-  flex-direction: row;
-  align-items: flex-start;
-`;
-
-const Date = styled.Text`
-  margin-top: 3px;
-  margin-left: 35px;
-  color: ${colors.homeText};
-  font-size: 12px;
-`;
-
-const ReplyButton = styled.TouchableOpacity`
-  margin-top: 3px;
-  margin-left: 5px;
-`;
-
-const ReplyText = styled.Text`
-  color: ${colors.homeText};
-  font-size: 12px;
-  font-weight: 600;
-`;
-
-export default function ReCommentPaint({
-  id,
-  userPostId,
-  user,
-  payload,
-  isMine,
-  createdAt,
-}) {
+export default function ({ id, userPostId, user, payload, isMine, createdAt }) {
   const deleteUserComment = (cache, result) => {
     const {
       data: {
@@ -184,21 +119,14 @@ export default function ReCommentPaint({
   const time = timeForToday(date);
 
   return (
-    <Container>
-      <HeaderContainer>
-        <Header onPress={goToProfile}>
-          <UserAvatar username={user.username} uri={user.avatar} />
-        </Header>
-        <IconView onPress={showActionSheet}>
-          <Ionicons name="ellipsis-vertical" color="grey" size={14} />
-        </IconView>
-      </HeaderContainer>
-      <CommentView>
-        <CommentPayLoad>{payload}</CommentPayLoad>
-      </CommentView>
-      <SubContainer>
-        <Date>{time}</Date>
-      </SubContainer>
+    <>
+      <ReCommentPaintPresenter
+        goToProfile={goToProfile}
+        user={user}
+        showActionSheet={showActionSheet}
+        payload={payload}
+        time={time}
+      />
       <ActionSheet
         ref={myActionsheet}
         options={myOptionArray}
@@ -213,6 +141,6 @@ export default function ReCommentPaint({
         destructiveButtonIndex={0}
         onPress={(index) => notMineHandleIndex(index)}
       />
-    </Container>
+    </>
   );
 }

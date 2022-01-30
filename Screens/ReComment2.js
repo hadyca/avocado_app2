@@ -40,7 +40,6 @@ const COMMENT_QUERY = gql`
       }
       createdAt
       updatedAt
-
       isMine
     }
   }
