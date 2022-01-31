@@ -6,7 +6,6 @@ import UserPostCommentPresenter from "./UserPostCommentPresenter";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
 import { DELETE_COMMENT_MUTATION } from "./UserPostCommentQueries";
 import timeForToday from "../../../utils";
-import ReCommentPaint from "../ReCommentPaint";
 
 export default function ({
   userPostId,
@@ -131,19 +130,6 @@ export default function ({
 
   const time = timeForToday(date);
 
-  const renderReComment = ({ item, index }) => {
-    return (
-      <ReCommentPaint
-        key={index}
-        user={item.user}
-        payload={item.payload}
-        isMine={item.isMine}
-        createdAt={item.createdAt}
-        id={item.id}
-        userPostId={userPostId}
-      />
-    );
-  };
   return (
     <>
       <UserPostCommentPresenter
@@ -155,7 +141,7 @@ export default function ({
         reCommentScreen={reCommentScreen}
         goToReComment={goToReComment}
         reComments={reComments}
-        renderReComment={renderReComment}
+        userPostId={userPostId}
       />
       <ActionSheet
         ref={myActionsheet}

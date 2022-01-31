@@ -16,6 +16,7 @@ export default function ({ route: { params } }) {
       userPostCommentId: parseInt(params.id),
     },
   });
+
   useEffect(() => {
     Platform.OS == "ios"
       ? StatusBarManager.getHeight((statusBarFrameData) => {
@@ -30,19 +31,21 @@ export default function ({ route: { params } }) {
     setRefreshing(false);
   };
 
-  const renderComment = ({ item }) => {
-    return (
-      <UserPostComment
-        userPostId={params.userPostId}
-        id={item.id}
-        user={item.user}
-        payload={item.payload}
-        isMine={item.isMine}
-        createdAt={item.createdAt}
-        reComments={item.userPostReComments}
-      />
-    );
-  };
+  // const renderComment = ({ item }) => {
+  //   console.log(item);
+  //   return (
+  //     <UserPostComment
+  //       userPostId={params.userPostId}
+  //       id={item.id}
+  //       user={item.user}
+  //       payload={item.payload}
+  //       isMine={item.isMine}
+  //       createdAt={item.createdAt}
+  //       reComments={item.userPostReComments}
+  //       reCommentScreen={true}
+  //     />
+  //   );
+  // };
 
   return (
     <ScreenLayout loading={loading}>
@@ -52,8 +55,7 @@ export default function ({ route: { params } }) {
         data={data}
         userPostId={params.userPostId}
         id={params.id}
-        renderComment={renderComment}
-        reCommentScreen={true}
+        // renderComment={renderComment}
         statusBarHeight={statusBarHeight}
       />
     </ScreenLayout>

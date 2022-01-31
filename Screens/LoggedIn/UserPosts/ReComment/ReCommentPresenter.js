@@ -5,9 +5,11 @@ import {
   RefreshControl,
   FlatList,
 } from "react-native";
-import UserPostComment from "../../../../Components/Post/UserPostComment";
+import styled from "styled-components/native";
+
 import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import CommentForm from "../../../../Components/Post/CommentForm";
+import UserPostComment from "../../../../Components/Post/UserPostComment";
 
 export default function ReCommentPresenter({
   refreshing,
@@ -20,21 +22,51 @@ export default function ReCommentPresenter({
   statusBarHeight,
 }) {
   let reCommentRef = useRef();
-  const handleReComment = (text) => {
+  const handleReComment = () => {
     setTimeout(() => reCommentRef.current?.scrollToEnd(), 1000);
   };
+
   return (
     <>
       <DismissKeyboard>
-        <FlatList
+        {/* <FlatList
+          ListHeaderComponent={
+            <UserPostComment
+              userPostId={userPostId}
+              id={data?.seeUserPostComment?.id}
+              user={data?.seeUserPostComment?.user}
+              payload={data?.seeUserPostComment?.payload}
+              isMine={data?.seeUserPostComment?.isMine}
+              createdAt={data?.seeUserPostComment?.createdAt}
+              reComments={data?.seeUserPostComment?.userPostReComments}
+              reCommentScreen={true}
+            />
+          }
+          shshowsVerticalScrollIndicator={true}
+          ref={reCommentRef}
           refreshing={refreshing}
           onRefresh={refresh}
-          showsVerticalScrollIndicator={true}
-          data={data?.seeUserPostComment}
-          keyExtractor={(item) => "" + item.id}
-          renderItem={renderComment}
+        /> */}
+
+        <ScrollView
+          shshowsVerticalScrollIndicator={true}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={refresh} />
+          }
+          style={{ flex: 1 }}
           ref={reCommentRef}
-        />
+        >
+          <UserPostComment
+            userPostId={userPostId}
+            id={data?.seeUserPostComment?.id}
+            user={data?.seeUserPostComment?.user}
+            payload={data?.seeUserPostComment?.payload}
+            isMine={data?.seeUserPostComment?.isMine}
+            createdAt={data?.seeUserPostComment?.createdAt}
+            reComments={data?.seeUserPostComment?.userPostReComments}
+            reCommentScreen={true}
+          />
+        </ScrollView>
         {/* <FlatList
           ListHeaderComponent={
             <UserPostComment
@@ -79,9 +111,9 @@ export default function ReCommentPresenter({
         // keyboardVerticalOffset={300}
       >
         <CommentForm
-          userPostId={parseInt(userPostId)}
-          userPostCommentId={parseInt(id)}
-          reCommentScreen={reCommentScreen}
+          userPostId={userPostId}
+          userPostCommentId={id}
+          reCommentScreen={true}
           handleReComment={handleReComment}
         />
       </KeyboardAvoidingView>

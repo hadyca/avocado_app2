@@ -31,7 +31,6 @@ export default function UserPostDetailPresenter({
     await refetch();
     setTimeout(() => detailRef.current?.scrollToEnd(), 1000);
   };
-
   return (
     <>
       {data?.seeUserPost?.userPostComments.length > 0 ? (
@@ -89,9 +88,6 @@ export default function UserPostDetailPresenter({
             refreshing={refreshing}
             onRefresh={refresh}
             showsVerticalScrollIndicator={true}
-            // data={data?.seeUserPost?.userPostComments}
-            // keyExtractor={(item) => "" + item.id}
-            // renderItem={renderComment}
           />
         </PostContainer>
       )}

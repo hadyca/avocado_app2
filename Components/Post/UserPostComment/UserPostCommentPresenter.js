@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
-import { FlatList, View } from "react-native";
-
 import { colors } from "../../../colors";
 import UserAvatar from "../../UserAvatar";
+import ReCommentPaint from "../ReCommentPaint";
 
 const Container = styled.View`
   margin: 10px;
@@ -62,39 +61,42 @@ export default function UserPostCommentPresenter({
   reCommentScreen,
   goToReComment,
   reComments,
-  renderReComment,
+  userPostId,
 }) {
   return (
     <Container>
-      <FlatList
-        ListHeaderComponent={
-          <>
-            <HeaderContainer>
-              <Header onPress={goToProfile}>
-                <UserAvatar username={user.username} uri={user.avatar} />
-              </Header>
-              <IconView onPress={showActionSheet}>
-                <Ionicons name="ellipsis-vertical" color="grey" size={14} />
-              </IconView>
-            </HeaderContainer>
-            <CommentView>
-              <CommentPayload>{payload}</CommentPayload>
-            </CommentView>
-            <SubContainer>
-              <Date>{time}</Date>
-              {!reCommentScreen ? (
-                <ReplyButton onPress={goToReComment}>
-                  <ReplyText>답글 쓰기</ReplyText>
-                </ReplyButton>
-              ) : null}
-            </SubContainer>
-          </>
-        }
-        showsVerticalScrollIndicator={false}
-        data={reComments}
-        keyExtractor={(item) => "" + item.id}
-        renderItem={renderReComment}
-      />
+      <HeaderContainer>
+        <Header onPress={goToProfile}>
+          <UserAvatar username={user.username} uri={user.avatar} />
+        </Header>
+        <IconView onPress={showActionSheet}>
+          <Ionicons name="ellipsis-vertical" color="grey" size={14} />
+        </IconView>
+      </HeaderContainer>
+      <CommentView>
+        <CommentPayload>{payload}</CommentPayload>
+      </CommentView>
+      <SubContainer>
+        <Date>{time}</Date>
+        {!reCommentScreen ? (
+          <ReplyButton onPress={goToReComment}>
+            <ReplyText>답글 쓰기</ReplyText>
+          </ReplyButton>
+        ) : null}
+      </SubContainer>
+      {reComments.length > 0
+        ? reComments.map((item, index) => (
+            <ReCommentPaint
+              key={index}
+              user={item.user}
+              payload={item.payload}
+              isMine={item.isMine}
+              createdAt={item.createdAt}
+              id={item.id}
+              userPostId={userPostId}
+            />
+          ))
+        : null}
     </Container>
   );
 }

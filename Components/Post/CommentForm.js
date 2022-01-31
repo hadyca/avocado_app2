@@ -133,10 +133,10 @@ export default function CommentForm({
   );
 
   const onValid = ({ payload }) => {
-    if (!ReCommentLoading && reCommentScreen) {
+    if (reCommentScreen) {
       createReCommentMutation({
         variables: {
-          userPostCommentId,
+          userPostCommentId: parseInt(userPostCommentId),
           payload,
         },
       });
