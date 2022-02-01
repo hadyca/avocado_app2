@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { gql, useMutation } from "@apollo/client";
 import styled from "styled-components/native";
 import { useForm, Controller } from "react-hook-form";
 import { colors } from "../../colors";
 import SendButton from "./SendButton";
-import { Keyboard } from "react-native";
+import { Keyboard, Text, View } from "react-native";
 const CREATE_COMMENT_MUTATION = gql`
   mutation createUserPostComment($userPostId: Int!, $payload: String!) {
     createUserPostComment(userPostId: $userPostId, payload: $payload) {
@@ -65,6 +65,7 @@ export default function CommentForm({
   reCommentScreen,
   handleComment,
   handleReComment,
+  commentLoadingCheck,
 }) {
   const { handleSubmit, control, reset, watch } = useForm();
 
@@ -77,9 +78,9 @@ export default function CommentForm({
       cache.modify({
         id: UserPostId,
         fields: {
-          // userPostComments(prev) {
-          //   return [createUserPostComment, ...prev];
-          // },
+          userPostComments(prev) {
+            return [createUserPostComment, ...prev];
+          },
           totalUserPostComments(prev) {
             return prev + 1;
           },
@@ -174,7 +175,7 @@ export default function CommentForm({
         />
         <SendButton
           disabled={!watch("payload")}
-          loading={loading || ReCommentLoading}
+          // loading={loading || ReCommentLoading}
           onPress={handleSubmit(onValid)}
         />
       </Actions>

@@ -1,5 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Platform, NativeModules, TouchableOpacity, Alert } from "react-native";
+import {
+  Platform,
+  NativeModules,
+  TouchableOpacity,
+  Alert,
+  Text,
+  View,
+} from "react-native";
 import { useMutation, useQuery } from "@apollo/client";
 import UserPostDetailPresenter from "./UserPostDetailPresenter";
 import { useNavigation } from "@react-navigation/native";
@@ -16,6 +23,7 @@ import ScreenLayout from "../../../../Components/ScreenLayout";
 export default function ({ route: { params } }) {
   const [refreshing, setRefreshing] = useState(false);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
+  const [commentRefetching, setCommentRefetching] = useState(false);
   const navigation = useNavigation();
 
   const { StatusBarManager } = NativeModules;
@@ -72,20 +80,21 @@ export default function ({ route: { params } }) {
       });
     }
     Alert.alert("게시글이 삭제 되었습니다.");
-    navigation.pop();
+    navigation.popToTop();
   };
-  const { data, loading, fetchMore, refetch } = useQuery(POST_DETAIL_QUERY, {
-    variables: {
-      userPostId: parseInt(params?.id),
-    },
-  });
-
-  const [deleteUserPostMutation, { loading: deleteLoading }] = useMutation(
-    DELETE_USERPOST_MUTATION,
+  const { data, loading, fetchMore, refetch, networkStatus } = useQuery(
+    POST_DETAIL_QUERY,
     {
-      update: goDeleteUserPost,
+      variables: {
+        userPostId: parseInt(params?.id),
+      },
+      notifyOnNetworkStatusChange: true,
     }
   );
+
+  const [deleteUserPostMutation] = useMutation(DELETE_USERPOST_MUTATION, {
+    update: goDeleteUserPost,
+  });
 
   const [toggleUserPostLikeMutation, { loading: likeLoading }] = useMutation(
     TOGGLE_USERPOST_LIKE_MUTATION,
@@ -240,8 +249,16 @@ export default function ({ route: { params } }) {
     });
   }, [params, data]);
 
+  useEffect(() => {
+    if (networkStatus === 4) {
+      setCommentRefetching(true);
+    } else {
+      setCommentRefetching(false);
+    }
+  }, [networkStatus]);
+
   return (
-    <ScreenLayout loading={loading}>
+    <ScreenLayout loading={networkStatus === 1}>
       <UserPostDetailPresenter
         data={data}
         likeLoading={likeLoading}
@@ -252,8 +269,7 @@ export default function ({ route: { params } }) {
         statusBarHeight={statusBarHeight}
         userPostId={params.id}
         refetch={refetch}
-        myHandleIndex={myHandleIndex}
-        notMineHandleIndex={notMineHandleIndex}
+        commentRefetching={commentRefetching}
       />
       <ActionSheet
         ref={myActionsheet}
