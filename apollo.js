@@ -33,7 +33,7 @@ const uploadHttpLink = createUploadLink({
 // for simulator
 
 // const uploadHttpLink = createUploadLink({
-//   uri: "http://9b38-210-108-196-61.ngrok.io/graphql",
+//   uri: "http://6298-220-72-180-148.ngrok.io/graphql",
 // });
 
 const authLink = setContext((_, { headers }) => {
@@ -60,6 +60,9 @@ export const cache = new InMemoryCache({
       fields: {
         seeAllUserPosts: offsetLimitPagination(),
         seeUserCategoryPost: offsetLimitPagination(["category"]),
+        userPostReComments: {
+          merge: true,
+        },
       },
     },
   },
