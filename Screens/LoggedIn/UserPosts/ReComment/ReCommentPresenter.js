@@ -1,15 +1,16 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   KeyboardAvoidingView,
   ScrollView,
   RefreshControl,
-  FlatList,
+  View,
+  ActivityIndicator,
 } from "react-native";
-import styled from "styled-components/native";
 
 import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import CommentForm from "../../../../Components/Post/CommentForm";
 import UserPostComment from "../../../../Components/Post/UserPostComment";
+import { colors } from "../../../../colors";
 
 export default function ReCommentPresenter({
   refreshing,
@@ -17,106 +18,74 @@ export default function ReCommentPresenter({
   data,
   userPostId,
   id,
-  renderComment,
-  reCommentScreen,
   statusBarHeight,
+  refetch,
+  commentRefetching,
 }) {
+  const [commentUploading, setCommentUploading] = useState(false);
+
   let reCommentRef = useRef();
   const handleReComment = () => {
-    setTimeout(() => reCommentRef.current?.scrollToEnd(), 1000);
+    setCommentUploading(true);
+    refetch();
   };
 
   return (
     <>
-      <DismissKeyboard>
-        {/* <FlatList
-          ListHeaderComponent={
-            <UserPostComment
+      {commentRefetching && commentUploading ? (
+        <View
+          style={{
+            backgroundColor: colors.backgraound,
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <ActivityIndicator color="black" />
+        </View>
+      ) : (
+        <>
+          <DismissKeyboard>
+            <ScrollView
+              shshowsVerticalScrollIndicator={true}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={refresh} />
+              }
+              style={{ flex: 1 }}
+              ref={reCommentRef}
+              onContentSizeChange={() => {
+                if (commentUploading) {
+                  reCommentRef.current?.scrollToEnd();
+                  setCommentUploading(false);
+                }
+              }}
+            >
+              <UserPostComment
+                userPostId={userPostId}
+                id={data?.seeUserPostComment?.id}
+                user={data?.seeUserPostComment?.user}
+                payload={data?.seeUserPostComment?.payload}
+                isMine={data?.seeUserPostComment?.isMine}
+                createdAt={data?.seeUserPostComment?.createdAt}
+                reComments={data?.seeUserPostComment?.userPostReComments}
+                reCommentScreen={true}
+              />
+            </ScrollView>
+          </DismissKeyboard>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={statusBarHeight + 20}
+            // keyboardVerticalOffset={300}
+          >
+            <CommentForm
               userPostId={userPostId}
-              id={data?.seeUserPostComment?.id}
-              user={data?.seeUserPostComment?.user}
-              payload={data?.seeUserPostComment?.payload}
-              isMine={data?.seeUserPostComment?.isMine}
-              createdAt={data?.seeUserPostComment?.createdAt}
-              reComments={data?.seeUserPostComment?.userPostReComments}
+              userPostCommentId={id}
               reCommentScreen={true}
+              handleReComment={handleReComment}
             />
-          }
-          shshowsVerticalScrollIndicator={true}
-          ref={reCommentRef}
-          refreshing={refreshing}
-          onRefresh={refresh}
-        /> */}
-
-        <ScrollView
-          shshowsVerticalScrollIndicator={true}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={refresh} />
-          }
-          style={{ flex: 1 }}
-          ref={reCommentRef}
-        >
-          <UserPostComment
-            userPostId={userPostId}
-            id={data?.seeUserPostComment?.id}
-            user={data?.seeUserPostComment?.user}
-            payload={data?.seeUserPostComment?.payload}
-            isMine={data?.seeUserPostComment?.isMine}
-            createdAt={data?.seeUserPostComment?.createdAt}
-            reComments={data?.seeUserPostComment?.userPostReComments}
-            reCommentScreen={true}
-          />
-        </ScrollView>
-        {/* <FlatList
-          ListHeaderComponent={
-            <UserPostComment
-              userPostId={userPostId}
-              id={id}
-              user={user}
-              payload={payload}
-              isMine={isMine}
-              createdAt={createdAt}
-              reComments={reComments}
-              reCommentScreen={reCommentScreen}
-            />
-          }
-          shshowsVerticalScrollIndicator={true}
-          ref={reCommentRef}
-          refreshing={refreshing}
-          onRefresh={refresh}
-        /> */}
-        {/* <ScrollView
-          shshowsVerticalScrollIndicator={true}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={refresh} />
-          }
-          style={{ flex: 1 }}
-          ref={reCommentRef}
-        >
-          <UserPostComment
-            userPostId={userPostId}
-            id={id}
-            user={user}
-            payload={payload}
-            isMine={isMine}
-            createdAt={createdAt}
-            reComments={reComments}
-            reCommentScreen={reCommentScreen}
-          />
-        </ScrollView> */}
-      </DismissKeyboard>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={statusBarHeight + 20}
-        // keyboardVerticalOffset={300}
-      >
-        <CommentForm
-          userPostId={userPostId}
-          userPostCommentId={id}
-          reCommentScreen={true}
-          handleReComment={handleReComment}
-        />
-      </KeyboardAvoidingView>
+          </KeyboardAvoidingView>
+        </>
+      )}
     </>
   );
 }

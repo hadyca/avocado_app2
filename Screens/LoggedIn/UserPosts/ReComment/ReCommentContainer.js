@@ -8,13 +8,15 @@ import { COMMENT_QUERY } from "./ReCommentQueries";
 
 export default function ({ route: { params } }) {
   const [refreshing, setRefreshing] = useState(false);
+  const [commentRefetching, setCommentRefetching] = useState(false);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
   const { StatusBarManager } = NativeModules;
 
-  const { data, refetch, loading } = useQuery(COMMENT_QUERY, {
+  const { data, refetch, loading, networkStatus } = useQuery(COMMENT_QUERY, {
     variables: {
       userPostCommentId: parseInt(params.id),
     },
+    notifyOnNetworkStatusChange: true,
   });
 
   useEffect(() => {
@@ -31,32 +33,25 @@ export default function ({ route: { params } }) {
     setRefreshing(false);
   };
 
-  // const renderComment = ({ item }) => {
-  //   console.log(item);
-  //   return (
-  //     <UserPostComment
-  //       userPostId={params.userPostId}
-  //       id={item.id}
-  //       user={item.user}
-  //       payload={item.payload}
-  //       isMine={item.isMine}
-  //       createdAt={item.createdAt}
-  //       reComments={item.userPostReComments}
-  //       reCommentScreen={true}
-  //     />
-  //   );
-  // };
+  useEffect(() => {
+    if (networkStatus === 4) {
+      setCommentRefetching(true);
+    } else {
+      setCommentRefetching(false);
+    }
+  }, [networkStatus]);
 
   return (
-    <ScreenLayout loading={loading}>
+    <ScreenLayout loading={networkStatus === 1}>
       <ReCommentPresenter
         refreshing={refreshing}
         refresh={refresh}
         data={data}
         userPostId={params.userPostId}
         id={params.id}
-        // renderComment={renderComment}
         statusBarHeight={statusBarHeight}
+        refetch={refetch}
+        commentRefetching={commentRefetching}
       />
     </ScreenLayout>
   );

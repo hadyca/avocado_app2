@@ -65,7 +65,6 @@ export default function CommentForm({
   reCommentScreen,
   handleComment,
   handleReComment,
-  commentLoadingCheck,
 }) {
   const { handleSubmit, control, reset, watch } = useForm();
 
@@ -78,17 +77,17 @@ export default function CommentForm({
       cache.modify({
         id: UserPostId,
         fields: {
-          userPostComments(prev) {
-            return [createUserPostComment, ...prev];
-          },
+          // userPostComments(prev) {
+          //   return [createUserPostComment, ...prev];
+          // },
           totalUserPostComments(prev) {
             return prev + 1;
           },
         },
       });
     }
-    handleComment();
     Keyboard.dismiss();
+    handleComment();
   };
 
   const updateReComment = (cache, result) => {
@@ -96,16 +95,16 @@ export default function CommentForm({
       data: { createUserPostReComment },
     } = result;
     if (createUserPostReComment.ok) {
-      const UserPostCommentId = `UserPostComment:${userPostCommentId}`;
+      // const UserPostCommentId = `UserPostComment:${userPostCommentId}`;
       const UserPostId = `UserPost:${userPostId}`;
-      cache.modify({
-        id: UserPostCommentId,
-        fields: {
-          userPostReComments(prev) {
-            return [createUserPostReComment, ...prev];
-          },
-        },
-      });
+      // cache.modify({
+      //   id: UserPostCommentId,
+      //   fields: {
+      //     userPostReComments(prev) {
+      //       return [createUserPostReComment, ...prev];
+      //     },
+      //   },
+      // });
       cache.modify({
         id: UserPostId,
         fields: {
@@ -114,8 +113,8 @@ export default function CommentForm({
           },
         },
       });
-      handleReComment();
       Keyboard.dismiss();
+      handleReComment();
     }
   };
 

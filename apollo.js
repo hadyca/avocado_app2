@@ -33,7 +33,7 @@ const uploadHttpLink = createUploadLink({
 // for simulator
 
 // const uploadHttpLink = createUploadLink({
-//   uri: "http://6298-220-72-180-148.ngrok.io/graphql",
+//   uri: "http://4d73-220-72-180-148.ngrok.io/graphql",
 // });
 
 const authLink = setContext((_, { headers }) => {
