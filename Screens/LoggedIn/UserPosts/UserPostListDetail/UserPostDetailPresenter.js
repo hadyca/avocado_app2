@@ -3,9 +3,7 @@ import {
   Platform,
   FlatList,
   KeyboardAvoidingView,
-  View,
-  Text,
-  ActivityIndicator,
+  Keyboard,
 } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../../../../colors";
@@ -35,104 +33,107 @@ export default function UserPostDetailPresenter({
   commentRefetching,
 }) {
   const [commentUploading, setCommentUploading] = useState(false);
+
   let detailRef = useRef();
 
-  const handleComment = () => {
+  const handleComment = async () => {
     setCommentUploading(true);
     refetch();
   };
 
   return (
     <>
-      {commentRefetching && commentUploading ? (
-        <View
-          style={{
-            backgroundColor: colors.backgraound,
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <ActivityIndicator color="black" />
-        </View>
+      {data?.seeUserPost?.userPostComments.length > 0 ? (
+        <PostContainer>
+          <FlatList
+            ListHeaderComponent={
+              <PostContents
+                file={data?.seeUserPost?.file.length}
+                data={data}
+                userId={data?.userId}
+                username={data?.seeUserPost?.user?.username}
+                avatar={data?.seeUserPost?.user?.avatar}
+                title={data?.seeUserPost?.title}
+                content={data?.seeUserPost?.content}
+                category={data?.seeUserPost?.category}
+                likeLoading={likeLoading}
+                toggleUserPostLikeMutation={toggleUserPostLikeMutation}
+                isLiked={data?.seeUserPost?.isLiked}
+              />
+            }
+            refreshing={refreshing}
+            onRefresh={refresh}
+            showsVerticalScrollIndicator={true}
+            data={data?.seeUserPost?.userPostComments}
+            keyExtractor={(item) => "" + item.id}
+            renderItem={renderComment}
+            ref={detailRef}
+            initialNumToRender={30}
+            onContentSizeChange={() => {
+              if (commentUploading) {
+                detailRef.current?.scrollToEnd({ animated: true });
+                setCommentUploading(false);
+                Keyboard.dismiss();
+              }
+            }}
+          />
+        </PostContainer>
       ) : (
-        <>
-          {data?.seeUserPost?.userPostComments.length > 0 ? (
-            <PostContainer>
-              <FlatList
-                ListHeaderComponent={
-                  <PostContents
-                    file={data?.seeUserPost?.file.length}
-                    data={data}
-                    userId={data?.userId}
-                    username={data?.seeUserPost?.user?.username}
-                    avatar={data?.seeUserPost?.user?.avatar}
-                    title={data?.seeUserPost?.title}
-                    content={data?.seeUserPost?.content}
-                    category={data?.seeUserPost?.category}
-                    likeLoading={likeLoading}
-                    toggleUserPostLikeMutation={toggleUserPostLikeMutation}
-                    isLiked={data?.seeUserPost?.isLiked}
-                  />
-                }
-                refreshing={refreshing}
-                onRefresh={refresh}
-                showsVerticalScrollIndicator={true}
-                data={data?.seeUserPost?.userPostComments}
-                keyExtractor={(item) => "" + item.id}
-                renderItem={renderComment}
-                ref={detailRef}
-                onContentSizeChange={() => {
-                  if (commentUploading) {
-                    detailRef.current?.scrollToEnd();
-                    setCommentUploading(false);
-                  }
-                }}
+        <PostContainer>
+          <FlatList
+            ListHeaderComponent={
+              <PostContents
+                file={data?.seeUserPost?.file.length}
+                data={data}
+                userId={data?.userId}
+                username={data?.seeUserPost?.user?.username}
+                avatar={data?.seeUserPost?.user?.avatar}
+                title={data?.seeUserPost?.title}
+                content={data?.seeUserPost?.content}
+                category={data?.seeUserPost?.category}
+                likeLoading={likeLoading}
+                toggleUserPostLikeMutation={toggleUserPostLikeMutation}
+                isLiked={data?.seeUserPost?.isLiked}
               />
-            </PostContainer>
-          ) : (
-            <PostContainer>
-              <FlatList
-                ListHeaderComponent={
-                  <PostContents
-                    file={data?.seeUserPost?.file.length}
-                    data={data}
-                    userId={data?.userId}
-                    username={data?.seeUserPost?.user?.username}
-                    avatar={data?.seeUserPost?.user?.avatar}
-                    title={data?.seeUserPost?.title}
-                    content={data?.seeUserPost?.content}
-                    category={data?.seeUserPost?.category}
-                    likeLoading={likeLoading}
-                    toggleUserPostLikeMutation={toggleUserPostLikeMutation}
-                    isLiked={data?.seeUserPost?.isLiked}
-                  />
-                }
-                ListFooterComponent={
-                  <NoCommentView>
-                    <NoComment>
-                      There is no comment. Please write a comment.
-                    </NoComment>
-                  </NoCommentView>
-                }
-                refreshing={refreshing}
-                onRefresh={refresh}
-                showsVerticalScrollIndicator={true}
-              />
-            </PostContainer>
-          )}
-          <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={statusBarHeight + 20}
-            // keyboardVerticalOffset={300}
-          >
-            <CommentForm
-              userPostId={userPostId}
-              handleComment={handleComment}
-            />
-          </KeyboardAvoidingView>
-        </>
+            }
+            ListFooterComponent={
+              <NoCommentView>
+                <NoComment>
+                  There is no comment. Please write a comment.
+                </NoComment>
+              </NoCommentView>
+            }
+            refreshing={refreshing}
+            onRefresh={refresh}
+            showsVerticalScrollIndicator={true}
+          />
+        </PostContainer>
       )}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={statusBarHeight + 20}
+        // keyboardVerticalOffset={300}
+      >
+        <CommentForm
+          userPostId={userPostId}
+          handleComment={handleComment}
+          commentRefetching={commentRefetching}
+          commentUploading={commentUploading}
+        />
+      </KeyboardAvoidingView>
     </>
   );
 }
+
+// {commentRefetching && commentUploading ? (
+//   <View
+//     style={{
+//       backgroundColor: colors.backgraound,
+//       flex: 1,
+//       alignItems: "center",
+//       justifyContent: "center",
+//     }}
+//   >
+//     <ActivityIndicator color="black" />
+//   </View>
+// )

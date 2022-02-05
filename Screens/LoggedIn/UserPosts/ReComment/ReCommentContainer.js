@@ -3,7 +3,6 @@ import { NativeModules } from "react-native";
 import { useQuery } from "@apollo/client";
 import ReCommentPresenter from "./ReCommentPresenter";
 import ScreenLayout from "../../../../Components/ScreenLayout";
-import UserPostComment from "../../../../Components/Post/UserPostComment";
 import { COMMENT_QUERY } from "./ReCommentQueries";
 
 export default function ({ route: { params } }) {
