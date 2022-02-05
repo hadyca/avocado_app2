@@ -3,7 +3,6 @@ import styled from "styled-components/native";
 import { useForm, Controller } from "react-hook-form";
 import { colors } from "../../../colors";
 import SendButton from "../SendButton";
-import { Text, View } from "react-native";
 
 const Container = styled.View`
   border-top-width: 1px;
@@ -37,7 +36,6 @@ export default function CommentFormPresenter({
   reCommentScreen,
   loading,
   ReCommentLoading,
-  commentRefetching,
   commentUploading,
 }) {
   const { handleSubmit, control, reset, watch } = useForm();
@@ -82,11 +80,7 @@ export default function CommentFormPresenter({
         />
         <SendButton
           disabled={!watch("payload")}
-          loading={
-            loading ||
-            ReCommentLoading ||
-            (commentRefetching && commentUploading)
-          }
+          loading={loading || ReCommentLoading || commentUploading}
           onPress={handleSubmit(onValid)}
         />
       </Actions>

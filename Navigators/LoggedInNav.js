@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import TabsNav from "./TabsNav";
-import UserPostUploadForm from "../Screens/UserPostUploadForm";
+import UserPostUploadForm from "../Screens/LoggedIn/UserPosts/UserPostUploadForm";
 import EditUserPostForm from "../Screens/EditUserPostForm";
 import UserPostListDetail from "../Screens/LoggedIn/UserPosts/UserPostListDetail";
 import EditUserPostCommentForm from "../Screens/EditUserPostCommentForm";

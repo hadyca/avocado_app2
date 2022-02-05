@@ -23,7 +23,6 @@ import ScreenLayout from "../../../../Components/ScreenLayout";
 export default function ({ route: { params } }) {
   const [refreshing, setRefreshing] = useState(false);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
-  const [commentRefetching, setCommentRefetching] = useState(false);
   const navigation = useNavigation();
 
   const { StatusBarManager } = NativeModules;
@@ -82,15 +81,11 @@ export default function ({ route: { params } }) {
     Alert.alert("게시글이 삭제 되었습니다.");
     navigation.popToTop();
   };
-  const { data, loading, fetchMore, refetch, networkStatus } = useQuery(
-    POST_DETAIL_QUERY,
-    {
-      variables: {
-        userPostId: parseInt(params?.id),
-      },
-      notifyOnNetworkStatusChange: true,
-    }
-  );
+  const { data, loading, fetchMore, refetch } = useQuery(POST_DETAIL_QUERY, {
+    variables: {
+      userPostId: parseInt(params?.id),
+    },
+  });
 
   const [deleteUserPostMutation] = useMutation(DELETE_USERPOST_MUTATION, {
     update: goDeleteUserPost,
@@ -249,16 +244,28 @@ export default function ({ route: { params } }) {
     });
   }, [params, data]);
 
-  useEffect(() => {
-    if (networkStatus === 4) {
-      setCommentRefetching(true);
-    } else {
-      setCommentRefetching(false);
-    }
-  }, [networkStatus]);
+  // useEffect(() => {
+  //   if (networkStatus === 1) {
+  //     setCommentRefetching(true);
+  //   } else {
+  //     setCommentRefetching(false);
+  //   }
+  // }, [networkStatus]);
+
+  // useEffect(() => {
+  //   if (networkStatus === 1 && !cacheUpdated) {
+  //     setFirstLoading(true);
+  //   } else {
+  //     setFirstLoading(false);
+  //   }
+  // }, [networkStatus]);
+
+  // const handleCache = (bool) => {
+  //   setCacheUpdated(bool);
+  // };
 
   return (
-    <ScreenLayout loading={networkStatus === 1}>
+    <ScreenLayout loading={loading}>
       <UserPostDetailPresenter
         data={data}
         likeLoading={likeLoading}
@@ -268,8 +275,6 @@ export default function ({ route: { params } }) {
         refresh={refresh}
         statusBarHeight={statusBarHeight}
         userPostId={params.id}
-        refetch={refetch}
-        commentRefetching={commentRefetching}
       />
       <ActionSheet
         ref={myActionsheet}

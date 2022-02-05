@@ -29,16 +29,13 @@ export default function UserPostDetailPresenter({
   refresh,
   statusBarHeight,
   userPostId,
-  refetch,
-  commentRefetching,
 }) {
   const [commentUploading, setCommentUploading] = useState(false);
 
   let detailRef = useRef();
 
-  const handleComment = async () => {
+  const handleComment = () => {
     setCommentUploading(true);
-    refetch();
   };
 
   return (
@@ -117,23 +114,9 @@ export default function UserPostDetailPresenter({
         <CommentForm
           userPostId={userPostId}
           handleComment={handleComment}
-          commentRefetching={commentRefetching}
           commentUploading={commentUploading}
         />
       </KeyboardAvoidingView>
     </>
   );
 }
-
-// {commentRefetching && commentUploading ? (
-//   <View
-//     style={{
-//       backgroundColor: colors.backgraound,
-//       flex: 1,
-//       alignItems: "center",
-//       justifyContent: "center",
-//     }}
-//   >
-//     <ActivityIndicator color="black" />
-//   </View>
-// )

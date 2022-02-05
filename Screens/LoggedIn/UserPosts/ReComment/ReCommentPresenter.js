@@ -20,15 +20,12 @@ export default function ReCommentPresenter({
   userPostId,
   id,
   statusBarHeight,
-  refetch,
-  commentRefetching,
 }) {
   const [commentUploading, setCommentUploading] = useState(false);
 
   let reCommentRef = useRef();
   const handleReComment = () => {
     setCommentUploading(true);
-    refetch();
   };
 
   return (
@@ -71,7 +68,6 @@ export default function ReCommentPresenter({
           userPostCommentId={id}
           reCommentScreen={true}
           handleReComment={handleReComment}
-          commentRefetching={commentRefetching}
           commentUploading={commentUploading}
         />
       </KeyboardAvoidingView>

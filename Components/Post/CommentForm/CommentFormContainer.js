@@ -12,7 +12,6 @@ export default function ({
   reCommentScreen,
   handleComment,
   handleReComment,
-  commentRefetching,
   commentUploading,
 }) {
   const updateComment = async (cache, result) => {
@@ -24,6 +23,9 @@ export default function ({
       cache.modify({
         id: UserPostId,
         fields: {
+          userPostComments(prev) {
+            return [createUserPostComment, ...prev];
+          },
           totalUserPostComments(prev) {
             return prev + 1;
           },
@@ -38,7 +40,16 @@ export default function ({
       data: { createUserPostReComment },
     } = result;
     if (createUserPostReComment.ok) {
+      const UserPostCommentId = `UserPostComment:${userPostCommentId}`;
       const UserPostId = `UserPost:${userPostId}`;
+      cache.modify({
+        id: UserPostCommentId,
+        fields: {
+          userPostReComments(prev) {
+            return [createUserPostReComment, ...prev];
+          },
+        },
+      });
       cache.modify({
         id: UserPostId,
         fields: {
@@ -74,7 +85,6 @@ export default function ({
       reCommentScreen={reCommentScreen}
       loading={loading}
       ReCommentLoading={ReCommentLoading}
-      commentRefetching={commentRefetching}
       commentUploading={commentUploading}
     />
   );
