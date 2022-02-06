@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import UserPostListPresenter from "./UserPostListPresenter";
 import UserPost from "../../../../Components/Post/UserPost";
 import ScreenLayout from "../../../../Components/ScreenLayout";
+import { USER_POST_LIST } from "../../../../Constant";
 
 export default function () {
   const navigation = useNavigation();
@@ -19,7 +20,7 @@ export default function () {
 
   const goToUserPostForm = () => {
     return navigation.navigate("UserPostUploadForm", {
-      screenName: "UserPostList",
+      screenName: USER_POST_LIST,
     });
   };
 

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
-import { categories } from "../../constant";
+import { categories } from "../../Constant";
 
 const SContentInput = styled.TextInput`
   padding: 15px 7px;

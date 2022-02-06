@@ -2,8 +2,8 @@ import React from "react";
 import { useWindowDimensions, Alert } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
-import { colors } from "../../colors";
-import timeForToday from "../../utils";
+import { colors } from "../../Colors";
+import timeForToday from "../../Utils";
 import UserAvatar from "../UserAvatar";
 
 const Container = styled.View`
@@ -100,7 +100,6 @@ function UserPost({
   totalUserPostLikes,
   totalUserPostComments,
   createdAt,
-  isMine,
 }) {
   const { width, height } = useWindowDimensions();
 

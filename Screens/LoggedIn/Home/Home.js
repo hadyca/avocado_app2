@@ -4,7 +4,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import ScreenLayout from "../../../Components/ScreenLayout";
 import styled from "styled-components/native";
 import { useWindowDimensions } from "react-native";
-import { colors } from "../../../colors";
+import { colors } from "../../../Colors";
 
 const Container = styled.View`
   justify-content: center;

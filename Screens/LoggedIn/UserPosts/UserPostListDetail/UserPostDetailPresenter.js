@@ -4,11 +4,15 @@ import {
   FlatList,
   KeyboardAvoidingView,
   Keyboard,
+  TouchableOpacity,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
-import { colors } from "../../../../colors";
+import { colors } from "../../../../Colors";
 import CommentForm from "../../../../Components/Post/CommentForm";
 import PostContents from "../../../../Components/Post/PostContents";
+import { CATEGORY_BOARD, USER_POST_LIST } from "../../../../Constant";
 
 const PostContainer = styled.View`
   flex: 1;
@@ -29,7 +33,11 @@ export default function UserPostDetailPresenter({
   refresh,
   statusBarHeight,
   userPostId,
+  showActionSheet,
+  fromWhere,
 }) {
+  const navigation = useNavigation();
+
   const [commentUploading, setCommentUploading] = useState(false);
 
   let detailRef = useRef();
@@ -38,6 +46,65 @@ export default function UserPostDetailPresenter({
     setCommentUploading(true);
   };
 
+  //Header setting
+  const headerLeftCategory = () => (
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("CategoryBoard", {
+          category: data?.seeUserPost?.category,
+        })
+      }
+    >
+      <Ionicons
+        name="chevron-back-outline"
+        color="black"
+        size={30}
+        style={{ marginLeft: 8 }}
+      />
+    </TouchableOpacity>
+  );
+
+  const headerLeftUserPostList = () => (
+    <TouchableOpacity
+      onPress={() => navigation.navigate("UserPostList")}
+      stlye={{ marginLeft: 10 }}
+    >
+      <Ionicons name="chevron-back-outline" color="black" size={30} />
+    </TouchableOpacity>
+  );
+
+  const headerLeft = () => (
+    <TouchableOpacity onPress={() => navigation.pop()}>
+      <Ionicons
+        name="chevron-back-outline"
+        color="black"
+        size={30}
+        style={{ marginLeft: 8 }}
+      />
+    </TouchableOpacity>
+  );
+
+  const HeaderRight = () => (
+    <TouchableOpacity onPress={showActionSheet}>
+      <Ionicons
+        name="ellipsis-vertical"
+        color="grey"
+        size={18}
+        style={{ paddingLeft: 10, paddingRight: 10 }}
+      />
+    </TouchableOpacity>
+  );
+  useEffect(() => {
+    navigation.setOptions({
+      headerLeft:
+        fromWhere === CATEGORY_BOARD
+          ? headerLeftCategory
+          : fromWhere === USER_POST_LIST
+          ? headerLeftUserPostList
+          : headerLeft,
+      headerRight: HeaderRight,
+    });
+  }, [fromWhere, data]);
   return (
     <>
       {data?.seeUserPost?.userPostComments.length > 0 ? (

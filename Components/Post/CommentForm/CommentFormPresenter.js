@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
 import { useForm, Controller } from "react-hook-form";
-import { colors } from "../../../colors";
+import { colors } from "../../../Colors";
 import SendButton from "../SendButton";
 
 const Container = styled.View`

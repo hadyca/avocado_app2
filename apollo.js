@@ -54,16 +54,13 @@ const onErrorLink = onError(({ graphQLErrors, networkError }) => {
   }
 });
 
-export const cache = new InMemoryCache({
+const cache = new InMemoryCache({
   typePolicies: {
     Query: {
       fields: {
         seeAllUserPosts: offsetLimitPagination(),
         seeUserCategoryPost: offsetLimitPagination(["category"]),
         userPostComments: {
-          merge: true,
-        },
-        userPostReComments: {
           merge: true,
         },
       },

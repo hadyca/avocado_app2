@@ -7,7 +7,7 @@ import SearchConditionNav from "./SearchConditionNav";
 import FavoritesNav from "./FavoritesNav";
 import Me from "../Screens/Me";
 import CompanyPostList from "../Screens/CompanyPostList";
-import { colors } from "../colors";
+import { colors } from "../Colors";
 import Profile from "../Screens/Profile";
 
 const Stack = createStackNavigator();

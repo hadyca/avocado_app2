@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
-import { TouchableOpacity, ActivityIndicator } from "react-native";
-import { useForm } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
-import { ReactNativeFile } from "apollo-upload-client";
-
 import * as ImagePicker from "expo-image-picker";
 import UserPostUploadFormPresenter from "./UserPostUploadFormPresenter";
 import { UPLOAD_USER_POST_MUTATION } from "./UserPostUploadFormQueries";
@@ -13,34 +9,9 @@ export default function ({ route: { params } }) {
   const [photo, setPhoto] = useState([]);
   const [countPhoto, setCountPhoto] = useState(0);
   const [screenName, setScreenName] = useState("");
+
   const navigation = useNavigation();
-  const { control, handleSubmit, formState } = useForm({
-    mode: "onChange",
-  });
 
-  const NoHeaderRight = () => (
-    <TouchableOpacity
-      disabled={true}
-      onPress={handleSubmit(onValid)}
-      style={{ marginRight: 10, opacity: 0.5 }}
-    >
-      <HeaderRightText>Done</HeaderRightText>
-    </TouchableOpacity>
-  );
-
-  const OkHeaderRight = () => (
-    <TouchableOpacity
-      disabled={false}
-      onPress={handleSubmit(onValid)}
-      style={{ marginRight: 10, opacity: 1 }}
-    >
-      <HeaderRightText>Done</HeaderRightText>
-    </TouchableOpacity>
-  );
-
-  const HeaderRightLoading = () => (
-    <ActivityIndicator size="small" color="black" style={{ marginRight: 10 }} />
-  );
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
@@ -81,26 +52,6 @@ export default function ({ route: { params } }) {
     }
   );
 
-  const onValid = async ({ title, content }) => {
-    const fileUrl = await photo.map((_, index) => {
-      return new ReactNativeFile({
-        uri: photo[index].uri,
-        name: `${index}.jpg`,
-        type: "image/jpeg",
-      });
-    });
-    if (!loading) {
-      uploadUserPostMutation({
-        variables: {
-          fileUrl,
-          title,
-          content,
-          category: params?.category,
-        },
-      });
-    }
-  };
-
   const goToImageSelect = async () => {
     if (countPhoto < 5) {
       let result = await ImagePicker.launchImageLibraryAsync({
@@ -131,21 +82,11 @@ export default function ({ route: { params } }) {
   const goToCategory = () => navigation.navigate("PostCategory");
 
   useEffect(() => {
-    navigation.setOptions({
-      headerRight: loading
-        ? HeaderRightLoading
-        : !formState.isValid || !params?.category
-        ? NoHeaderRight
-        : OkHeaderRight,
-      ...(loading && { headerLeft: () => null }),
-    });
-  }, [photo, loading, params, formState.isValid]);
-
-  useEffect(() => {
     if (params?.screenName) {
       setScreenName(params?.screenName);
     }
   }, []);
+
   return (
     <UserPostUploadFormPresenter
       goToImageSelect={goToImageSelect}
@@ -154,6 +95,8 @@ export default function ({ route: { params } }) {
       countPhoto={countPhoto}
       photo={photo}
       category={params.category}
+      loading={loading}
+      uploadUserPostMutation={uploadUserPostMutation}
     />
   );
 }

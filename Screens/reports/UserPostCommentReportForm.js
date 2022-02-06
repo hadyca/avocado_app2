@@ -2,9 +2,9 @@ import React from "react";
 import { Alert } from "react-native";
 import ScreenLayout from "../../Components/ScreenLayout";
 import { gql, useMutation } from "@apollo/client";
-import { userPostCommentReportAry } from "../../constant";
+import { userPostCommentReportAry } from "../../Constant";
 import styled from "styled-components/native";
-import { colors } from "../../colors";
+import { colors } from "../../Colors";
 import { useNavigation } from "@react-navigation/native";
 
 const REPORT_MUTATION = gql`

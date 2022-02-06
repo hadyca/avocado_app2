@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
-import { colors } from "../../colors";
+import { colors } from "../../Colors";
 import AuthButton from "../../Components/Auth/AuthButton";
 import AuthLayout from "../../Components/Auth/AuthLayout";
 

@@ -1,20 +1,10 @@
 import React, { useEffect } from "react";
-import { View, TouchableOpacity, ActivityIndicator } from "react-native";
+import { TouchableOpacity, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
-import { gql, useMutation } from "@apollo/client";
-import DismissKeyboard from "../Components/DismissKeyBoard";
 import styled from "styled-components/native";
-import { colors } from "../colors";
-
-const EDIT_COMMENT_MUTATION = gql`
-  mutation editUserPostComment($commentId: Int!, $payload: String!) {
-    editUserPostComment(commentId: $commentId, payload: $payload) {
-      ok
-      error
-    }
-  }
-`;
+import DismissKeyboard from "../../../../Components/DismissKeyBoard";
+import { colors } from "../../../../Colors";
 
 const HeaderRightText = styled.Text`
   color: ${colors.black};
@@ -34,47 +24,27 @@ const TextInput = styled.TextInput`
   color: black;
   border: 1px solid ${colors.borderThin};
 `;
-export default function EditUserPostCommentForm({ route: { params } }) {
+
+export default function EditUserPostReCommentFormPresenter({
+  loading,
+  reCommentId,
+  OriginalPayload,
+  editUserPostCommentMutation,
+  handlePayload,
+}) {
   const navigation = useNavigation();
-  const { control, handleSubmit, getValues, formState } = useForm({
+  const { control, handleSubmit, formState } = useForm({
     defaultValues: {
-      payload: params.payload,
+      payload: OriginalPayload,
     },
     mode: "onChange",
   });
-
-  const updateEditUserPostComment = (cache, result) => {
-    const { payload } = getValues();
-    const {
-      data: {
-        editUserPostComment: { ok },
-      },
-    } = result;
-    if (ok) {
-      const CommentId = `UserPostComment:${params.commentId}`;
-      cache.modify({
-        id: CommentId,
-        fields: {
-          payload() {
-            return payload;
-          },
-        },
-      });
-    }
-    navigation.pop();
-  };
-
-  const [editUserPostCommentMutation, { loading }] = useMutation(
-    EDIT_COMMENT_MUTATION,
-    {
-      update: updateEditUserPostComment,
-    }
-  );
   const onValid = ({ payload }) => {
     if (!loading) {
+      handlePayload(payload);
       editUserPostCommentMutation({
         variables: {
-          commentId: parseInt(params.commentId),
+          reCommentId: parseInt(reCommentId),
           payload,
         },
       });
@@ -112,6 +82,7 @@ export default function EditUserPostCommentForm({ route: { params } }) {
       ...(loading && { headerLeft: () => null }),
     });
   }, [loading, formState.isValid]);
+
   return (
     <DismissKeyboard>
       <Container>

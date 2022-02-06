@@ -1,6 +1,6 @@
 import React from "react";
 import { ActivityIndicator, View } from "react-native";
-import { colors } from "../colors";
+import { colors } from "../Colors";
 
 export default function ScreenLayout({ loading, children }) {
   return loading ? (

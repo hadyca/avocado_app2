@@ -37,3 +37,6 @@ export const userPostCommentReportAry = [
   "댓글 test",
   "댓글 test2",
 ];
+
+export const USER_POST_LIST = "UserPostList";
+export const CATEGORY_BOARD = "CategoryBoard";

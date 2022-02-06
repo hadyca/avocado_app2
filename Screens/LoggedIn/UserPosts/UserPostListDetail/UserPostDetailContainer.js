@@ -1,12 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import {
-  Platform,
-  NativeModules,
-  TouchableOpacity,
-  Alert,
-  Text,
-  View,
-} from "react-native";
+import { Platform, NativeModules, TouchableOpacity, Alert } from "react-native";
 import { useMutation, useQuery } from "@apollo/client";
 import UserPostDetailPresenter from "./UserPostDetailPresenter";
 import { useNavigation } from "@react-navigation/native";
@@ -15,7 +8,6 @@ import {
   DELETE_USERPOST_MUTATION,
   TOGGLE_USERPOST_LIKE_MUTATION,
 } from "./UserPostDetailQueries";
-import { Ionicons } from "@expo/vector-icons";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
 import UserPostComment from "../../../../Components/Post/UserPostComment";
 import ScreenLayout from "../../../../Components/ScreenLayout";
@@ -36,6 +28,7 @@ export default function ({ route: { params } }) {
   }, []);
 
   const updateToggleLike = (cache, result) => {
+    console.log(cache);
     const {
       data: {
         toggleUserPostLike: { ok },
@@ -115,55 +108,6 @@ export default function ({ route: { params } }) {
     );
   };
 
-  //Header setting
-  const headerLeftCategory = () => (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("CategoryBoard", {
-          category: data?.seeUserPost?.category,
-        })
-      }
-    >
-      <Ionicons
-        name="chevron-back-outline"
-        color="black"
-        size={30}
-        style={{ marginLeft: 8 }}
-      />
-    </TouchableOpacity>
-  );
-
-  const headerLeftUserPostList = () => (
-    <TouchableOpacity
-      onPress={() => navigation.navigate("UserPostList")}
-      stlye={{ marginLeft: 10 }}
-    >
-      <Ionicons name="chevron-back-outline" color="black" size={30} />
-    </TouchableOpacity>
-  );
-
-  const headerLeft = () => (
-    <TouchableOpacity onPress={() => navigation.pop()}>
-      <Ionicons
-        name="chevron-back-outline"
-        color="black"
-        size={30}
-        style={{ marginLeft: 8 }}
-      />
-    </TouchableOpacity>
-  );
-
-  const HeaderRight = () => (
-    <TouchableOpacity onPress={showActionSheet}>
-      <Ionicons
-        name="ellipsis-vertical"
-        color="grey"
-        size={18}
-        style={{ paddingLeft: 10, paddingRight: 10 }}
-      />
-    </TouchableOpacity>
-  );
-
   const refresh = () => {
     setRefreshing(true);
     refetch();
@@ -177,6 +121,7 @@ export default function ({ route: { params } }) {
       content: data?.seeUserPost?.content,
       category: data?.seeUserPost?.category,
       file: data?.seeUserPost?.file,
+      screenName: params.fromWhere,
     });
   };
 
@@ -194,7 +139,7 @@ export default function ({ route: { params } }) {
     });
   };
 
-  //Action Sheet & UseEffect
+  //Action Sheet
   let myActionsheet = useRef();
   let notMeActionsheet = useRef();
   let myOptionArray = ["수정", "삭제", "취소"];
@@ -232,38 +177,6 @@ export default function ({ route: { params } }) {
     }
   };
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft:
-        params?.fromWhere === "CategoryBoard"
-          ? headerLeftCategory
-          : params?.fromWhere === "UserPostList"
-          ? headerLeftUserPostList
-          : headerLeft,
-      headerRight: HeaderRight,
-    });
-  }, [params, data]);
-
-  // useEffect(() => {
-  //   if (networkStatus === 1) {
-  //     setCommentRefetching(true);
-  //   } else {
-  //     setCommentRefetching(false);
-  //   }
-  // }, [networkStatus]);
-
-  // useEffect(() => {
-  //   if (networkStatus === 1 && !cacheUpdated) {
-  //     setFirstLoading(true);
-  //   } else {
-  //     setFirstLoading(false);
-  //   }
-  // }, [networkStatus]);
-
-  // const handleCache = (bool) => {
-  //   setCacheUpdated(bool);
-  // };
-
   return (
     <ScreenLayout loading={loading}>
       <UserPostDetailPresenter
@@ -275,6 +188,8 @@ export default function ({ route: { params } }) {
         refresh={refresh}
         statusBarHeight={statusBarHeight}
         userPostId={params.id}
+        showActionSheet={showActionSheet}
+        fromWhere={params.fromWhere}
       />
       <ActionSheet
         ref={myActionsheet}

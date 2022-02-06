@@ -1,16 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
-
-import { colors } from "../../../../colors";
+import { colors } from "../../../../Colors";
 import ContentInput from "../../../../Components/Post/ContentInput";
-import { Text } from "react-native";
+import { ActivityIndicator, Image, Text, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { ReactNativeFile } from "apollo-upload-client";
 
 const Container = styled.ScrollView`
   flex: 1;
-  background-color: #ffffff;
+  background-color: ${colors.backgraound};
 `;
+
+const HeaderRightText = styled.Text`
+  color: ${colors.black};
+  font-size: 16px;
+  font-weight: 600;
+  margin-right: 7px;
+`;
+
 const ImageTop = styled.View`
   margin: 10px 10px 0px 10px;
 `;
@@ -32,13 +41,6 @@ const ImagePick = styled.TouchableOpacity`
 `;
 const CameraText = styled.Text`
   color: #868b94;
-`;
-
-const HeaderRightText = styled.Text`
-  color: ${colors.black};
-  font-size: 16px;
-  font-weight: 600;
-  margin-right: 7px;
 `;
 
 const TitleInput = styled.TextInput`
@@ -89,10 +91,64 @@ export default function UserPostUploadFormPresenter({
   countPhoto,
   photo,
   category,
+  loading,
+  uploadUserPostMutation,
 }) {
+  const navigation = useNavigation();
+
   const { control, handleSubmit, formState } = useForm({
     mode: "onChange",
   });
+
+  const onValid = async ({ title, content }) => {
+    const fileUrl = await photo.map((_, index) => {
+      return new ReactNativeFile({
+        uri: photo[index].uri,
+        name: `${index}.jpg`,
+        type: "image/jpeg",
+      });
+    });
+    if (!loading) {
+      uploadUserPostMutation({
+        variables: {
+          fileUrl,
+          title,
+          content,
+          category,
+        },
+      });
+    }
+  };
+  const NoHeaderRight = () => (
+    <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
+      <HeaderRightText>Done</HeaderRightText>
+    </TouchableOpacity>
+  );
+
+  const OkHeaderRight = () => (
+    <TouchableOpacity
+      disabled={false}
+      onPress={handleSubmit(onValid)}
+      style={{ marginRight: 10, opacity: 1 }}
+    >
+      <HeaderRightText>Done</HeaderRightText>
+    </TouchableOpacity>
+  );
+  const HeaderRightLoading = () => (
+    <ActivityIndicator size="small" color="black" style={{ marginRight: 10 }} />
+  );
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: loading
+        ? HeaderRightLoading
+        : !formState.isValid || !category
+        ? NoHeaderRight
+        : OkHeaderRight,
+      ...(loading && { headerLeft: () => null }),
+    });
+  }, [photo, loading, category, formState.isValid]);
+
   return (
     <Container>
       <ImageTop>
@@ -101,12 +157,12 @@ export default function UserPostUploadFormPresenter({
             <Ionicons name={"camera"} color={"#868B94"} size={30} />
             <CameraText>{`${countPhoto} / 5`}</CameraText>
           </ImagePick>
-          {photo?.length > 0
+          {photo.length > 0
             ? photo.map((item, index) => {
                 return (
                   <ImageContainer key={index}>
                     <Image
-                      source={{ uri: item.fileUrl }}
+                      source={{ uri: item.uri }}
                       style={{ height: 60, width: 60 }}
                     />
                     <DeleteBtn onPress={() => DeleteImg(index)}>
@@ -137,10 +193,17 @@ export default function UserPostUploadFormPresenter({
           )}
         />
         <CategoryView onPress={goToCategory}>
-          <CategoryContainer>
-            <Text>{category}</Text>
-            <Ionicons name="chevron-forward" color="black" size={17} />
-          </CategoryContainer>
+          {category ? (
+            <CategoryContainer>
+              <Text>{category}</Text>
+              <Ionicons name="chevron-forward" color="black" size={17} />
+            </CategoryContainer>
+          ) : (
+            <CategoryContainer>
+              <Text>게시글의 주제를 정해주세요.</Text>
+              <Ionicons name="chevron-forward" color="black" size={17} />
+            </CategoryContainer>
+          )}
         </CategoryView>
         <Controller
           name="content"

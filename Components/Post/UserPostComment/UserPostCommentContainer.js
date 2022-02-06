@@ -5,7 +5,7 @@ import { Alert } from "react-native";
 import UserPostCommentPresenter from "./UserPostCommentPresenter";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
 import { DELETE_COMMENT_MUTATION } from "./UserPostCommentQueries";
-import timeForToday from "../../../utils";
+import timeForToday from "../../../Utils";
 
 export default function ({
   userPostId,

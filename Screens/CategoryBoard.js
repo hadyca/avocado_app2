@@ -10,6 +10,7 @@ import ScreenLayout from "../Components/ScreenLayout";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import CategoryUserPost from "../Components/Post/CategoryUserPost";
+import { CATEGORY_BOARD } from "../Constant";
 
 const CATEGORY_BOARD_QUERY = gql`
   query seeUserCategoryPost($category: String!, $offset: Int!) {
@@ -91,7 +92,7 @@ export default function CategoryBoard({ route: { params } }) {
   const goToUserPostForm = () => {
     return navigation.navigate("UserPostUploadForm", {
       category: params?.category,
-      screenName: "CategoryBoard",
+      screenName: CATEGORY_BOARD,
     });
   };
 

@@ -3,7 +3,7 @@ import { useScrollToTop } from "@react-navigation/native";
 import { FlatList, ActivityIndicator, ScrollView } from "react-native";
 import styled from "styled-components/native";
 import PostFormButton from "../../../../Components/Post/PostFormButton";
-import { categories } from "../../../../constant";
+import { categories } from "../../../../Constant";
 
 const Container = styled.View`
   flex: 1;

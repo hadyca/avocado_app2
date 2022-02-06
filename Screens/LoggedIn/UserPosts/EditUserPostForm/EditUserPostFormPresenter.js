@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
-import { colors } from "../colors";
+import { useForm, Controller } from "react-hook-form";
+import { useNavigation } from "@react-navigation/native";
+
+import { colors } from "../../../../Colors";
+import { Image, Text, TouchableOpacity, ActivityIndicator } from "react-native";
+import { ReactNativeFile } from "apollo-upload-client";
+import ContentInput from "../../../../Components/Post/ContentInput";
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -78,7 +84,78 @@ const DeleteText = styled.Text`
   color: white;
 `;
 
-export default function EditUserPostFormPresenter({}) {
+export default function EditUserPostFormPresenter({
+  title,
+  content,
+  loading,
+  userPostId,
+  photo,
+  countPhoto,
+  category,
+  editUserPostMutation,
+  goToCategory,
+  goToImageSelect,
+  DeleteImg,
+}) {
+  const navigation = useNavigation();
+  const { control, handleSubmit, getValues, formState } = useForm({
+    defaultValues: {
+      title,
+      content,
+    },
+    mode: "onChange",
+  });
+
+  const onValid = async ({ title, content }) => {
+    const editedFileUrl = await photo.map((_, index) => {
+      return new ReactNativeFile({
+        uri: photo[index].fileUrl,
+        name: `${index}.jpg`,
+        type: "image/jpeg",
+      });
+    });
+
+    if (!loading) {
+      editUserPostMutation({
+        variables: {
+          userPostId: parseInt(userPostId),
+          fileUrl: editedFileUrl,
+          title,
+          content,
+          category,
+        },
+      });
+    }
+  };
+  const NoHeaderRight = () => (
+    <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
+      <HeaderRightText>Done</HeaderRightText>
+    </TouchableOpacity>
+  );
+
+  const OkHeaderRight = () => (
+    <TouchableOpacity
+      disabled={false}
+      onPress={handleSubmit(onValid)}
+      style={{ marginRight: 10, opacity: 1 }}
+    >
+      <HeaderRightText>Done</HeaderRightText>
+    </TouchableOpacity>
+  );
+  const HeaderRightLoading = () => (
+    <ActivityIndicator size="small" color="black" style={{ marginRight: 10 }} />
+  );
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: loading
+        ? HeaderRightLoading
+        : !formState.isValid || !category
+        ? NoHeaderRight
+        : OkHeaderRight,
+      ...(loading && { headerLeft: () => null }),
+    });
+  }, [photo, loading, category, formState.isValid]);
+
   return (
     <Container>
       <ImageTop>
@@ -124,7 +201,7 @@ export default function EditUserPostFormPresenter({}) {
         />
         <CategoryView onPress={goToCategory}>
           <CategoryContainer>
-            <Text>{params.category}</Text>
+            <Text>{category}</Text>
             <Ionicons name="chevron-forward" color="black" size={17} />
           </CategoryContainer>
         </CategoryView>
@@ -140,7 +217,7 @@ export default function EditUserPostFormPresenter({}) {
               autoCapitalize="none"
               onChangeText={(text) => onChange(text)}
               value={value || ""}
-              categoryName={params?.category}
+              categoryName={category}
             />
           )}
         />

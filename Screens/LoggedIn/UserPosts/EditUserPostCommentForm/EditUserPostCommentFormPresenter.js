@@ -1,20 +1,10 @@
 import React, { useEffect } from "react";
-import { View, TouchableOpacity, ActivityIndicator } from "react-native";
+import { TouchableOpacity, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
-import { gql, useMutation } from "@apollo/client";
-import DismissKeyboard from "../Components/DismissKeyBoard";
 import styled from "styled-components/native";
-import { colors } from "../colors";
-
-const EDIT_COMMENT_MUTATION = gql`
-  mutation editUserPostReComment($reCommentId: Int!, $payload: String!) {
-    editUserPostReComment(reCommentId: $reCommentId, payload: $payload) {
-      ok
-      error
-    }
-  }
-`;
+import DismissKeyboard from "../../../../Components/DismissKeyBoard";
+import { colors } from "../../../../Colors";
 
 const HeaderRightText = styled.Text`
   color: ${colors.black};
@@ -27,55 +17,35 @@ const Container = styled.View`
   margin: 10px;
 `;
 const TextInput = styled.TextInput`
-  width: 100%;
-  height: 100%;
-  background-color: ${colors.backgraound}
-  padding: 13px
-  color: black;
-  border: 1px solid ${colors.borderThin};
+width: 100%;
+height: 100%;
+background-color: ${colors.backgraound}
+padding: 13px
+color: black;
+border: 1px solid ${colors.borderThin};
 `;
 
-export default function EditUserPostReCommentForm({ route: { params } }) {
+export default function EditUserPostCommentFormPresenter({
+  loading,
+  editUserPostCommentMutation,
+  commentId,
+  originalPayload,
+  handlePayload,
+}) {
   const navigation = useNavigation();
-  const { control, handleSubmit, getValues, formState } = useForm({
+
+  const { control, handleSubmit, formState } = useForm({
     defaultValues: {
-      payload: params.payload,
+      payload: originalPayload,
     },
     mode: "onChange",
   });
-
-  const updateEditUserPostComment = (cache, result) => {
-    const { payload } = getValues();
-    const {
-      data: {
-        editUserPostReComment: { ok },
-      },
-    } = result;
-    if (ok) {
-      const reCommentId = `UserPostReComment:${params.reCommentId}`;
-      cache.modify({
-        id: reCommentId,
-        fields: {
-          payload() {
-            return payload;
-          },
-        },
-      });
-    }
-    navigation.pop();
-  };
-
-  const [editUserPostCommentMutation, { loading }] = useMutation(
-    EDIT_COMMENT_MUTATION,
-    {
-      update: updateEditUserPostComment,
-    }
-  );
   const onValid = ({ payload }) => {
     if (!loading) {
+      handlePayload(payload);
       editUserPostCommentMutation({
         variables: {
-          reCommentId: parseInt(params.reCommentId),
+          commentId: parseInt(commentId),
           payload,
         },
       });
@@ -85,11 +55,7 @@ export default function EditUserPostReCommentForm({ route: { params } }) {
     <ActivityIndicator size="small" color="black" style={{ marginRight: 10 }} />
   );
   const NoHeaderRight = () => (
-    <TouchableOpacity
-      disabled={true}
-      onPress={handleSubmit(onValid)}
-      style={{ marginRight: 10, opacity: 0.5 }}
-    >
+    <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
       <HeaderRightText>Done</HeaderRightText>
     </TouchableOpacity>
   );
@@ -113,6 +79,7 @@ export default function EditUserPostReCommentForm({ route: { params } }) {
       ...(loading && { headerLeft: () => null }),
     });
   }, [loading, formState.isValid]);
+
   return (
     <DismissKeyboard>
       <Container>

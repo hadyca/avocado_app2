@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
-export const POST_QUERY = gql`
-  query seeAllUserPosts($offset: Int!) {
-    seeAllUserPosts(offset: $offset) {
+export const CATEGORY_BOARD_QUERY = gql`
+  query seeUserCategoryPost($category: String!, $offset: Int!) {
+    seeUserCategoryPost(category: $category, offset: $offset) {
       id
       user {
         username

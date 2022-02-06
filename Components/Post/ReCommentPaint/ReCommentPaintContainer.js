@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
-import timeForToday from "../../../utils";
+import timeForToday from "../../../Utils";
 import ReCommentPaintPresenter from "./ReCommentPaintPresenter";
 import { DELETE_COMMENT_MUTATION } from "./ReCommentPaintQueries";
 

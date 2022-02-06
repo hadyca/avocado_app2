@@ -2,8 +2,8 @@ import React, { useMemo } from "react";
 import { useWindowDimensions } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
-import { colors } from "../../colors";
-import timeForToday from "../../utils";
+import { colors } from "../../Colors";
+import timeForToday from "../../Utils";
 import UserAvatar from "../UserAvatar";
 
 const Container = styled.View`
@@ -96,11 +96,9 @@ function CategoryUserPost({
   file,
   title,
   content,
-  category,
   totalUserPostLikes,
   totalUserPostComments,
   createdAt,
-  isMine,
 }) {
   const { width, height } = useWindowDimensions();
 

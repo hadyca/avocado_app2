@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
-import { colors } from "../colors";
+import { colors } from "../Colors";
 
 const SSeparator = styled.View`
   margin-top: 10px;

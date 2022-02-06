@@ -7,7 +7,7 @@ import FormError from "../../Components/Auth/FormError";
 import { Subtitle } from "../../Components/Auth/Subtitle";
 import { TextInput } from "../../Components/Auth/AuthShared";
 import { useState } from "react";
-import { emailRule, passwordRule, usernameRule } from "../../regExp";
+import { emailRule, passwordRule, usernameRule } from "../../RegExp";
 
 const CREATE_ACCOUNT_MUTATION = gql`
   mutation createAccount(

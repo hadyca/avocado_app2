@@ -1,8 +1,8 @@
 import React from "react";
 import { View } from "react-native";
-import { smallDistrict } from "../../districtList";
+import { smallDistrict } from "../../DistrictList";
 import styled from "styled-components/native";
-import { colors } from "../../colors";
+import { colors } from "../../Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
