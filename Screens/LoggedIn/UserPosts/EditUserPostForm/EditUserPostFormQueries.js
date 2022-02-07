@@ -15,20 +15,9 @@ export const EDIT_USERPOST_MUTATION = gql`
       content: $content
       category: $category
     ) {
+      ok
+      error
       id
-      user {
-        username
-        avatar
-      }
-      title
-      content
-      category
-      totalUserPostLikes
-      createdAt
-      isMine
-      file {
-        fileUrl
-      }
     }
   }
 `;

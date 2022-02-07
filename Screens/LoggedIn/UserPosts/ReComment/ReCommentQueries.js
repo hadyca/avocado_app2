@@ -1,30 +1,11 @@
 import { gql } from "@apollo/client";
+import { USER_POST_COMMENT_FRAGMENT } from "../../../../Fragments";
 
 export const COMMENT_QUERY = gql`
   query seeUserPostComment($userPostCommentId: Int!) {
     seeUserPostComment(userPostCommentId: $userPostCommentId) {
-      id
-      user {
-        id
-        username
-        avatar
-      }
-      payload
-      userPostReComments {
-        id
-        user {
-          id
-          username
-          avatar
-        }
-        payload
-        createdAt
-        updatedAt
-        isMine
-      }
-      createdAt
-      updatedAt
-      isMine
+      ...UserPostCommentFragment
     }
   }
+  ${USER_POST_COMMENT_FRAGMENT}
 `;

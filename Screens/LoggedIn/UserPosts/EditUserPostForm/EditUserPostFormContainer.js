@@ -12,11 +12,13 @@ export default function ({ route: { params } }) {
   const navigation = useNavigation();
 
   const onCompleted = (data) => {
-    const { editUserPost } = data;
+    const {
+      editUserPost: { ok, id },
+    } = data;
 
-    if (editUserPost.id) {
+    if (ok) {
       navigation.navigate("UserPostListDetail", {
-        id: editUserPost.id,
+        id,
         fromWhere: screenName,
       });
     }

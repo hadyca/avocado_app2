@@ -28,7 +28,6 @@ export default function ({ route: { params } }) {
   }, []);
 
   const updateToggleLike = (cache, result) => {
-    console.log(cache);
     const {
       data: {
         toggleUserPostLike: { ok },
@@ -76,7 +75,7 @@ export default function ({ route: { params } }) {
   };
   const { data, loading, fetchMore, refetch } = useQuery(POST_DETAIL_QUERY, {
     variables: {
-      userPostId: parseInt(params?.id),
+      userPostId: parseInt(params.id),
     },
   });
 
