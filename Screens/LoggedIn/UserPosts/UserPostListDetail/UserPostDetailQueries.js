@@ -7,9 +7,10 @@ import {
 export const POST_DETAIL_QUERY = gql`
   query seeUserPost($userPostId: Int!) {
     seeUserPost(userPostId: $userPostId) {
-      ...UserPostFragment
       isLiked
       isMine
+      totalUserPostComments
+      ...UserPostFragment
       userPostComments {
         ...UserPostCommentFragment
         userPostReComments {

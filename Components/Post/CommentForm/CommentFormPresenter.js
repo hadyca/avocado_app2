@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 import { useForm, Controller } from "react-hook-form";
 import { colors } from "../../../Colors";
 import SendButton from "../SendButton";
+import { Keyboard } from "react-native";
 
 const Container = styled.View`
   border-top-width: 1px;
@@ -40,14 +41,14 @@ export default function CommentFormPresenter({
 }) {
   const { handleSubmit, control, reset, watch } = useForm();
   const onValid = ({ payload }) => {
-    if (reCommentScreen) {
+    if (reCommentScreen && !loading) {
       createReCommentMutation({
         variables: {
           userPostCommentId: parseInt(userPostCommentId),
           payload,
         },
       });
-    } else {
+    } else if (!reCommentScreen && !loading) {
       createCommentMutation({
         variables: {
           userPostId: parseInt(userPostId),
@@ -80,7 +81,7 @@ export default function CommentFormPresenter({
         />
         <SendButton
           disabled={!watch("payload")}
-          loading={loading || ReCommentLoading || commentUploading}
+          loading={loading || ReCommentLoading}
           onPress={handleSubmit(onValid)}
         />
       </Actions>

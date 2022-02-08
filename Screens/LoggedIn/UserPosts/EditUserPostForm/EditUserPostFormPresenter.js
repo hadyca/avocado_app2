@@ -96,9 +96,10 @@ export default function EditUserPostFormPresenter({
   goToCategory,
   goToImageSelect,
   DeleteImg,
+  handleEdit,
 }) {
   const navigation = useNavigation();
-  const { control, handleSubmit, getValues, formState } = useForm({
+  const { control, handleSubmit, formState } = useForm({
     defaultValues: {
       title,
       content,
@@ -116,6 +117,7 @@ export default function EditUserPostFormPresenter({
     });
 
     if (!loading) {
+      handleEdit(title, content);
       editUserPostMutation({
         variables: {
           userPostId: parseInt(userPostId),

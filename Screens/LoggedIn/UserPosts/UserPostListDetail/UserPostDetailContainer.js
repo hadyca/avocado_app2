@@ -35,7 +35,7 @@ export default function ({ route: { params } }) {
     } = result;
 
     if (ok) {
-      const UserPostId = `UserPost:${params?.id}`;
+      const UserPostId = `UserPost:${params.id}`;
       cache.modify({
         id: UserPostId,
         fields: {
@@ -96,7 +96,7 @@ export default function ({ route: { params } }) {
   const renderComment = ({ item }) => {
     return (
       <UserPostComment
-        userPostId={parseInt(params?.id)}
+        userPostId={parseInt(params.id)}
         id={item.id}
         user={item.user}
         payload={item.payload}

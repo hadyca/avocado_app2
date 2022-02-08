@@ -11,7 +11,6 @@ import {
 import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import CommentForm from "../../../../Components/Post/CommentForm";
 import UserPostComment from "../../../../Components/Post/UserPostComment";
-import { colors } from "../../../../Colors";
 
 export default function ReCommentPresenter({
   refreshing,
@@ -39,10 +38,12 @@ export default function ReCommentPresenter({
           style={{ flex: 1 }}
           ref={reCommentRef}
           onContentSizeChange={() => {
-            if (commentUploading) {
-              reCommentRef.current?.scrollToEnd();
+            if (
+              commentUploading &&
+              data?.seeUserPostComment?.userPostReComments.length > 6
+            ) {
               setCommentUploading(false);
-              Keyboard.dismiss();
+              reCommentRef.current?.scrollToEnd();
             }
           }}
         >

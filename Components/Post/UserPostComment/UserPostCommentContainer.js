@@ -29,6 +29,7 @@ export default function ({
       cache.evict({
         id: CommentId,
       });
+
       cache.modify({
         id: UserPostId,
         fields: {

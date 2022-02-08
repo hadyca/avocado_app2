@@ -9,25 +9,46 @@ export default function ({ route: { params } }) {
   const [photo, setPhoto] = useState([]);
   const [countPhoto, setCountPhoto] = useState(0);
   const [screenName, setScreenName] = useState("");
+  const [editedTitle, setEditedTitle] = useState("");
+  const [editedContent, setEditedContent] = useState("");
   const navigation = useNavigation();
 
-  const onCompleted = (data) => {
+  const updateEditUserPost = (cache, result) => {
     const {
-      editUserPost: { ok, id },
-    } = data;
-
+      data: {
+        editUserPost: { ok, id },
+      },
+    } = result;
     if (ok) {
-      navigation.navigate("UserPostListDetail", {
-        id,
-        fromWhere: screenName,
+      const UserPostId = `UserPost:${params.id}`;
+
+      cache.modify({
+        id: UserPostId,
+        fields: {
+          title() {
+            return editedTitle;
+          },
+          content() {
+            return editedContent;
+          },
+          category() {
+            return params.category;
+          },
+          file() {
+            return photo[0]?.fileUrl;
+          },
+        },
       });
     }
+    navigation.navigate("UserPostListDetail", {
+      id,
+      fromWhere: screenName,
+    });
   };
-
   const [editUserPostMutation, { loading }] = useMutation(
     EDIT_USERPOST_MUTATION,
     {
-      onCompleted,
+      update: updateEditUserPost,
     }
   );
 
@@ -74,6 +95,11 @@ export default function ({ route: { params } }) {
     }
   }, []);
 
+  const handleEdit = (title, content) => {
+    setEditedTitle(title);
+    setEditedContent(content);
+  };
+
   return (
     <EditUserPostFormPresenter
       title={params.title}
@@ -87,6 +113,7 @@ export default function ({ route: { params } }) {
       DeleteImg={DeleteImg}
       goToCategory={goToCategory}
       goToImageSelect={goToImageSelect}
+      handleEdit={handleEdit}
     />
   );
 }

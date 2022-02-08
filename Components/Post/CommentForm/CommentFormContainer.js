@@ -1,10 +1,12 @@
 import React from "react";
-import { useMutation } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import CommentFormPresenter from "./CommentFormPresenter";
 import {
   CREATE_COMMENT_MUTATION,
   CREATE_RECOMMENT_MUTATION,
 } from "./CommentFormQueries";
+import useMe from "../../../Hooks/useMe";
+import { Keyboard } from "react-native";
 
 export default function ({
   userPostId,
@@ -14,17 +16,46 @@ export default function ({
   handleReComment,
   commentUploading,
 }) {
+  const { data: userData } = useMe();
+
   const updateComment = async (cache, result) => {
     const {
       data: { createUserPostComment },
     } = result;
-    if (createUserPostComment.ok) {
+    if (createUserPostComment && userData?.me) {
+      const newComment = {
+        __typename: "UserPostComment",
+        createdAt: createUserPostComment?.createdAt,
+        id: createUserPostComment?.id,
+        isMine: true,
+        payload: createUserPostComment?.payload,
+        user: {
+          ...userData?.me,
+        },
+      };
+      const newCacheComment = cache.writeFragment({
+        data: newComment,
+        fragment: gql`
+          fragment BSName on UserPostComment {
+            id
+            createdAt
+            isMine
+            payload
+            user {
+              id
+              username
+              avatar
+            }
+          }
+        `,
+      });
+
       const UserPostId = `UserPost:${userPostId}`;
       cache.modify({
         id: UserPostId,
         fields: {
-          userPostComments(prev) {
-            return [createUserPostComment, ...prev];
+          userPostComments() {
+            return newCacheComment;
           },
           totalUserPostComments(prev) {
             return prev + 1;
@@ -33,23 +64,50 @@ export default function ({
       });
     }
     handleComment();
+    Keyboard.dismiss();
   };
 
   const updateReComment = (cache, result) => {
     const {
       data: { createUserPostReComment },
     } = result;
-    if (createUserPostReComment.ok) {
+    if (createUserPostReComment && userData?.me) {
+      const newComment = {
+        __typename: "UserPostReComment",
+        createdAt: createUserPostReComment?.createdAt,
+        id: createUserPostReComment?.id,
+        isMine: true,
+        payload: createUserPostReComment?.payload,
+        user: {
+          ...userData?.me,
+        },
+      };
+      const newCacheComment = cache.writeFragment({
+        data: newComment,
+        fragment: gql`
+          fragment BSName2 on UserPostReComment {
+            id
+            createdAt
+            isMine
+            payload
+            user {
+              id
+              username
+              avatar
+            }
+          }
+        `,
+      });
       const UserPostCommentId = `UserPostComment:${userPostCommentId}`;
-      const UserPostId = `UserPost:${userPostId}`;
       cache.modify({
         id: UserPostCommentId,
         fields: {
-          userPostReComments(prev) {
-            return [createUserPostReComment, ...prev];
+          userPostReComments() {
+            return newCacheComment;
           },
         },
       });
+      const UserPostId = `UserPost:${userPostId}`;
       cache.modify({
         id: UserPostId,
         fields: {
@@ -59,6 +117,7 @@ export default function ({
         },
       });
       handleReComment();
+      Keyboard.dismiss();
     }
   };
 

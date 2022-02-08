@@ -105,6 +105,7 @@ export default function UserPostDetailPresenter({
       headerRight: HeaderRight,
     });
   }, [fromWhere, data]);
+
   return (
     <>
       {data?.seeUserPost?.userPostComments.length > 0 ? (
@@ -134,9 +135,12 @@ export default function UserPostDetailPresenter({
             ref={detailRef}
             initialNumToRender={30}
             onContentSizeChange={() => {
-              if (commentUploading) {
-                detailRef.current?.scrollToEnd({ animated: true });
+              if (
+                commentUploading &&
+                data?.seeUserPost?.totalUserPostComments > 5
+              ) {
                 setCommentUploading(false);
+                detailRef.current?.scrollToEnd({ animated: true });
                 Keyboard.dismiss();
               }
             }}

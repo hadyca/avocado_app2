@@ -60,9 +60,6 @@ const cache = new InMemoryCache({
       fields: {
         seeAllUserPosts: offsetLimitPagination(),
         seeUserCategoryPost: offsetLimitPagination(["category"]),
-        userPostComments: {
-          merge: true,
-        },
       },
     },
   },
