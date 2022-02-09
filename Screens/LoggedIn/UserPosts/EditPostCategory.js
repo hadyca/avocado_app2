@@ -1,9 +1,9 @@
 import React from "react";
-import ScreenLayout from "../Components/ScreenLayout";
+import ScreenLayout from "../../../Components/ScreenLayout";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
-import { colors } from "../Colors";
-import { categories } from "../Constant";
+import { colors } from "../../../Colors";
+import { categories } from "../../../Constant";
 
 const Container = styled.View``;
 

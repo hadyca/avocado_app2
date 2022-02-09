@@ -40,21 +40,21 @@ export default function SearchConditionIndustry() {
       <Row>
         <Contents onPress={() => sendData("서비스")}>
           <WorkLogo
-            source={require("../assets/coffee.png")}
+            source={require("../../../assets/coffee.png")}
             resizeMode="contain"
           />
           <Text>서비스</Text>
         </Contents>
         <Contents onPress={() => sendData("공장/제조")}>
           <WorkLogo
-            source={require("../assets/coffee.png")}
+            source={require("../../../assets/coffee.png")}
             resizeMode="contain"
           />
           <Text>공장/제조</Text>
         </Contents>
         <Contents onPress={() => sendData("배달")}>
           <WorkLogo
-            source={require("../assets/coffee.png")}
+            source={require("../../../assets/coffee.png")}
             resizeMode="contain"
           />
           <Text>배달</Text>
@@ -63,21 +63,21 @@ export default function SearchConditionIndustry() {
       <Row>
         <Contents>
           <WorkLogo
-            source={require("../assets/coffee.png")}
+            source={require("../../../assets/coffee.png")}
             resizeMode="contain"
           />
           <Text>서비스업</Text>
         </Contents>
         <Contents>
           <WorkLogo
-            source={require("../assets/coffee.png")}
+            source={require("../../../assets/coffee.png")}
             resizeMode="contain"
           />
           <Text>서비스업</Text>
         </Contents>
         <Contents>
           <WorkLogo
-            source={require("../assets/coffee.png")}
+            source={require("../../../assets/coffee.png")}
             resizeMode="contain"
           />
           <Text>서비스업</Text>

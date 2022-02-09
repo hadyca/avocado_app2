@@ -6,14 +6,14 @@ import EditUserPostForm from "../Screens/LoggedIn/UserPosts/EditUserPostForm";
 import UserPostListDetail from "../Screens/LoggedIn/UserPosts/UserPostListDetail";
 import EditUserPostCommentForm from "../Screens/LoggedIn/UserPosts/EditUserPostCommentForm";
 import EditUserPostReCommentForm from "../Screens/LoggedIn/UserPosts/EditUserPostReCommentForm";
-import Profile from "../Screens/Profile";
-import PostCategory from "../Screens/PostCategory";
-import EditPostCategory from "../Screens/EditPostCategory";
+import Profile from "../Screens/LoggedIn/Share/Profile";
+import PostCategory from "../Screens/LoggedIn/UserPosts/PostCategory";
+import EditPostCategory from "../Screens/LoggedIn/UserPosts/EditPostCategory";
 import CategoryBoard from "../Screens/LoggedIn/UserPosts/CategoryBoard";
 import ReComment from "../Screens/LoggedIn/UserPosts/ReComment";
-import UserPostReportForm from "../Screens/reports/UserPostReportForm";
-import UserPostCommentReportForm from "../Screens/reports/UserPostCommentReportForm";
-import UserPostReCommentReportForm from "../Screens/reports/UserPostReCommentReportForm";
+import UserPostReportForm from "../Screens/LoggedIn/UserPosts/UserPostReportForm";
+import UserPostCommentReportForm from "../Screens/LoggedIn/UserPosts/UserPostCommentReportForm";
+import UserPostReCommentReportForm from "../Screens/LoggedIn/UserPosts/UserPostReCommentReportForm";
 
 const Stack = createStackNavigator();
 

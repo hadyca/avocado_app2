@@ -1,5 +1,5 @@
 import React from "react";
-import { useWindowDimensions, Alert } from "react-native";
+import { useWindowDimensions } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../Colors";
@@ -19,8 +19,19 @@ const Header = styled.TouchableOpacity`
   margin: 10px;
 `;
 
-const IconView = styled.TouchableOpacity`
-  padding: 10px;
+const CategoryView = styled.View`
+  margin-left: 10px;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: flex-start;
+`;
+const CategoryTouch = styled.TouchableOpacity``;
+
+const CategoryText = styled.Text`
+  padding: 5px 10px;
+  background-color: ${colors.borderThin};
+  font-weight: 600;
+  text-align: center;
 `;
 
 const Contents = styled.TouchableOpacity`
@@ -68,24 +79,24 @@ const LikeComment = styled.View`
 const Likes = styled.Text`
   margin-right: 5px;
   color: ${colors.homeText};
-  font-size: 11px;
+  font-size: 12px;
 `;
 
 const Comments = styled.Text`
   color: ${colors.homeText};
-  font-size: 11px;
+  font-size: 12px;
 `;
 
 const Date = styled.Text`
   margin-top: 3px;
   margin-left: 10px;
   color: ${colors.homeText};
-  font-size: 8px;
+  font-size: 10px;
 `;
 
 const Separator = styled.View`
   width: 100%;
-  height: 2px;
+  height: 5px;
   background-color: ${colors.borderThin};
   margin-top: 20px;
 `;
@@ -115,6 +126,12 @@ function UserPost({
       username: user.username,
     });
   };
+
+  const goToCategoryScreen = (category) => {
+    navigation.navigate("CategoryBoard", {
+      category,
+    });
+  };
   const goToPostDetail = () => {
     navigation.navigate("UserPostListDetail", {
       id,
@@ -128,6 +145,11 @@ function UserPost({
           <UserAvatar username={user.username} uri={user.avatar} />
         </Header>
       </HeaderContainer>
+      <CategoryView>
+        <CategoryTouch onPress={() => goToCategoryScreen(category)}>
+          <CategoryText>{category}</CategoryText>
+        </CategoryTouch>
+      </CategoryView>
       {file.length > 0 ? (
         <ImgContainer onPress={goToPostDetail}>
           <MainImg
@@ -139,7 +161,6 @@ function UserPost({
         </ImgContainer>
       ) : null}
       <Contents onPress={goToPostDetail}>
-        <Title>{category}</Title>
         <Title>{title}</Title>
         {content.length >= 20 ? (
           <Content>

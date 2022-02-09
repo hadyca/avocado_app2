@@ -6,9 +6,9 @@ import UserPostList from "../Screens/LoggedIn/UserPosts/UserPostList";
 import SearchConditionNav from "./SearchConditionNav";
 import FavoritesNav from "./FavoritesNav";
 import Me from "../Screens/LoggedIn/Me/Me";
-import CompanyPostList from "../Screens/CompanyPostList";
+import CompanyPostList from "../Screens/LoggedIn/Search/CompanyPostList";
 import { colors } from "../Colors";
-import Profile from "../Screens/Profile";
+import Profile from "../Screens/LoggedIn/Share/Profile";
 
 const Stack = createStackNavigator();
 

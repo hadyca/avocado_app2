@@ -7,7 +7,7 @@ export const colors = {
   buttonBackground: "#22DA93",
   linkText: "#22DA93",
   borderThick: "#B0B0B0",
-  borderThin: "#E6E6E6",
+  borderThin: "#f1f3f6",
   focus: "#222222",
   error: "tomato",
   homeText: "#717171",
