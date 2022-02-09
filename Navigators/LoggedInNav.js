@@ -9,7 +9,7 @@ import EditUserPostReCommentForm from "../Screens/LoggedIn/UserPosts/EditUserPos
 import Profile from "../Screens/Profile";
 import PostCategory from "../Screens/PostCategory";
 import EditPostCategory from "../Screens/EditPostCategory";
-import CategoryBoard from "../Screens/CategoryBoard";
+import CategoryBoard from "../Screens/LoggedIn/UserPosts/CategoryBoard";
 import ReComment from "../Screens/LoggedIn/UserPosts/ReComment";
 import UserPostReportForm from "../Screens/reports/UserPostReportForm";
 import UserPostCommentReportForm from "../Screens/reports/UserPostCommentReportForm";

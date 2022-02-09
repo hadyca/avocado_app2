@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { useWindowDimensions } from "react-native";
-import ScreenLayout from "../Components/ScreenLayout";
 import { useNavigation } from "@react-navigation/native";
+import ScreenLayout from "../../../../Components/ScreenLayout";
 import CategoryUserPost from "../../../../Components/Post/CategoryUserPost";
 import { CATEGORY_BOARD } from "../../../../Constant";
 import { CATEGORY_BOARD_QUERY } from "./CategoryBoardQueries";

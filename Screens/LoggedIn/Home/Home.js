@@ -93,15 +93,15 @@ export default function Home() {
           </Contents>
           <Contents>
             <SubTitle>제공 하는 서비스</SubTitle>
-            <SubContent>내용</SubContent>
+            <SubContent>서비스 내용</SubContent>
           </Contents>
           <Contents>
             <SubTitle>제공 하는 서비스</SubTitle>
-            <SubContent>내용</SubContent>
+            <SubContent>서비스 내용</SubContent>
           </Contents>
           <Contents>
             <SubTitle>Footer</SubTitle>
-            <SubContent>내용</SubContent>
+            <SubContent>푸터 내용</SubContent>
           </Contents>
         </Container>
       </ScrollView>
