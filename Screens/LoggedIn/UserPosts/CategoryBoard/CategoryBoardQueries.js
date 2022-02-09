@@ -11,6 +11,4 @@ export const CATEGORY_BOARD_QUERY = gql`
     }
   }
   ${USER_POST_FRAGMENT}
-    }
-  }
 `;

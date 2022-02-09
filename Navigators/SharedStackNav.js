@@ -5,7 +5,7 @@ import Home from "../Screens/LoggedIn/Home/Home";
 import UserPostList from "../Screens/LoggedIn/UserPosts/UserPostList";
 import SearchConditionNav from "./SearchConditionNav";
 import FavoritesNav from "./FavoritesNav";
-// import Me from "../Screens/Me";
+import Me from "../Screens/LoggedIn/Me/Me";
 import CompanyPostList from "../Screens/CompanyPostList";
 import { colors } from "../Colors";
 import Profile from "../Screens/Profile";
@@ -54,7 +54,7 @@ export default function SharedStackNav({ screenName }) {
       {screenName === "FavoritesNav" ? (
         <Stack.Screen name={"즐겨 찾기"} component={FavoritesNav} />
       ) : null}
-      {/* {screenName === "Me" ? <Stack.Screen name="Me21" component={Me} /> : null} */}
+      {screenName === "Me" ? <Stack.Screen name="Me21" component={Me} /> : null}
       <Stack.Screen name="CompanyPostList" component={CompanyPostList} />
       {/* <Stack.Screen name="Profile" component={Profile} /> */}
     </Stack.Navigator>
