@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { useWindowDimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -54,6 +54,11 @@ export default function ({ route: { params } }) {
       screenName: CATEGORY_BOARD,
     });
   };
+
+  useEffect(() => {
+    refetch();
+  }, [params]);
+
   return (
     <ScreenLayout loading={loading}>
       <CategoryBoardPresenter

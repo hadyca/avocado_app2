@@ -6,9 +6,7 @@ import { colors } from "../../Colors";
 import timeForToday from "../../Utils";
 import UserAvatar from "../UserAvatar";
 
-const Container = styled.View`
-  margin-bottom: 10px;
-`;
+const Container = styled.View``;
 
 const HeaderContainer = styled.View`
   flex-direction: row;
@@ -28,6 +26,7 @@ const CategoryView = styled.View`
 const CategoryTouch = styled.TouchableOpacity``;
 
 const CategoryText = styled.Text`
+  font-size: 9px;
   padding: 5px 10px;
   background-color: ${colors.borderThin};
   font-weight: 600;
@@ -36,9 +35,12 @@ const CategoryText = styled.Text`
 
 const Contents = styled.TouchableOpacity`
   margin-left: 10px;
+  margin-top: 8px;
 `;
 
-const ImgContainer = styled.TouchableOpacity``;
+const ImgContainer = styled.TouchableOpacity`
+  margin-top: 8px;
+`;
 
 const MainImg = styled.Image`
   margin-top: 5px;
@@ -47,13 +49,11 @@ const MainImg = styled.Image`
 `;
 
 const Title = styled.Text`
-  margin-top: 8px;
   font-size: 16px;
   font-weight: 600;
 `;
 
 const Content = styled.View`
-  font-size: 14px;
   margin-top: 5px;
   flex-direction: row;
   align-items: center;
@@ -98,7 +98,7 @@ const Separator = styled.View`
   width: 100%;
   height: 5px;
   background-color: ${colors.borderThin};
-  margin-top: 20px;
+  margin-top: 10px;
 `;
 
 function UserPost({

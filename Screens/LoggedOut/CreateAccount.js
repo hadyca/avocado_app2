@@ -32,14 +32,16 @@ export default function CreateAccount({ navigation }) {
     const {
       createAccount: { ok, error },
     } = data;
-    const { email } = getValues();
+    const { email, username, password } = getValues();
     if (!ok) {
       return setError("result", {
         message: error,
       });
     } else {
       return navigation.reset({
-        routes: [{ name: "ConfirmSecret", params: { email } }],
+        routes: [
+          { name: "ConfirmSecret", params: { email, username, password } },
+        ],
       });
     }
   };

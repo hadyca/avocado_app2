@@ -56,7 +56,7 @@ export default function CategoryBoardPresenter({
         style={{ width: "100%" }}
         showsVerticalScrollIndicator={false}
         data={data?.seeUserCategoryPost}
-        keyExtractor={(post) => "" + post.id}
+        keyExtractor={(item) => "" + item.id}
         renderItem={renderPost}
       />
       {fetchLoading ? (

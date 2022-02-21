@@ -20,8 +20,18 @@ const REQUEST_SECRET_MUTATION = gql`
 `;
 
 const CONFIRM_SECRET = gql`
-  mutation confirmSecret($email: String!, $secret: String!) {
-    confirmSecret(email: $email, secret: $secret) {
+  mutation confirmSecret(
+    $email: String!
+    $username: String!
+    $password: String!
+    $secret: String!
+  ) {
+    confirmSecret(
+      email: $email
+      username: $username
+      password: $password
+      secret: $secret
+    ) {
       ok
       error
       token
@@ -67,6 +77,8 @@ export default function ConfirmSecret({ route: { params } }) {
       confirmSecretMutation({
         variables: {
           email: params.email,
+          username: params.username,
+          password: params.password,
           secret: data.secret,
         },
       });

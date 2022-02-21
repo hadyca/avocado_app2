@@ -16,21 +16,22 @@ const CategoryTouch = styled.TouchableOpacity`
   background-color: ${colors.backgraound};
   border: 1px ${colors.borderThick} solid;
   border-radius: 5px;
-  margin: 15px 15px 15px ${(props) => (props.first ? 15 : 0)}px;
-  padding: 20px;
+  margin: 10px 10px 10px ${(props) => (props.first ? 10 : 0)}px;
+  padding: 10px;
   justify-content: center;
   align-items: center;
 `;
 
 const CategoryText = styled.Text`
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 700;
   text-align: center;
 `;
 
 const BottomView = styled.View``;
 
 const FetchView = styled.View`
-  bottom: 50px;
+  bottom: 100px;
 `;
 
 export default function UserPostListPresenter({
@@ -68,7 +69,7 @@ export default function UserPostListPresenter({
           style={{ width: "100%" }}
           showsVerticalScrollIndicator={false}
           data={data?.seeAllUserPosts}
-          keyExtractor={(post) => "" + post.id}
+          keyExtractor={(item) => "" + item.id}
           renderItem={renderPost}
         />
         {fetchLoading ? (
