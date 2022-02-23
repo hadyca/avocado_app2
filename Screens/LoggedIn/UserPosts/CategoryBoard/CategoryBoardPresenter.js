@@ -1,6 +1,7 @@
 import React from "react";
 import { FlatList, ActivityIndicator, Text } from "react-native";
 import styled from "styled-components/native";
+import ExplainCategory from "../../../../Components/Post/ExplainCategory";
 
 const ImgContainer = styled.View``;
 
@@ -10,8 +11,14 @@ const MainImg = styled.Image`
   height: ${(props) => Math.ceil(props.height / 3)}px;
 `;
 
-const CategoryLink = styled.TouchableOpacity``;
-const CategoryText = styled.Text``;
+const CategoryText = styled.Text`
+  margin: 10px;
+  font-size: 18px;
+  font-weight: bold;
+`;
+const CategoryContent = styled.Text``;
+const WriteTextLink = styled.TouchableOpacity``;
+const WriteText = styled.Text``;
 
 const FetchView = styled.View`
   bottom: 30px;
@@ -43,10 +50,11 @@ export default function CategoryBoardPresenter({
                 height={height}
               />
             </ImgContainer>
-            <Text>{category}</Text>
-            <CategoryLink onPress={goToUserPostForm}>
-              <CategoryText>이 주제로 글 쓰러 가기</CategoryText>
-            </CategoryLink>
+            <CategoryText>{category}</CategoryText>
+            <ExplainCategory categoryName={category} />
+            <WriteTextLink onPress={goToUserPostForm}>
+              <WriteText>이 주제로 글쓰기</WriteText>
+            </WriteTextLink>
           </>
         }
         onEndReachedThreshold={0.05}

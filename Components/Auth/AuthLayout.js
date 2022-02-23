@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
+  NativeModules,
   Platform,
   TouchableWithoutFeedback,
 } from "react-native";
@@ -23,6 +24,15 @@ const Logo = styled.Image`
 `;
 
 export default function AuthLayout({ children }) {
+  const [statusBarHeight, setStatusBarHeight] = useState(0);
+  const { StatusBarManager } = NativeModules;
+  useEffect(() => {
+    Platform.OS == "ios"
+      ? StatusBarManager.getHeight((statusBarFrameData) => {
+          setStatusBarHeight(statusBarFrameData.height);
+        })
+      : null;
+  }, []);
   const dismissKeyboard = () => {
     Keyboard.dismiss();
   };
@@ -37,8 +47,10 @@ export default function AuthLayout({ children }) {
           style={{
             width: "100%",
           }}
-          behavior="position"
-          keyboardVerticalOffset={Platform.OS === "ios" ? 50 : 0}
+          behavior={Platform.OS === "ios" ? "padding" : null}
+          keyboardVerticalOffset={
+            Platform.OS === "ios" ? statusBarHeight + 30 : null
+          }
         >
           <Logo
             resizeMode="contain"

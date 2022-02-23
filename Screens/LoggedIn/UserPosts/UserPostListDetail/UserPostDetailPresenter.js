@@ -6,7 +6,6 @@ import {
   Keyboard,
   TouchableOpacity,
 } from "react-native";
-import { useHeaderHeight } from "@react-navigation/elements";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
@@ -38,7 +37,6 @@ export default function UserPostDetailPresenter({
   fromWhere,
 }) {
   const navigation = useNavigation();
-  const headerHeight = useHeaderHeight();
 
   const [commentUploading, setCommentUploading] = useState(false);
 
@@ -111,8 +109,11 @@ export default function UserPostDetailPresenter({
   return (
     <>
       <KeyboardAvoidingView
-        behavior={"padding"}
-        keyboardVerticalOffset={headerHeight - 700}
+        enabled
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={
+          Platform.OS === "ios" ? statusBarHeight + 20 : statusBarHeight + 60
+        }
         style={{ flex: 1 }}
       >
         {data?.seeUserPost?.userPostComments.length > 0 ? (

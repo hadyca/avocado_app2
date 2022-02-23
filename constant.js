@@ -10,7 +10,7 @@ export const categories = [
   "일반/기타",
 ];
 
-export const categoriesScreen_ = [
+export const categoriesScreen = [
   "Job",
   "Question",
   "Beauty",

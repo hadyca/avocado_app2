@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components/native";
-import { useWindowDimensions, ScrollView, View, Text } from "react-native";
+import { useWindowDimensions, ScrollView } from "react-native";
 
 const Container = styled.View`
   width: ${(props) => props.width}px;

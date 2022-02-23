@@ -14,7 +14,7 @@ export default function ContentInput({
   value,
   categoryName,
 }) {
-  return categoryName === "일/직업" ? (
+  return categoryName === categories.[0] ? (
     <SContentInput
       multiline={multiline}
       placeholder="일이나 직업관련해서 얘기해봐요"

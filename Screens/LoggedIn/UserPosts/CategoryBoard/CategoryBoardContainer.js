@@ -50,7 +50,7 @@ export default function ({ route: { params } }) {
 
   const goToUserPostForm = () => {
     return navigation.navigate("UserPostUploadForm", {
-      category: params?.category,
+      category: params.category,
       screenName: CATEGORY_BOARD,
     });
   };

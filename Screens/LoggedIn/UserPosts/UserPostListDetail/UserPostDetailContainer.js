@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Platform, NativeModules, TouchableOpacity, Alert } from "react-native";
+import { Platform, NativeModules, Alert } from "react-native";
 import { useMutation, useQuery } from "@apollo/client";
 import UserPostDetailPresenter from "./UserPostDetailPresenter";
 import { useNavigation } from "@react-navigation/native";

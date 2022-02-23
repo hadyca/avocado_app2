@@ -82,8 +82,8 @@ export default function ({ route: { params } }) {
   const goToCategory = () => navigation.navigate("PostCategory");
 
   useEffect(() => {
-    if (params?.screenName) {
-      setScreenName(params?.screenName);
+    if (params.screenName) {
+      setScreenName(params.screenName);
     }
   }, []);
 

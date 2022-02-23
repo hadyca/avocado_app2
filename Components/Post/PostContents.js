@@ -6,13 +6,28 @@ import Separator from "../Separator";
 import { Ionicons } from "@expo/vector-icons";
 import ImageSlider from "./ImageSlider";
 import { useNavigation } from "@react-navigation/native";
+import { colors } from "../../Colors";
 
-const PostContainer = styled.View`
-  flex: 7;
-`;
 const Container = styled.View`
   margin: 10px;
 `;
+
+const CategoryView = styled.View`
+  margin-bottom: 10px;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: flex-start;
+`;
+const CategoryTouch = styled.TouchableOpacity``;
+
+const CategoryText = styled.Text`
+  font-size: 9px;
+  padding: 5px 10px;
+  background-color: ${colors.borderThin};
+  font-weight: 600;
+  text-align: center;
+`;
+
 const Header = styled.TouchableOpacity``;
 const Contents = styled.View``;
 
@@ -50,6 +65,12 @@ export default function PostContents({
 }) {
   const navigation = useNavigation();
 
+  const goToCategoryScreen = (category) => {
+    navigation.navigate("CategoryBoard", {
+      category,
+    });
+  };
+
   const goToProfile = () => {
     navigation.navigate("Profile", {
       id: userId,
@@ -61,8 +82,12 @@ export default function PostContents({
     <View>
       {file !== 0 ? <ImageSlider data={data} /> : null}
       <Container>
+        <CategoryView>
+          <CategoryTouch onPress={() => goToCategoryScreen(category)}>
+            <CategoryText>{category}</CategoryText>
+          </CategoryTouch>
+        </CategoryView>
         <Header onPress={goToProfile}>
-          <Title>{category}</Title>
           <UserAvatar username={username} uri={avatar} />
         </Header>
         <Separator />

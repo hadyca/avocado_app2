@@ -6,32 +6,35 @@ import { colors } from "../../../../Colors";
 import PostFormButton from "../../../../Components/Post/PostFormButton";
 import { categories } from "../../../../Constant";
 
-const Container = styled.View``;
+const Container = styled.View`
+  flex: 1;
+`;
 
-const TopScroll = styled.ScrollView`
+const TopView = styled.View`
   background-color: ${colors.borderThin};
 `;
+
+const TopScroll = styled.ScrollView``;
 
 const CategoryTouch = styled.TouchableOpacity`
   background-color: ${colors.backgraound};
   border: 1px ${colors.borderThick} solid;
   border-radius: 5px;
   margin: 10px 10px 10px ${(props) => (props.first ? 10 : 0)}px;
-  padding: 10px;
   justify-content: center;
   align-items: center;
+  padding: 0 15px;
+  height: 35px;
 `;
 
 const CategoryText = styled.Text`
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   text-align: center;
 `;
 
-const BottomView = styled.View``;
-
 const FetchView = styled.View`
-  bottom: 100px;
+  bottom: 35px;
 `;
 
 export default function UserPostListPresenter({
@@ -49,17 +52,19 @@ export default function UserPostListPresenter({
   return (
     <>
       <Container>
-        <TopScroll horizontal={true} showsHorizontalScrollIndicator={false}>
-          {categories.map((item, index) => (
-            <CategoryTouch
-              first={index === 0}
-              key={index}
-              onPress={() => goToCategoryScreen(item)}
-            >
-              <CategoryText>{item}</CategoryText>
-            </CategoryTouch>
-          ))}
-        </TopScroll>
+        <TopView>
+          <TopScroll horizontal={true} showsHorizontalScrollIndicator={false}>
+            {categories.map((item, index) => (
+              <CategoryTouch
+                first={index === 0}
+                key={index}
+                onPress={() => goToCategoryScreen(item)}
+              >
+                <CategoryText>{item}</CategoryText>
+              </CategoryTouch>
+            ))}
+          </TopScroll>
+        </TopView>
         <FlatList
           ref={ref}
           onEndReachedThreshold={0.05}
