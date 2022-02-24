@@ -2,6 +2,7 @@ import React from "react";
 import { FlatList, ActivityIndicator, Text } from "react-native";
 import styled from "styled-components/native";
 import ExplainCategory from "../../../../Components/Post/ExplainCategory";
+import { colors } from "../../../../Colors";
 
 const ImgContainer = styled.View``;
 
@@ -16,9 +17,29 @@ const CategoryText = styled.Text`
   font-size: 18px;
   font-weight: bold;
 `;
-const CategoryContent = styled.Text``;
-const WriteTextLink = styled.TouchableOpacity``;
-const WriteText = styled.Text``;
+
+const ExplainView = styled.View`
+  margin: 0px 0px 10px 10px;
+`;
+
+const WriteTextLink = styled.TouchableOpacity`
+  background-color: ${colors.buttonBackground};
+  border-radius: 20px;
+  margin: 0px 10px;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+`;
+const WriteText = styled.Text`
+  color: white;
+`;
+
+const Separator = styled.View`
+  width: 100%;
+  height: 5px;
+  background-color: ${colors.borderThin};
+  margin-top: 10px;
+`;
 
 const FetchView = styled.View`
   bottom: 30px;
@@ -51,10 +72,13 @@ export default function CategoryBoardPresenter({
               />
             </ImgContainer>
             <CategoryText>{category}</CategoryText>
-            <ExplainCategory categoryName={category} />
+            <ExplainView>
+              <ExplainCategory categoryName={category} />
+            </ExplainView>
             <WriteTextLink onPress={goToUserPostForm}>
               <WriteText>이 주제로 글쓰기</WriteText>
             </WriteTextLink>
+            <Separator />
           </>
         }
         onEndReachedThreshold={0.05}

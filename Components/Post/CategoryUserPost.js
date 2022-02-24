@@ -85,7 +85,7 @@ const Date = styled.Text`
 
 const Separator = styled.View`
   width: 100%;
-  height: 2px;
+  height: 5px;
   background-color: ${colors.borderThin};
   margin-top: 20px;
 `;
