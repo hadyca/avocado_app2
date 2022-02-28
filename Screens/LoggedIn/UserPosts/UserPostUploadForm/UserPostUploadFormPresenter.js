@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
+import { AntDesign } from "@expo/vector-icons";
 import { colors } from "../../../../Colors";
 import ContentInput from "../../../../Components/Post/ContentInput";
 import { ActivityIndicator, Image, Text, TouchableOpacity } from "react-native";
@@ -69,19 +70,12 @@ const ImageContainer = styled.View`
 `;
 
 const DeleteBtn = styled.TouchableOpacity`
-  width: 15px;
-  height: 15px;
-  background-color: black;
   border-radius: 15px;
   position: absolute;
   top: 0px;
-  right: -3px;
+  right: -6px;
   justify-content: center;
   align-items: center;
-`;
-
-const DeleteText = styled.Text`
-  color: white;
 `;
 
 export default function UserPostUploadFormPresenter({
@@ -166,7 +160,7 @@ export default function UserPostUploadFormPresenter({
                       style={{ height: 60, width: 60 }}
                     />
                     <DeleteBtn onPress={() => DeleteImg(index)}>
-                      <DeleteText>X</DeleteText>
+                      <AntDesign name="closecircle" size={16} color="black" />
                     </DeleteBtn>
                   </ImageContainer>
                 );

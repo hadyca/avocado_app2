@@ -35,7 +35,7 @@ export default function ContentInput({
           ? "오늘 하루 어땠는지 다른사람들과 이야기 해보세요."
           : categoryName === "일반/기타"
           ? "여러사람들과 정보를 공유하고 대화해보세요."
-          : null
+          : "다른사람들에게 질문이나 이야기를 해보세요."
       }
       autoCapitalize={autoCapitalize}
       onChangeText={onChangeText}

@@ -30,48 +30,51 @@ export default function ReCommentPresenter({
   return (
     <>
       <DismissKeyboard>
-        <ScrollView
-          shshowsVerticalScrollIndicator={true}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={refresh} />
+        <KeyboardAvoidingView
+          enabled
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={
+            Platform.OS === "ios" ? statusBarHeight + 20 : statusBarHeight + 60
           }
           style={{ flex: 1 }}
-          ref={reCommentRef}
-          onContentSizeChange={() => {
-            if (
-              commentUploading &&
-              data?.seeUserPostComment?.userPostReComments.length > 6
-            ) {
-              setCommentUploading(false);
-              reCommentRef.current?.scrollToEnd();
-            }
-          }}
         >
-          <UserPostComment
+          <ScrollView
+            shshowsVerticalScrollIndicator={true}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={refresh} />
+            }
+            style={{ flex: 1 }}
+            ref={reCommentRef}
+            onContentSizeChange={() => {
+              if (
+                commentUploading &&
+                data?.seeUserPostComment?.userPostReComments.length > 6
+              ) {
+                setCommentUploading(false);
+                reCommentRef.current?.scrollToEnd();
+              }
+            }}
+          >
+            <UserPostComment
+              userPostId={userPostId}
+              id={data?.seeUserPostComment?.id}
+              user={data?.seeUserPostComment?.user}
+              payload={data?.seeUserPostComment?.payload}
+              isMine={data?.seeUserPostComment?.isMine}
+              createdAt={data?.seeUserPostComment?.createdAt}
+              reComments={data?.seeUserPostComment?.userPostReComments}
+              reCommentScreen={true}
+            />
+          </ScrollView>
+          <CommentForm
             userPostId={userPostId}
-            id={data?.seeUserPostComment?.id}
-            user={data?.seeUserPostComment?.user}
-            payload={data?.seeUserPostComment?.payload}
-            isMine={data?.seeUserPostComment?.isMine}
-            createdAt={data?.seeUserPostComment?.createdAt}
-            reComments={data?.seeUserPostComment?.userPostReComments}
+            userPostCommentId={id}
             reCommentScreen={true}
+            handleReComment={handleReComment}
+            commentUploading={commentUploading}
           />
-        </ScrollView>
+        </KeyboardAvoidingView>
       </DismissKeyboard>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={statusBarHeight + 20}
-        // keyboardVerticalOffset={300}
-      >
-        <CommentForm
-          userPostId={userPostId}
-          userPostCommentId={id}
-          reCommentScreen={true}
-          handleReComment={handleReComment}
-          commentUploading={commentUploading}
-        />
-      </KeyboardAvoidingView>
     </>
   );
 }

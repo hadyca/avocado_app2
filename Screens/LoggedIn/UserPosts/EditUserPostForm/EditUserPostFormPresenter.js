@@ -3,7 +3,7 @@ import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
-
+import { AntDesign } from "@expo/vector-icons";
 import { colors } from "../../../../Colors";
 import { Image, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import { ReactNativeFile } from "apollo-upload-client";
@@ -24,6 +24,7 @@ const ImageScroll = styled.ScrollView`
 const InputBottom = styled.View`
   margin: 0px 10px 10px 10px;
 `;
+
 const ImagePick = styled.TouchableOpacity`
   margin: 10px 20px 10px 10px;
   width: 60px;
@@ -69,19 +70,12 @@ const ImageContainer = styled.View`
 `;
 
 const DeleteBtn = styled.TouchableOpacity`
-  width: 15px;
-  height: 15px;
-  background-color: black;
   border-radius: 15px;
   position: absolute;
   top: 0px;
-  right: -3px;
+  right: -6px;
   justify-content: center;
   align-items: center;
-`;
-
-const DeleteText = styled.Text`
-  color: white;
 `;
 
 export default function EditUserPostFormPresenter({
@@ -175,7 +169,7 @@ export default function EditUserPostFormPresenter({
                       style={{ height: 60, width: 60 }}
                     />
                     <DeleteBtn onPress={() => DeleteImg(index)}>
-                      <DeleteText>X</DeleteText>
+                      <AntDesign name="closecircle" size={16} color="black" />
                     </DeleteBtn>
                   </ImageContainer>
                 );
