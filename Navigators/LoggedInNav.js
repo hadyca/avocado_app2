@@ -14,6 +14,7 @@ import ReComment from "../Screens/LoggedIn/UserPosts/ReComment";
 import UserPostReportForm from "../Screens/LoggedIn/UserPosts/UserPostReportForm";
 import UserPostCommentReportForm from "../Screens/LoggedIn/UserPosts/UserPostCommentReportForm";
 import UserPostReCommentReportForm from "../Screens/LoggedIn/UserPosts/UserPostReCommentReportForm";
+import CreateCompany from "../Screens/LoggedIn/Share/CreateCompany";
 
 const Stack = createStackNavigator();
 
@@ -117,6 +118,13 @@ export default function LoggedInNav() {
           headerBackTitleVisible: false,
         }}
         component={UserPostReCommentReportForm}
+      />
+      <Stack.Screen
+        name="CreateCompany"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={CreateCompany}
       />
     </Stack.Navigator>
   );

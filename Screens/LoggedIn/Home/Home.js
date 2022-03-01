@@ -3,8 +3,9 @@ import { useScrollToTop } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 import ScreenLayout from "../../../Components/ScreenLayout";
 import styled from "styled-components/native";
-import { useWindowDimensions } from "react-native";
+import { useWindowDimensions, TouchableOpacity, Text } from "react-native";
 import { colors } from "../../../Colors";
+import { useNavigation } from "@react-navigation/native";
 
 const Container = styled.View`
   justify-content: center;
@@ -64,6 +65,10 @@ export default function Home() {
   const ref = useRef(null);
   useScrollToTop(ref);
   const { height } = useWindowDimensions();
+  const navigation = useNavigation();
+  const goToCreateCompany = () => {
+    navigation.navigate("CreateCompany");
+  };
 
   return (
     <ScreenLayout>
@@ -103,6 +108,9 @@ export default function Home() {
             <SubTitle>Footer</SubTitle>
             <SubContent>푸터 내용</SubContent>
           </Contents>
+          <TouchableOpacity onPress={goToCreateCompany}>
+            <Text>기업 회원 가입 하러 가기</Text>
+          </TouchableOpacity>
         </Container>
       </ScrollView>
     </ScreenLayout>

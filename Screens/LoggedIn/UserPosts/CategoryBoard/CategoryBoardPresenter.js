@@ -28,7 +28,7 @@ const WriteTextLink = styled.TouchableOpacity`
   margin: 0px 10px;
   justify-content: center;
   align-items: center;
-  padding: 4px;
+  padding: 8px;
 `;
 const WriteText = styled.Text`
   color: white;
