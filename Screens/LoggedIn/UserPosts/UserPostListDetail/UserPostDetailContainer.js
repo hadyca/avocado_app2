@@ -73,12 +73,12 @@ export default function ({ route: { params } }) {
     Alert.alert("게시글이 삭제 되었습니다.");
     navigation.popToTop();
   };
-  const { data, loading, fetchMore, refetch } = useQuery(POST_DETAIL_QUERY, {
+  const { data, loading, refetch, error } = useQuery(POST_DETAIL_QUERY, {
     variables: {
       userPostId: parseInt(params.id),
     },
   });
-
+  console.log(error);
   const [deleteUserPostMutation] = useMutation(DELETE_USERPOST_MUTATION, {
     update: goDeleteUserPost,
   });

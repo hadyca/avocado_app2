@@ -10,12 +10,11 @@ export default function ({ route: { params } }) {
   const [statusBarHeight, setStatusBarHeight] = useState(0);
   const { StatusBarManager } = NativeModules;
 
-  const { data, refetch, loading } = useQuery(COMMENT_QUERY, {
+  const { data, refetch, loading, error } = useQuery(COMMENT_QUERY, {
     variables: {
       userPostCommentId: parseInt(params.id),
     },
   });
-
   useEffect(() => {
     Platform.OS == "ios"
       ? StatusBarManager.getHeight((statusBarFrameData) => {
@@ -39,6 +38,7 @@ export default function ({ route: { params } }) {
         userPostId={params.userPostId}
         id={params.id}
         statusBarHeight={statusBarHeight}
+        error={error}
       />
     </ScreenLayout>
   );

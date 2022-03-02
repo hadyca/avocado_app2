@@ -69,9 +69,11 @@ export default function UserPostCommentPresenter({
         <Header onPress={goToProfile}>
           <UserAvatar username={user.username} uri={user.avatar} />
         </Header>
-        <IconView onPress={showActionSheet}>
-          <Ionicons name="ellipsis-vertical" color="grey" size={14} />
-        </IconView>
+        {!reCommentScreen ? (
+          <IconView onPress={showActionSheet}>
+            <Ionicons name="ellipsis-vertical" color="grey" size={14} />
+          </IconView>
+        ) : null}
       </HeaderContainer>
       <CommentView>
         <CommentPayload>{payload}</CommentPayload>

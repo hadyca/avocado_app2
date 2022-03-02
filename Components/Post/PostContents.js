@@ -21,7 +21,7 @@ const CategoryView = styled.View`
 const CategoryTouch = styled.TouchableOpacity``;
 
 const CategoryText = styled.Text`
-  font-size: 9px;
+  font-size: 11px;
   padding: 5px 10px;
   background-color: ${colors.borderThin};
   font-weight: 600;
