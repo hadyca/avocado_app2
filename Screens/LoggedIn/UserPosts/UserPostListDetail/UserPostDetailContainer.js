@@ -78,7 +78,7 @@ export default function ({ route: { params } }) {
       userPostId: parseInt(params.id),
     },
   });
-  console.log(error);
+
   const [deleteUserPostMutation] = useMutation(DELETE_USERPOST_MUTATION, {
     update: goDeleteUserPost,
   });

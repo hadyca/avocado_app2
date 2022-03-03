@@ -1,17 +1,14 @@
 import React, { useRef, useState } from "react";
-import {
-  KeyboardAvoidingView,
-  ScrollView,
-  RefreshControl,
-  View,
-  ActivityIndicator,
-  Keyboard,
-  Text,
-} from "react-native";
+import { KeyboardAvoidingView, ScrollView, RefreshControl } from "react-native";
+import styled from "styled-components/native";
 
 import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import CommentForm from "../../../../Components/Post/CommentForm";
 import UserPostComment from "../../../../Components/Post/UserPostComment";
+
+const CommentContainer = styled.View`
+  flex: 1;
+`;
 
 export default function ReCommentPresenter({
   refreshing,
@@ -20,7 +17,6 @@ export default function ReCommentPresenter({
   userPostId,
   id,
   statusBarHeight,
-  error,
 }) {
   const [commentUploading, setCommentUploading] = useState(false);
 
@@ -28,61 +24,54 @@ export default function ReCommentPresenter({
   const handleReComment = () => {
     setCommentUploading(true);
   };
-  console.log(error);
+
   return (
     <>
-      {error ? (
-        <Text>{error}</Text>
-      ) : (
-        <DismissKeyboard>
-          <KeyboardAvoidingView
-            enabled
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={
-              Platform.OS === "ios"
-                ? statusBarHeight + 20
-                : statusBarHeight + 60
+      <KeyboardAvoidingView
+        enabled
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={
+          Platform.OS === "ios" ? statusBarHeight + 20 : statusBarHeight + 60
+        }
+        style={{ flex: 1 }}
+      >
+        <CommentContainer>
+          <ScrollView
+            shshowsVerticalScrollIndicator={true}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={refresh} />
             }
-            style={{ flex: 1 }}
-          >
-            <ScrollView
-              shshowsVerticalScrollIndicator={true}
-              refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={refresh} />
+            ref={reCommentRef}
+            onContentSizeChange={() => {
+              if (
+                commentUploading &&
+                data?.seeUserPostComment?.userPostReComments.length > 6
+              ) {
+                setCommentUploading(false);
+                reCommentRef.current?.scrollToEnd();
               }
-              style={{ flex: 1 }}
-              ref={reCommentRef}
-              onContentSizeChange={() => {
-                if (
-                  commentUploading &&
-                  data?.seeUserPostComment?.userPostReComments.length > 6
-                ) {
-                  setCommentUploading(false);
-                  reCommentRef.current?.scrollToEnd();
-                }
-              }}
-            >
-              <UserPostComment
-                userPostId={userPostId}
-                id={data?.seeUserPostComment?.id}
-                user={data?.seeUserPostComment?.user}
-                payload={data?.seeUserPostComment?.payload}
-                isMine={data?.seeUserPostComment?.isMine}
-                createdAt={data?.seeUserPostComment?.createdAt}
-                reComments={data?.seeUserPostComment?.userPostReComments}
-                reCommentScreen={true}
-              />
-            </ScrollView>
-            <CommentForm
+            }}
+          >
+            <UserPostComment
               userPostId={userPostId}
-              userPostCommentId={id}
+              id={data?.seeUserPostComment?.id}
+              user={data?.seeUserPostComment?.user}
+              payload={data?.seeUserPostComment?.payload}
+              isMine={data?.seeUserPostComment?.isMine}
+              createdAt={data?.seeUserPostComment?.createdAt}
+              reComments={data?.seeUserPostComment?.userPostReComments}
               reCommentScreen={true}
-              handleReComment={handleReComment}
-              commentUploading={commentUploading}
             />
-          </KeyboardAvoidingView>
-        </DismissKeyboard>
-      )}
+          </ScrollView>
+        </CommentContainer>
+        <CommentForm
+          userPostId={userPostId}
+          userPostCommentId={id}
+          reCommentScreen={true}
+          handleReComment={handleReComment}
+          commentUploading={commentUploading}
+        />
+      </KeyboardAvoidingView>
     </>
   );
 }

@@ -1,12 +1,13 @@
 import React from "react";
 import { gql, useMutation } from "@apollo/client";
-import CommentFormPresenter from "./CommentFormPresenter";
+import { Alert, Keyboard } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import {
   CREATE_COMMENT_MUTATION,
   CREATE_RECOMMENT_MUTATION,
 } from "./CommentFormQueries";
 import useMe from "../../../Hooks/useMe";
-import { Keyboard } from "react-native";
+import CommentFormPresenter from "./CommentFormPresenter";
 
 export default function ({
   userPostId,
@@ -17,7 +18,7 @@ export default function ({
   commentUploading,
 }) {
   const { data: userData } = useMe();
-
+  const navigation = useNavigation();
   const updateComment = async (cache, result) => {
     const {
       data: { createUserPostComment },
@@ -68,6 +69,7 @@ export default function ({
   };
 
   const updateReComment = (cache, result) => {
+    console.log(result, "결과값");
     const {
       data: { createUserPostReComment },
     } = result;
@@ -132,9 +134,12 @@ export default function ({
     CREATE_RECOMMENT_MUTATION,
     {
       update: updateReComment,
+      onError: () => {
+        Alert.alert("존재하지 않는 코멘트 입니다.");
+        navigation.pop();
+      },
     }
   );
-
   return (
     <CommentFormPresenter
       userPostId={userPostId}
