@@ -1,5 +1,9 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import { TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+
 import TabsNav from "./TabsNav";
 import UserPostUploadForm from "../Screens/LoggedIn/UserPosts/UserPostUploadForm";
 import EditUserPostForm from "../Screens/LoggedIn/UserPosts/EditUserPostForm";
@@ -19,8 +23,19 @@ import CreateCompany from "../Screens/LoggedIn/Share/CreateCompany";
 const Stack = createStackNavigator();
 
 export default function LoggedInNav() {
+  const navigation = useNavigation();
+  const headerLeft = () => (
+    <TouchableOpacity>
+      <Ionicons
+        name="chevron-back-outline"
+        color="black"
+        size={30}
+        style={{ marginLeft: 8 }}
+      />
+    </TouchableOpacity>
+  );
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{}}>
       <Stack.Screen
         name="TabsNav"
         options={{
