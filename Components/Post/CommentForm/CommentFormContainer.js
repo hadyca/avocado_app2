@@ -69,7 +69,6 @@ export default function ({
   };
 
   const updateReComment = (cache, result) => {
-    console.log(result, "결과값");
     const {
       data: { createUserPostReComment },
     } = result;

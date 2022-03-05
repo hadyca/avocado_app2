@@ -56,7 +56,14 @@ export default function ({ route: { params } }) {
   };
 
   useEffect(() => {
-    refetch();
+    if (params?.fromWhere === CATEGORY_BOARD) {
+      refetch();
+      navigation.navigate("UserPostListDetail", {
+        id: params?.id,
+      });
+    } else {
+      refetch();
+    }
   }, [params]);
 
   return (

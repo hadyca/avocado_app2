@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import UserPostUploadFormPresenter from "./UserPostUploadFormPresenter";
 import { UPLOAD_USER_POST_MUTATION } from "./UserPostUploadFormQueries";
+import { CATEGORY_BOARD, USER_POST_LIST } from "../../../../Constant";
 
 export default function ({ route: { params } }) {
   const [photo, setPhoto] = useState([]);
@@ -39,10 +40,24 @@ export default function ({ route: { params } }) {
       });
     }
 
-    navigation.navigate("UserPostListDetail", {
-      id: uploadUserPost.id,
-      fromWhere: screenName,
-    });
+    // navigation.navigate("UserPostListDetail", {
+    //   id: uploadUserPost.id,
+    //   fromWhere: screenName,
+    // });
+    if (screenName === USER_POST_LIST) {
+      navigation.navigate("UserPostList", {
+        id: uploadUserPost.id,
+        fromWhere: screenName,
+      });
+    }
+
+    if (screenName === CATEGORY_BOARD) {
+      navigation.navigate("CategoryBoard", {
+        id: uploadUserPost.id,
+        category: params.category,
+        fromWhere: screenName,
+      });
+    }
   };
 
   const [uploadUserPostMutation, { loading }] = useMutation(

@@ -12,7 +12,6 @@ import styled from "styled-components/native";
 import { colors } from "../../../../Colors";
 import CommentForm from "../../../../Components/Post/CommentForm";
 import PostContents from "../../../../Components/Post/PostContents";
-import { CATEGORY_BOARD, USER_POST_LIST } from "../../../../Constant";
 
 const PostContainer = styled.View`
   flex: 1;
@@ -34,7 +33,6 @@ export default function UserPostDetailPresenter({
   statusBarHeight,
   userPostId,
   showActionSheet,
-  fromWhere,
 }) {
   const navigation = useNavigation();
 
@@ -45,44 +43,6 @@ export default function UserPostDetailPresenter({
   const handleComment = () => {
     setCommentUploading(true);
   };
-
-  //Header setting
-  const headerLeftCategory = () => (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("CategoryBoard", {
-          category: data?.seeUserPost?.category,
-        })
-      }
-    >
-      <Ionicons
-        name="chevron-back-outline"
-        color="black"
-        size={30}
-        style={{ marginLeft: 8 }}
-      />
-    </TouchableOpacity>
-  );
-
-  const headerLeftUserPostList = () => (
-    <TouchableOpacity
-      onPress={() => navigation.navigate("UserPostList")}
-      stlye={{ marginLeft: 10 }}
-    >
-      <Ionicons name="chevron-back-outline" color="black" size={30} />
-    </TouchableOpacity>
-  );
-
-  const headerLeft = () => (
-    <TouchableOpacity onPress={() => navigation.pop()}>
-      <Ionicons
-        name="chevron-back-outline"
-        color="black"
-        size={30}
-        style={{ marginLeft: 8 }}
-      />
-    </TouchableOpacity>
-  );
 
   const HeaderRight = () => (
     <TouchableOpacity onPress={showActionSheet}>
@@ -96,15 +56,9 @@ export default function UserPostDetailPresenter({
   );
   useEffect(() => {
     navigation.setOptions({
-      headerLeft:
-        fromWhere === CATEGORY_BOARD
-          ? headerLeftCategory
-          : fromWhere === USER_POST_LIST
-          ? headerLeftUserPostList
-          : headerLeft,
       headerRight: HeaderRight,
     });
-  }, [fromWhere, data]);
+  }, []);
 
   return (
     <>

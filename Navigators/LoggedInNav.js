@@ -23,19 +23,8 @@ import CreateCompany from "../Screens/LoggedIn/Share/CreateCompany";
 const Stack = createStackNavigator();
 
 export default function LoggedInNav() {
-  const navigation = useNavigation();
-  const headerLeft = () => (
-    <TouchableOpacity>
-      <Ionicons
-        name="chevron-back-outline"
-        color="black"
-        size={30}
-        style={{ marginLeft: 8 }}
-      />
-    </TouchableOpacity>
-  );
   return (
-    <Stack.Navigator screenOptions={{}}>
+    <Stack.Navigator>
       <Stack.Screen
         name="TabsNav"
         options={{

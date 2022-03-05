@@ -1,17 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { POST_QUERY } from "./UserPostListQueries";
 import { useNavigation } from "@react-navigation/native";
 import UserPostListPresenter from "./UserPostListPresenter";
 import UserPost from "../../../../Components/Post/UserPost";
 import ScreenLayout from "../../../../Components/ScreenLayout";
-import { USER_POST_LIST } from "../../../../Constant";
+import { CATEGORY_BOARD, USER_POST_LIST } from "../../../../Constant";
 
-export default function () {
+export default function ({ route: { params } }) {
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
-
   const { data, loading, refetch, fetchMore } = useQuery(POST_QUERY, {
     variables: {
       offset: 0,
@@ -57,6 +56,14 @@ export default function () {
       return null;
     }
   };
+
+  useEffect(() => {
+    if (params?.fromWhere === USER_POST_LIST) {
+      navigation.navigate("UserPostListDetail", {
+        id: params?.id,
+      });
+    }
+  }, [params]);
 
   return (
     <ScreenLayout loading={loading}>
