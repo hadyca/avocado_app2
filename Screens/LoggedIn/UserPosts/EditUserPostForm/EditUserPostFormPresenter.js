@@ -72,8 +72,9 @@ const ImageContainer = styled.View`
 const DeleteBtn = styled.TouchableOpacity`
   border-radius: 15px;
   position: absolute;
-  top: 0px;
-  right: -6px;
+  top: 3px;
+  right: -5px;
+  opacity: 0.8;
   justify-content: center;
   align-items: center;
 `;
