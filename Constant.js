@@ -40,3 +40,13 @@ export const userPostCommentReportAry = [
 
 export const USER_POST_LIST = "UserPostList";
 export const CATEGORY_BOARD = "CategoryBoard";
+
+export const createCompanyData_KR = [
+  "회사 이름을 알려주세요.",
+  "Email주소를 알려주세요.",
+];
+
+export const CategoryExplain = [
+  "여러 사람들과 일과 관련된 이야기를 해보세요.",
+  "궁금한 것을 물어보세요! 누군가가 친절하게 답변 해줄거에요.",
+];

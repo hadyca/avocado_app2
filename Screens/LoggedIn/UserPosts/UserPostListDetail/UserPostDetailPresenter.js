@@ -16,7 +16,9 @@ import PostContents from "../../../../Components/Post/PostContents";
 const PostContainer = styled.View`
   flex: 1;
 `;
-const NoCommentView = styled.View``;
+const NoCommentView = styled.View`
+  margin-top: 10px;
+`;
 const NoComment = styled.Text`
   margin: auto;
   font-size: 14px;

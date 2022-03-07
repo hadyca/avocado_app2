@@ -1,9 +1,5 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-
 import TabsNav from "./TabsNav";
 import UserPostUploadForm from "../Screens/LoggedIn/UserPosts/UserPostUploadForm";
 import EditUserPostForm from "../Screens/LoggedIn/UserPosts/EditUserPostForm";
