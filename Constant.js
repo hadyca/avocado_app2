@@ -1,4 +1,28 @@
-export const categories = [
+// export const categories_KR = {
+//   JOB: "일/직업",
+//   QUESTION: "질문",
+//   BEAUTY: "피부 미용",
+//   CHILDCARE: "출산/육아",
+//   NEIGHBORHOOD_INFO: "동네 정보",
+//   LOVE: "연애/결혼",
+//   FOOD: "요리/음식",
+//   DAILYLIFE: "일상",
+//   GENERAL: "일반/기타",
+// };
+
+// export const categories_EN = {
+//   JOB: "Job",
+//   QUESTION: "Question",
+//   BEAUTY: "Beauty",
+//   CHILDCARE: "Childcare",
+//   NEIGHBORHOOD_INFO: "Neighborhood Info",
+//   LOVE: "Love",
+//   FOOD: "Food",
+//   DAILYLIFE: "Daily Life",
+//   GENERAL: "General",
+// };
+
+export const categories_KR = [
   "일/직업",
   "질문",
   "피부 미용",
@@ -10,17 +34,19 @@ export const categories = [
   "일반/기타",
 ];
 
-export const categoriesScreen = [
+export const categories_EN = [
   "Job",
   "Question",
   "Beauty",
-  "ChildCare",
-  "Neighborhood",
+  "Childcare",
+  "Neighborhood Info",
   "Love",
   "Food",
-  "DailyLife",
+  "Daily Life",
   "General",
 ];
+
+export const categories_VN = {};
 
 export const userPostReportAry = [
   "요상한 글이에요",
@@ -38,8 +64,10 @@ export const userPostCommentReportAry = [
   "댓글 test2",
 ];
 
-export const USER_POST_LIST = "UserPostList";
-export const CATEGORY_BOARD = "CategoryBoard";
+export const ScreenNames = {
+  USER_POST_LIST: "UserPostList",
+  CATEGORY_BOARD: "CategoryBoard",
+};
 
 export const createCompanyData_KR = [
   "회사 이름을 알려주세요.",

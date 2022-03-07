@@ -3,7 +3,7 @@ import ScreenLayout from "../../../Components/ScreenLayout";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { colors } from "../../../Colors";
-import { categories } from "../../../Constant";
+import { categories_KR } from "../../../Constant";
 
 const Container = styled.View``;
 
@@ -29,7 +29,7 @@ export default function EditPostCategory({ route: { params } }) {
   return (
     <ScreenLayout>
       <Container>
-        {categories.map((item, index) => (
+        {categories_KR.map((item, index) => (
           <CategoryView key={index}>
             <CategoryView2 onPress={() => selectCategory(item)}>
               <CategoryText>{item}</CategoryText>

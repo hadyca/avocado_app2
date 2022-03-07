@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import UserPostUploadFormPresenter from "./UserPostUploadFormPresenter";
 import { UPLOAD_USER_POST_MUTATION } from "./UserPostUploadFormQueries";
-import { CATEGORY_BOARD, USER_POST_LIST } from "../../../../Constant";
+import { ScreenNames } from "../../../../Constant";
 
 export default function ({ route: { params } }) {
   const [photo, setPhoto] = useState([]);
@@ -44,14 +44,14 @@ export default function ({ route: { params } }) {
     //   id: uploadUserPost.id,
     //   fromWhere: screenName,
     // });
-    if (screenName === USER_POST_LIST) {
+    if (screenName === ScreenNames.USER_POST_LIST) {
       navigation.navigate("UserPostList", {
         id: uploadUserPost.id,
         fromWhere: screenName,
       });
     }
 
-    if (screenName === CATEGORY_BOARD) {
+    if (screenName === ScreenNames.CATEGORY_BOARD) {
       navigation.navigate("CategoryBoard", {
         id: uploadUserPost.id,
         category: params.category,

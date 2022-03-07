@@ -4,7 +4,7 @@ import { useWindowDimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ScreenLayout from "../../../../Components/ScreenLayout";
 import CategoryUserPost from "../../../../Components/Post/CategoryUserPost";
-import { CATEGORY_BOARD } from "../../../../Constant";
+import { ScreenNames } from "../../../../Constant";
 import { CATEGORY_BOARD_QUERY } from "./CategoryBoardQueries";
 import CategoryBoardPresenter from "./CategoryBoardPresenter";
 
@@ -51,12 +51,12 @@ export default function ({ route: { params } }) {
   const goToUserPostForm = () => {
     return navigation.navigate("UserPostUploadForm", {
       category: params.category,
-      screenName: CATEGORY_BOARD,
+      screenName: ScreenNames.CATEGORY_BOARD,
     });
   };
 
   useEffect(() => {
-    if (params?.fromWhere === CATEGORY_BOARD) {
+    if (params?.fromWhere === ScreenNames.CATEGORY_BOARD) {
       refetch();
       navigation.navigate("UserPostListDetail", {
         id: params?.id,

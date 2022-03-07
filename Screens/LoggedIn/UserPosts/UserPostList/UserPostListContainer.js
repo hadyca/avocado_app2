@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import UserPostListPresenter from "./UserPostListPresenter";
 import UserPost from "../../../../Components/Post/UserPost";
 import ScreenLayout from "../../../../Components/ScreenLayout";
-import { CATEGORY_BOARD, USER_POST_LIST } from "../../../../Constant";
+import { ScreenNames } from "../../../../Constant";
 
 export default function ({ route: { params } }) {
   const navigation = useNavigation();
@@ -19,7 +19,7 @@ export default function ({ route: { params } }) {
 
   const goToUserPostForm = () => {
     return navigation.navigate("UserPostUploadForm", {
-      screenName: USER_POST_LIST,
+      screenName: ScreenNames.USER_POST_LIST,
     });
   };
 
@@ -58,7 +58,7 @@ export default function ({ route: { params } }) {
   };
 
   useEffect(() => {
-    if (params?.fromWhere === USER_POST_LIST) {
+    if (params?.fromWhere === ScreenNames.USER_POST_LIST) {
       navigation.navigate("UserPostListDetail", {
         id: params?.id,
       });

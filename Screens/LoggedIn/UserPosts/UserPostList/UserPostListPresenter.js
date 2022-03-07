@@ -4,7 +4,7 @@ import { FlatList, ActivityIndicator } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../../../../Colors";
 import PostFormButton from "../../../../Components/Post/PostFormButton";
-import { categories } from "../../../../Constant";
+import { categories_KR } from "../../../../Constant";
 
 const Container = styled.View`
   flex: 1;
@@ -54,7 +54,7 @@ export default function UserPostListPresenter({
       <Container>
         <TopView>
           <TopScroll horizontal={true} showsHorizontalScrollIndicator={false}>
-            {categories.map((item, index) => (
+            {categories_KR.map((item, index) => (
               <CategoryTouch
                 first={index === 0}
                 key={index}
