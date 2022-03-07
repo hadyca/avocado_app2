@@ -37,6 +37,7 @@
 # 2022.3.7
 
 - [] category명, 설명(category board랑 input placeholder에 들어가는것들 전부 constant에서 가져오게끔 변경)
+- [] 위 카테고리 포함해서, db나 root data에 박히는 것들은 전부 영어로 교체하고, text로 보이는것들은 한글로 해도 ok
 - [] 기업 회원 가입 화면 만들기
 
 # 3월 목표
