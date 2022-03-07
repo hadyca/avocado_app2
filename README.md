@@ -34,9 +34,31 @@
 - [x] UserPostListDetail 화면 디자인
 - [x] CategoryBoard 화면 디자인
 
+# 2022.2.23
+
+- [x] ios용 UserPostList 상단 카테고리 높이 문제
+- [x] UserPostListDetail 화면 디자인
+- [x] CategoryBoard 화면 디자인
+
 # 2월 목표
 
 - [] UserPostList탭 디자인 부분 다 끝내기
+
+# 2022.3.6
+
+- [] 모바일 인증번호 로직 추가 (twilio)
+
+# 3월 목표
+
+- [] UserPostList탭 디자인 부분 다 끝내기 (이미지 포함)
+- [] 메인 컬러 뭐할지
+- [] search 화면 마무리
+- [] profile 화면 마무리
+
+# 4월 목표
+
+-[] Home 화면 꾸미기
+-[] 홍보 영상 콘티 짜기
 
 # 중기 To-be
 
