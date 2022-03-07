@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
+import { categories, CategoryExplain } from "../../Constant";
 
 const SContentInput = styled.TextInput`
   padding: 15px 7px;
@@ -17,8 +18,8 @@ export default function ContentInput({
     <SContentInput
       multiline={multiline}
       placeholder={
-        categoryName === "일/직업"
-          ? "여러 사람들과 일과 관련된 이야기를 해보세요."
+        categoryName === categories[0]
+          ? CategoryExplain[0]
           : categoryName === "질문"
           ? "궁금한 것을 물어보세요! 누군가가 친절하게 답변 해줄거에요."
           : categoryName === "피부 미용"

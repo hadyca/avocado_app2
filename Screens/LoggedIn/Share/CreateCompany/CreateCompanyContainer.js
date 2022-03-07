@@ -1,10 +1,11 @@
 import React from "react";
 import { Text } from "react-native";
+import AuthLayout from "../../../../Components/Auth/AuthLayout";
 
 export default function () {
   return (
-    <ScreenLayout>
-      <Text>기업 회원 가입 화면</Text>
-    </ScreenLayout>
+    <AuthLayout>
+      <Text>회원 가입 화면</Text>
+    </AuthLayout>
   );
 }
