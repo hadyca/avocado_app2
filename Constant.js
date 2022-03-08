@@ -46,7 +46,7 @@ export const categories_EN = [
   "General",
 ];
 
-export const categories_VN = {};
+export const categories_VN = [];
 
 export const userPostReportAry = [
   "요상한 글이에요",
@@ -74,7 +74,15 @@ export const createCompanyData_KR = [
   "Email주소를 알려주세요.",
 ];
 
-export const CategoryExplain = [
+export const CategoryExplain_KR = [
   "여러 사람들과 일과 관련된 이야기를 해보세요.",
   "궁금한 것을 물어보세요! 누군가가 친절하게 답변 해줄거에요.",
+  "미용 관련해서 정보를 나누어 주세요.",
+  "아이 키우는데 필요한 정보나 노하우를 공유해주세요.",
+  "동네 여러 이슈들을 공유해주세요!",
+  "연애나 결혼에 대해 가지고 있는 고민거리나 좋은 정보들을 알려주세요.",
+  "요리방법, 맛집과 같은 음식 관련 정보들을 공유해주세요.",
+  "오늘 하루 어땠는지 다른사람들과 이야기 해보세요.",
+  "여러사람들과 정보를 공유하고 대화해보세요.",
+  "다른사람들에게 질문이나 이야기를 해보세요.",
 ];

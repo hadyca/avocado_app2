@@ -38,9 +38,7 @@
 
 # 2월 목표
 
-- [] UserPostList탭 디자인 부분 다 끝내기
-
-# 2022.3.7
+# 2022.3.8
 
 - [] category명, 설명(category board랑 input placeholder에 들어가는것들 전부 constant에서 가져오게끔 변경)
 - [] 위 카테고리 포함해서, db나 root data에 박히는 것들은 전부 영어로 교체하고, text로 보이는것들은 한글로 해도 ok
@@ -48,6 +46,7 @@
 
 # 3월 목표
 
+- [] UserPostList탭 디자인 부분 다 끝내기
 - [] Search 화면 완성
 - [] Profile 화면 완성
 - [] Favorites 화면 완성
