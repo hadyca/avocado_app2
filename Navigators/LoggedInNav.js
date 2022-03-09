@@ -14,7 +14,10 @@ import ReComment from "../Screens/LoggedIn/UserPosts/ReComment";
 import UserPostReportForm from "../Screens/LoggedIn/UserPosts/UserPostReportForm";
 import UserPostCommentReportForm from "../Screens/LoggedIn/UserPosts/UserPostCommentReportForm";
 import UserPostReCommentReportForm from "../Screens/LoggedIn/UserPosts/UserPostReCommentReportForm";
-import CreateCompany from "../Screens/LoggedIn/Share/CreateCompany";
+import AskCompanyName from "../Screens/LoggedIn/Share/CreateCompany/AskCompanyName";
+import AskEmail from "../Screens/LoggedIn/Share/CreateCompany/AskEmail";
+import AskAboutUs from "../Screens/LoggedIn/Share/CreateCompany/AskAboutUs";
+import AskContactNumber from "../Screens/LoggedIn/Share/CreateCompany/AskContactNumber";
 
 const Stack = createStackNavigator();
 
@@ -120,11 +123,32 @@ export default function LoggedInNav() {
         component={UserPostReCommentReportForm}
       />
       <Stack.Screen
-        name="CreateCompany"
+        name="AskCompanyName"
         options={{
           headerBackTitleVisible: false,
         }}
-        component={CreateCompany}
+        component={AskCompanyName}
+      />
+      <Stack.Screen
+        name="AskEmail"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={AskEmail}
+      />
+      <Stack.Screen
+        name="AskContactNumber"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={AskContactNumber}
+      />
+      <Stack.Screen
+        name="AskAboutUs"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={AskAboutUs}
       />
     </Stack.Navigator>
   );

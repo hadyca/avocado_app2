@@ -211,6 +211,7 @@ export default function EditUserPostFormPresenter({
           render={({ field: { onChange, value } }) => (
             <ContentInput
               multiline={true}
+              textAlignVertical={"top"}
               autoCapitalize="none"
               onChangeText={(text) => onChange(text)}
               value={value || ""}

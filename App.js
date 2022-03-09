@@ -23,7 +23,7 @@ export default function App() {
     return Promise.all([...fontPromises, ...imagePromises]);
   };
   const preload = async () => {
-    logUserOut();
+    // logUserOut();
     const token = await AsyncStorage.getItem("token");
     if (token) {
       isLoggedInVar(true);

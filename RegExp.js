@@ -7,3 +7,5 @@ export const usernameRule = /^[0-9A-Za-z]{1,20}$/;
 // 숫자, 영문, 특수문자 각 1자리 이상이면서 최소 8자리
 export const passwordRule =
   /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,}$/;
+
+export const onlyNumber = /^[0-9]/g;

@@ -67,7 +67,7 @@ export default function Home() {
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
   const goToCreateCompany = () => {
-    navigation.navigate("CreateCompany");
+    navigation.navigate("AskCompanyName");
   };
 
   return (

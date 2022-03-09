@@ -20,16 +20,6 @@ export default function TabsNav() {
       }}
     >
       <Tabs.Screen
-        name="UserPostList1"
-        options={{
-          tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon iconName={"people"} color={color} focused={focused} />
-          ),
-        }}
-      >
-        {() => <SharedStackNav screenName="UserPostList" />}
-      </Tabs.Screen>
-      <Tabs.Screen
         name="Home1"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -38,6 +28,16 @@ export default function TabsNav() {
         }}
       >
         {() => <SharedStackNav screenName="Home" />}
+      </Tabs.Screen>
+      <Tabs.Screen
+        name="UserPostList1"
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <TabIcon iconName={"people"} color={color} focused={focused} />
+          ),
+        }}
+      >
+        {() => <SharedStackNav screenName="UserPostList" />}
       </Tabs.Screen>
       <Tabs.Screen
         name="SearchConditionNav1"

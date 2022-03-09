@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { useForm, Controller } from "react-hook-form";
 import AuthButton from "../../Components/Auth/AuthButton";
@@ -6,7 +6,6 @@ import AuthLayout from "../../Components/Auth/AuthLayout";
 import FormError from "../../Components/Auth/FormError";
 import { Subtitle } from "../../Components/Auth/Subtitle";
 import { TextInput } from "../../Components/Auth/AuthShared";
-import { useState } from "react";
 import { emailRule, passwordRule, usernameRule } from "../../RegExp";
 
 const CREATE_ACCOUNT_MUTATION = gql`

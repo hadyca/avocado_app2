@@ -3,7 +3,7 @@ import styled from "styled-components/native";
 import { colors } from "../../Colors";
 
 const SFormError = styled.Text`
-  color: ${colors.error}
+  color: ${colors.error};
   font-weight: 600;
   font-size: 12px;
   margin: 3px 0px 15px 0px;

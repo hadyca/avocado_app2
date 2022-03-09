@@ -69,6 +69,7 @@ export default function CommentFormPresenter({
             <TextInput
               placeholder="Please Write Comment"
               multiline={true}
+              textAlignVertical={"top"}
               // maxLength={120}
               maxHeight={120}
               autoCapitalize="none"
