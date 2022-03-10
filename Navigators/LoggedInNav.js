@@ -18,6 +18,8 @@ import AskCompanyName from "../Screens/LoggedIn/Share/CreateCompany/AskCompanyNa
 import AskEmail from "../Screens/LoggedIn/Share/CreateCompany/AskEmail";
 import AskAboutUs from "../Screens/LoggedIn/Share/CreateCompany/AskAboutUs";
 import AskContactNumber from "../Screens/LoggedIn/Share/CreateCompany/AskContactNumber";
+import AskSector from "../Screens/LoggedIn/Share/CreateCompany/AskSector";
+import AskTotalEmployees from "../Screens/LoggedIn/Share/CreateCompany/AskTotalEmployees";
 
 const Stack = createStackNavigator();
 
@@ -30,6 +32,20 @@ export default function LoggedInNav() {
           headerShown: false,
         }}
         component={TabsNav}
+      />
+      <Stack.Screen
+        name="AskTotalEmployees"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={AskTotalEmployees}
+      />
+      <Stack.Screen
+        name="AskSector"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={AskSector}
       />
       <Stack.Screen
         name="UserPostListDetail"

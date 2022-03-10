@@ -18,13 +18,16 @@ export default function AskEmail({ route: { params } }) {
     const { email } = getValues();
     navigation.navigate("AskContactNumber", {
       companyName: params.companyName,
+      aboutUs: params.aboutUs,
+      sector: params.sector,
+      totalEmployees: params.totalEmployees,
       email,
     });
   };
 
   return (
     <AuthLayout>
-      <Text>이메일 주소를 넣어주세요. 2/7</Text>
+      <Text>이메일 주소를 넣어주세요. 5/7</Text>
       <Controller
         name="email"
         rules={{

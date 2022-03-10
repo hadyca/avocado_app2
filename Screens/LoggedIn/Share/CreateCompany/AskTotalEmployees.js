@@ -2,51 +2,50 @@ import React, { useState } from "react";
 import { Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
-import styled from "styled-components/native";
 import AuthLayout from "../../../../Components/Auth/AuthLayout";
-import { Subtitle } from "../../../../Components/Auth/Subtitle";
-import {
-  TextInput_Company,
-  UnderBar,
-} from "../../../../Components/Auth/AuthShared";
+import { TextInput } from "../../../../Components/Auth/AuthShared";
 import AuthButton from "../../../../Components/Auth/AuthButton";
+import { onlyNumber } from "../../../../RegExp";
 
-export default function AskCompanyName() {
+export default function AskTotalEmployees({ route: { params } }) {
   const navigation = useNavigation();
   const [focus1, setFocus1] = useState(false);
   const { control, formState, getValues } = useForm({
     mode: "onChange",
   });
 
-  const goToAboutUs = () => {
-    const { companyName } = getValues();
-    navigation.navigate("AskAboutUs", {
-      companyName,
+  const goToAskEmail = () => {
+    const { totalEmployees } = getValues();
+    navigation.navigate("AskEmail", {
+      companyName: params.companyName,
+      aboutUs: params.aboutUs,
+      sector: params.sector,
+      totalEmployees,
     });
   };
 
   return (
     <AuthLayout>
-      <Subtitle>
-        기업 회원 가입해주셔서 감사합니다. 7개의 정보만 알려주시면 금방
-        끝납니다.
-      </Subtitle>
-      <Text>회사 이름을 알려주세요. 1/7</Text>
+      <Text>총 임직원수를 알려주세요 (숫자만 넣어주세요.) 4/7</Text>
       <Controller
-        name="companyName"
+        name="totalEmployees"
         rules={{
           required: true,
+          pattern: {
+            value: onlyNumber,
+          },
         }}
         control={control}
         render={({ field: { onChange, value } }) => (
-          <TextInput_Company
-            placeholder="Company name"
+          <TextInput
+            placeholder={""}
             autoCapitalize="none"
             returnKeyType="done"
+            keyboardType="number-pad"
             onChangeText={(text) => onChange(text)}
             value={value || ""}
             hasError={false}
-            onSubmitEditing={goToAboutUs}
+            onSubmitEditing={goToAskEmail}
             onFocus={() => {
               setFocus1(true);
             }}
@@ -57,12 +56,12 @@ export default function AskCompanyName() {
           />
         )}
       />
-      <UnderBar />
+
       <AuthButton
         text="다음"
         disabled={!formState.isValid}
         loading={false}
-        onPress={goToAboutUs}
+        onPress={goToAskEmail}
       />
     </AuthLayout>
   );

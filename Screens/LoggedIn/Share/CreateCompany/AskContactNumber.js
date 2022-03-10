@@ -25,7 +25,7 @@ export default function AskContactNumber({ route: { params } }) {
   return (
     <AuthLayout>
       <Text>
-        연락받을 수 있는 전화번호를 넣어주세요. (숫자만 넣어주세요.) 3/7
+        연락받을 수 있는 전화번호를 넣어주세요. (숫자만 넣어주세요.) 6/7
       </Text>
       <Controller
         name="contactNumber"
@@ -39,7 +39,7 @@ export default function AskContactNumber({ route: { params } }) {
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextInput
-            placeholder={"Contact Number"}
+            placeholder={"50"}
             autoCapitalize="none"
             returnKeyType="done"
             keyboardType="number-pad"

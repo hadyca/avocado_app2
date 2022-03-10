@@ -40,10 +40,6 @@ export default function ({ route: { params } }) {
       });
     }
 
-    // navigation.navigate("UserPostListDetail", {
-    //   id: uploadUserPost.id,
-    //   fromWhere: screenName,
-    // });
     if (screenName === ScreenNames.USER_POST_LIST) {
       navigation.navigate("UserPostList", {
         id: uploadUserPost.id,
