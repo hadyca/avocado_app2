@@ -20,12 +20,20 @@ import AskAboutUs from "../Screens/LoggedIn/Share/CreateCompany/AskAboutUs";
 import AskContactNumber from "../Screens/LoggedIn/Share/CreateCompany/AskContactNumber";
 import AskSector from "../Screens/LoggedIn/Share/CreateCompany/AskSector";
 import AskTotalEmployees from "../Screens/LoggedIn/Share/CreateCompany/AskTotalEmployees";
+import AskAddress from "../Screens/LoggedIn/Share/CreateCompany/AskAddress";
 
 const Stack = createStackNavigator();
 
 export default function LoggedInNav() {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="AskAddress"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={AskAddress}
+      />
       <Stack.Screen
         name="TabsNav"
         options={{
@@ -40,6 +48,7 @@ export default function LoggedInNav() {
         }}
         component={AskTotalEmployees}
       />
+
       <Stack.Screen
         name="AskSector"
         options={{

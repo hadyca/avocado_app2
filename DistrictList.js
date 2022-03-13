@@ -1,5 +1,10 @@
 //1급 행정구 (총 63개)
 export const bigDistrict = [
+  { id: 1, title: "Ha Noi" },
+  { id: 2, title: "Ho Chi Minh" },
+];
+
+export const bigDistrict2 = [
   "Hà Nội",
   "Hồ Chí Minh",
   "Cần Thơ",

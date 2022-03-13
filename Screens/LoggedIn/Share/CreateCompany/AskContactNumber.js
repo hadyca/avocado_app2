@@ -14,12 +14,16 @@ export default function AskContactNumber({ route: { params } }) {
     mode: "onChange",
   });
 
-  const goToAskContactNumber = () => {
-    // const { email } = getValues();
-    // navigation.navigate("AskEmail", {
-    //   companyName: params.companyName,
-    //   email,
-    // });
+  const goToAskAddress = () => {
+    const { contactNumber } = getValues();
+    navigation.navigate("AskAddress", {
+      companyName: params.companyName,
+      aboutUs: params.aboutUs,
+      sector: params.sector,
+      totalEmployees: params.totalEmployees,
+      email: params.email,
+      contactNumber,
+    });
   };
 
   return (
@@ -39,14 +43,14 @@ export default function AskContactNumber({ route: { params } }) {
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextInput
-            placeholder={"50"}
+            placeholder={"Contanct Number"}
             autoCapitalize="none"
             returnKeyType="done"
             keyboardType="number-pad"
             onChangeText={(text) => onChange(text)}
             value={value || ""}
             hasError={false}
-            onSubmitEditing={goToAskContactNumber}
+            onSubmitEditing={goToAskAddress}
             onFocus={() => {
               setFocus1(true);
             }}
@@ -62,7 +66,7 @@ export default function AskContactNumber({ route: { params } }) {
         text="다음"
         disabled={!formState.isValid}
         loading={false}
-        onPress={goToAskContactNumber}
+        onPress={goToAskAddress}
       />
     </AuthLayout>
   );
