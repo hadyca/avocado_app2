@@ -3,7 +3,7 @@ import { Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AuthLayout from "../../../../Components/Auth/AuthLayout";
 import AuthButton from "../../../../Components/Auth/AuthButton";
-import { Picker } from "@react-native-picker/picker";
+// import { Picker } from "@react-native-picker/picker";
 import styled from "styled-components/native";
 import { colors } from "../../../../Colors";
 import { UnderBar } from "../../../../Components/Auth/AuthShared";
@@ -29,7 +29,7 @@ export default function AskSector({ route: { params } }) {
 
   return (
     <AuthLayout>
-      <Text>어떤 업종인지 알려주세요 3/7 </Text>
+      {/* <Text>어떤 업종인지 알려주세요 3/7 </Text>
       <Picker
         selectedValue={selectedSector}
         onValueChange={(itemValue, itemIndex) => setSelectedSector(itemValue)}
@@ -49,7 +49,7 @@ export default function AskSector({ route: { params } }) {
         disabled={false}
         loading={false}
         onPress={goTototalEmployees}
-      />
+      /> */}
     </AuthLayout>
   );
 }

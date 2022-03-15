@@ -20,7 +20,9 @@ import AskAboutUs from "../Screens/LoggedIn/Share/CreateCompany/AskAboutUs";
 import AskContactNumber from "../Screens/LoggedIn/Share/CreateCompany/AskContactNumber";
 import AskSector from "../Screens/LoggedIn/Share/CreateCompany/AskSector";
 import AskTotalEmployees from "../Screens/LoggedIn/Share/CreateCompany/AskTotalEmployees";
-import AskAddress from "../Screens/LoggedIn/Share/CreateCompany/AskAddress";
+import AskAddress_1 from "../Screens/LoggedIn/Share/CreateCompany/AskAddress_1";
+import AskAddress_2 from "../Screens/LoggedIn/Share/CreateCompany/AskAddress_2";
+import AskAddress_3 from "../Screens/LoggedIn/Share/CreateCompany/AskAddress_3";
 
 const Stack = createStackNavigator();
 
@@ -28,11 +30,25 @@ export default function LoggedInNav() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="AskAddress"
+        name="AskAddress_1"
         options={{
           headerBackTitleVisible: false,
         }}
-        component={AskAddress}
+        component={AskAddress_1}
+      />
+      <Stack.Screen
+        name="AskAddress_2"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={AskAddress_2}
+      />
+      <Stack.Screen
+        name="AskAddress_3"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={AskAddress_3}
       />
       <Stack.Screen
         name="TabsNav"

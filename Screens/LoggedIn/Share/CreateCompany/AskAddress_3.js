@@ -2,11 +2,7 @@ import React, { useState, useRef } from "react";
 import { View, Text, useWindowDimensions, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
-import {
-  bigDistrict,
-  smallDistrict2,
-  smallDistrict1,
-} from "../../../../DistrictList";
+import { bigDistrict, smallDistrict } from "../../../../DistrictList";
 import styled from "styled-components/native";
 import AuthLayout from "../../../../Components/Auth/AuthLayout";
 import { Subtitle } from "../../../../Components/Auth/Subtitle";
@@ -17,7 +13,7 @@ import {
 import AuthButton from "../../../../Components/Auth/AuthButton";
 import ModalSelector from "react-native-modal-selector";
 
-export default function AskAddress({ route: { params } }) {
+export default function AskAddress_3({ route: { params } }) {
   const navigation = useNavigation();
   const [add_1, setAdd_1] = useState({});
   const [add_2, setAdd_2] = useState("");
@@ -60,7 +56,7 @@ export default function AskAddress({ route: { params } }) {
         />
       </ModalSelector>
       <ModalSelector
-        data={smallDistrict1[add_1.id - 1]}
+        data={smallDistrict[add_1.id - 1]}
         keyExtractor={(item) => item.id}
         labelExtractor={(item) => item.value}
         accessible={true}
