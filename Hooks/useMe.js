@@ -8,6 +8,10 @@ const ME_QUERY = gql`
       id
       username
       avatar
+      myCompany {
+        id
+        companyName
+      }
     }
   }
 `;

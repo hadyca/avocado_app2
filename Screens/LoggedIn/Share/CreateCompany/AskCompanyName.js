@@ -11,6 +11,10 @@ import {
 } from "../../../../Components/Auth/AuthShared";
 import AuthButton from "../../../../Components/Auth/AuthButton";
 
+const Title = styled.Text`
+  font-size: 20px;
+`;
+
 export default function AskCompanyName() {
   const navigation = useNavigation();
   const [focus1, setFocus1] = useState(false);
@@ -27,11 +31,10 @@ export default function AskCompanyName() {
 
   return (
     <AuthLayout>
-      <Subtitle>
-        기업 회원 가입해주셔서 감사합니다. 7개의 정보만 알려주시면 금방
-        끝납니다.
-      </Subtitle>
-      <Text>회사 이름을 알려주세요. 1/7</Text>
+      <TitleView>
+      <Title>회사 이름을 알려주세요.</Title>
+      <Process>회사 이름을 알려주세요.</Title>
+      </TitleView>
       <Controller
         name="companyName"
         rules={{

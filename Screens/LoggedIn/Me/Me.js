@@ -8,7 +8,6 @@ export default function Me({ navigation }) {
   const ref = useRef(null);
   useScrollToTop(ref);
   const { data } = useMe();
-
   useEffect(() => {
     if (data?.me?.username) {
       navigation.setOptions({
@@ -20,6 +19,8 @@ export default function Me({ navigation }) {
   return (
     <ScreenLayout>
       <Text>Me화면</Text>
+      <Text>{data?.me?.myCompany?.id}</Text>
+      <Text>{data?.me?.myCompany?.companyName}</Text>
     </ScreenLayout>
   );
 }
