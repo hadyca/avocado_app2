@@ -18,14 +18,13 @@ export default function AskAddress_1({ route: { params } }) {
   const [add_1, setAdd_1] = useState({});
 
   const goToAddress_2 = () => {
-    console.log(add_1);
     navigation.navigate("AskAddress_2", {
-      // companyName: params.companyName,
-      // aboutUs: params.aboutUs,
-      // sector: params.sector,
-      // totalEmployees: params.totalEmployees,
-      // email: params.email,
-      // contactNumber: params.contactNumber,
+      companyName: params.companyName,
+      aboutUs: params.aboutUs,
+      sector: params.sector,
+      totalEmployees: params.totalEmployees,
+      email: params.email,
+      contactNumber: params.contactNumber,
       addressStep1: add_1,
     });
   };

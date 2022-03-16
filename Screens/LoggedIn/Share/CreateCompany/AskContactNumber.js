@@ -16,7 +16,7 @@ export default function AskContactNumber({ route: { params } }) {
 
   const goToAskAddress = () => {
     const { contactNumber } = getValues();
-    navigation.navigate("AskAddress", {
+    navigation.navigate("AskAddress_1", {
       companyName: params.companyName,
       aboutUs: params.aboutUs,
       sector: params.sector,

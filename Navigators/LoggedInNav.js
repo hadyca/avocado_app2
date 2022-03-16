@@ -30,6 +30,13 @@ export default function LoggedInNav() {
   return (
     <Stack.Navigator>
       <Stack.Screen
+        name="TabsNav"
+        options={{
+          headerShown: false,
+        }}
+        component={TabsNav}
+      />
+      <Stack.Screen
         name="AskAddress_1"
         options={{
           headerBackTitleVisible: false,
@@ -49,13 +56,6 @@ export default function LoggedInNav() {
           headerBackTitleVisible: false,
         }}
         component={AskAddress_3}
-      />
-      <Stack.Screen
-        name="TabsNav"
-        options={{
-          headerShown: false,
-        }}
-        component={TabsNav}
       />
       <Stack.Screen
         name="AskTotalEmployees"

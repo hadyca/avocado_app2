@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text } from "react-native";
+import { Text, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AuthLayout from "../../../../Components/Auth/AuthLayout";
 import AuthButton from "../../../../Components/Auth/AuthButton";
@@ -7,6 +7,8 @@ import AuthButton from "../../../../Components/Auth/AuthButton";
 import styled from "styled-components/native";
 import { colors } from "../../../../Colors";
 import { UnderBar } from "../../../../Components/Auth/AuthShared";
+import { sectors } from "../../../../Constant";
+import ModalSelector from "react-native-modal-selector";
 
 // const PickerView = styled.View`
 //   border-radius: 4px;
@@ -17,7 +19,7 @@ import { UnderBar } from "../../../../Components/Auth/AuthShared";
 
 export default function AskSector({ route: { params } }) {
   const navigation = useNavigation();
-  const [selectedSector, setSelectedSector] = useState("sector1");
+  const [selectedSector, setSelectedSector] = useState("");
 
   const goTototalEmployees = () => {
     navigation.navigate("AskTotalEmployees", {
@@ -29,27 +31,36 @@ export default function AskSector({ route: { params } }) {
 
   return (
     <AuthLayout>
-      {/* <Text>어떤 업종인지 알려주세요 3/7 </Text>
-      <Picker
-        selectedValue={selectedSector}
-        onValueChange={(itemValue, itemIndex) => setSelectedSector(itemValue)}
+      <ModalSelector
+        data={sectors}
+        keyExtractor={(item) => item.id}
+        labelExtractor={(item) => item.value}
+        accessible={true}
+        onChange={(item) => {
+          setSelectedSector(item.value);
+        }}
+        // cancelText={"Cancel"}
+        optionContainerStyle={{ height: 500 }}
       >
-        <Picker.Item label="Sector1" value="sector1" />
-        <Picker.Item label="Sector2" value="sector2" />
-        <Picker.Item label="Sector3" value="sector3" />
-        <Picker.Item label="Sector4" value="sector4" />
-        <Picker.Item label="Sector1" value="sector1" />
-        <Picker.Item label="Sector2" value="sector2" />
-        <Picker.Item label="Sector3" value="sector3" />
-        <Picker.Item label="Sector4" value="sector4" />
-      </Picker>
-      <UnderBar />
+        <TextInput
+          style={{
+            borderWidth: 1,
+            borderColor: "#ccc",
+            padding: 10,
+            height: 50,
+            color: "black",
+          }}
+          editable={false}
+          placeholder="Select your sector!"
+          value={selectedSector}
+        />
+      </ModalSelector>
       <AuthButton
         text="다음"
-        disabled={false}
+        disabled={!selectedSector}
         loading={false}
         onPress={goTototalEmployees}
-      /> */}
+      />
     </AuthLayout>
   );
 }

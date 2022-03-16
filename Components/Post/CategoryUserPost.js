@@ -102,7 +102,7 @@ function CategoryUserPost({
 }) {
   const { width, height } = useWindowDimensions();
 
-  const date = new window.Date(parseInt(createdAt));
+  const date = new window.Date(createdAt);
 
   const time = timeForToday(date);
 

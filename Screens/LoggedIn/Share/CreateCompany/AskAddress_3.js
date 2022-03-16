@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { gql, useMutation } from "@apollo/client";
 import { View, Text, useWindowDimensions, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
@@ -12,73 +13,118 @@ import {
 } from "../../../../Components/Auth/AuthShared";
 import AuthButton from "../../../../Components/Auth/AuthButton";
 import ModalSelector from "react-native-modal-selector";
+import FormError from "../../../../Components/Auth/FormError";
+
+const CREATE_COMPANY_MUTATION = gql`
+  mutation createCompany(
+    $companyName: String!
+    $aboutUs: String!
+    $sector: String!
+    $totalEmployees: Int!
+    $email: String!
+    $contactNumber: String!
+    $addressStep1: String!
+    $addressStep2: String!
+    $addressStep3: String!
+  ) {
+    createCompany(
+      companyName: $companyName
+      aboutUs: $aboutUs
+      sector: $sector
+      totalEmployees: $totalEmployees
+      email: $email
+      contactNumber: $contactNumber
+      addressStep1: $addressStep1
+      addressStep2: $addressStep2
+      addressStep3: $addressStep3
+    ) {
+      ok
+      error
+    }
+  }
+`;
 
 export default function AskAddress_3({ route: { params } }) {
   const navigation = useNavigation();
-  const [add_1, setAdd_1] = useState({});
-  const [add_2, setAdd_2] = useState("");
+  const [focus1, setFocus1] = useState(false);
 
-  const goToAboutUs = () => {
-    // const { companyName } = getValues();
-    // navigation.navigate("AskAboutUs", {
-    //   companyName,
-    // });
+  const { control, formState, handleSubmit, setError } = useForm({
+    mode: "onChange",
+  });
+
+  const onCompleted = async (data) => {
+    const {
+      createCompany: { ok, error },
+    } = data;
+    if (!ok) {
+      return setError("result", {
+        message: error,
+      });
+    } else {
+      navigation.navigate("Home");
+    }
   };
+
+  const [createCompanytMutation, { loading }] = useMutation(
+    CREATE_COMPANY_MUTATION,
+    {
+      onCompleted,
+    }
+  );
+
+  const onValid = (data) => {
+    if (!loading) {
+      createCompanytMutation({
+        variables: {
+          companyName: params.companyName,
+          aboutUs: params.aboutUs,
+          sector: params.sector,
+          totalEmployees: parseInt(params.totalEmployees),
+          email: params.email,
+          contactNumber: params.contactNumber,
+          addressStep1: params.addressStep1,
+          addressStep2: params.addressStep2,
+          addressStep3: data.addressStep3,
+        },
+      });
+    }
+  };
+
   return (
-    <View>
-      <ModalSelector
-        data={bigDistrict}
-        keyExtractor={(item) => item.id}
-        labelExtractor={(item) => item.value}
-        accessible={true}
-        onChange={(item) => {
-          if (add_1.id !== item.id) {
-            setAdd_1({ id: item.id, value: item.value });
-            setAdd_2("");
-          } else {
-            return null;
-          }
+    <AuthLayout>
+      <Controller
+        name="addressStep3"
+        rules={{
+          required: true,
         }}
-        // cancelText={"Cancel"}
-        optionContainerStyle={{ height: 500 }}
-      >
-        <TextInput
-          style={{
-            borderWidth: 1,
-            borderColor: "#ccc",
-            padding: 10,
-            height: 50,
-            color: "black",
-          }}
-          editable={false}
-          placeholder="Select your first address!"
-          value={add_1.value}
-        />
-      </ModalSelector>
-      <ModalSelector
-        data={smallDistrict[add_1.id - 1]}
-        keyExtractor={(item) => item.id}
-        labelExtractor={(item) => item.value}
-        accessible={true}
-        onChange={(item) => {
-          setAdd_2(item.value);
-        }}
-        // cancelText={"Cancel"}
-        optionContainerStyle={{ height: 500 }}
-      >
-        <TextInput
-          style={{
-            borderWidth: 1,
-            borderColor: "#ccc",
-            padding: 10,
-            height: 50,
-            color: "black",
-          }}
-          editable={false}
-          placeholder="Select your next address!"
-          value={add_2}
-        />
-      </ModalSelector>
-    </View>
+        control={control}
+        render={({ field: { onChange, value } }) => (
+          <TextInput_Company
+            placeholder="last address.."
+            autoCapitalize="none"
+            returnKeyType="done"
+            onChangeText={(text) => onChange(text)}
+            value={value || ""}
+            hasError={false}
+            onSubmitEditing={handleSubmit(onValid)}
+            onFocus={() => {
+              setFocus1(true);
+            }}
+            onBlur={() => {
+              setFocus1(false);
+            }}
+            focus={focus1}
+          />
+        )}
+      />
+      <UnderBar />
+      <FormError message={formState?.errors?.result?.message} />
+      <AuthButton
+        text="완료"
+        disabled={!formState.isValid}
+        loading={loading}
+        onPress={handleSubmit(onValid)}
+      />
+    </AuthLayout>
   );
 }

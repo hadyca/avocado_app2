@@ -86,3 +86,13 @@ export const CategoryExplain_KR = [
   "여러사람들과 정보를 공유하고 대화해보세요.",
   "다른사람들에게 질문이나 이야기를 해보세요.",
 ];
+
+export const sectors = [
+  { id: 1, value: "sector1" },
+  { id: 2, value: "sector2" },
+  { id: 3, value: "sector3" },
+  { id: 4, value: "sector4" },
+  { id: 5, value: "sector5" },
+  { id: 6, value: "sector6" },
+  { id: 7, value: "sector7" },
+];

@@ -14,20 +14,25 @@ import AuthButton from "../../../../Components/Auth/AuthButton";
 import ModalSelector from "react-native-modal-selector";
 
 export default function AskAddress_2({ route: { params } }) {
-  console.log(params);
   const navigation = useNavigation();
   const [add_2, setAdd_2] = useState("");
 
-  const goToAboutUs = () => {
-    // const { companyName } = getValues();
-    // navigation.navigate("AskAboutUs", {
-    //   companyName,
-    // });
+  const goToAddress_3 = () => {
+    navigation.navigate("AskAddress_3", {
+      companyName: params.companyName,
+      aboutUs: params.aboutUs,
+      sector: params.sector,
+      totalEmployees: params.totalEmployees,
+      email: params.email,
+      contactNumber: params.contactNumber,
+      addressStep1: params.addressStep1.value,
+      addressStep2: add_2,
+    });
   };
   return (
-    <View>
+    <AuthLayout>
       <ModalSelector
-        data={smallDistrict[add_1.id - 1]}
+        data={smallDistrict[params.addressStep1.id - 1]}
         keyExtractor={(item) => item.id}
         labelExtractor={(item) => item.value}
         accessible={true}
@@ -50,6 +55,12 @@ export default function AskAddress_2({ route: { params } }) {
           value={add_2}
         />
       </ModalSelector>
-    </View>
+      <AuthButton
+        text="다음"
+        disabled={!add_2}
+        loading={false}
+        onPress={goToAddress_3}
+      />
+    </AuthLayout>
   );
 }
