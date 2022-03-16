@@ -8,4 +8,4 @@ export const usernameRule = /^[0-9A-Za-z]{1,20}$/;
 export const passwordRule =
   /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,}$/;
 
-export const onlyNumber = /^[0-9]/g;
+export const onlyNumber = /^[0-9]+$/;

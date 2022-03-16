@@ -61,7 +61,7 @@ export default function AskAddress_3({ route: { params } }) {
         message: error,
       });
     } else {
-      navigation.navigate("Home");
+      navigation.navigate("CreateCompanyFinish");
     }
   };
 

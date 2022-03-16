@@ -55,6 +55,7 @@
 - [] Profile 화면 완성
 - [] Favorites 화면 완성
 - [] 전체 폰트 크기 일괄 조정
+- [] user edit, company edit + delete 화면 만들기 (user는 탈퇴 없음)
 
 # 4월 목표
 

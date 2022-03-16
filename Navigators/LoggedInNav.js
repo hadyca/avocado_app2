@@ -23,6 +23,7 @@ import AskTotalEmployees from "../Screens/LoggedIn/Share/CreateCompany/AskTotalE
 import AskAddress_1 from "../Screens/LoggedIn/Share/CreateCompany/AskAddress_1";
 import AskAddress_2 from "../Screens/LoggedIn/Share/CreateCompany/AskAddress_2";
 import AskAddress_3 from "../Screens/LoggedIn/Share/CreateCompany/AskAddress_3";
+import CreateCompanyFinish from "../Screens/LoggedIn/Share/CreateCompany/CreateCompanyFinish";
 
 const Stack = createStackNavigator();
 
@@ -35,6 +36,13 @@ export default function LoggedInNav() {
           headerShown: false,
         }}
         component={TabsNav}
+      />
+      <Stack.Screen
+        name="CreateCompanyFinish"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={CreateCompanyFinish}
       />
       <Stack.Screen
         name="AskAddress_1"
