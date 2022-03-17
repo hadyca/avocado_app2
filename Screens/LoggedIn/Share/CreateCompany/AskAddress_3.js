@@ -14,6 +14,7 @@ import {
 import AuthButton from "../../../../Components/Auth/AuthButton";
 import ModalSelector from "react-native-modal-selector";
 import FormError from "../../../../Components/Auth/FormError";
+import ProgressCreateCompany from "../../../../Components/Auth/ProgressCreateCompany";
 
 const CREATE_COMPANY_MUTATION = gql`
   mutation createCompany(
@@ -92,6 +93,10 @@ export default function AskAddress_3({ route: { params } }) {
 
   return (
     <AuthLayout>
+      <ProgressCreateCompany
+        title={"마지막 세부주소를 입력해 주세요."}
+        step={"9"}
+      />
       <Controller
         name="addressStep3"
         rules={{
@@ -100,7 +105,7 @@ export default function AskAddress_3({ route: { params } }) {
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextInput_Company
-            placeholder="last address.."
+            placeholder="01 Công xã Paris, Bến Nghé"
             autoCapitalize="none"
             returnKeyType="done"
             onChangeText={(text) => onChange(text)}
@@ -117,7 +122,7 @@ export default function AskAddress_3({ route: { params } }) {
           />
         )}
       />
-      <UnderBar />
+      <UnderBar lastOne={true} />
       <FormError message={formState?.errors?.result?.message} />
       <AuthButton
         text="완료"

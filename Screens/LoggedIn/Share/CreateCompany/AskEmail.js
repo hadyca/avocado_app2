@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { gql, useMutation } from "@apollo/client";
-import { Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import AuthLayout from "../../../../Components/Auth/AuthLayout";
-import { TextInput } from "../../../../Components/Auth/AuthShared";
+import {
+  TextInput_Company,
+  UnderBar,
+} from "../../../../Components/Auth/AuthShared";
 import AuthButton from "../../../../Components/Auth/AuthButton";
 import { emailRule } from "../../../../RegExp";
 import FormError from "../../../../Components/Auth/FormError";
+import ProgressCreateCompany from "../../../../Components/Auth/ProgressCreateCompany";
 
 const CHECK_EMAIL_MUTATION = gql`
   mutation checkEmail($email: String!) {
@@ -20,7 +23,6 @@ const CHECK_EMAIL_MUTATION = gql`
 
 export default function AskEmail({ route: { params } }) {
   const navigation = useNavigation();
-  const [focus1, setFocus1] = useState(false);
   const { control, handleSubmit, getValues, formState, setError, clearErrors } =
     useForm({
       mode: "onChange",
@@ -66,7 +68,7 @@ export default function AskEmail({ route: { params } }) {
 
   return (
     <AuthLayout>
-      <Text>이메일 주소를 넣어주세요. 5/7</Text>
+      <ProgressCreateCompany title={"이메일 주소를 알려주세요!"} step={"5"} />
       <Controller
         name="email"
         rules={{
@@ -75,25 +77,22 @@ export default function AskEmail({ route: { params } }) {
         }}
         control={control}
         render={({ field: { onChange, value } }) => (
-          <TextInput
-            placeholder={"Email"}
+          <TextInput_Company
+            placeholder="Your@Eamil.com"
             autoCapitalize="none"
             returnKeyType="done"
             keyboardType="email-address"
             onChangeText={(text) => onChange(text)}
             value={value || ""}
             onChange={clearEmailError}
-            hasError={Boolean(formState?.errors?.email)}
+            hasError={false}
             onSubmitEditing={handleSubmit(onValid)}
-            onFocus={() => {
-              setFocus1(true);
-            }}
-            onBlur={() => {
-              setFocus1(false);
-            }}
-            focus={focus1}
           />
         )}
+      />
+      <UnderBar
+        lastOne={!formState?.errors?.result?.message}
+        hasError={formState?.errors?.result?.message}
       />
       <FormError message={formState?.errors?.result?.message} />
       <AuthButton

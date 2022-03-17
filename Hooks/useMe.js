@@ -11,6 +11,7 @@ const ME_QUERY = gql`
       myCompany {
         id
         companyName
+        email
       }
     }
   }
@@ -21,6 +22,7 @@ export default function useMe() {
   const { data } = useQuery(ME_QUERY, {
     skip: !hasToken,
   });
+
   useEffect(() => {
     if (data?.me === null) {
       logUserOut();

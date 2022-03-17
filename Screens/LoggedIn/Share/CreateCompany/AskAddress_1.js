@@ -12,6 +12,7 @@ import {
 } from "../../../../Components/Auth/AuthShared";
 import AuthButton from "../../../../Components/Auth/AuthButton";
 import ModalSelector from "react-native-modal-selector";
+import ProgressCreateCompany from "../../../../Components/Auth/ProgressCreateCompany";
 
 export default function AskAddress_1({ route: { params } }) {
   const navigation = useNavigation();
@@ -31,6 +32,10 @@ export default function AskAddress_1({ route: { params } }) {
 
   return (
     <AuthLayout>
+      <ProgressCreateCompany
+        title={"첫번째 도시를 선택해 주세요."}
+        step={"6"}
+      />
       <ModalSelector
         data={bigDistrict}
         keyExtractor={(item) => item.id}
@@ -42,19 +47,12 @@ export default function AskAddress_1({ route: { params } }) {
         // cancelText={"Cancel"}
         optionContainerStyle={{ height: 500 }}
       >
-        <TextInput
-          style={{
-            borderWidth: 1,
-            borderColor: "#ccc",
-            padding: 10,
-            height: 50,
-            color: "black",
-          }}
-          editable={false}
-          placeholder="Select your first address!"
+        <TextInput_Company
+          placeholder={"Select your first city!"}
           value={add_1.value}
         />
       </ModalSelector>
+      <UnderBar lastOne={true} />
       <AuthButton
         text="다음"
         disabled={!add_1.value}

@@ -3,9 +3,14 @@ import { Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import AuthLayout from "../../../../Components/Auth/AuthLayout";
-import { TextInput } from "../../../../Components/Auth/AuthShared";
+import {
+  TextInput,
+  TextInput_Company,
+  UnderBar,
+} from "../../../../Components/Auth/AuthShared";
 import AuthButton from "../../../../Components/Auth/AuthButton";
 import { onlyNumber } from "../../../../RegExp";
+import ProgressCreateCompany from "../../../../Components/Auth/ProgressCreateCompany";
 
 export default function AskContactNumber({ route: { params } }) {
   const navigation = useNavigation();
@@ -28,9 +33,8 @@ export default function AskContactNumber({ route: { params } }) {
 
   return (
     <AuthLayout>
-      <Text>
-        연락받을 수 있는 전화번호를 넣어주세요. (숫자만 넣어주세요.) 6/7
-      </Text>
+      <ProgressCreateCompany title={"연락처를 알려주세요"} step={"5"} />
+
       <Controller
         name="contactNumber"
         rules={{
@@ -42,25 +46,35 @@ export default function AskContactNumber({ route: { params } }) {
         }}
         control={control}
         render={({ field: { onChange, value } }) => (
-          <TextInput
-            placeholder={"Contanct Number"}
+          <TextInput_Company
+            placeholder="Contact Number"
             autoCapitalize="none"
             returnKeyType="done"
-            keyboardType="number-pad"
             onChangeText={(text) => onChange(text)}
             value={value || ""}
             hasError={false}
             onSubmitEditing={goToAskAddress}
-            onFocus={() => {
-              setFocus1(true);
-            }}
-            onBlur={() => {
-              setFocus1(false);
-            }}
-            focus={focus1}
           />
+          // <TextInput
+          //   placeholder={"Contanct Number"}
+          //   autoCapitalize="none"
+          //   returnKeyType="done"
+          //   keyboardType="number-pad"
+          //   onChangeText={(text) => onChange(text)}
+          //   value={value || ""}
+          //   hasError={false}
+          //   onSubmitEditing={goToAskAddress}
+          //   onFocus={() => {
+          //     setFocus1(true);
+          //   }}
+          //   onBlur={() => {
+          //     setFocus1(false);
+          //   }}
+          //   focus={focus1}
+          // />
         )}
       />
+      <UnderBar lastOne={true} />
 
       <AuthButton
         text="다음"
