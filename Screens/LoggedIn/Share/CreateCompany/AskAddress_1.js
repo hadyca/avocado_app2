@@ -1,11 +1,9 @@
 import React, { useState, useRef } from "react";
-import { View, Text, useWindowDimensions, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useForm, Controller } from "react-hook-form";
-import { bigDistrict, smallDistrict } from "../../../../DistrictList";
 import styled from "styled-components/native";
+import { Ionicons } from "@expo/vector-icons";
+import { bigDistrict, smallDistrict } from "../../../../DistrictList";
 import AuthLayout from "../../../../Components/Auth/AuthLayout";
-import { Subtitle } from "../../../../Components/Auth/Subtitle";
 import {
   TextInput_Company,
   UnderBar,
@@ -13,6 +11,12 @@ import {
 import AuthButton from "../../../../Components/Auth/AuthButton";
 import ModalSelector from "react-native-modal-selector";
 import ProgressCreateCompany from "../../../../Components/Auth/ProgressCreateCompany";
+
+const TextView = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
 
 export default function AskAddress_1({ route: { params } }) {
   const navigation = useNavigation();
@@ -47,10 +51,18 @@ export default function AskAddress_1({ route: { params } }) {
         // cancelText={"Cancel"}
         optionContainerStyle={{ height: 500 }}
       >
-        <TextInput_Company
-          placeholder={"Select your first city!"}
-          value={add_1.value}
-        />
+        <TextView>
+          <TextInput_Company
+            placeholder={"Select your first city!"}
+            value={add_1.value}
+          />
+          <Ionicons
+            name="chevron-forward"
+            color="black"
+            size={17}
+            style={{ paddingTop: 15 }}
+          />
+        </TextView>
       </ModalSelector>
       <UnderBar lastOne={true} />
       <AuthButton

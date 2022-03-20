@@ -50,6 +50,7 @@ export default function AskTotalEmployees({ route: { params } }) {
             value={value || ""}
             hasError={false}
             onSubmitEditing={goToAskEmail}
+            maxLength={100}
           />
         )}
       />

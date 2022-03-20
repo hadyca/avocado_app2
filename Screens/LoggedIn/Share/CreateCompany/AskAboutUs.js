@@ -18,6 +18,7 @@ const AboutUsView = styled.View`
 const CountingText = styled.Text`
   color: ${colors.buttonBackground};
   align-self: flex-end;
+  font-size: 11px;
 `;
 
 export default function AskAboutUs({ route: { params } }) {
@@ -64,9 +65,10 @@ export default function AskAboutUs({ route: { params } }) {
               value={value || ""}
               hasError={false}
               onSubmitEditing={goToAskSector}
+              maxLength={100}
             />
             <UnderBar lastOne={false} />
-            <CountingText>{counting}/100</CountingText>
+            <CountingText>글자수 제한 ({counting}/100)</CountingText>
           </AboutUsView>
         )}
       />

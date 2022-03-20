@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import styled from "styled-components/native";
+import { Ionicons } from "@expo/vector-icons";
 import AuthLayout from "../../../../Components/Auth/AuthLayout";
 import AuthButton from "../../../../Components/Auth/AuthButton";
 import {
@@ -9,6 +11,12 @@ import {
 import { sectors } from "../../../../Constant";
 import ModalSelector from "react-native-modal-selector";
 import ProgressCreateCompany from "../../../../Components/Auth/ProgressCreateCompany";
+
+const TextView = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
 
 export default function AskSector({ route: { params } }) {
   const navigation = useNavigation();
@@ -39,10 +47,18 @@ export default function AskSector({ route: { params } }) {
         // cancelText={"Cancel"}
         optionContainerStyle={{ height: 500 }}
       >
-        <TextInput_Company
-          placeholder={"Select your sector!"}
-          value={selectedSector}
-        />
+        <TextView>
+          <TextInput_Company
+            placeholder={"Select your sector!"}
+            value={selectedSector}
+          />
+          <Ionicons
+            name="chevron-forward"
+            color="black"
+            size={17}
+            style={{ paddingTop: 15 }}
+          />
+        </TextView>
       </ModalSelector>
       <UnderBar lastOne={true} />
 

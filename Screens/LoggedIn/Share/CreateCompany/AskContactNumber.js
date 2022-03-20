@@ -42,7 +42,6 @@ export default function AskContactNumber({ route: { params } }) {
           pattern: {
             value: onlyNumber,
           },
-          minLength: 5,
         }}
         control={control}
         render={({ field: { onChange, value } }) => (
@@ -54,24 +53,8 @@ export default function AskContactNumber({ route: { params } }) {
             value={value || ""}
             hasError={false}
             onSubmitEditing={goToAskAddress}
+            maxLength={100}
           />
-          // <TextInput
-          //   placeholder={"Contanct Number"}
-          //   autoCapitalize="none"
-          //   returnKeyType="done"
-          //   keyboardType="number-pad"
-          //   onChangeText={(text) => onChange(text)}
-          //   value={value || ""}
-          //   hasError={false}
-          //   onSubmitEditing={goToAskAddress}
-          //   onFocus={() => {
-          //     setFocus1(true);
-          //   }}
-          //   onBlur={() => {
-          //     setFocus1(false);
-          //   }}
-          //   focus={focus1}
-          // />
         )}
       />
       <UnderBar lastOne={true} />

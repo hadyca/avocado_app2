@@ -15,7 +15,6 @@ export default function Me({ navigation }) {
       });
     }
   }, [data]);
-  console.log(data?.me);
   return (
     <ScreenLayout>
       <Text>Me화면</Text>

@@ -87,6 +87,7 @@ export default function AskEmail({ route: { params } }) {
             onChange={clearEmailError}
             hasError={false}
             onSubmitEditing={handleSubmit(onValid)}
+            maxLength={100}
           />
         )}
       />

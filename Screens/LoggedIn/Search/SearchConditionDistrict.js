@@ -1,9 +1,13 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useScrollToTop } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+
 import styled from "styled-components/native";
 import { colors } from "../../../Colors";
 import SearchSmallDistrict from "../../../Components/Search/SearchSmallDistrict";
 import { bigDistrict } from "../../../DistrictList";
+import PostFormButton from "../../../Components/Post/PostFormButton";
+import { ScreenNames } from "../../../Constant";
 
 const Container = styled.View`
   flex: 1;
@@ -35,7 +39,9 @@ const ButtonText = styled.Text`
   padding: 15px 2px 15px 2px;
 `;
 
-export default function SearchConditionDistrict() {
+export default function SearchConditionDistrict({ route: { params } }) {
+  const navigation = useNavigation();
+
   const ref = useRef(null);
   useScrollToTop(ref);
   const [districtCode, setDistrictCode] = useState(0);
@@ -44,24 +50,41 @@ export default function SearchConditionDistrict() {
     setDistrictCode(index);
   };
 
+  const goToCompanyPostForm = () => {
+    return navigation.navigate("CompanyPostUploadForm", {
+      screenName: ScreenNames.SEARCH_DISTRICT,
+    });
+  };
+
+  useEffect(() => {
+    if (params?.fromWhere === ScreenNames.SEARCH_DISTRICT) {
+      // navigation.navigate("UserPostListDetail", {
+      //   id: params?.id,
+      // });
+    }
+  }, [params]);
+
   return (
-    <Container>
-      <FirstScrollView ref={ref} showsVerticalScrollIndicator={false}>
-        {bigDistrict.map((value, index) => (
-          <Button
-            focus={districtCode === index ? true : false}
-            onPress={() => changeDistrictCode(index)}
-            key={index}
-          >
-            <ButtonText focus={districtCode === index ? true : false}>
-              {value}
-            </ButtonText>
-          </Button>
-        ))}
-      </FirstScrollView>
-      <SecondScrollView showsVerticalScrollIndicator={false}>
-        <SearchSmallDistrict districtCode={districtCode} />
-      </SecondScrollView>
-    </Container>
+    <>
+      <Container>
+        <FirstScrollView ref={ref} showsVerticalScrollIndicator={false}>
+          {bigDistrict.map((item, index) => (
+            <Button
+              focus={districtCode === index ? true : false}
+              onPress={() => changeDistrictCode(index)}
+              key={index}
+            >
+              <ButtonText focus={districtCode === index ? true : false}>
+                {item.value}
+              </ButtonText>
+            </Button>
+          ))}
+        </FirstScrollView>
+        <SecondScrollView showsVerticalScrollIndicator={false}>
+          <SearchSmallDistrict districtCode={districtCode} />
+        </SecondScrollView>
+      </Container>
+      <PostFormButton onPress={goToCompanyPostForm} />
+    </>
   );
 }

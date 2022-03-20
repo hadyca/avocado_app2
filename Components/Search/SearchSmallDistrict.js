@@ -32,9 +32,9 @@ export default function SearchSmallDistrict({ districtCode }) {
   };
   return (
     <View>
-      {smallDistrict[districtCode].map((value, index) => (
-        <Button key={index} onPress={() => goToCompanyPostList(value)}>
-          <ButtonText key={index}>{value}</ButtonText>
+      {smallDistrict[districtCode].map((item, index) => (
+        <Button key={index} onPress={() => goToCompanyPostList(item.value)}>
+          <ButtonText key={index}>{item.value}</ButtonText>
           <Ionicons
             name="chevron-forward"
             color="black"

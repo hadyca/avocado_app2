@@ -41,6 +41,7 @@ export default function AskCompanyName() {
             value={value || ""}
             hasError={false}
             onSubmitEditing={goToAboutUs}
+            maxLength={100}
           />
         )}
       />

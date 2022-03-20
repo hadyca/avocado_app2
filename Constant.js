@@ -49,30 +49,34 @@ export const categories_EN = [
 export const categories_VN = [];
 
 export const userPostReportAry = [
-  "요상한 글이에요",
-  "문제가 많은 게시글이에요",
-  "너무 폭력적이에요",
-  "불법 판매 글이에요",
-  "이상한 사이트로 유도해요",
-  "유저가 못생겼을 거 같아요",
+  "광고 / 홍보 글이에요",
+  "누군가를 비방하는 글이에요",
+  "중복 / 도배 글이에요",
+  "정치 / 종교 관련 글이에요",
+  "금전을 요구하는 글이에요",
+  "불쾌감을 줄 수 있는 글이에요",
+  "불법 / 음란성 글이 포함 되어 있어요",
+  "다른 채팅 앱이나 사이트로 유도 해요",
+  "기타",
 ];
 
 export const userPostCommentReportAry = [
-  "악플이에요",
-  "댓글단 사람이 못생겼습니다.",
-  "댓글 test",
-  "댓글 test2",
+  "광고 / 홍보 댓글이에요",
+  "누군가를 비방하는 댓글이에요",
+  "중복 / 도배 댓글이에요",
+  "정치 / 종교 관련 댓글이에요",
+  "금전을 요구하는 댓글이에요",
+  "불쾌감을 줄 수 있는 댓글이에요",
+  "불법 / 음란성 댓글이 포함 되어 있어요",
+  "다른 채팅 앱이나 사이트로 유도 해요",
+  "기타",
 ];
 
 export const ScreenNames = {
   USER_POST_LIST: "UserPostList",
   CATEGORY_BOARD: "CategoryBoard",
+  SEARCH_DISTRICT: "SearchConditionDistrict",
 };
-
-export const createCompanyData_KR = [
-  "회사 이름을 알려주세요.",
-  "Email주소를 알려주세요.",
-];
 
 export const CategoryExplain_KR = [
   "여러 사람들과 일과 관련된 이야기를 해보세요.",

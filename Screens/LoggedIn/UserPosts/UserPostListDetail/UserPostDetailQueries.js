@@ -9,7 +9,6 @@ export const POST_DETAIL_QUERY = gql`
     seeUserPost(userPostId: $userPostId) {
       isLiked
       isMine
-      totalUserPostComments
       ...UserPostFragment
       userPostComments {
         ...UserPostCommentFragment

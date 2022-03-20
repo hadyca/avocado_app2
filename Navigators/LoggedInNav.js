@@ -24,6 +24,7 @@ import AskAddress_1 from "../Screens/LoggedIn/Share/CreateCompany/AskAddress_1";
 import AskAddress_2 from "../Screens/LoggedIn/Share/CreateCompany/AskAddress_2";
 import AskAddress_3 from "../Screens/LoggedIn/Share/CreateCompany/AskAddress_3";
 import CreateCompanyFinish from "../Screens/LoggedIn/Share/CreateCompany/CreateCompanyFinish";
+import CompanyPostUploadForm from "../Screens/LoggedIn/Search/CompanyPostUploadForm";
 
 const Stack = createStackNavigator();
 
@@ -36,6 +37,13 @@ export default function LoggedInNav() {
           headerShown: false,
         }}
         component={TabsNav}
+      />
+      <Stack.Screen
+        name="CompanyPostUploadForm"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={CompanyPostUploadForm}
       />
       <Stack.Screen
         name="CreateCompanyFinish"
