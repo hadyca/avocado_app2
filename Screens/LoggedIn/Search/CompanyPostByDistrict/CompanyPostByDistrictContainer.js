@@ -14,7 +14,7 @@ export default function ({ route: { params } }) {
   const [fetchLoading, setFetchLoading] = useState(false);
   const { data, loading, refetch, fetchMore } = useQuery(COMPANYPOST_QUERY, {
     variables: {
-      category: params.addressStep2,
+      addressStep2: params.addressStep2,
       offset: 0,
     },
   });

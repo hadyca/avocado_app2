@@ -10,6 +10,8 @@ export const POST_DETAIL_QUERY = gql`
       isLiked
       isMine
       ...UserPostFragment
+      totalUserPostComments
+      # for comment scroll
       userPostComments {
         ...UserPostCommentFragment
         userPostReComments {

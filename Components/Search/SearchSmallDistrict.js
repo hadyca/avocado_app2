@@ -26,7 +26,7 @@ const ButtonText = styled.Text`
 export default function SearchSmallDistrict({ districtCode }) {
   const navigation = useNavigation();
   const goToCompanyPostList = (addressStep2) => {
-    navigation.navigate("CompanyPostList", {
+    navigation.navigate("CompanyPostByDistrict", {
       addressStep2,
     });
   };
