@@ -1,14 +1,15 @@
 import { gql } from "@apollo/client";
-import {
-  USER_POST_COMMENT_FRAGMENT,
-  USER_POST_FRAGMENT,
-} from "../../../../Fragments";
 
 export const POST_DETAIL_QUERY = gql`
   query seeCompanyPost($companyPostId: Int!) {
     seeCompanyPost(companyPostId: $companyPostId) {
       id
       company {
+        user {
+          id
+          username
+          avatar
+        }
         companyName
         aboutUs
         sector
@@ -38,16 +39,15 @@ export const POST_DETAIL_QUERY = gql`
         isMine
         createdAt
         companyPostReComments {
-          id {
-            user {
-              id
-              username
-              avatar
-            }
-            payload
-            isMine
-            createdAt
+          id
+          user {
+            id
+            username
+            avatar
           }
+          payload
+          isMine
+          createdAt
         }
       }
     }
@@ -56,7 +56,7 @@ export const POST_DETAIL_QUERY = gql`
 
 export const DELETE_COMPANYPOST_MUTATION = gql`
   mutation deleteCompanyPost($companyPostId: Int!) {
-    deleteUserPost(companyPostId: $companyPostId) {
+    deleteCompanyPost(companyPostId: $companyPostId) {
       ok
       error
     }
@@ -65,7 +65,7 @@ export const DELETE_COMPANYPOST_MUTATION = gql`
 
 export const TOGGLE_COMPANYPOST_LIKE_MUTATION = gql`
   mutation toggleCompanyPostLike($companyPostId: Int!) {
-    toggleCompanyPostLike(companyPostId: $userPostId) {
+    toggleCompanyPostLike(companyPostId: $companyPostId) {
       ok
       error
     }

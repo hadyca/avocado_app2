@@ -5,9 +5,9 @@ import CompanyPostDetailPresenter from "./CompanyPostDetailPresenter";
 import { useNavigation } from "@react-navigation/native";
 import {
   POST_DETAIL_QUERY,
-  DELETE_USERPOST_MUTATION,
-  TOGGLE_USERPOST_LIKE_MUTATION,
-} from "./UserPostDetailQueries";
+  DELETE_COMPANYPOST_MUTATION,
+  TOGGLE_COMPANYPOST_LIKE_MUTATION,
+} from "./CompanyPostDetailQueries";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
 import UserPostComment from "../../../../Components/Post/UserPostComment";
 import ScreenLayout from "../../../../Components/ScreenLayout";
@@ -34,23 +34,23 @@ export default function ({ route: { params } }) {
       },
     } = result;
 
-    if (ok) {
-      const UserPostId = `UserPost:${params.id}`;
-      cache.modify({
-        id: UserPostId,
-        fields: {
-          isLiked(prev) {
-            return !prev;
-          },
-          totalUserPostLikes(prev) {
-            if (data?.seeUserPost?.isLiked) {
-              return prev - 1;
-            }
-            return prev + 1;
-          },
-        },
-      });
-    }
+    // if (ok) {
+    //   const UserPostId = `UserPost:${params.id}`;
+    //   cache.modify({
+    //     id: UserPostId,
+    //     fields: {
+    //       isLiked(prev) {
+    //         return !prev;
+    //       },
+    //       totalUserPostLikes(prev) {
+    //         if (data?.seeUserPost?.isLiked) {
+    //           return prev - 1;
+    //         }
+    //         return prev + 1;
+    //       },
+    //     },
+    //   });
+    // }
   };
 
   const goDeleteUserPost = (cache, result) => {
@@ -59,32 +59,32 @@ export default function ({ route: { params } }) {
         deleteUserPost: { ok },
       },
     } = result;
-    if (ok) {
-      const UserPostId = `UserPost:${params.id}`;
-      cache.modify({
-        id: UserPostId,
-        fields: {
-          deleted(prev) {
-            return !prev;
-          },
-        },
-      });
-    }
-    Alert.alert("게시글이 삭제 되었습니다.");
-    navigation.pop();
+    // if (ok) {
+    //   const UserPostId = `UserPost:${params.id}`;
+    //   cache.modify({
+    //     id: UserPostId,
+    //     fields: {
+    //       deleted(prev) {
+    //         return !prev;
+    //       },
+    //     },
+    //   });
+    // }
+    // Alert.alert("게시글이 삭제 되었습니다.");
+    // navigation.pop();
   };
   const { data, loading, refetch, error } = useQuery(POST_DETAIL_QUERY, {
     variables: {
-      userPostId: parseInt(params.id),
+      companyPostId: parseInt(params.id),
     },
   });
 
-  const [deleteUserPostMutation] = useMutation(DELETE_USERPOST_MUTATION, {
+  const [deleteCompanyPostMutation] = useMutation(DELETE_COMPANYPOST_MUTATION, {
     update: goDeleteUserPost,
   });
 
-  const [toggleUserPostLikeMutation, { loading: likeLoading }] = useMutation(
-    TOGGLE_USERPOST_LIKE_MUTATION,
+  const [toggleCompanyPostLikeMutation, { loading: likeLoading }] = useMutation(
+    TOGGLE_COMPANYPOST_LIKE_MUTATION,
     {
       variables: {
         userPostId: parseInt(params.id),
@@ -131,7 +131,7 @@ export default function ({ route: { params } }) {
   };
 
   const goToDeletePost = () => {
-    deleteUserPostMutation({
+    deleteCompanyPostMutation({
       variables: {
         userPostId: parseInt(params.id),
       },
@@ -145,7 +145,7 @@ export default function ({ route: { params } }) {
   let notMineOptionArray = ["신고", "취소"];
 
   const showActionSheet = () => {
-    if (data?.seeUserPost?.isMine) {
+    if (data?.seeCompanyPost?.isMine) {
       return myActionsheet.current.show();
     } else {
       return notMeActionsheet.current.show();
@@ -181,12 +181,12 @@ export default function ({ route: { params } }) {
       <CompanyPostDetailPresenter
         data={data}
         likeLoading={likeLoading}
-        toggleUserPostLikeMutation={toggleUserPostLikeMutation}
+        toggleCompanyPostLikeMutation={toggleCompanyPostLikeMutation}
         renderComment={renderComment}
         refreshing={refreshing}
         refresh={refresh}
         statusBarHeight={statusBarHeight}
-        userPostId={params.id}
+        companyPostId={params.id}
         showActionSheet={showActionSheet}
         fromWhere={params.fromWhere}
       />

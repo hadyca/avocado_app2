@@ -76,6 +76,7 @@ export const ScreenNames = {
   USER_POST_LIST: "UserPostList",
   CATEGORY_BOARD: "CategoryBoard",
   SEARCH_DISTRICT: "SearchConditionDistrict",
+  COMPANY_POST_BY_DISTRICT: "CompanyPostByDistrict",
 };
 
 export const CategoryExplain_KR = [

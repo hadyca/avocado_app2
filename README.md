@@ -58,6 +58,7 @@
 - [] Favorites 화면 완성
 - [] 전체 폰트 크기 일괄 조정
 - [] user edit, company edit + delete 화면 만들기 (user는 탈퇴 없음)
+- [] companyPost 모델에 임금 값도 넣어야 할까?
 - [x] Report 내용 제대로 작성하기
 
 # 4월 목표

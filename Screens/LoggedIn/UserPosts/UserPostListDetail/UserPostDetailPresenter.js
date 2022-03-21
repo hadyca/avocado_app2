@@ -77,7 +77,7 @@ export default function UserPostDetailPresenter({
             <FlatList
               ListHeaderComponent={
                 <PostContents
-                  file={data?.seeUserPost?.file.length}
+                  file={data?.seeUserPost?.file}
                   data={data}
                   userId={data?.userId}
                   username={data?.seeUserPost?.user?.username}
@@ -86,7 +86,7 @@ export default function UserPostDetailPresenter({
                   content={data?.seeUserPost?.content}
                   category={data?.seeUserPost?.category}
                   likeLoading={likeLoading}
-                  toggleUserPostLikeMutation={toggleUserPostLikeMutation}
+                  toggleLikeMutation={toggleUserPostLikeMutation}
                   isLiked={data?.seeUserPost?.isLiked}
                 />
               }
@@ -115,7 +115,7 @@ export default function UserPostDetailPresenter({
             <FlatList
               ListHeaderComponent={
                 <PostContents
-                  file={data?.seeUserPost?.file.length}
+                  file={data?.seeUserPost?.file}
                   data={data}
                   userId={data?.userId}
                   username={data?.seeUserPost?.user?.username}
@@ -124,7 +124,7 @@ export default function UserPostDetailPresenter({
                   content={data?.seeUserPost?.content}
                   category={data?.seeUserPost?.category}
                   likeLoading={likeLoading}
-                  toggleUserPostLikeMutation={toggleUserPostLikeMutation}
+                  toggleLikeMutation={toggleUserPostLikeMutation}
                   isLiked={data?.seeUserPost?.isLiked}
                 />
               }

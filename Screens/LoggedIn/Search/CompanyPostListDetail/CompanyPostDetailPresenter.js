@@ -11,7 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
 import { colors } from "../../../../Colors";
 import CommentForm from "../../../../Components/Post/CommentForm";
-import PostContents from "../../../../Components/Post/PostContents";
+import CompanyPostContents from "../../../../Components/Post/CompanyPostContents";
 
 const PostContainer = styled.View`
   flex: 1;
@@ -28,12 +28,12 @@ const NoComment = styled.Text`
 export default function CompanyPostDetailPresenter({
   data,
   likeLoading,
-  toggleUserPostLikeMutation,
+  toggleCompanyPostLikeMutation,
   renderComment,
   refreshing,
   refresh,
   statusBarHeight,
-  userPostId,
+  companyPostId,
   showActionSheet,
 }) {
   const navigation = useNavigation();
@@ -72,28 +72,27 @@ export default function CompanyPostDetailPresenter({
         }
         style={{ flex: 1 }}
       >
-        {data?.seeUserPost?.userPostComments.length > 0 ? (
+        {data?.seeCompanyPost?.companyPostComments.length > 0 ? (
           <PostContainer>
             <FlatList
               ListHeaderComponent={
-                <PostContents
-                  file={data?.seeUserPost?.file.length}
+                <CompanyPostContents
+                  file={data?.seeCompanyPost?.file}
                   data={data}
                   userId={data?.userId}
-                  username={data?.seeUserPost?.user?.username}
-                  avatar={data?.seeUserPost?.user?.avatar}
-                  title={data?.seeUserPost?.title}
-                  content={data?.seeUserPost?.content}
-                  category={data?.seeUserPost?.category}
+                  username={data?.seeCompanyPost?.company?.user?.username}
+                  avatar={data?.seeCompanyPost?.company?.user?.avatar}
+                  title={data?.seeCompanyPost?.title}
+                  content={data?.seeCompanyPost?.content}
                   likeLoading={likeLoading}
-                  toggleUserPostLikeMutation={toggleUserPostLikeMutation}
-                  isLiked={data?.seeUserPost?.isLiked}
+                  toggleLikeMutation={toggleCompanyPostLikeMutation}
+                  isLiked={data?.seeCompanyPost?.isLiked}
                 />
               }
               refreshing={refreshing}
               onRefresh={refresh}
               showsVerticalScrollIndicator={true}
-              data={data?.seeUserPost?.userPostComments}
+              data={data?.seeCompanyPost?.userPostComments}
               keyExtractor={(item) => "" + item.id}
               renderItem={renderComment}
               ref={detailRef}
@@ -101,7 +100,7 @@ export default function CompanyPostDetailPresenter({
               onContentSizeChange={() => {
                 if (
                   commentUploading &&
-                  data?.seeUserPost?.totalUserPostComments > 5
+                  data?.seeCompanyPost?.totalUserPostComments > 5
                 ) {
                   setCommentUploading(false);
                   detailRef.current?.scrollToEnd({ animated: true });
@@ -114,18 +113,18 @@ export default function CompanyPostDetailPresenter({
           <PostContainer>
             <FlatList
               ListHeaderComponent={
-                <PostContents
-                  file={data?.seeUserPost?.file.length}
+                <CompanyPostContents
+                  file={data?.seeCompanyPost?.file}
                   data={data}
                   userId={data?.userId}
-                  username={data?.seeUserPost?.user?.username}
-                  avatar={data?.seeUserPost?.user?.avatar}
-                  title={data?.seeUserPost?.title}
-                  content={data?.seeUserPost?.content}
-                  category={data?.seeUserPost?.category}
+                  username={data?.seeCompanyPost?.company?.user?.username}
+                  avatar={data?.seeCompanyPost?.company?.user?.avatar}
+                  title={data?.seeCompanyPost?.title}
+                  content={data?.seeCompanyPost?.content}
+                  category={data?.seeCompanyPost?.category}
                   likeLoading={likeLoading}
-                  toggleUserPostLikeMutation={toggleUserPostLikeMutation}
-                  isLiked={data?.seeUserPost?.isLiked}
+                  toggleLikeMutation={toggleCompanyPostLikeMutation}
+                  isLiked={data?.seeCompanyPost?.isLiked}
                 />
               }
               ListFooterComponent={
@@ -142,7 +141,7 @@ export default function CompanyPostDetailPresenter({
           </PostContainer>
         )}
         <CommentForm
-          userPostId={userPostId}
+          companyPostId={companyPostId}
           handleComment={handleComment}
           commentUploading={commentUploading}
         />

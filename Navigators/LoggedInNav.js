@@ -25,6 +25,8 @@ import AskAddress_2 from "../Screens/LoggedIn/Share/CreateCompany/AskAddress_2";
 import AskAddress_3 from "../Screens/LoggedIn/Share/CreateCompany/AskAddress_3";
 import CreateCompanyFinish from "../Screens/LoggedIn/Share/CreateCompany/CreateCompanyFinish";
 import CompanyPostUploadForm from "../Screens/LoggedIn/Search/CompanyPostUploadForm";
+import CompanyPostListDetail from "../Screens/LoggedIn/Search/CompanyPostListDetail";
+import CompanyPostByDistrict from "../Screens/LoggedIn/Search/CompanyPostByDistrict";
 
 const Stack = createStackNavigator();
 
@@ -37,6 +39,20 @@ export default function LoggedInNav() {
           headerShown: false,
         }}
         component={TabsNav}
+      />
+      <Stack.Screen
+        name="CompanyPostByDistrict"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={CompanyPostByDistrict}
+      />
+      <Stack.Screen
+        name="CompanyPostListDetail"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={CompanyPostListDetail}
       />
       <Stack.Screen
         name="CompanyPostUploadForm"

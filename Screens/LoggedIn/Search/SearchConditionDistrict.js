@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useScrollToTop } from "@react-navigation/native";
-import { useNavigation } from "@react-navigation/native";
-
+import { useScrollToTop, useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { colors } from "../../../Colors";
 import SearchSmallDistrict from "../../../Components/Search/SearchSmallDistrict";
@@ -58,9 +56,9 @@ export default function SearchConditionDistrict({ route: { params } }) {
 
   useEffect(() => {
     if (params?.fromWhere === ScreenNames.SEARCH_DISTRICT) {
-      // navigation.navigate("UserPostListDetail", {
-      //   id: params?.id,
-      // });
+      navigation.navigate("CompanyPostListDetail", {
+        id: params?.id,
+      });
     }
   }, [params]);
 

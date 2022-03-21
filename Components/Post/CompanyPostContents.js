@@ -50,7 +50,7 @@ const Action = styled.TouchableOpacity`
   margin-right: 10px;
 `;
 
-export default function PostContents({
+export default function CompanyPostContents({
   file,
   data,
   userId,
@@ -58,7 +58,6 @@ export default function PostContents({
   avatar,
   title,
   content,
-  category,
   toggleLikeMutation,
   likeLoading,
   isLiked,
@@ -80,13 +79,8 @@ export default function PostContents({
 
   return (
     <View>
-      {file.length !== 0 ? <ImageSlider file={file} /> : null}
+      {file !== 0 ? <ImageSlider file={file} /> : null}
       <Container>
-        <CategoryView>
-          <CategoryTouch onPress={() => goToCategoryScreen(category)}>
-            <CategoryText>{category}</CategoryText>
-          </CategoryTouch>
-        </CategoryView>
         <Header onPress={goToProfile}>
           <UserAvatar username={username} uri={avatar} />
         </Header>
