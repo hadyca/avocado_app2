@@ -29,6 +29,8 @@ import CompanyPostListDetail from "../Screens/LoggedIn/Search/CompanyPostListDet
 import CompanyPostByDistrict from "../Screens/LoggedIn/Search/CompanyPostByDistrict";
 import EditCompanyPostForm from "../Screens/LoggedIn/Search/EditCompanyPostForm";
 import CompanyReComment from "../Screens/LoggedIn/Search/CompanyReComment";
+import EditCompanyPostCommentForm from "../Screens/LoggedIn/Search/EditCompanyPostCommentForm";
+import EditCompanyPostReCommentForm from "../Screens/LoggedIn/Search/EditCompanyPostReCommentForm";
 
 const Stack = createStackNavigator();
 
@@ -41,6 +43,20 @@ export default function LoggedInNav() {
           headerShown: false,
         }}
         component={TabsNav}
+      />
+      <Stack.Screen
+        name="EditCompanyPostCommentForm"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={EditCompanyPostCommentForm}
+      />
+      <Stack.Screen
+        name="EditCompanyPostReCommentForm"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={EditCompanyPostReCommentForm}
       />
       <Stack.Screen
         name="CompanyReComment"

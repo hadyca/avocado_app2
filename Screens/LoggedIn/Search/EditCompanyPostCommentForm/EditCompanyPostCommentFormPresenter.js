@@ -25,26 +25,27 @@ const TextInput = styled.TextInput`
   border: 1px solid ${colors.borderThin};
 `;
 
-export default function EditUserPostReCommentFormPresenter({
+export default function EditCompanyPostCommentFormPresenter({
   loading,
-  reCommentId,
-  OriginalPayload,
-  editUserPostCommentMutation,
+  editCompanyPostCommentMutation,
+  commentId,
+  originalPayload,
   handlePayload,
 }) {
   const navigation = useNavigation();
+
   const { control, handleSubmit, formState } = useForm({
     defaultValues: {
-      payload: OriginalPayload,
+      payload: originalPayload,
     },
     mode: "onChange",
   });
   const onValid = ({ payload }) => {
     if (!loading) {
       handlePayload(payload);
-      editUserPostCommentMutation({
+      editCompanyPostCommentMutation({
         variables: {
-          reCommentId: parseInt(reCommentId),
+          commentId: parseInt(commentId),
           payload,
         },
       });
@@ -54,11 +55,7 @@ export default function EditUserPostReCommentFormPresenter({
     <ActivityIndicator size="small" color="black" style={{ marginRight: 10 }} />
   );
   const NoHeaderRight = () => (
-    <TouchableOpacity
-      disabled={true}
-      onPress={handleSubmit(onValid)}
-      style={{ marginRight: 10, opacity: 0.5 }}
-    >
+    <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
       <HeaderRightText>Done</HeaderRightText>
     </TouchableOpacity>
   );

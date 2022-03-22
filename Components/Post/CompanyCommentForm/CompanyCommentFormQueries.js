@@ -17,11 +17,11 @@ export const CREATE_COMMENT_MUTATION = gql`
 `;
 
 export const CREATE_RECOMMENT_MUTATION = gql`
-  mutation createCompanyRePostComment(
+  mutation createCompanyPostReComment(
     $companyPostCommentId: Int!
     $payload: String!
   ) {
-    createCompanyRePostComment(
+    createCompanyPostReComment(
       companyPostCommentId: $companyPostCommentId
       payload: $payload
     ) {

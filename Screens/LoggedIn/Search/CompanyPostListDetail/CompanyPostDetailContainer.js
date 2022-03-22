@@ -53,7 +53,6 @@ export default function ({ route: { params } }) {
   };
 
   const goDeleteCompanyPost = (cache, result) => {
-    console.log(result);
     const {
       data: {
         deleteCompanyPost: { ok },

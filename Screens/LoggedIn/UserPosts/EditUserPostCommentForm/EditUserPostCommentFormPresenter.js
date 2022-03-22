@@ -17,12 +17,12 @@ const Container = styled.View`
   margin: 10px;
 `;
 const TextInput = styled.TextInput`
-width: 100%;
-height: 100%;
-background-color: ${colors.backgraound}
-padding: 13px
-color: black;
-border: 1px solid ${colors.borderThin};
+  width: 100%;
+  height: 100%;
+  background-color: ${colors.backgraound};
+  padding: 13px;
+  color: black;
+  border: 1px solid ${colors.borderThin};
 `;
 
 export default function EditUserPostCommentFormPresenter({

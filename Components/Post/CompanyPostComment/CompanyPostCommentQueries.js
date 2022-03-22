@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const DELETE_COMMENT_MUTATION = gql`
-  mutation deleteUserPostComment($commentId: Int!) {
-    deleteUserPostComment(commentId: $commentId) {
+  mutation deleteCompanyPostComment($commentId: Int!) {
+    deleteCompanyPostComment(commentId: $commentId) {
       ok
       totalRecomments
     }

@@ -29,7 +29,7 @@ export default function EditUserPostReCommentFormPresenter({
   loading,
   reCommentId,
   OriginalPayload,
-  editUserPostCommentMutation,
+  editCompanyPostCommentMutation,
   handlePayload,
 }) {
   const navigation = useNavigation();
@@ -42,7 +42,7 @@ export default function EditUserPostReCommentFormPresenter({
   const onValid = ({ payload }) => {
     if (!loading) {
       handlePayload(payload);
-      editUserPostCommentMutation({
+      editCompanyPostCommentMutation({
         variables: {
           reCommentId: parseInt(reCommentId),
           payload,
