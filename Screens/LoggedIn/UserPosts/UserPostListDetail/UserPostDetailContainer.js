@@ -33,7 +33,6 @@ export default function ({ route: { params } }) {
         toggleUserPostLike: { ok },
       },
     } = result;
-
     if (ok) {
       const UserPostId = `UserPost:${params.id}`;
       cache.modify({
@@ -116,7 +115,6 @@ export default function ({ route: { params } }) {
   const goToEditForm = () => {
     navigation.navigate("EditUserPostForm", {
       id: params.id,
-      title: data?.seeUserPost?.title,
       content: data?.seeUserPost?.content,
       category: data?.seeUserPost?.category,
       file: data?.seeUserPost?.file,

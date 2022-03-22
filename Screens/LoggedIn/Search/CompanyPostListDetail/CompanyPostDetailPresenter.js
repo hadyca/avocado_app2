@@ -10,7 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
 import { colors } from "../../../../Colors";
-import CommentForm from "../../../../Components/Post/CommentForm";
+import CompanyCommentForm from "../../../../Components/Post/CompanyCommentForm";
 import CompanyPostContents from "../../../../Components/Post/CompanyPostContents";
 
 const PostContainer = styled.View`
@@ -92,7 +92,7 @@ export default function CompanyPostDetailPresenter({
               refreshing={refreshing}
               onRefresh={refresh}
               showsVerticalScrollIndicator={true}
-              data={data?.seeCompanyPost?.userPostComments}
+              data={data?.seeCompanyPost?.companyPostComments}
               keyExtractor={(item) => "" + item.id}
               renderItem={renderComment}
               ref={detailRef}
@@ -100,7 +100,7 @@ export default function CompanyPostDetailPresenter({
               onContentSizeChange={() => {
                 if (
                   commentUploading &&
-                  data?.seeCompanyPost?.totalUserPostComments > 5
+                  data?.seeCompanyPost?.totalCompanyPostComments > 5
                 ) {
                   setCommentUploading(false);
                   detailRef.current?.scrollToEnd({ animated: true });
@@ -140,7 +140,7 @@ export default function CompanyPostDetailPresenter({
             />
           </PostContainer>
         )}
-        <CommentForm
+        <CompanyCommentForm
           companyPostId={companyPostId}
           handleComment={handleComment}
           commentUploading={commentUploading}

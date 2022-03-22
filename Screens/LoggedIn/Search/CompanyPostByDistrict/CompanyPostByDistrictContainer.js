@@ -18,7 +18,7 @@ export default function ({ route: { params } }) {
       offset: 0,
     },
   });
-  const { width, height } = useWindowDimensions();
+  // const { width, height } = useWindowDimensions();
 
   const renderPost = ({ item }) => {
     if (item.deleted === false) {
@@ -54,22 +54,22 @@ export default function ({ route: { params } }) {
     });
   };
 
-  // useEffect(() => {
-  //   if (params?.fromWhere === ScreenNames.CATEGORY_BOARD) {
-  //     refetch();
-  //     navigation.navigate("CompanyPostListDetail", {
-  //       id: params?.id,
-  //     });
-  //   } else {
-  //     refetch();
-  //   }
-  // }, [params]);
-  console.log(data);
+  useEffect(() => {
+    if (params?.fromWhere === ScreenNames.SEARCH_DISTRICT) {
+      refetch();
+      navigation.navigate("CompanyPostListDetail", {
+        id: params?.id,
+      });
+    } else {
+      refetch();
+    }
+  }, [params]);
+
   return (
     <ScreenLayout loading={loading}>
       <CompanyPostByDistrictPresenter
-        width={width}
-        height={height}
+        // width={width}
+        // height={height}
         goToCompanyPostForm={goToCompanyPostForm}
         handleFetch={handleFetch}
         refreshing={refreshing}

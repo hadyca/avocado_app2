@@ -1,14 +1,12 @@
 import React from "react";
-import { useWindowDimensions } from "react-native";
+import { useWindowDimensions, Text } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../Colors";
 import timeForToday from "../../Utils";
 import UserAvatar from "../UserAvatar";
 
-const Container = styled.View`
-  margin-bottom: 10px;
-`;
+const Container = styled.View``;
 
 const HeaderContainer = styled.View`
   flex-direction: row;
@@ -19,24 +17,20 @@ const Header = styled.TouchableOpacity`
   margin: 10px;
 `;
 
-const IconView = styled.TouchableOpacity`
-  padding: 10px;
-`;
-
 const Contents = styled.TouchableOpacity`
   margin-left: 10px;
 `;
 
-const ImgContainer = styled.TouchableOpacity``;
+const ImgContainer = styled.TouchableOpacity`
+  margin-bottom: 8px;
+`;
 
 const MainImg = styled.Image`
-  margin-top: 5px;
   width: ${(props) => props.width}px;
   height: ${(props) => Math.ceil(props.height / 3)}px;
 `;
 
 const Title = styled.Text`
-  margin-top: 8px;
   font-size: 16px;
   font-weight: 600;
 `;
@@ -92,17 +86,16 @@ const Separator = styled.View`
 
 function DistrictCompanyPost({
   id,
-  user,
+  company,
   file,
   title,
-  content,
   totalCompanyPostLikes,
   totalCompanyPostComments,
   createdAt,
 }) {
   const { width, height } = useWindowDimensions();
 
-  const date = new window.Date(createdAt);
+  const date = new window.Date(parseInt(createdAt));
 
   const time = timeForToday(date);
 
@@ -110,13 +103,13 @@ function DistrictCompanyPost({
 
   const goToProfile = () => {
     navigation.navigate("Profile", {
-      id: user.id,
-      username: user.username,
+      id: company.user.id,
+      username: company.user.username,
     });
   };
 
   const goToPostDetail = () => {
-    navigation.navigate("UserPostListDetail", {
+    navigation.navigate("CompanyPostListDetail", {
       id,
     });
   };
@@ -125,10 +118,14 @@ function DistrictCompanyPost({
     <Container>
       <HeaderContainer>
         <Header onPress={goToProfile}>
-          <UserAvatar username={user.username} uri={user.avatar} />
+          <UserAvatar
+            username={company.user.username}
+            uri={company.user.avatar}
+          />
         </Header>
+        <Text>{company.companyName}</Text>
+        <Text>{company.sector}</Text>
       </HeaderContainer>
-
       {file.length > 0 ? (
         <ImgContainer onPress={goToPostDetail}>
           <MainImg
@@ -141,7 +138,7 @@ function DistrictCompanyPost({
       ) : null}
       <Contents onPress={goToPostDetail}>
         <Title>{title}</Title>
-        {content.length >= 20 ? (
+        {/* {content.length >= 20 ? (
           <Content>
             <ContentText>{content.substr(0, 20)}</ContentText>
             <MoreText>...more</MoreText>
@@ -150,16 +147,16 @@ function DistrictCompanyPost({
           <Content>
             <ContentText>{content}</ContentText>
           </Content>
-        )}
+        )} */}
       </Contents>
       <LikeComment>
         <Likes>
-          {totalUserPostLikes > 1
+          {totalCompanyPostLikes > 1
             ? `${totalCompanyPostLikes} likes`
             : `${totalCompanyPostLikes} like`}
         </Likes>
         <Comments>
-          {totalUserPostComments > 1
+          {totalCompanyPostComments > 1
             ? `${totalCompanyPostComments} comments`
             : `${totalCompanyPostComments} comment`}
         </Comments>

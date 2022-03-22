@@ -9,7 +9,7 @@ import {
   TOGGLE_COMPANYPOST_LIKE_MUTATION,
 } from "./CompanyPostDetailQueries";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
-import UserPostComment from "../../../../Components/Post/UserPostComment";
+import CompanyPostComment from "../../../../Components/Post/CompanyPostComment";
 import ScreenLayout from "../../../../Components/ScreenLayout";
 
 export default function ({ route: { params } }) {
@@ -30,48 +30,48 @@ export default function ({ route: { params } }) {
   const updateToggleLike = (cache, result) => {
     const {
       data: {
-        toggleUserPostLike: { ok },
+        toggleCompanyPostLike: { ok },
       },
     } = result;
-
-    // if (ok) {
-    //   const UserPostId = `UserPost:${params.id}`;
-    //   cache.modify({
-    //     id: UserPostId,
-    //     fields: {
-    //       isLiked(prev) {
-    //         return !prev;
-    //       },
-    //       totalUserPostLikes(prev) {
-    //         if (data?.seeUserPost?.isLiked) {
-    //           return prev - 1;
-    //         }
-    //         return prev + 1;
-    //       },
-    //     },
-    //   });
-    // }
+    if (ok) {
+      const CompanyPostId = `CompanyPost:${params.id}`;
+      cache.modify({
+        id: CompanyPostId,
+        fields: {
+          isLiked(prev) {
+            return !prev;
+          },
+          totalCompanyPostLikes(prev) {
+            if (data?.seeCompanyPost?.isLiked) {
+              return prev - 1;
+            }
+            return prev + 1;
+          },
+        },
+      });
+    }
   };
 
-  const goDeleteUserPost = (cache, result) => {
+  const goDeleteCompanyPost = (cache, result) => {
+    console.log(result);
     const {
       data: {
-        deleteUserPost: { ok },
+        deleteCompanyPost: { ok },
       },
     } = result;
-    // if (ok) {
-    //   const UserPostId = `UserPost:${params.id}`;
-    //   cache.modify({
-    //     id: UserPostId,
-    //     fields: {
-    //       deleted(prev) {
-    //         return !prev;
-    //       },
-    //     },
-    //   });
-    // }
-    // Alert.alert("게시글이 삭제 되었습니다.");
-    // navigation.pop();
+    if (ok) {
+      const CompanyPostId = `CompanyPost:${params.id}`;
+      cache.modify({
+        id: CompanyPostId,
+        fields: {
+          deleted(prev) {
+            return !prev;
+          },
+        },
+      });
+    }
+    Alert.alert("게시글이 삭제 되었습니다.");
+    navigation.pop();
   };
   const { data, loading, refetch, error } = useQuery(POST_DETAIL_QUERY, {
     variables: {
@@ -80,14 +80,14 @@ export default function ({ route: { params } }) {
   });
 
   const [deleteCompanyPostMutation] = useMutation(DELETE_COMPANYPOST_MUTATION, {
-    update: goDeleteUserPost,
+    update: goDeleteCompanyPost,
   });
 
   const [toggleCompanyPostLikeMutation, { loading: likeLoading }] = useMutation(
     TOGGLE_COMPANYPOST_LIKE_MUTATION,
     {
       variables: {
-        userPostId: parseInt(params.id),
+        companyPostId: parseInt(params.id),
       },
       update: updateToggleLike,
     }
@@ -95,14 +95,14 @@ export default function ({ route: { params } }) {
 
   const renderComment = ({ item }) => {
     return (
-      <UserPostComment
-        userPostId={parseInt(params.id)}
+      <CompanyPostComment
+        companyPostId={parseInt(params.id)}
         id={item.id}
         user={item.user}
         payload={item.payload}
         isMine={item.isMine}
         createdAt={item.createdAt}
-        reComments={item.userPostReComments}
+        reComments={item.companyPostReComments}
       />
     );
   };
@@ -114,12 +114,11 @@ export default function ({ route: { params } }) {
   };
 
   const goToEditForm = () => {
-    navigation.navigate("EditUserPostForm", {
+    navigation.navigate("EditCompanyPostForm", {
       id: params.id,
-      title: data?.seeUserPost?.title,
-      content: data?.seeUserPost?.content,
-      category: data?.seeUserPost?.category,
-      file: data?.seeUserPost?.file,
+      title: data?.seeCompanyPost?.title,
+      content: data?.seeCompanyPost?.content,
+      file: data?.seeCompanyPost?.file,
       screenName: params.fromWhere,
     });
   };
@@ -133,7 +132,7 @@ export default function ({ route: { params } }) {
   const goToDeletePost = () => {
     deleteCompanyPostMutation({
       variables: {
-        userPostId: parseInt(params.id),
+        companyPostId: parseInt(params.id),
       },
     });
   };

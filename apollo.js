@@ -60,6 +60,7 @@ const cache = new InMemoryCache({
       fields: {
         seeAllUserPosts: offsetLimitPagination(),
         seeUserCategoryPost: offsetLimitPagination(["category"]),
+        seeCompanyPostByDistrict: offsetLimitPagination(["addressStep2"]),
       },
     },
   },

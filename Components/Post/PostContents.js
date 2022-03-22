@@ -31,11 +31,6 @@ const CategoryText = styled.Text`
 const Header = styled.TouchableOpacity``;
 const Contents = styled.View``;
 
-const Title = styled.Text`
-  margin-top: 10px;
-  font-size: 16px;
-  font-weight: 900;
-`;
 const Content = styled.Text`
   margin-top: 10px;
   font-size: 14px;
@@ -56,7 +51,6 @@ export default function PostContents({
   userId,
   username,
   avatar,
-  title,
   content,
   category,
   toggleLikeMutation,
@@ -92,7 +86,6 @@ export default function PostContents({
         </Header>
         <Separator />
         <Contents>
-          <Title>{title}</Title>
           <Content>{content}</Content>
         </Contents>
         <Actions>

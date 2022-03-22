@@ -5,6 +5,7 @@ export const POST_DETAIL_QUERY = gql`
     seeCompanyPost(companyPostId: $companyPostId) {
       id
       company {
+        id
         user {
           id
           username

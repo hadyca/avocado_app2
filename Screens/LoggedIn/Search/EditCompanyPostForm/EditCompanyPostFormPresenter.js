@@ -1,26 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
+import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { colors } from "../../../../Colors";
-import ContentInput from "../../../../Components/Post/ContentInput";
-import { ActivityIndicator, Image, Text, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { Image, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import { ReactNativeFile } from "apollo-upload-client";
+import ContentInput from "../../../../Components/Post/ContentInput";
 
 const Container = styled.ScrollView`
   flex: 1;
-  background-color: ${colors.backgraound};
+  background-color: #ffffff;
 `;
-
-const HeaderRightText = styled.Text`
-  color: ${colors.black};
-  font-size: 16px;
-  font-weight: 600;
-  margin-right: 7px;
-`;
-
 const ImageTop = styled.View`
   margin: 10px 10px 0px 10px;
 `;
@@ -32,6 +24,7 @@ const ImageScroll = styled.ScrollView`
 const InputBottom = styled.View`
   margin: 0px 10px 10px 10px;
 `;
+
 const ImagePick = styled.TouchableOpacity`
   margin: 10px 20px 10px 10px;
   width: 60px;
@@ -44,16 +37,18 @@ const CameraText = styled.Text`
   color: #868b94;
 `;
 
-const CategoryView = styled.TouchableOpacity`
-  border-bottom-width: 1px;
-  border-bottom-color: ${colors.borderThin};
+const HeaderRightText = styled.Text`
+  color: ${colors.black};
+  font-size: 16px;
+  font-weight: 600;
+  margin-right: 7px;
 `;
 
-const CategoryContainer = styled.View`
+const TitleInput = styled.TextInput`
   padding: 15px 7px;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  color: black;
+  border-bottom-width: 1px;
+  border-bottom-color: ${colors.borderThin};
 `;
 
 const ImageContainer = styled.View`
@@ -72,36 +67,44 @@ const DeleteBtn = styled.TouchableOpacity`
   align-items: center;
 `;
 
-export default function UserPostUploadFormPresenter({
+export default function EditCompanyPostFormPresenter({
+  title,
+  content,
+  loading,
+  companyPostId,
+  photo,
+  countPhoto,
+  editCompanyPostMutation,
   goToImageSelect,
   DeleteImg,
-  goToCategory,
-  countPhoto,
-  photo,
-  category,
-  loading,
-  uploadUserPostMutation,
+  handleEdit,
 }) {
   const navigation = useNavigation();
-
   const { control, handleSubmit, formState } = useForm({
+    defaultValues: {
+      title,
+      content,
+    },
     mode: "onChange",
   });
 
-  const onValid = async ({ content }) => {
-    const fileUrl = await photo.map((_, index) => {
+  const onValid = async ({ title, content }) => {
+    const editedFileUrl = await photo.map((_, index) => {
       return new ReactNativeFile({
-        uri: photo[index].uri,
+        uri: photo[index].fileUrl,
         name: `${index}.jpg`,
         type: "image/jpeg",
       });
     });
+
     if (!loading) {
-      uploadUserPostMutation({
+      handleEdit(title, content);
+      editCompanyPostMutation({
         variables: {
-          fileUrl,
+          companyPostId: parseInt(companyPostId),
+          fileUrl: editedFileUrl,
+          title,
           content,
-          category,
         },
       });
     }
@@ -124,17 +127,16 @@ export default function UserPostUploadFormPresenter({
   const HeaderRightLoading = () => (
     <ActivityIndicator size="small" color="black" style={{ marginRight: 10 }} />
   );
-
   useEffect(() => {
     navigation.setOptions({
       headerRight: loading
         ? HeaderRightLoading
-        : !formState.isValid || !category
+        : !formState.isValid
         ? NoHeaderRight
         : OkHeaderRight,
       ...(loading && { headerLeft: () => null }),
     });
-  }, [photo, loading, category, formState.isValid]);
+  }, [photo, loading, formState.isValid]);
 
   return (
     <Container>
@@ -144,12 +146,12 @@ export default function UserPostUploadFormPresenter({
             <Ionicons name={"camera"} color={"#868B94"} size={30} />
             <CameraText>{`${countPhoto} / 5`}</CameraText>
           </ImagePick>
-          {photo.length > 0
+          {photo?.length > 0
             ? photo.map((item, index) => {
                 return (
                   <ImageContainer key={index}>
                     <Image
-                      source={{ uri: item.uri }}
+                      source={{ uri: item.fileUrl }}
                       style={{ height: 60, width: 60 }}
                     />
                     <DeleteBtn onPress={() => DeleteImg(index)}>
@@ -162,19 +164,23 @@ export default function UserPostUploadFormPresenter({
         </ImageScroll>
       </ImageTop>
       <InputBottom>
-        <CategoryView onPress={goToCategory}>
-          {category ? (
-            <CategoryContainer>
-              <Text>{category}</Text>
-              <Ionicons name="chevron-forward" color="black" size={17} />
-            </CategoryContainer>
-          ) : (
-            <CategoryContainer>
-              <Text>게시글의 주제를 정해주세요.</Text>
-              <Ionicons name="chevron-forward" color="black" size={17} />
-            </CategoryContainer>
+        <Controller
+          name="title"
+          rules={{
+            required: true,
+          }}
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <TitleInput
+              placeholder="Title"
+              autoCapitalize="none"
+              multiline={false}
+              returnKeyType="next"
+              onChangeText={(text) => onChange(text)}
+              value={value}
+            />
           )}
-        </CategoryView>
+        />
         <Controller
           name="content"
           rules={{
@@ -188,7 +194,6 @@ export default function UserPostUploadFormPresenter({
               autoCapitalize="none"
               onChangeText={(text) => onChange(text)}
               value={value || ""}
-              categoryName={category}
             />
           )}
         />

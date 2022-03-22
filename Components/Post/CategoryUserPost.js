@@ -6,9 +6,7 @@ import { colors } from "../../Colors";
 import timeForToday from "../../Utils";
 import UserAvatar from "../UserAvatar";
 
-const Container = styled.View`
-  margin-bottom: 10px;
-`;
+const Container = styled.View``;
 
 const HeaderContainer = styled.View`
   flex-direction: row;
@@ -19,26 +17,17 @@ const Header = styled.TouchableOpacity`
   margin: 10px;
 `;
 
-const IconView = styled.TouchableOpacity`
-  padding: 10px;
-`;
-
 const Contents = styled.TouchableOpacity`
   margin-left: 10px;
 `;
 
-const ImgContainer = styled.TouchableOpacity``;
-
-const MainImg = styled.Image`
-  margin-top: 5px;
-  width: ${(props) => props.width}px;
-  height: ${(props) => Math.ceil(props.height / 3)}px;
+const ImgContainer = styled.TouchableOpacity`
+  margin-bottom: 8px;
 `;
 
-const Title = styled.Text`
-  margin-top: 8px;
-  font-size: 16px;
-  font-weight: 600;
+const MainImg = styled.Image`
+  width: ${(props) => props.width}px;
+  height: ${(props) => Math.ceil(props.height / 3)}px;
 `;
 
 const Content = styled.View`
@@ -94,7 +83,6 @@ function CategoryUserPost({
   id,
   user,
   file,
-  title,
   content,
   totalUserPostLikes,
   totalUserPostComments,
@@ -102,7 +90,7 @@ function CategoryUserPost({
 }) {
   const { width, height } = useWindowDimensions();
 
-  const date = new window.Date(createdAt);
+  const date = new window.Date(parseInt(createdAt));
 
   const time = timeForToday(date);
 
@@ -140,7 +128,6 @@ function CategoryUserPost({
         </ImgContainer>
       ) : null}
       <Contents onPress={goToPostDetail}>
-        <Title>{title}</Title>
         {content.length >= 20 ? (
           <Content>
             <ContentText>{content.substr(0, 20)}</ContentText>

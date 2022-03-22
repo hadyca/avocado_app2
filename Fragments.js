@@ -8,7 +8,6 @@ export const USER_POST_FRAGMENT = gql`
       username
       avatar
     }
-    title
     content
     category
     createdAt

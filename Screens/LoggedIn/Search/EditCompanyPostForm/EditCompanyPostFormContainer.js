@@ -2,33 +2,33 @@ import React, { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
-import EditUserPostFormPresenter from "./EditUserPostFormPresenter";
-import { EDIT_USERPOST_MUTATION } from "./EditUserPostFormQueries";
+import EditCompanyPostFormPresenter from "./EditCompanyPostFormPresenter";
+import { EDIT_COMPANYPOST_MUTATION } from "./EditCompanyPostFormQueries";
 
 export default function ({ route: { params } }) {
   const [photo, setPhoto] = useState([]);
   const [countPhoto, setCountPhoto] = useState(0);
   const [screenName, setScreenName] = useState("");
+  const [editedTitle, setEditedTitle] = useState("");
   const [editedContent, setEditedContent] = useState("");
   const navigation = useNavigation();
 
-  const updateEditUserPost = (cache, result) => {
+  const updateEditCompanyPost = (cache, result) => {
     const {
       data: {
-        editUserPost: { ok, id },
+        editCompanyPost: { ok, id },
       },
     } = result;
     if (ok) {
-      const UserPostId = `UserPost:${params.id}`;
-
+      const CompanyPostId = `CompanyPost:${params.id}`;
       cache.modify({
-        id: UserPostId,
+        id: CompanyPostId,
         fields: {
+          title() {
+            return editedTitle;
+          },
           content() {
             return editedContent;
-          },
-          category() {
-            return params.category;
           },
           file() {
             return photo[0]?.fileUrl;
@@ -36,15 +36,15 @@ export default function ({ route: { params } }) {
         },
       });
     }
-    navigation.navigate("UserPostListDetail", {
+    navigation.navigate("CompanyPostListDetail", {
       id,
       fromWhere: screenName,
     });
   };
-  const [editUserPostMutation, { loading }] = useMutation(
-    EDIT_USERPOST_MUTATION,
+  const [editCompanyPostMutation, { loading }] = useMutation(
+    EDIT_COMPANYPOST_MUTATION,
     {
-      update: updateEditUserPost,
+      update: updateEditCompanyPost,
     }
   );
 
@@ -82,30 +82,28 @@ export default function ({ route: { params } }) {
     }
   }, []);
 
-  const goToCategory = () =>
-    navigation.navigate("EditPostCategory", { id: params.id });
-
   useEffect(() => {
     if (params.screenName) {
       setScreenName(params.screenName);
     }
   }, []);
 
-  const handleEdit = (content) => {
+  const handleEdit = (title, content) => {
+    setEditedTitle(title);
     setEditedContent(content);
   };
 
   return (
-    <EditUserPostFormPresenter
+    <EditCompanyPostFormPresenter
+      title={params.title}
       content={params.content}
       loading={loading}
-      userPostId={params.id}
+      companyPostId={params.id}
       photo={photo}
       countPhoto={countPhoto}
       category={params.category}
-      editUserPostMutation={editUserPostMutation}
+      editCompanyPostMutation={editCompanyPostMutation}
       DeleteImg={DeleteImg}
-      goToCategory={goToCategory}
       goToImageSelect={goToImageSelect}
       handleEdit={handleEdit}
     />

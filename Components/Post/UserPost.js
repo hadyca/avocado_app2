@@ -48,11 +48,6 @@ const MainImg = styled.Image`
   height: ${(props) => Math.ceil(props.height / 3)}px;
 `;
 
-const Title = styled.Text`
-  font-size: 16px;
-  font-weight: 600;
-`;
-
 const Content = styled.View`
   margin-top: 5px;
   flex-direction: row;
@@ -105,7 +100,6 @@ function UserPost({
   id,
   user,
   file,
-  title,
   content,
   category,
   totalUserPostLikes,
@@ -161,7 +155,6 @@ function UserPost({
         </ImgContainer>
       ) : null}
       <Contents onPress={goToPostDetail}>
-        <Title>{title}</Title>
         {content.length >= 20 ? (
           <Content>
             <ContentText>{content.substr(0, 20)}</ContentText>

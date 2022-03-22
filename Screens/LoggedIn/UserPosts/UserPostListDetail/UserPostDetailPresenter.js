@@ -82,7 +82,6 @@ export default function UserPostDetailPresenter({
                   userId={data?.userId}
                   username={data?.seeUserPost?.user?.username}
                   avatar={data?.seeUserPost?.user?.avatar}
-                  title={data?.seeUserPost?.title}
                   content={data?.seeUserPost?.content}
                   category={data?.seeUserPost?.category}
                   likeLoading={likeLoading}
@@ -120,7 +119,6 @@ export default function UserPostDetailPresenter({
                   userId={data?.userId}
                   username={data?.seeUserPost?.user?.username}
                   avatar={data?.seeUserPost?.user?.avatar}
-                  title={data?.seeUserPost?.title}
                   content={data?.seeUserPost?.content}
                   category={data?.seeUserPost?.category}
                   likeLoading={likeLoading}
