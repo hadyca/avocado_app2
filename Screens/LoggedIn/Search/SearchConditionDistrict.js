@@ -6,6 +6,7 @@ import SearchSmallDistrict from "../../../Components/Search/SearchSmallDistrict"
 import { bigDistrict } from "../../../DistrictList";
 import PostFormButton from "../../../Components/Post/PostFormButton";
 import { ScreenNames } from "../../../Constant";
+import useMe from "../../../Hooks/useMe";
 
 const Container = styled.View`
   flex: 1;
@@ -39,9 +40,11 @@ const ButtonText = styled.Text`
 
 export default function SearchConditionDistrict({ route: { params } }) {
   const navigation = useNavigation();
-
+  const { data } = useMe();
   const ref = useRef(null);
   useScrollToTop(ref);
+
+  const [companyOwner, setCompanyOwner] = useState(false);
   const [districtCode, setDistrictCode] = useState(0);
 
   const changeDistrictCode = (index) => {
@@ -61,6 +64,12 @@ export default function SearchConditionDistrict({ route: { params } }) {
       });
     }
   }, [params]);
+
+  useEffect(() => {
+    if (data?.me?.myCompany?.id) {
+      setCompanyOwner(true);
+    }
+  }, [data]);
 
   return (
     <>
@@ -82,7 +91,7 @@ export default function SearchConditionDistrict({ route: { params } }) {
           <SearchSmallDistrict districtCode={districtCode} />
         </SecondScrollView>
       </Container>
-      <PostFormButton onPress={goToCompanyPostForm} />
+      {companyOwner ? <PostFormButton onPress={goToCompanyPostForm} /> : null}
     </>
   );
 }

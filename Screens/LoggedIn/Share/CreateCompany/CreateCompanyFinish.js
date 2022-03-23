@@ -5,12 +5,14 @@ import styled from "styled-components/native";
 import ScreenLayout from "../../../../Components/ScreenLayout";
 import { colors } from "../../../../Colors";
 import AuthButton from "../../../../Components/Auth/AuthButton";
+import useMe from "../../../../Hooks/useMe";
 
 export default function CreateCompanyFinish() {
   const navigation = useNavigation();
-
-  const goToHome = () => {
-    navigation.navigate("Home");
+  const { refetch } = useMe();
+  const goToHome = async () => {
+    await refetch();
+    navigation.navigate("TabsNav");
   };
 
   return (

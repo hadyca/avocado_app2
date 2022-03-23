@@ -3,9 +3,9 @@ import { useQuery } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import ScreenLayout from "../../../../Components/ScreenLayout";
 import { ScreenNames } from "../../../../Constant";
-import { COMPANYPOST_QUERY } from "./CompanyPostByDistrictQueries";
-import CompanyPostByDistrictPresenter from "./CompanyPostByDistrictPresenter";
-import DistrictCompanyPost from "../../../../Components/Post/DistrictCompanyPost";
+import { COMPANYPOST_QUERY } from "./CompanyPostBySectorQueries";
+import CompanyPostBySectorPresenter from "./CompanyPostBySectorPresenter";
+import SectorCompanyPost from "../../../../Components/Post/SectorCompanyPost";
 import useMe from "../../../../Hooks/useMe";
 
 export default function ({ route: { params } }) {
@@ -17,14 +17,14 @@ export default function ({ route: { params } }) {
   const [fetchLoading, setFetchLoading] = useState(false);
   const { data, loading, refetch, fetchMore } = useQuery(COMPANYPOST_QUERY, {
     variables: {
-      addressStep2: params.addressStep2,
+      sector: params.sector,
       offset: 0,
     },
   });
 
   const renderPost = ({ item }) => {
     if (item.deleted === false) {
-      return <DistrictCompanyPost {...item} />;
+      return <SectorCompanyPost {...item} />;
     } else {
       return null;
     }
@@ -43,7 +43,7 @@ export default function ({ route: { params } }) {
       setFetchLoading(true);
       await fetchMore({
         variables: {
-          offset: data?.seeCompanyPostByDistrict?.length,
+          offset: data?.seeCompanyPostBySector?.length,
         },
       });
       setFetchLoading(false);
@@ -52,13 +52,13 @@ export default function ({ route: { params } }) {
 
   const goToCompanyPostForm = () => {
     return navigation.navigate("CompanyPostUploadForm", {
-      screenName: ScreenNames.COMPANY_POST_BY_DISTRICT,
-      addressStep2: params.addressStep2,
+      screenName: ScreenNames.COMPANY_POST_BY_SECTOR,
+      sector: params.sector,
     });
   };
 
   useEffect(() => {
-    if (params?.fromWhere === ScreenNames.COMPANY_POST_BY_DISTRICT) {
+    if (params?.fromWhere === ScreenNames.COMPANY_POST_BY_SECTOR) {
       refetch();
       navigation.navigate("CompanyPostListDetail", {
         id: params?.id,
@@ -76,8 +76,8 @@ export default function ({ route: { params } }) {
 
   return (
     <ScreenLayout loading={loading}>
-      <CompanyPostByDistrictPresenter
-        addressStep2={params.addressStep2}
+      <CompanyPostBySectorPresenter
+        sector={params.sector}
         goToCompanyPostForm={goToCompanyPostForm}
         handleFetch={handleFetch}
         refreshing={refreshing}

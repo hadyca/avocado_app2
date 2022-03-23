@@ -44,8 +44,8 @@ const Separator = styled.View`
 const FetchView = styled.View`
   bottom: 30px;
 `;
-export default function CompanyPostByDistrictPresenter({
-  addressStep2,
+export default function CompanyPostBySectorPresenter({
+  sector,
   goToCompanyPostForm,
   handleFetch,
   refreshing,
@@ -57,7 +57,7 @@ export default function CompanyPostByDistrictPresenter({
 }) {
   return (
     <>
-      <Text>{addressStep2}</Text>
+      <Text>{sector}</Text>
       <FlatList
         onEndReachedThreshold={0.05}
         onEndReached={handleFetch}
@@ -65,7 +65,7 @@ export default function CompanyPostByDistrictPresenter({
         onRefresh={refresh}
         style={{ width: "100%" }}
         showsVerticalScrollIndicator={false}
-        data={data?.seeCompanyPostByDistrict}
+        data={data?.seeCompanyPostBySector}
         keyExtractor={(item) => "" + item.id}
         renderItem={renderPost}
       />

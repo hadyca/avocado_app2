@@ -48,13 +48,28 @@ export default function ({ route: { params } }) {
       });
     }
 
-    // if (screenName === ScreenNames.CATEGORY_BOARD) {
-    //   navigation.navigate("CategoryBoard", {
-    //     id: uploadUserPost.id,
-    //     category: params.category,
-    //     fromWhere: screenName,
-    //   });
-    // }
+    if (screenName === ScreenNames.SEARCH_SECTOR) {
+      navigation.navigate("SearchConditionSector", {
+        id: uploadCompanyPost.id,
+        fromWhere: screenName,
+      });
+    }
+
+    if (screenName === ScreenNames.COMPANY_POST_BY_DISTRICT) {
+      navigation.navigate("CompanyPostByDistrict", {
+        id: uploadCompanyPost.id,
+        addressStep2: params.addressStep2,
+        fromWhere: screenName,
+      });
+    }
+
+    if (screenName === ScreenNames.COMPANY_POST_BY_SECTOR) {
+      navigation.navigate("CompanyPostBySector", {
+        id: uploadCompanyPost.id,
+        sector: params.sector,
+        fromWhere: screenName,
+      });
+    }
   };
 
   const [uploadCompanyPostMutation, { loading }] = useMutation(

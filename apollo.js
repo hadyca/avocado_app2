@@ -6,6 +6,7 @@ import { offsetLimitPagination } from "@apollo/client/utilities";
 import { createUploadLink } from "apollo-upload-client";
 
 export const isLoggedInVar = makeVar(false);
+
 export const tokenVar = makeVar("");
 
 const TOKEN = "token";
@@ -27,14 +28,14 @@ export const logUserOut = async () => {
 // });
 // for web
 
-const uploadHttpLink = createUploadLink({
-  uri: "http://10.0.2.2:4000/graphql",
-});
+// const uploadHttpLink = createUploadLink({
+//   uri: "http://10.0.2.2:4000/graphql",
+// });
 // for simulator
 
-// const uploadHttpLink = createUploadLink({
-//   uri: "http://b869-182-160-125-147.ngrok.io/graphql",
-// });
+const uploadHttpLink = createUploadLink({
+  uri: "http://b707-182-160-125-147.ngrok.io/graphql",
+});
 
 const authLink = setContext((_, { headers }) => {
   return {
@@ -61,6 +62,7 @@ const cache = new InMemoryCache({
         seeAllUserPosts: offsetLimitPagination(),
         seeUserCategoryPost: offsetLimitPagination(["category"]),
         seeCompanyPostByDistrict: offsetLimitPagination(["addressStep2"]),
+        seeCompanyPostBySector: offsetLimitPagination(["sector"]),
       },
     },
   },

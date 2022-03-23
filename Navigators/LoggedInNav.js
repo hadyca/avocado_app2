@@ -27,6 +27,7 @@ import CreateCompanyFinish from "../Screens/LoggedIn/Share/CreateCompany/CreateC
 import CompanyPostUploadForm from "../Screens/LoggedIn/Search/CompanyPostUploadForm";
 import CompanyPostListDetail from "../Screens/LoggedIn/Search/CompanyPostListDetail";
 import CompanyPostByDistrict from "../Screens/LoggedIn/Search/CompanyPostByDistrict";
+import CompanyPostBySector from "../Screens/LoggedIn/Search/CompanyPostBySector";
 import EditCompanyPostForm from "../Screens/LoggedIn/Search/EditCompanyPostForm";
 import CompanyReComment from "../Screens/LoggedIn/Search/CompanyReComment";
 import EditCompanyPostCommentForm from "../Screens/LoggedIn/Search/EditCompanyPostCommentForm";
@@ -50,6 +51,13 @@ export default function LoggedInNav() {
           headerBackTitleVisible: false,
         }}
         component={EditCompanyPostCommentForm}
+      />
+      <Stack.Screen
+        name="CompanyPostBySector"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={CompanyPostBySector}
       />
       <Stack.Screen
         name="EditCompanyPostReCommentForm"
