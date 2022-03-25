@@ -41,6 +41,7 @@ export default function SearchConditionDistrictPresenter({
   districtCode,
   companyOwner,
   goToCompanyPostForm,
+  addressStep1,
 }) {
   const ref = useRef(null);
   useScrollToTop(ref);
