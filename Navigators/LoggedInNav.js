@@ -32,6 +32,9 @@ import EditCompanyPostForm from "../Screens/LoggedIn/Search/EditCompanyPostForm"
 import CompanyReComment from "../Screens/LoggedIn/Search/CompanyReComment";
 import EditCompanyPostCommentForm from "../Screens/LoggedIn/Search/EditCompanyPostCommentForm";
 import EditCompanyPostReCommentForm from "../Screens/LoggedIn/Search/EditCompanyPostReCommentForm";
+import CompanyPostReportForm from "../Screens/LoggedIn/Search/CompanyPostReportForm";
+import CompanyPostCommentReportForm from "../Screens/LoggedIn/Search/CompanyPostCommentReportForm";
+import CompanyPostReCommentReportForm from "../Screens/LoggedIn/Search/CompanyPostReCommentReportForm";
 
 const Stack = createStackNavigator();
 
@@ -44,6 +47,27 @@ export default function LoggedInNav() {
           headerShown: false,
         }}
         component={TabsNav}
+      />
+      <Stack.Screen
+        name="CompanyPostCommentReportForm"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={CompanyPostCommentReportForm}
+      />
+      <Stack.Screen
+        name="CompanyPostReCommentReportForm"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={CompanyPostReCommentReportForm}
+      />
+      <Stack.Screen
+        name="CompanyPostReportForm"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={CompanyPostReportForm}
       />
       <Stack.Screen
         name="EditCompanyPostCommentForm"
@@ -136,7 +160,6 @@ export default function LoggedInNav() {
         }}
         component={AskTotalEmployees}
       />
-
       <Stack.Screen
         name="AskSector"
         options={{

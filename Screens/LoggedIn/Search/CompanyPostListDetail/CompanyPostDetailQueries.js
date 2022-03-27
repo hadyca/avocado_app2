@@ -29,6 +29,7 @@ export const POST_DETAIL_QUERY = gql`
       totalCompanyPostComments
       isMine
       isLiked
+      isFavorite
       companyPostComments {
         id
         user {
@@ -67,6 +68,15 @@ export const DELETE_COMPANYPOST_MUTATION = gql`
 export const TOGGLE_COMPANYPOST_LIKE_MUTATION = gql`
   mutation toggleCompanyPostLike($companyPostId: Int!) {
     toggleCompanyPostLike(companyPostId: $companyPostId) {
+      ok
+      error
+    }
+  }
+`;
+
+export const TOGGLE_COMPANYPOST_FAVORITE_MUTATION = gql`
+  mutation toggleFavoritePost($companyPostId: Int!) {
+    toggleFavoritePost(companyPostId: $companyPostId) {
       ok
       error
     }

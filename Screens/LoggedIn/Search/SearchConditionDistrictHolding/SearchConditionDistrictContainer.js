@@ -13,7 +13,7 @@ export default function ({ route: { params } }) {
 
   const [companyOwner, setCompanyOwner] = useState(false);
   const [districtCode, setDistrictCode] = useState(0);
-  const [addressStep1, setAddressStep1] = useState();
+  // const [addressStep1, setAddressStep1] = useState();
 
   const { data, loading } = useQuery(POST_QUERY);
 
@@ -41,21 +41,21 @@ export default function ({ route: { params } }) {
     }
   }, [userData]);
 
-  useEffect(() => {
-    const CompanyPosts = data?.seeAllCompanyPosts;
-    if (CompanyPosts) {
-      const address = CompanyPosts.reduce((acc, cur) => {
-        const key = cur.company.addressStep1;
-        return {
-          ...acc,
-          [key]: (acc[key] || 0) + 1,
-        };
-      }, {});
-      setAddressStep1(address);
-    } else {
-      return;
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   const CompanyPosts = data?.seeAllCompanyPosts;
+  //   if (CompanyPosts) {
+  //     const address = CompanyPosts.reduce((acc, cur) => {
+  //       const key = cur.company.addressStep1;
+  //       return {
+  //         ...acc,
+  //         [key]: (acc[key] || 0) + 1,
+  //       };
+  //     }, {});
+  //     setAddressStep1(address);
+  //   } else {
+  //     return;
+  //   }
+  // }, [data]);
   return (
     <ScreenLayout loading={loading}>
       <SearchConditionDistrictPresenter
@@ -63,7 +63,7 @@ export default function ({ route: { params } }) {
         districtCode={districtCode}
         companyOwner={companyOwner}
         goToCompanyPostForm={goToCompanyPostForm}
-        addressStep1={addressStep1}
+        // addressStep1={addressStep1}
       />
     </ScreenLayout>
   );

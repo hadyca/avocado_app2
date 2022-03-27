@@ -72,6 +72,18 @@ export const userPostCommentReportAry = [
   "기타",
 ];
 
+export const companyPostReportAry = [
+  "광고 / 홍보 글이에요",
+  "누군가를 비방하는 글이에요",
+  "중복 / 도배 글이에요",
+  "정치 / 종교 관련 글이에요",
+  "금전을 요구하는 글이에요",
+  "불쾌감을 줄 수 있는 글이에요",
+  "불법 / 음란성 글이 포함 되어 있어요",
+  "다른 채팅 앱이나 사이트로 유도 해요",
+  "채용 관련 게시글이 아니에요",
+];
+
 export const ScreenNames = {
   USER_POST_LIST: "UserPostList",
   CATEGORY_BOARD: "CategoryBoard",

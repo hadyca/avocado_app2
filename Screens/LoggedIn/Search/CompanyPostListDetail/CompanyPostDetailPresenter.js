@@ -34,10 +34,7 @@ export default function CompanyPostDetailPresenter({
   refresh,
   statusBarHeight,
   companyPostId,
-  showActionSheet,
 }) {
-  const navigation = useNavigation();
-
   const [commentUploading, setCommentUploading] = useState(false);
 
   let detailRef = useRef();
@@ -45,22 +42,6 @@ export default function CompanyPostDetailPresenter({
   const handleComment = () => {
     setCommentUploading(true);
   };
-
-  const HeaderRight = () => (
-    <TouchableOpacity onPress={showActionSheet}>
-      <Ionicons
-        name="ellipsis-vertical"
-        color="grey"
-        size={18}
-        style={{ paddingLeft: 10, paddingRight: 10 }}
-      />
-    </TouchableOpacity>
-  );
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: HeaderRight,
-    });
-  }, []);
 
   return (
     <>
