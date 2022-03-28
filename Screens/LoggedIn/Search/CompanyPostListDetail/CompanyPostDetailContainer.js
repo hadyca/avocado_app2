@@ -180,7 +180,7 @@ export default function ({ route: { params } }) {
 
   let notMeActionsheet2 = useRef();
   let notMineOptionArray2 = ["관심목록에서 삭제", "신고", "취소"];
-
+  console.log(data?.seeCompanyPost?.isMine);
   const showActionSheet = () => {
     if (data?.seeCompanyPost?.isMine) {
       return myActionsheet.current.show();
