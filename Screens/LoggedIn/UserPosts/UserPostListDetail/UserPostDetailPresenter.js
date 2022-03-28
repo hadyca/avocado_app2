@@ -79,7 +79,7 @@ export default function UserPostDetailPresenter({
                 <PostContents
                   file={data?.seeUserPost?.file}
                   data={data}
-                  userId={data?.userId}
+                  userId={data?.seeUserPost?.user?.id}
                   username={data?.seeUserPost?.user?.username}
                   avatar={data?.seeUserPost?.user?.avatar}
                   content={data?.seeUserPost?.content}
@@ -116,7 +116,7 @@ export default function UserPostDetailPresenter({
                 <PostContents
                   file={data?.seeUserPost?.file}
                   data={data}
-                  userId={data?.userId}
+                  userId={data?.seeUserPost?.user?.id}
                   username={data?.seeUserPost?.user?.username}
                   avatar={data?.seeUserPost?.user?.avatar}
                   content={data?.seeUserPost?.content}

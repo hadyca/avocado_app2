@@ -7,14 +7,12 @@ import useMe from "../../../Hooks/useMe";
 export default function Me({ navigation }) {
   const ref = useRef(null);
   useScrollToTop(ref);
-  const { data } = useMe();
+  const { data, loading } = useMe();
 
   useEffect(() => {
-    if (data?.me?.username) {
-      navigation.setOptions({
-        title: data?.me?.username,
-      });
-    }
+    navigation.setOptions({
+      title: loading ? "Loading..." : data?.me?.username,
+    });
   }, [data]);
 
   return (

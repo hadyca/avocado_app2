@@ -19,7 +19,7 @@ export default function FavoritesNav() {
         name="FavoriteCompany"
         component={FavoriteCompany}
         options={{
-          title: "팔로잉 회사들",
+          title: "팔로잉 유저들",
         }}
       />
     </Tab.Navigator>

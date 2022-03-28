@@ -17,8 +17,8 @@ import ScreenLayout from "../../../../Components/ScreenLayout";
 export default function ({ route: { params } }) {
   const [refreshing, setRefreshing] = useState(false);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
-  const [mine, setMine] = useState(false);
-  const [favorite, setFavorite] = useState(false);
+  // const [mine, setMine] = useState(false);
+  // const [favorite, setFavorite] = useState(false);
   const navigation = useNavigation();
 
   const { StatusBarManager } = NativeModules;
@@ -54,30 +54,21 @@ export default function ({ route: { params } }) {
         toggleFavoritePost: { ok },
       },
     } = result;
-    // if (ok) {
-    //   const CompanyPostId = `CompanyPost:${params.id}`;
-    //   cache.modify({
-    //     id: CompanyPostId,
-    //     fields: {
-    //       isLiked(prev) {
-    //         return !prev;
-    //       },
-    //       totalCompanyPostLikes(prev) {
-    //         if (data?.seeCompanyPost?.isLiked) {
-    //           return prev - 1;
-    //         }
-    //         return prev + 1;
-    //       },
-    //     },
-    //   });
-    // }
-    if (!favorite) {
-      setFavorite(true);
-      Alert.alert("관심목록에 추가 되었습니다.");
-    }
-    if (favorite) {
-      setFavorite(false);
-      Alert.alert("관심목록에서 삭제 되었습니다.");
+    if (ok) {
+      const CompanyPostId = `CompanyPost:${params.id}`;
+      cache.modify({
+        id: CompanyPostId,
+        fields: {
+          isFavorite(prev) {
+            return !prev;
+          },
+        },
+      });
+      if (data?.seeCompanyPost?.isFavorite) {
+        Alert.alert("관심목록에서 삭제 되었습니다.");
+      } else {
+        Alert.alert("관심목록에 추가 되었습니다.");
+      }
     }
   };
 
@@ -193,12 +184,10 @@ export default function ({ route: { params } }) {
   const showActionSheet = () => {
     if (data?.seeCompanyPost?.isMine) {
       return myActionsheet.current.show();
-    }
-    if (!favorite) {
-      return notMeActionsheet1.current.show();
-    }
-    if (favorite) {
+    } else if (data?.seeCompanyPost?.isFavorite) {
       return notMeActionsheet2.current.show();
+    } else {
+      return notMeActionsheet1.current.show();
     }
   };
 
@@ -258,15 +247,6 @@ export default function ({ route: { params } }) {
       : null;
   }, []);
 
-  useEffect(() => {
-    if (data?.seeCompanyPost?.isFavorite) {
-      setFavorite(true);
-    }
-    if (!data?.seeCompanyPost?.isFavorite) {
-      setFavorite(false);
-    }
-  }, [data]);
-
   const HeaderRight = () => (
     <TouchableOpacity onPress={showActionSheet}>
       <Ionicons
@@ -281,7 +261,7 @@ export default function ({ route: { params } }) {
     navigation.setOptions({
       headerRight: HeaderRight,
     });
-  }, [favorite]);
+  }, [data]);
 
   return (
     <ScreenLayout loading={loading}>

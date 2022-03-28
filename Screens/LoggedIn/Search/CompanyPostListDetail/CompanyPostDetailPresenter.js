@@ -4,10 +4,7 @@ import {
   FlatList,
   KeyboardAvoidingView,
   Keyboard,
-  TouchableOpacity,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
 import { colors } from "../../../../Colors";
 import CompanyCommentForm from "../../../../Components/Post/CompanyCommentForm";
@@ -60,7 +57,7 @@ export default function CompanyPostDetailPresenter({
                 <CompanyPostContents
                   file={data?.seeCompanyPost?.file}
                   data={data}
-                  userId={data?.userId}
+                  userId={data?.seeCompanyPost?.company?.user?.id}
                   username={data?.seeCompanyPost?.company?.user?.username}
                   avatar={data?.seeCompanyPost?.company?.user?.avatar}
                   title={data?.seeCompanyPost?.title}
@@ -97,7 +94,7 @@ export default function CompanyPostDetailPresenter({
                 <CompanyPostContents
                   file={data?.seeCompanyPost?.file}
                   data={data}
-                  userId={data?.userId}
+                  userId={data?.seeCompanyPost?.company?.user?.id}
                   username={data?.seeCompanyPost?.company?.user?.username}
                   avatar={data?.seeCompanyPost?.company?.user?.avatar}
                   title={data?.seeCompanyPost?.title}

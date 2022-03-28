@@ -5,7 +5,7 @@ import { COMPANYPOST_QUERY } from "./FavoriteCompanyPostQueries";
 import FavoriteCompanyPostPresenter from "./FavoriteCompanyPostPresenter";
 import FavoriteCompanyPost from "../../../../Components/Post/FavoriteCompanyPost";
 
-export default function () {
+export default function ({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
   const { data, loading, refetch, fetchMore } = useQuery(COMPANYPOST_QUERY, {
