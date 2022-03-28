@@ -17,8 +17,7 @@ import ScreenLayout from "../../../../Components/ScreenLayout";
 export default function ({ route: { params } }) {
   const [refreshing, setRefreshing] = useState(false);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
-  // const [mine, setMine] = useState(false);
-  // const [favorite, setFavorite] = useState(false);
+
   const navigation = useNavigation();
 
   const { StatusBarManager } = NativeModules;
