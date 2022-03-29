@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import ScreenLayout from "../../../../Components/ScreenLayout";
-import { COMPANYPOST_QUERY } from "./FavoriteCompanyPostQueries";
-import FavoriteCompanyPostPresenter from "./FavoriteCompanyPostPresenter";
-import FavoriteCompanyPost from "../../../../Components/Post/FavoriteCompanyPost";
+import { USERPOST_QUERY } from "./FavoriteUserPostPostQueries";
+import FavoriteUserPostPresenter from "./FavoriteUserPostPresenter";
+import UserPost from "../../../../Components/Post/UserPost";
 
 export default function () {
   const [refreshing, setRefreshing] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
-  const { data, loading, refetch, fetchMore } = useQuery(COMPANYPOST_QUERY, {
+  const { data, loading, refetch, fetchMore } = useQuery(USERPOST_QUERY, {
     variables: {
       offset: 0,
     },
@@ -16,7 +16,7 @@ export default function () {
 
   const renderPost = ({ item }) => {
     if (item.deleted === false) {
-      return <FavoriteCompanyPost {...item} />;
+      return <UserPost {...item} />;
     } else {
       return null;
     }
@@ -35,7 +35,7 @@ export default function () {
       setFetchLoading(true);
       await fetchMore({
         variables: {
-          offset: data?.seeFavoriteCompanyPosts?.length,
+          offset: data?.seeFavoriteUserPosts?.length,
         },
       });
       setFetchLoading(false);
@@ -44,7 +44,7 @@ export default function () {
 
   return (
     <ScreenLayout loading={loading}>
-      <FavoriteCompanyPostPresenter
+      <FavoriteUserPostPresenter
         handleFetch={handleFetch}
         refreshing={refreshing}
         refresh={refresh}

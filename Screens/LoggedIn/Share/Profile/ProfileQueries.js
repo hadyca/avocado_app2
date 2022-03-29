@@ -18,11 +18,21 @@ export const PROFILE_QUERY = gql`
         id
         username
       }
+      totalUserPosts
+      totalCompanyPosts
       totalFollowers
       totalFollowing
       myCompany {
         id
         companyName
+        addressStep1
+        addressStep2
+        addressStep3
+        email
+        sector
+        aboutUs
+        contactNumber
+        totalEmployees
       }
     }
   }

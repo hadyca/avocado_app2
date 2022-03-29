@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
-import { useNavigation } from "@react-navigation/native";
-import { colors } from "../../Colors";
+import { Text } from "react-native";
+import { colors } from "../../../Colors";
 
 const Container = styled.View`
   margin: 10px;
@@ -17,6 +17,9 @@ const Avatar = styled.Image`
   border-radius: 50px;
 `;
 
+const Posts = styled.Text``;
+const JobPosts = styled.Text``;
+
 const Following = styled.Text``;
 
 const Followers = styled.Text``;
@@ -30,42 +33,44 @@ const CompanyName = styled.Text``;
 const Bio = styled.Text``;
 
 const ProfileBtn = styled.TouchableOpacity`
-  background-color: ${colors.buttonBackground};
+  background-color: ${(props) => (props.backgroundColor ? "blue" : "white")};
   padding: 15px 7px;
   border-radius: 3px;
   width: 100%;
+  border: 1px blue solid;
 `;
 
 const ProfileText = styled.Text`
-  color: white;
+  color: ${(props) => (props.backgroundColor ? "white" : "black")};
   font-weight: 600;
   text-align: center;
 `;
 
-export default function ProfileContents({ data }) {
-  const navigation = useNavigation();
+const Bottom = styled.View``;
 
-  const toggleFollowing = () => {};
-
+export default function ProfileContentsPresenter({
+  data,
+  toggleFollowingMutation,
+}) {
   const getButton = (seeProfile) => {
     const { isMe, isFollowing, myCompany } = seeProfile;
     if (isMe) {
       return (
-        <ProfileBtn>
-          <ProfileText>Edit Profile</ProfileText>
+        <ProfileBtn backgroundColor={true}>
+          <ProfileText backgroundColor={true}>Edit Profile</ProfileText>
         </ProfileBtn>
       );
     }
     if (isFollowing) {
       return (
-        <ProfileBtn onPress={toggleFollowing}>
-          <ProfileText>UnFollow</ProfileText>
+        <ProfileBtn backgroundColor={false} onPress={toggleFollowingMutation}>
+          <ProfileText backgroundColor={false}>Following</ProfileText>
         </ProfileBtn>
       );
     } else {
       return (
-        <ProfileBtn onClick={toggleFollowing}>
-          <ProfileText>Follow</ProfileText>
+        <ProfileBtn backgroundColor={true} onPress={toggleFollowingMutation}>
+          <ProfileText backgroundColor={true}>Follow</ProfileText>
         </ProfileBtn>
       );
     }
@@ -87,6 +92,8 @@ export default function ProfileContents({ data }) {
             }}
           />
         )}
+        <Posts>{data?.seeProfile?.totalUserPosts} Posts</Posts>
+        <JobPosts>{data?.seeProfile?.totalCompanyPosts} Job Posts</JobPosts>
         <Following>{data?.seeProfile?.totalFollowing} Following</Following>
         <Followers>{data?.seeProfile?.totalFollowers} Followers</Followers>
       </Header>
@@ -98,18 +105,24 @@ export default function ProfileContents({ data }) {
         <Bio>bio : {data?.seeProfile?.bio}</Bio>
       </SubHeader>
       {data?.seeProfile ? getButton(data.seeProfile) : null}
-      {/* <Bottom>
-        <UserPost>
-          <UserPostText>
-           해당 유저 게시글 보러가기
-          </UserPostText>
-        </UserPost>
-        <CompanyPost>
-          <UserPostText>
-해당 유저 채용글 보러가기            
-          </UserPostText>
-        </UserPost>
-      </Bottom> */}
+      <Bottom>
+        <Text>기업 소개</Text>
+        <Text>Company name : {data?.seeProfile?.myCompany?.companyName} </Text>
+        <Text>
+          Address : {data?.seeProfile?.myCompany?.addressStep3},
+          {data?.seeProfile?.myCompany?.addressStep2},
+          {data?.seeProfile?.myCompany?.addressStep1}
+        </Text>
+        <Text>Email: {data?.seeProfile?.myCompany?.email}</Text>
+        <Text>Sector: {data?.seeProfile?.myCompany?.sector}</Text>
+        <Text>About us : {data?.seeProfile?.myCompany?.aboutUs}</Text>
+        <Text>
+          Contact Number : {data?.seeProfile?.myCompany?.contactNumber}
+        </Text>
+        <Text>
+          Total Employees : {data?.seeProfile?.myCompany?.totalEmployees}
+        </Text>
+      </Bottom>
     </Container>
   );
 }

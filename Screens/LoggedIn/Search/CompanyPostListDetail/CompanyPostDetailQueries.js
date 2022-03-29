@@ -75,8 +75,8 @@ export const TOGGLE_COMPANYPOST_LIKE_MUTATION = gql`
 `;
 
 export const TOGGLE_COMPANYPOST_FAVORITE_MUTATION = gql`
-  mutation toggleFavoritePost($companyPostId: Int!) {
-    toggleFavoritePost(companyPostId: $companyPostId) {
+  mutation toggleFavoriteCompanyPost($companyPostId: Int!) {
+    toggleFavoriteCompanyPost(companyPostId: $companyPostId) {
       ok
       error
     }

@@ -17,16 +17,16 @@ export default function ({ route: { params } }) {
     },
   });
 
-  const {
-    data: postData,
-    loading: postLoading,
-    refetch: postRefetch,
-  } = useQuery(COMPANYPOST_QUERY, {
-    variables: {
-      companyId: parseInt(data?.seeProfile?.myCompany?.id),
-      offset: 0,
-    },
-  });
+  // const {
+  //   data: postData,
+  //   loading: postLoading,
+  //   refetch: postRefetch,
+  // } = useQuery(COMPANYPOST_QUERY, {
+  //   variables: {
+  //     companyId: parseInt(data?.seeProfile?.myCompany?.id),
+  //     offset: 0,
+  //   },
+  // });
 
   // const renderPost = ({ item }) => {
   //   if (item.deleted === false) {
@@ -71,7 +71,7 @@ export default function ({ route: { params } }) {
         refreshing={refreshing}
         refresh={refresh}
         data={data}
-        postData={postData}
+        // postData={postData}
         // renderPost={renderPost}
         fetchLoading={fetchLoading}
       />

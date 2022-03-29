@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, ActivityIndicator, Text } from "react-native";
+import { FlatList, ActivityIndicator } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../../../../Colors";
 import ProfileContents from "../../../../Components/Profile/ProfileContents";

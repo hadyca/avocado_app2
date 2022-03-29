@@ -1,13 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Platform,
   FlatList,
   KeyboardAvoidingView,
   Keyboard,
-  TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
 import { colors } from "../../../../Colors";
 import CommentForm from "../../../../Components/Post/CommentForm";
@@ -45,22 +43,6 @@ export default function UserPostDetailPresenter({
   const handleComment = () => {
     setCommentUploading(true);
   };
-
-  const HeaderRight = () => (
-    <TouchableOpacity onPress={showActionSheet}>
-      <Ionicons
-        name="ellipsis-vertical"
-        color="grey"
-        size={18}
-        style={{ paddingLeft: 10, paddingRight: 10 }}
-      />
-    </TouchableOpacity>
-  );
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: HeaderRight,
-    });
-  }, []);
 
   return (
     <>

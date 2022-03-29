@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Platform, NativeModules, Alert } from "react-native";
+import { Platform, NativeModules, Alert, TouchableOpacity } from "react-native";
 import { useMutation, useQuery } from "@apollo/client";
 import UserPostDetailPresenter from "./UserPostDetailPresenter";
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 import {
   POST_DETAIL_QUERY,
   DELETE_USERPOST_MUTATION,
   TOGGLE_USERPOST_LIKE_MUTATION,
+  TOGGLE_USERPOST_FAVORITE_MUTATION,
 } from "./UserPostDetailQueries";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
 import UserPostComment from "../../../../Components/Post/UserPostComment";
@@ -18,14 +20,6 @@ export default function ({ route: { params } }) {
   const navigation = useNavigation();
 
   const { StatusBarManager } = NativeModules;
-
-  useEffect(() => {
-    Platform.OS == "ios"
-      ? StatusBarManager.getHeight((statusBarFrameData) => {
-          setStatusBarHeight(statusBarFrameData.height);
-        })
-      : null;
-  }, []);
 
   const updateToggleLike = (cache, result) => {
     const {
@@ -52,6 +46,30 @@ export default function ({ route: { params } }) {
     }
   };
 
+  const updateToggleFavorite = (cache, result) => {
+    const {
+      data: {
+        toggleFavoriteUserPost: { ok },
+      },
+    } = result;
+    if (ok) {
+      const UserPostId = `UserPost:${params.id}`;
+      cache.modify({
+        id: UserPostId,
+        fields: {
+          isFavorite(prev) {
+            return !prev;
+          },
+        },
+      });
+      if (data?.seeUserPost?.isFavorite) {
+        Alert.alert("관심목록에서 삭제 되었습니다.");
+      } else {
+        Alert.alert("관심목록에 추가 되었습니다.");
+      }
+    }
+  };
+
   const goDeleteUserPost = (cache, result) => {
     const {
       data: {
@@ -72,7 +90,7 @@ export default function ({ route: { params } }) {
     Alert.alert("게시글이 삭제 되었습니다.");
     navigation.pop();
   };
-  const { data, loading, refetch, error } = useQuery(POST_DETAIL_QUERY, {
+  const { data, loading, refetch } = useQuery(POST_DETAIL_QUERY, {
     variables: {
       userPostId: parseInt(params.id),
     },
@@ -89,6 +107,13 @@ export default function ({ route: { params } }) {
         userPostId: parseInt(params.id),
       },
       update: updateToggleLike,
+    }
+  );
+
+  const [toggleUserPostFavoriteMutation] = useMutation(
+    TOGGLE_USERPOST_FAVORITE_MUTATION,
+    {
+      update: updateToggleFavorite,
     }
   );
 
@@ -136,17 +161,31 @@ export default function ({ route: { params } }) {
     });
   };
 
+  const goToToggleFavorite = () => {
+    toggleUserPostFavoriteMutation({
+      variables: {
+        userPostId: parseInt(params.id),
+      },
+    });
+  };
+
   //Action Sheet
   let myActionsheet = useRef();
-  let notMeActionsheet = useRef();
   let myOptionArray = ["수정", "삭제", "취소"];
-  let notMineOptionArray = ["신고", "취소"];
+
+  let notMeActionsheet1 = useRef();
+  let notMineOptionArray1 = ["관심목록에 추가", "신고", "취소"];
+
+  let notMeActionsheet2 = useRef();
+  let notMineOptionArray2 = ["관심목록에서 삭제", "신고", "취소"];
 
   const showActionSheet = () => {
     if (data?.seeUserPost?.isMine) {
       return myActionsheet.current.show();
+    } else if (data?.seeUserPost?.isFavorite) {
+      return notMeActionsheet2.current.show();
     } else {
-      return notMeActionsheet.current.show();
+      return notMeActionsheet1.current.show();
     }
   };
 
@@ -166,13 +205,62 @@ export default function ({ route: { params } }) {
     }
   };
 
-  const notMineHandleIndex = (index) => {
+  const notMineHandleIndex1 = (index) => {
     if (index === 0) {
+      Alert.alert("관심목록에 추가하시겠어요?", "", [
+        { text: "Cancel" },
+        {
+          text: "Ok",
+          onPress: () => goToToggleFavorite(),
+        },
+      ]);
+    } else if (index === 1) {
       goToReportForm();
     } else {
       return;
     }
   };
+
+  const notMineHandleIndex2 = (index) => {
+    if (index === 0) {
+      Alert.alert("관심목록에서 삭제 하시겠어요?", "", [
+        { text: "Cancel" },
+        {
+          text: "Ok",
+          onPress: () => goToToggleFavorite(),
+        },
+      ]);
+    } else if (index === 1) {
+      goToReportForm();
+    } else {
+      return;
+    }
+  };
+
+  useEffect(() => {
+    Platform.OS == "ios"
+      ? StatusBarManager.getHeight((statusBarFrameData) => {
+          setStatusBarHeight(statusBarFrameData.height);
+        })
+      : null;
+  }, []);
+
+  const HeaderRight = () => (
+    <TouchableOpacity onPress={showActionSheet}>
+      <Ionicons
+        name="ellipsis-vertical"
+        color="grey"
+        size={18}
+        style={{ paddingLeft: 10, paddingRight: 10 }}
+      />
+    </TouchableOpacity>
+  );
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: HeaderRight,
+    });
+  }, [data]);
 
   return (
     <ScreenLayout loading={loading}>
@@ -185,7 +273,6 @@ export default function ({ route: { params } }) {
         refresh={refresh}
         statusBarHeight={statusBarHeight}
         userPostId={params.id}
-        showActionSheet={showActionSheet}
         fromWhere={params.fromWhere}
       />
       <ActionSheet
@@ -196,11 +283,18 @@ export default function ({ route: { params } }) {
         onPress={(index) => myHandleIndex(index)}
       />
       <ActionSheet
-        ref={notMeActionsheet}
-        options={notMineOptionArray}
-        cancelButtonIndex={1}
+        ref={notMeActionsheet1}
+        options={notMineOptionArray1}
+        cancelButtonIndex={2}
         destructiveButtonIndex={0}
-        onPress={(index) => notMineHandleIndex(index)}
+        onPress={(index) => notMineHandleIndex1(index)}
+      />
+      <ActionSheet
+        ref={notMeActionsheet2}
+        options={notMineOptionArray2}
+        cancelButtonIndex={2}
+        destructiveButtonIndex={0}
+        onPress={(index) => notMineHandleIndex2(index)}
       />
     </ScreenLayout>
   );

@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const COMPANYPOST_QUERY = gql`
-  query seeFavoritePosts($offset: Int!) {
-    seeFavoritePosts(offset: $offset) {
+  query seeFavoriteCompanyPosts($offset: Int!) {
+    seeFavoriteCompanyPosts(offset: $offset) {
       id
       company {
         id

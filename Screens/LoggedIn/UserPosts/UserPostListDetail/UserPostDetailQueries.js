@@ -9,6 +9,7 @@ export const POST_DETAIL_QUERY = gql`
     seeUserPost(userPostId: $userPostId) {
       isLiked
       isMine
+      isFavorite
       ...UserPostFragment
       totalUserPostComments
       # for comment scroll
@@ -44,6 +45,15 @@ export const DELETE_USERPOST_MUTATION = gql`
 export const TOGGLE_USERPOST_LIKE_MUTATION = gql`
   mutation toggleUserPostLike($userPostId: Int!) {
     toggleUserPostLike(userPostId: $userPostId) {
+      ok
+      error
+    }
+  }
+`;
+
+export const TOGGLE_USERPOST_FAVORITE_MUTATION = gql`
+  mutation toggleFavoriteUserPost($userPostId: Int!) {
+    toggleFavoriteUserPost(userPostId: $userPostId) {
       ok
       error
     }

@@ -62,7 +62,6 @@ export default function CompanyPostContents({
   likeLoading,
   isLiked,
 }) {
-  console.log(userId);
   const navigation = useNavigation();
 
   const goToCategoryScreen = (category) => {

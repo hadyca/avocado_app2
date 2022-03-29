@@ -5,7 +5,7 @@ import styled from "styled-components/native";
 const FetchView = styled.View`
   bottom: 30px;
 `;
-export default function FavoriteCompanyPostPresenter({
+export default function FavoriteUserPostPresenter({
   handleFetch,
   refreshing,
   refresh,
@@ -22,7 +22,7 @@ export default function FavoriteCompanyPostPresenter({
         onRefresh={refresh}
         style={{ width: "100%" }}
         showsVerticalScrollIndicator={false}
-        data={data?.seeFavoriteCompanyPosts}
+        data={data?.seeFavoriteUserPosts}
         keyExtractor={(item) => "" + item.id}
         renderItem={renderPost}
       />

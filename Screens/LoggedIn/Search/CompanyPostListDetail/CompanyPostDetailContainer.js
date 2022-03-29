@@ -50,7 +50,7 @@ export default function ({ route: { params } }) {
   const updateToggleFavorite = (cache, result) => {
     const {
       data: {
-        toggleFavoritePost: { ok },
+        toggleFavoriteCompanyPost: { ok },
       },
     } = result;
     if (ok) {
@@ -91,7 +91,7 @@ export default function ({ route: { params } }) {
     Alert.alert("게시글이 삭제 되었습니다.");
     navigation.pop();
   };
-  const { data, loading, refetch, error } = useQuery(POST_DETAIL_QUERY, {
+  const { data, loading, refetch } = useQuery(POST_DETAIL_QUERY, {
     variables: {
       companyPostId: parseInt(params.id),
     },
@@ -179,7 +179,7 @@ export default function ({ route: { params } }) {
 
   let notMeActionsheet2 = useRef();
   let notMineOptionArray2 = ["관심목록에서 삭제", "신고", "취소"];
-  console.log(data?.seeCompanyPost?.isMine);
+
   const showActionSheet = () => {
     if (data?.seeCompanyPost?.isMine) {
       return myActionsheet.current.show();
