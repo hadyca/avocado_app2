@@ -5,6 +5,7 @@ import * as ImagePicker from "expo-image-picker";
 import UserPostUploadFormPresenter from "./UserPostUploadFormPresenter";
 import { UPLOAD_USER_POST_MUTATION } from "./UserPostUploadFormQueries";
 import { ScreenNames } from "../../../../Constant";
+import useMe from "../../../../Hooks/useMe";
 
 export default function ({ route: { params } }) {
   const [photo, setPhoto] = useState([]);
@@ -12,6 +13,7 @@ export default function ({ route: { params } }) {
   const [screenName, setScreenName] = useState("");
 
   const navigation = useNavigation();
+  const { data: userData } = useMe();
 
   useEffect(() => {
     (async () => {
@@ -35,6 +37,16 @@ export default function ({ route: { params } }) {
         fields: {
           seeAllUserPosts(prev) {
             return [uploadUserPost, ...prev];
+          },
+        },
+      });
+      const { me } = userData;
+      const UserId = `User:${me.id}`;
+      cache.modify({
+        id: UserId,
+        fields: {
+          totalUserPosts(prev) {
+            return prev + 1;
           },
         },
       });

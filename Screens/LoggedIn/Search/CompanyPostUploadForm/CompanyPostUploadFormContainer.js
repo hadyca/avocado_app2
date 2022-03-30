@@ -5,6 +5,7 @@ import * as ImagePicker from "expo-image-picker";
 import CompanyPostUploadFormPresenter from "./CompanyPostUploadFormPresenter";
 import { UPLOAD_COMPANY_POST_MUTATION } from "./CompanyPostUploadFormQueries";
 import { ScreenNames } from "../../../../Constant";
+import useMe from "../../../../Hooks/useMe";
 
 export default function ({ route: { params } }) {
   const [photo, setPhoto] = useState([]);
@@ -12,34 +13,25 @@ export default function ({ route: { params } }) {
   const [screenName, setScreenName] = useState("");
 
   const navigation = useNavigation();
-
-  useEffect(() => {
-    (async () => {
-      if (Platform.OS !== "web") {
-        const { status } =
-          await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== "granted") {
-          alert("Sorry, we need camera roll permissions to make this work!");
-        }
-      }
-    })();
-  }, []);
+  const { data: userData } = useMe();
 
   const updateUploadCompanyPost = (cache, result) => {
     const {
       data: { uploadCompanyPost },
     } = result;
 
-    // if (uploadCompanyPost.id) {
-    //   cache.modify({
-    //     id: "ROOT_QUERY",
-    //     fields: {
-    //       seeAllCompanyPosts(prev) {
-    //         return [uploadCompanyPost, ...prev];
-    //       },
-    //     },
-    //   });
-    // }
+    if (uploadCompanyPost.id) {
+      const { me } = userData;
+      const UserId = `User:${me.id}`;
+      cache.modify({
+        id: UserId,
+        fields: {
+          totalCompanyPosts(prev) {
+            return prev + 1;
+          },
+        },
+      });
+    }
 
     if (screenName === ScreenNames.SEARCH_DISTRICT) {
       navigation.navigate("SearchConditionDistrict", {
@@ -106,7 +98,17 @@ export default function ({ route: { params } }) {
     setCountPhoto(countPhoto - 1);
   };
 
-  //   const goToCategory = () => navigation.navigate("PostCategory");
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     if (params.screenName) {

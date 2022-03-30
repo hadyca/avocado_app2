@@ -62,6 +62,7 @@ export default function ({ route: { params } }) {
         id: params?.id,
       });
     } else {
+      return;
       refetch();
     }
   }, [params]);

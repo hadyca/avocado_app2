@@ -13,12 +13,13 @@ import {
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
 import UserPostComment from "../../../../Components/Post/UserPostComment";
 import ScreenLayout from "../../../../Components/ScreenLayout";
+import useMe from "../../../../Hooks/useMe";
 
 export default function ({ route: { params } }) {
   const [refreshing, setRefreshing] = useState(false);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
   const navigation = useNavigation();
-
+  const { data: userData } = useMe();
   const { StatusBarManager } = NativeModules;
 
   const updateToggleLike = (cache, result) => {
@@ -70,7 +71,7 @@ export default function ({ route: { params } }) {
     }
   };
 
-  const goDeleteUserPost = (cache, result) => {
+  const updateDeleteUserPost = (cache, result) => {
     const {
       data: {
         deleteUserPost: { ok },
@@ -81,8 +82,18 @@ export default function ({ route: { params } }) {
       cache.modify({
         id: UserPostId,
         fields: {
-          deleted(prev) {
-            return !prev;
+          deleted() {
+            return true;
+          },
+        },
+      });
+      const { me } = userData;
+      const UserId = `User:${me.id}`;
+      cache.modify({
+        id: UserId,
+        fields: {
+          totalUserPosts(prev) {
+            return prev - 1;
           },
         },
       });
@@ -97,7 +108,7 @@ export default function ({ route: { params } }) {
   });
 
   const [deleteUserPostMutation] = useMutation(DELETE_USERPOST_MUTATION, {
-    update: goDeleteUserPost,
+    update: updateDeleteUserPost,
   });
 
   const [toggleUserPostLikeMutation, { loading: likeLoading }] = useMutation(

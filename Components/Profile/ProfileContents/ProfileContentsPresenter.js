@@ -8,27 +8,28 @@ const Container = styled.View`
 `;
 const Header = styled.View`
   flex-direction: row;
+  justify-content: space-around;
   align-items: center;
-  justify-content: center;
 `;
 const Avatar = styled.Image`
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 50px;
+  margin-right: 10px;
 `;
 
-const Posts = styled.Text``;
-const JobPosts = styled.Text``;
+const Column = styled.View`
+  justify-content: center;
+  align-items: center;
+`;
 
-const Following = styled.Text``;
+const Number = styled.Text`
+  font-weight: bold;
+`;
 
-const Followers = styled.Text``;
+const Section = styled.Text``;
 
 const SubHeader = styled.View``;
-
-const Username = styled.Text``;
-
-const CompanyName = styled.Text``;
 
 const Bio = styled.Text``;
 
@@ -92,16 +93,34 @@ export default function ProfileContentsPresenter({
             }}
           />
         )}
-        <Posts>{data?.seeProfile?.totalUserPosts} Posts</Posts>
-        <JobPosts>{data?.seeProfile?.totalCompanyPosts} Job Posts</JobPosts>
-        <Following>{data?.seeProfile?.totalFollowing} Following</Following>
-        <Followers>{data?.seeProfile?.totalFollowers} Followers</Followers>
+        <Column>
+          <Number>{data?.seeProfile?.totalUserPosts}</Number>
+          <Section>
+            {data?.seeProfile?.totalUserPosts > 1 ? "Posts" : "Post"}
+          </Section>
+        </Column>
+        {data?.seeProfile?.myCompany ? (
+          <Column>
+            <Number>{data?.seeProfile?.totalCompanyPosts}</Number>
+            <Section>
+              {data?.seeProfile?.totalCompanyPosts > 1
+                ? "Job Posts"
+                : "Job Post"}
+            </Section>
+          </Column>
+        ) : null}
+        <Column>
+          <Number>{data?.seeProfile?.totalFollowing}</Number>
+          <Section>Following</Section>
+        </Column>
+        <Column>
+          <Number>{data?.seeProfile?.totalFollowers}</Number>
+          <Section>
+            {data?.seeProfile?.totalFollowers > 1 ? "Followers" : "Follower"}
+          </Section>
+        </Column>
       </Header>
       <SubHeader>
-        <Username>user name : {data?.seeProfile?.username}</Username>
-        <CompanyName>
-          company name : {data?.seeProfile?.myCompany?.companyName}
-        </CompanyName>
         <Bio>bio : {data?.seeProfile?.bio}</Bio>
       </SubHeader>
       {data?.seeProfile ? getButton(data.seeProfile) : null}
