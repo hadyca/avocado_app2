@@ -1,11 +1,17 @@
 import React from "react";
 import styled from "styled-components/native";
-import { Text } from "react-native";
 import { colors } from "../../../Colors";
 
 const Container = styled.View`
   margin: 10px;
 `;
+
+const Separator = styled.View`
+  width: 100%;
+  height: 1px;
+  background-color: ${colors.borderThin};
+`;
+
 const Header = styled.View`
   flex-direction: row;
   justify-content: space-around;
@@ -31,7 +37,43 @@ const Section = styled.Text``;
 
 const SubHeader = styled.View``;
 
-const Bio = styled.Text``;
+const Bio = styled.Text`
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;
+
+const Bottom = styled.View`
+  margin-top: 10px;
+`;
+
+const CompanyName = styled.Text`
+  font-weight: bold;
+  font-size: 28px;
+`;
+
+const AboutUs = styled.Text`
+  margin-top: 5px;
+`;
+
+const Address = styled.Text`
+  margin-top: 8px;
+  margin-bottom: 10px;
+  font-size: 13px;
+`;
+
+const InfoView = styled.View``;
+
+const Title = styled.Text`
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: bold;
+`;
+
+const Info = styled.Text`
+  margin-top: 5px;
+  margin-bottom: 10px;
+  color: ${colors.greyText};
+`;
 
 const ProfileBtn = styled.TouchableOpacity`
   background-color: ${(props) => (props.backgroundColor ? "blue" : "white")};
@@ -46,8 +88,6 @@ const ProfileText = styled.Text`
   font-weight: 600;
   text-align: center;
 `;
-
-const Bottom = styled.View``;
 
 export default function ProfileContentsPresenter({
   data,
@@ -121,26 +161,30 @@ export default function ProfileContentsPresenter({
         </Column>
       </Header>
       <SubHeader>
-        <Bio>bio : {data?.seeProfile?.bio}</Bio>
+        <Bio>{data?.seeProfile?.bio}</Bio>
       </SubHeader>
       {data?.seeProfile ? getButton(data.seeProfile) : null}
       <Bottom>
-        <Text>기업 소개</Text>
-        <Text>Company name : {data?.seeProfile?.myCompany?.companyName} </Text>
-        <Text>
-          Address : {data?.seeProfile?.myCompany?.addressStep3},
-          {data?.seeProfile?.myCompany?.addressStep2},
-          {data?.seeProfile?.myCompany?.addressStep1}
-        </Text>
-        <Text>Email: {data?.seeProfile?.myCompany?.email}</Text>
-        <Text>Sector: {data?.seeProfile?.myCompany?.sector}</Text>
-        <Text>About us : {data?.seeProfile?.myCompany?.aboutUs}</Text>
-        <Text>
-          Contact Number : {data?.seeProfile?.myCompany?.contactNumber}
-        </Text>
-        <Text>
-          Total Employees : {data?.seeProfile?.myCompany?.totalEmployees}
-        </Text>
+        <CompanyName>{data?.seeProfile?.myCompany?.companyName}</CompanyName>
+        <AboutUs>{data?.seeProfile?.myCompany?.aboutUs}</AboutUs>
+        <Address>
+          {`${data?.seeProfile?.myCompany?.addressStep3}, ${data?.seeProfile?.myCompany?.addressStep2}, ${data?.seeProfile?.myCompany?.addressStep1}`}
+        </Address>
+        <Separator />
+        <InfoView>
+          <Title>Sector</Title>
+          <Info>{data?.seeProfile?.myCompany?.sector}</Info>
+          <Separator />
+          <Title>Number of employees</Title>
+          <Info>{`${data?.seeProfile?.myCompany?.totalEmployees} 명`}</Info>
+          <Separator />
+          <Title>E-Mail</Title>
+          <Info>{data?.seeProfile?.myCompany?.email}</Info>
+          <Separator />
+          <Title>Contact Number</Title>
+          <Info>{data?.seeProfile?.myCompany?.contactNumber}</Info>
+          <Separator />
+        </InfoView>
       </Bottom>
     </Container>
   );

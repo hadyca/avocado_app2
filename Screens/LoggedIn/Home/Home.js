@@ -25,7 +25,7 @@ const Title = styled.Text`
 const Content = styled.Text`
   font-weight: 500;
   margin: 0px auto;
-  color: ${colors.homeText};
+  color: ${colors.greyText};
   font-size: 20px;
   margin-top: 5px;
 `;
@@ -43,7 +43,7 @@ const SubTitle = styled.Text`
 const SubContent = styled.Text`
   font-weight: 400;
   margin: 0px auto;
-  color: ${colors.homeText};
+  color: ${colors.greyText};
   font-size: 20px;
   margin-top: 10px;
 `;

@@ -43,19 +43,19 @@ const LikeComment = styled.View`
 
 const Likes = styled.Text`
   margin-right: 5px;
-  color: ${colors.homeText};
+  color: ${colors.greyText};
   font-size: 11px;
 `;
 
 const Comments = styled.Text`
-  color: ${colors.homeText};
+  color: ${colors.greyText};
   font-size: 11px;
 `;
 
 const Date = styled.Text`
   margin-top: 3px;
   margin-left: 10px;
-  color: ${colors.homeText};
+  color: ${colors.greyText};
   font-size: 8px;
 `;
 

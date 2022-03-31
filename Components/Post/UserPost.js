@@ -62,7 +62,7 @@ const ContentText = styled.Text`
 const MoreText = styled.Text`
   margin-left: 5px;
   font-size: 12px;
-  color: ${colors.homeText};
+  color: ${colors.greyText};
 `;
 
 const LikeComment = styled.View`
@@ -73,19 +73,19 @@ const LikeComment = styled.View`
 
 const Likes = styled.Text`
   margin-right: 5px;
-  color: ${colors.homeText};
+  color: ${colors.greyText};
   font-size: 12px;
 `;
 
 const Comments = styled.Text`
-  color: ${colors.homeText};
+  color: ${colors.greyText};
   font-size: 12px;
 `;
 
 const Date = styled.Text`
   margin-top: 3px;
   margin-left: 10px;
-  color: ${colors.homeText};
+  color: ${colors.greyText};
   font-size: 10px;
 `;
 

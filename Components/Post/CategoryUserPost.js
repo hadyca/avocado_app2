@@ -22,16 +22,16 @@ const Contents = styled.TouchableOpacity`
 `;
 
 const ImgContainer = styled.TouchableOpacity`
-  margin-bottom: 8px;
+  margin-top: 8px;
 `;
 
 const MainImg = styled.Image`
+  margin-top: 5px;
   width: ${(props) => props.width}px;
   height: ${(props) => Math.ceil(props.height / 3)}px;
 `;
 
 const Content = styled.View`
-  font-size: 14px;
   margin-top: 5px;
   flex-direction: row;
   align-items: center;
@@ -45,7 +45,7 @@ const ContentText = styled.Text`
 const MoreText = styled.Text`
   margin-left: 5px;
   font-size: 12px;
-  color: ${colors.homeText};
+  color: ${colors.greyText};
 `;
 
 const LikeComment = styled.View`
@@ -56,27 +56,27 @@ const LikeComment = styled.View`
 
 const Likes = styled.Text`
   margin-right: 5px;
-  color: ${colors.homeText};
-  font-size: 11px;
+  color: ${colors.greyText};
+  font-size: 12px;
 `;
 
 const Comments = styled.Text`
-  color: ${colors.homeText};
-  font-size: 11px;
+  color: ${colors.greyText};
+  font-size: 12px;
 `;
 
 const Date = styled.Text`
   margin-top: 3px;
   margin-left: 10px;
-  color: ${colors.homeText};
-  font-size: 8px;
+  color: ${colors.greyText};
+  font-size: 10px;
 `;
 
 const Separator = styled.View`
   width: 100%;
   height: 5px;
   background-color: ${colors.borderThin};
-  margin-top: 20px;
+  margin-top: 10px;
 `;
 
 function CategoryUserPost({
@@ -116,7 +116,6 @@ function CategoryUserPost({
           <UserAvatar username={user.username} uri={user.avatar} />
         </Header>
       </HeaderContainer>
-
       {file.length > 0 ? (
         <ImgContainer onPress={goToPostDetail}>
           <MainImg
