@@ -22,7 +22,7 @@ const TextInput = styled.TextInput`
   background-color: ${colors.backgraound};
   padding: 13px;
   color: black;
-  border: 1px solid ${colors.borderThin};
+  border: 1px solid ${colors.borderThick};
 `;
 
 export default function EditCompanyPostCommentFormPresenter({

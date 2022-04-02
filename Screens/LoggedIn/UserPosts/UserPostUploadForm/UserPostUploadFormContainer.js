@@ -15,18 +15,6 @@ export default function ({ route: { params } }) {
   const navigation = useNavigation();
   const { data: userData } = useMe();
 
-  useEffect(() => {
-    (async () => {
-      if (Platform.OS !== "web") {
-        const { status } =
-          await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== "granted") {
-          alert("Sorry, we need camera roll permissions to make this work!");
-        }
-      }
-    })();
-  }, []);
-
   const updateUploadUserPost = (cache, result) => {
     const {
       data: { uploadUserPost },
@@ -103,6 +91,18 @@ export default function ({ route: { params } }) {
   };
 
   const goToCategory = () => navigation.navigate("PostCategory");
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     if (params.screenName) {

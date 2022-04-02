@@ -49,7 +49,7 @@ export default function AskAboutUs({ route: { params } }) {
         name="aboutUs"
         rules={{
           required: true,
-          maxLength: 100,
+          maxLength: 150,
         }}
         control={control}
         render={({ field: { onChange, value } }) => (
@@ -65,10 +65,10 @@ export default function AskAboutUs({ route: { params } }) {
               value={value || ""}
               hasError={false}
               onSubmitEditing={goToAskSector}
-              maxLength={100}
+              maxLength={150}
             />
             <UnderBar lastOne={false} />
-            <CountingText>글자수 제한 ({counting}/100)</CountingText>
+            <CountingText>글자수 제한 ({counting}/150)</CountingText>
           </AboutUsView>
         )}
       />

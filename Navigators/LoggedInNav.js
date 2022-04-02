@@ -35,6 +35,8 @@ import EditCompanyPostReCommentForm from "../Screens/LoggedIn/Search/EditCompany
 import CompanyPostReportForm from "../Screens/LoggedIn/Search/CompanyPostReportForm";
 import CompanyPostCommentReportForm from "../Screens/LoggedIn/Search/CompanyPostCommentReportForm";
 import CompanyPostReCommentReportForm from "../Screens/LoggedIn/Search/CompanyPostReCommentReportForm";
+import EditProfile from "../Screens/LoggedIn/Share/EditProfile";
+import EditBio from "../Screens/LoggedIn/Share/EditBio";
 
 const Stack = createStackNavigator();
 
@@ -47,6 +49,20 @@ export default function LoggedInNav() {
           headerShown: false,
         }}
         component={TabsNav}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={EditProfile}
+      />
+      <Stack.Screen
+        name="EditBio"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={EditBio}
       />
       <Stack.Screen
         name="CompanyPostCommentReportForm"

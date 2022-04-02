@@ -23,6 +23,7 @@ const ButtonText = styled.Text`
   font-size: 15px;
   padding: 15px 2px 15px 2px;
 `;
+
 export default function SearchSmallDistrict({ districtCode }) {
   const navigation = useNavigation();
   const goToCompanyPostList = (addressStep2) => {

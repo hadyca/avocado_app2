@@ -58,12 +58,19 @@ export default function ({ data }) {
     }
   );
 
-  const toggleFollowing = () => {};
+  const goToEditProfile = () => {
+    navigation.navigate("EditProfile", {
+      username: data?.seeProfile?.username,
+      bio: data?.seeProfile?.bio,
+      avatar: data?.seeProfile?.avatar,
+    });
+  };
 
   return (
     <ProfileContentsPresenter
       data={data}
       toggleFollowingMutation={toggleFollowingMutation}
+      goToEditProfile={goToEditProfile}
     />
   );
 }

@@ -92,12 +92,13 @@ const ProfileText = styled.Text`
 export default function ProfileContentsPresenter({
   data,
   toggleFollowingMutation,
+  goToEditProfile,
 }) {
   const getButton = (seeProfile) => {
     const { isMe, isFollowing, myCompany } = seeProfile;
     if (isMe) {
       return (
-        <ProfileBtn backgroundColor={true}>
+        <ProfileBtn backgroundColor={true} onPress={goToEditProfile}>
           <ProfileText backgroundColor={true}>Edit Profile</ProfileText>
         </ProfileBtn>
       );
@@ -165,26 +166,32 @@ export default function ProfileContentsPresenter({
       </SubHeader>
       {data?.seeProfile ? getButton(data.seeProfile) : null}
       <Bottom>
-        <CompanyName>{data?.seeProfile?.myCompany?.companyName}</CompanyName>
-        <AboutUs>{data?.seeProfile?.myCompany?.aboutUs}</AboutUs>
-        <Address>
-          {`${data?.seeProfile?.myCompany?.addressStep3}, ${data?.seeProfile?.myCompany?.addressStep2}, ${data?.seeProfile?.myCompany?.addressStep1}`}
-        </Address>
-        <Separator />
-        <InfoView>
-          <Title>Sector</Title>
-          <Info>{data?.seeProfile?.myCompany?.sector}</Info>
-          <Separator />
-          <Title>Number of employees</Title>
-          <Info>{`${data?.seeProfile?.myCompany?.totalEmployees} 명`}</Info>
-          <Separator />
-          <Title>E-Mail</Title>
-          <Info>{data?.seeProfile?.myCompany?.email}</Info>
-          <Separator />
-          <Title>Contact Number</Title>
-          <Info>{data?.seeProfile?.myCompany?.contactNumber}</Info>
-          <Separator />
-        </InfoView>
+        {data?.seeProfile?.myCompany ? (
+          <>
+            <CompanyName>
+              {data?.seeProfile?.myCompany?.companyName}
+            </CompanyName>
+            <AboutUs>{data?.seeProfile?.myCompany?.aboutUs}</AboutUs>
+            <Address>
+              {`${data?.seeProfile?.myCompany?.addressStep3}, ${data?.seeProfile?.myCompany?.addressStep2}, ${data?.seeProfile?.myCompany?.addressStep1}`}
+            </Address>
+            <Separator />
+            <InfoView>
+              <Title>Sector</Title>
+              <Info>{data?.seeProfile?.myCompany?.sector}</Info>
+              <Separator />
+              <Title>Number of employees</Title>
+              <Info>{`${data?.seeProfile?.myCompany?.totalEmployees} 명`}</Info>
+              <Separator />
+              <Title>E-Mail</Title>
+              <Info>{data?.seeProfile?.myCompany?.email}</Info>
+              <Separator />
+              <Title>Contact Number</Title>
+              <Info>{data?.seeProfile?.myCompany?.contactNumber}</Info>
+              <Separator />
+            </InfoView>
+          </>
+        ) : null}
       </Bottom>
     </Container>
   );
