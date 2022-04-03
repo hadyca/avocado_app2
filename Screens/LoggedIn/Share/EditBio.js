@@ -36,15 +36,26 @@ export default function EditBio({ route: { params } }) {
     return setCounting(value.length);
   };
 
-  const { control, handleSubmit, formState } = useForm({
+  const { control, getValues } = useForm({
     defaultValues: {
       bio: params.bio,
     },
     mode: "onChange",
   });
 
+  const goToEditProfile = () => {
+    const { bio } = getValues();
+    navigation.navigate("EditProfile", {
+      avatar: params.avatar,
+      bio,
+    });
+  };
+
   const headerRight = () => (
-    <TouchableOpacity style={{ marginRight: 10, opacity: 1 }}>
+    <TouchableOpacity
+      onPress={goToEditProfile}
+      style={{ marginRight: 10, opacity: 1 }}
+    >
       <HeaderRightText>Done</HeaderRightText>
     </TouchableOpacity>
   );
