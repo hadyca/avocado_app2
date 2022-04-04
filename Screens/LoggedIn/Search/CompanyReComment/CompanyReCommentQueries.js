@@ -7,7 +7,7 @@ export const COMMENT_QUERY = gql`
       user {
         id
         username
-        avatar
+        avatarUrl
       }
       payload
       companyPostReComments {
@@ -15,7 +15,7 @@ export const COMMENT_QUERY = gql`
         user {
           id
           username
-          avatar
+          avatarUrl
         }
         payload
         createdAt

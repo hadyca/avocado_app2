@@ -61,8 +61,9 @@ export default function ({ data }) {
   const goToEditProfile = () => {
     navigation.navigate("EditProfile", {
       username: data?.seeProfile?.username,
+      usernameEditDate: data?.seeProfile?.usernameEditDate,
       bio: data?.seeProfile?.bio,
-      avatar: data?.seeProfile?.avatar,
+      avatarUrl: data?.seeProfile?.avatarUrl,
     });
   };
 

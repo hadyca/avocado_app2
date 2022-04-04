@@ -45,7 +45,7 @@ export default function ({
             user {
               id
               username
-              avatar
+              avatarUrl
             }
           }
         `,
@@ -94,7 +94,7 @@ export default function ({
             user {
               id
               username
-              avatar
+              avatarUrl
             }
           }
         `,

@@ -12,7 +12,7 @@ export const COMPANYPOST_QUERY = gql`
         user {
           id
           username
-          avatar
+          avatarUrl
         }
       }
       title

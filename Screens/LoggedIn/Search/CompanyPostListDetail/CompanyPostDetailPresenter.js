@@ -59,7 +59,7 @@ export default function CompanyPostDetailPresenter({
                   data={data}
                   userId={data?.seeCompanyPost?.company?.user?.id}
                   username={data?.seeCompanyPost?.company?.user?.username}
-                  avatar={data?.seeCompanyPost?.company?.user?.avatar}
+                  avatarUrl={data?.seeCompanyPost?.company?.user?.avatarUrl}
                   title={data?.seeCompanyPost?.title}
                   content={data?.seeCompanyPost?.content}
                   likeLoading={likeLoading}
@@ -96,7 +96,7 @@ export default function CompanyPostDetailPresenter({
                   data={data}
                   userId={data?.seeCompanyPost?.company?.user?.id}
                   username={data?.seeCompanyPost?.company?.user?.username}
-                  avatar={data?.seeCompanyPost?.company?.user?.avatar}
+                  avatarUrl={data?.seeCompanyPost?.company?.user?.avatarUrl}
                   title={data?.seeCompanyPost?.title}
                   content={data?.seeCompanyPost?.content}
                   category={data?.seeCompanyPost?.category}

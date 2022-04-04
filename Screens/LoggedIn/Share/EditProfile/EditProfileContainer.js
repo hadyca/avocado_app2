@@ -1,15 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useMutation } from "@apollo/client";
 import * as ImagePicker from "expo-image-picker";
 import ScreenLayout from "../../../../Components/ScreenLayout";
-import { EDIT_PROFILE_MUTATION } from "./EditProfileQueries";
+import { EDIT_AVATAR_MUTATION } from "./EditProfileQueries";
 import EditProfilePresenter from "./EditProfilePresenter";
 
 export default function ({ route: { params } }) {
   const navigation = useNavigation();
-  const [avatar, setAvatar] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState("");
 
-  const goToEditAvatar = async () => {
+  const updateAvatar = (cache, result) => {
+    const {
+      data: { editProfile },
+    } = result;
+    if (editProfile.id) {
+      const UserId = `User:${editProfile.id}`;
+      cache.modify({
+        id: UserId,
+        fields: {
+          avatarUrl() {
+            return editProfile.avatarUrl;
+          },
+        },
+      });
+      navigation.pop();
+    }
+  };
+
+  const [editAvatarMutation, { loading }] = useMutation(EDIT_AVATAR_MUTATION, {
+    update: updateAvatar,
+  });
+
+  const goToSelectAvatar = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -18,8 +41,14 @@ export default function ({ route: { params } }) {
     });
 
     if (!result.cancelled) {
-      setAvatar(result.uri);
+      setAvatarUrl(result.uri);
     }
+  };
+  const goToEditUsername = () => {
+    navigation.navigate("EditUsername", {
+      username: params.username,
+      usernameEditDate: params.usernameEditDate,
+    });
   };
 
   const goToEditBio = () => {
@@ -41,20 +70,24 @@ export default function ({ route: { params } }) {
   }, []);
 
   useEffect(() => {
-    if (params.avatar) {
-      setAvatar(params.avatar);
+    if (params.avatarUrl) {
+      setAvatarUrl(params.avatarUrl);
     } else {
       return;
     }
-  });
+  }, []);
 
   return (
     <ScreenLayout>
       <EditProfilePresenter
-        goToEditAvatar={goToEditAvatar}
+        editAvatarMutation={editAvatarMutation}
+        goToSelectAvatar={goToSelectAvatar}
+        goToEditUsername={goToEditUsername}
         goToEditBio={goToEditBio}
-        avatar={avatar}
+        avatarUrl={avatarUrl}
+        username={params.username}
         bio={params.bio}
+        loading={loading}
       />
     </ScreenLayout>
   );

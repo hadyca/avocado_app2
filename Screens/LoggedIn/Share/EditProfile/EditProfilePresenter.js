@@ -1,8 +1,17 @@
-import React from "react";
-import { TouchableOpacity } from "react-native";
+import React, { useEffect } from "react";
+import { TouchableOpacity, ActivityIndicator } from "react-native";
 import styled from "styled-components/native";
+import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import { ReactNativeFile } from "apollo-upload-client";
 import { colors } from "../../../../Colors";
+
+const HeaderRightText = styled.Text`
+  color: ${colors.black};
+  font-size: 16px;
+  font-weight: 600;
+  margin-right: 7px;
+`;
 
 const Container = styled.View`
   margin: 20px;
@@ -56,6 +65,7 @@ const ButtonTextView = styled.View`
 const ButtonText = styled.Text`
   color: ${colors.black};
   margin-right: 5px;
+  margin-bottom: 10px;
 `;
 
 const AddBio = styled.Text`
@@ -63,16 +73,57 @@ const AddBio = styled.Text`
 `;
 
 export default function EditProfilePresenter({
-  goToEditAvatar,
+  editAvatarMutation,
+  goToSelectAvatar,
+  goToEditUsername,
   goToEditBio,
-  avatar,
+  avatarUrl,
+  username,
   bio,
+  loading,
 }) {
+  const navigation = useNavigation();
+
+  const goToEditAvatar = () => {
+    const newAvatar = new ReactNativeFile({
+      uri: avatarUrl,
+      name: `1.jpg`,
+      type: "image/jpeg",
+    });
+    if (!loading) {
+      editAvatarMutation({
+        variables: {
+          avatarUrl: newAvatar,
+        },
+      });
+    }
+  };
+
+  const OkHeaderRight = () => (
+    <TouchableOpacity
+      disabled={false}
+      onPress={goToEditAvatar}
+      style={{ marginRight: 10, opacity: 1 }}
+    >
+      <HeaderRightText>Done</HeaderRightText>
+    </TouchableOpacity>
+  );
+  const HeaderRightLoading = () => (
+    <ActivityIndicator size="small" color="black" style={{ marginRight: 10 }} />
+  );
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: loading ? HeaderRightLoading : OkHeaderRight,
+      ...(loading && { headerLeft: () => null }),
+    });
+  }, [loading, avatarUrl]);
+
   return (
     <Container>
-      <Top onPress={goToEditAvatar}>
-        {avatar ? (
-          <Avatar resizeMode="cover" source={{ uri: avatar }} />
+      <Top onPress={goToSelectAvatar}>
+        {avatarUrl ? (
+          <Avatar resizeMode="cover" source={{ uri: avatarUrl }} />
         ) : (
           <Avatar
             resizeMode="cover"
@@ -89,10 +140,17 @@ export default function EditProfilePresenter({
           style={{ position: "absolute" }}
         />
       </Top>
-      <TouchableOpacity onPress={goToEditAvatar}>
+      <TouchableOpacity onPress={goToSelectAvatar}>
         <ChangePhoto>Edit Avatar</ChangePhoto>
       </TouchableOpacity>
       <Bottom>
+        <Button onPress={goToEditUsername}>
+          <ButtonName>Username</ButtonName>
+          <ButtonTextView>
+            <ButtonText>{username}</ButtonText>
+            <Ionicons name="chevron-forward" color="black" size={17} />
+          </ButtonTextView>
+        </Button>
         <Button onPress={goToEditBio}>
           <ButtonName>Bio</ButtonName>
           <ButtonTextView>

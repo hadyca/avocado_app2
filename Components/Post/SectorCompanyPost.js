@@ -102,7 +102,7 @@ function SectorCompanyPost({
         <Header onPress={goToProfile}>
           <UserAvatar
             username={company.user.username}
-            uri={company.user.avatar}
+            uri={company.user.avatarUrl}
           />
         </Header>
         <Text>{company.companyName}</Text>

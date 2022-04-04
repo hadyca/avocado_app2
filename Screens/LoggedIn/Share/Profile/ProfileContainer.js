@@ -62,7 +62,7 @@ export default function ({ route: { params } }) {
         title: params.username,
       });
     }
-  }, []);
+  }, [params]);
 
   return (
     <ScreenLayout loading={loading}>

@@ -121,10 +121,10 @@ export default function ProfileContentsPresenter({
   return (
     <Container>
       <Header>
-        {data?.seeProfile?.avatar ? (
+        {data?.seeProfile?.avatarUrl ? (
           <Avatar
             resizeMode="cover"
-            source={{ uri: data?.seeProfile?.avatar }}
+            source={{ uri: data?.seeProfile?.avatarUrl }}
           />
         ) : (
           <Avatar

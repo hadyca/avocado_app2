@@ -7,7 +7,7 @@ export const USERPOST_QUERY = gql`
       user {
         id
         username
-        avatar
+        avatarUrl
       }
       content
       category

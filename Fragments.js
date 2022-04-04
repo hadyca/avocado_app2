@@ -6,7 +6,7 @@ export const USER_POST_FRAGMENT = gql`
     user {
       id
       username
-      avatar
+      avatarUrl
     }
     content
     category
@@ -23,7 +23,7 @@ export const USER_POST_COMMENT_FRAGMENT = gql`
     user {
       id
       username
-      avatar
+      avatarUrl
     }
     payload
     isMine

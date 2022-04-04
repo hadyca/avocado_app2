@@ -10,7 +10,7 @@ export const UPLOAD_USER_POST_MUTATION = gql`
       id
       user {
         username
-        avatar
+        avatarUrl
       }
       content
       category

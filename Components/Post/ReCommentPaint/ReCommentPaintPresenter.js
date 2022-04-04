@@ -63,7 +63,7 @@ export default function ReCommentPaintPresenter({
     <Container>
       <HeaderContainer>
         <Header onPress={goToProfile}>
-          <UserAvatar username={user.username} uri={user.avatar} />
+          <UserAvatar username={user.username} uri={user.avatarUrl} />
         </Header>
         <IconView onPress={showActionSheet}>
           <Ionicons name="ellipsis-vertical" color="grey" size={14} />

@@ -50,7 +50,7 @@ export default function PostContents({
   data,
   userId,
   username,
-  avatar,
+  avatarUrl,
   content,
   category,
   toggleLikeMutation,
@@ -82,7 +82,7 @@ export default function PostContents({
           </CategoryTouch>
         </CategoryView>
         <Header onPress={goToProfile}>
-          <UserAvatar username={username} uri={avatar} />
+          <UserAvatar username={username} uri={avatarUrl} />
         </Header>
         <Separator />
         <Contents>

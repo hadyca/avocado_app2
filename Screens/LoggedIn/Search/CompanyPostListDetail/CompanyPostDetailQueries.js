@@ -9,7 +9,7 @@ export const POST_DETAIL_QUERY = gql`
         user {
           id
           username
-          avatar
+          avatarUrl
         }
         companyName
         aboutUs
@@ -35,7 +35,7 @@ export const POST_DETAIL_QUERY = gql`
         user {
           id
           username
-          avatar
+          avatarUrl
         }
         payload
         isMine
@@ -45,7 +45,7 @@ export const POST_DETAIL_QUERY = gql`
           user {
             id
             username
-            avatar
+            avatarUrl
           }
           payload
           isMine

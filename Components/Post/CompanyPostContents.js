@@ -52,10 +52,9 @@ const Action = styled.TouchableOpacity`
 
 export default function CompanyPostContents({
   file,
-  data,
   userId,
   username,
-  avatar,
+  avatarUrl,
   title,
   content,
   toggleLikeMutation,
@@ -82,7 +81,7 @@ export default function CompanyPostContents({
       {file.length !== 0 ? <ImageSlider file={file} /> : null}
       <Container>
         <Header onPress={goToProfile}>
-          <UserAvatar username={username} uri={avatar} />
+          <UserAvatar username={username} uri={avatarUrl} />
         </Header>
         <Separator />
         <Contents>

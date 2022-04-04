@@ -67,7 +67,7 @@ export default function UserPostCommentPresenter({
     <Container>
       <HeaderContainer>
         <Header onPress={goToProfile}>
-          <UserAvatar username={user.username} uri={user.avatar} />
+          <UserAvatar username={user.username} uri={user.avatarUrl} />
         </Header>
         {!reCommentScreen ? (
           <IconView onPress={showActionSheet}>

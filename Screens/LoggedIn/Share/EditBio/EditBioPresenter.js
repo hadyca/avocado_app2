@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { TouchableOpacity } from "react-native";
+import React, { useEffect } from "react";
+import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { useForm, Controller } from "react-hook-form";
-import { colors } from "../../../Colors";
-import DismissKeyboard from "../../../Components/DismissKeyBoard";
-import { UnderBar } from "../../../Components/Auth/AuthShared";
+import { colors } from "../../../../Colors";
+import DismissKeyboard from "../../../../Components/DismissKeyBoard";
+import { UnderBar } from "../../../../Components/Auth/AuthShared";
 
 const HeaderRightText = styled.Text`
   color: ${colors.black};
@@ -27,43 +27,51 @@ const CountingText = styled.Text`
   font-size: 11px;
 `;
 
-export default function EditBio({ route: { params } }) {
-  const [counting, setCounting] = useState(params.bio.length);
-
+export default function EditBioPresenter({
+  editBioMutation,
+  countingText,
+  counting,
+  loading,
+  originBio,
+}) {
   const navigation = useNavigation();
 
-  const countingText = (value) => {
-    return setCounting(value.length);
-  };
-
-  const { control, getValues } = useForm({
+  const { control, handleSubmit } = useForm({
     defaultValues: {
-      bio: params.bio,
+      bio: originBio,
     },
-    mode: "onChange",
   });
 
-  const goToEditProfile = () => {
-    const { bio } = getValues();
-    navigation.navigate("EditProfile", {
-      avatar: params.avatar,
-      bio,
-    });
+  const onValid = async ({ bio }) => {
+    if (!loading) {
+      editBioMutation({
+        variables: {
+          bio,
+        },
+      });
+    }
   };
 
-  const headerRight = () => (
+  const OkHeaderRight = () => (
     <TouchableOpacity
-      onPress={goToEditProfile}
+      disabled={false}
+      onPress={handleSubmit(onValid)}
       style={{ marginRight: 10, opacity: 1 }}
     >
       <HeaderRightText>Done</HeaderRightText>
     </TouchableOpacity>
   );
+
+  const HeaderRightLoading = () => (
+    <ActivityIndicator size="small" color="black" style={{ marginRight: 10 }} />
+  );
+
   useEffect(() => {
     navigation.setOptions({
-      headerRight: headerRight,
+      headerRight: loading ? HeaderRightLoading : OkHeaderRight,
+      ...(loading && { headerLeft: () => null }),
     });
-  }, []);
+  }, [loading]);
 
   return (
     <DismissKeyboard>
@@ -73,7 +81,7 @@ export default function EditBio({ route: { params } }) {
           control={control}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              placeholder="Please Write Bio"
+              placeholder="Bio"
               textAlignVertical={"top"}
               maxLength={150}
               autoCapitalize="none"

@@ -20,7 +20,7 @@ export const POST_DETAIL_QUERY = gql`
           user {
             id
             username
-            avatar
+            avatarUrl
           }
           payload
           isMine
