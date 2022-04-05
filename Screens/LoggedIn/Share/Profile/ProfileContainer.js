@@ -57,12 +57,10 @@ export default function ({ route: { params } }) {
   };
 
   useEffect(() => {
-    if (params?.username) {
-      navigation.setOptions({
-        title: params.username,
-      });
-    }
-  }, [params]);
+    navigation.setOptions({
+      title: loading ? "Loading..." : data?.seeProfile?.username,
+    });
+  }, [data]);
 
   return (
     <ScreenLayout loading={loading}>

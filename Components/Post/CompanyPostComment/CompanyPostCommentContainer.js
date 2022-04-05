@@ -5,7 +5,7 @@ import { Alert } from "react-native";
 import CompanyPostCommentPresenter from "./CompanyPostCommentPresenter";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
 import { DELETE_COMMENT_MUTATION } from "./CompanyPostCommentQueries";
-import timeForToday from "../../../Utils";
+import { timeForToday } from "../../../Utils";
 
 export default function ({
   companyPostId,
@@ -127,9 +127,8 @@ export default function ({
       reComments,
     });
   };
-  const date = new window.Date(parseInt(createdAt));
 
-  const time = timeForToday(date);
+  const time = timeForToday(parseInt(createdAt));
 
   return (
     <>

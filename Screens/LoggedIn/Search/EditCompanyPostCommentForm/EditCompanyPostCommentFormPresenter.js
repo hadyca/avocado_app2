@@ -76,7 +76,6 @@ export default function EditCompanyPostCommentFormPresenter({
         : !formState.isValid
         ? NoHeaderRight
         : OkHeaderRight,
-      ...(loading && { headerLeft: () => null }),
     });
   }, [loading, formState.isValid]);
 

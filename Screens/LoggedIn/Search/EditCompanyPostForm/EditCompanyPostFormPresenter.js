@@ -134,7 +134,6 @@ export default function EditCompanyPostFormPresenter({
         : !formState.isValid
         ? NoHeaderRight
         : OkHeaderRight,
-      ...(loading && { headerLeft: () => null }),
     });
   }, [photo, loading, formState.isValid]);
 

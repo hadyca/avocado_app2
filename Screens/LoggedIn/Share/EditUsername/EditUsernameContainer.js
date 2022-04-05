@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@apollo/client";
 import ScreenLayout from "../../../../Components/ScreenLayout";
@@ -7,7 +7,7 @@ import EditUsernamePresenter from "./EditUsernamePresenter";
 
 export default function ({ route: { params } }) {
   const [counting, setCounting] = useState(params.username.length);
-  const [betweenTimeDay, SetBetweenTimeDay] = useState(0);
+  const [errorMessage, setErrorMessage] = useState(null);
   const navigation = useNavigation();
 
   const countingText = (value) => {
@@ -30,6 +30,7 @@ export default function ({ route: { params } }) {
       });
       navigation.navigate("EditProfile", {
         username: editProfile.username,
+        bio: params.bio,
       });
     }
   };
@@ -38,19 +39,12 @@ export default function ({ route: { params } }) {
     EDIT_USERNAME_MUTATION,
     {
       update: updateUsername,
+      onError: (error) => setErrorMessage(error.message),
     }
   );
 
-  const today = new Date();
-  const todayTime = today.getTime();
-  const getDate = params.usernameEditDate;
-  if (getDate !== null) {
-    const betweenTime = Math.floor((todayTime - getDate.getTime()) / 1000 / 60);
-    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
-    SetBetweenTimeDay(betweenTimeDay);
-  }
-  console.log(todayTime);
-  console.log(betweenTimeDay);
+  const today = new Date().getTime();
+
   return (
     <ScreenLayout>
       <EditUsernamePresenter
@@ -59,8 +53,8 @@ export default function ({ route: { params } }) {
         counting={counting}
         loading={loading}
         originUsername={params.username}
-        todayTime={todayTime}
-        betweenTimeDay={betweenTimeDay}
+        today={today}
+        errorMessage={errorMessage}
       />
     </ScreenLayout>
   );

@@ -79,7 +79,6 @@ export default function EditUserPostReCommentFormPresenter({
         : !formState.isValid
         ? NoHeaderRight
         : OkHeaderRight,
-      ...(loading && { headerLeft: () => null }),
     });
   }, [loading, formState.isValid]);
 

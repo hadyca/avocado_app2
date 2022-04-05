@@ -47,12 +47,13 @@ export default function ({ route: { params } }) {
   const goToEditUsername = () => {
     navigation.navigate("EditUsername", {
       username: params.username,
-      usernameEditDate: params.usernameEditDate,
+      bio: params.bio,
     });
   };
 
   const goToEditBio = () => {
     navigation.navigate("EditBio", {
+      username: params.username,
       bio: params.bio,
     });
   };

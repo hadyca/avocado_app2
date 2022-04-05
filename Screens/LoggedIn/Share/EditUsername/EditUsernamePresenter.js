@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
@@ -6,6 +6,8 @@ import { useForm, Controller } from "react-hook-form";
 import { colors } from "../../../../Colors";
 import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import { UnderBar } from "../../../../Components/Auth/AuthShared";
+import { usernameRule } from "../../../../RegExp";
+import FormError from "../../../../Components/Auth/FormError";
 
 const HeaderRightText = styled.Text`
   color: ${colors.black};
@@ -33,8 +35,8 @@ export default function EditUsernamePresenter({
   counting,
   loading,
   originUsername,
-  todayTime,
-  betweenTimeDay,
+  today,
+  errorMessage,
 }) {
   const navigation = useNavigation();
 
@@ -42,7 +44,6 @@ export default function EditUsernamePresenter({
     defaultValues: {
       username: originUsername,
     },
-    mode: "onChange",
   });
 
   const onValid = async ({ username }) => {
@@ -50,11 +51,12 @@ export default function EditUsernamePresenter({
       editUsernameMutation({
         variables: {
           username,
-          usernameEditDate: todayTime,
+          usernameEditDate: String(today),
         },
       });
     }
   };
+
   const NoHeaderRight = () => (
     <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
       <HeaderRightText>Done</HeaderRightText>
@@ -81,7 +83,6 @@ export default function EditUsernamePresenter({
         : !formState.isValid
         ? NoHeaderRight
         : OkHeaderRight,
-      ...(loading && { headerLeft: () => null }),
     });
   }, [loading, formState.isValid]);
 
@@ -91,23 +92,31 @@ export default function EditUsernamePresenter({
         <Controller
           name="username"
           control={control}
-          rules={{ required: true }}
+          rules={{
+            required: true,
+            pattern: {
+              value: usernameRule,
+              message: "숫자와 영문만 사용 가능하며, 20자를 넘을 수 없습니다.",
+            },
+          }}
           render={({ field: { onChange, value } }) => (
             <TextInput
               placeholder="Username"
               textAlignVertical={"top"}
-              maxLength={150}
+              maxLength={20}
               autoCapitalize="none"
               onChangeText={(text) => {
                 onChange(text);
                 countingText(text);
               }}
-              value={value}
+              value={value.trim()}
             />
           )}
         />
         <UnderBar />
-        <CountingText>({counting}/150)</CountingText>
+        <FormError message={formState?.errors?.username?.message} />
+        {errorMessage ? <FormError message={errorMessage} /> : null}
+        <CountingText>({counting}/20)</CountingText>
       </Container>
     </DismissKeyboard>
   );

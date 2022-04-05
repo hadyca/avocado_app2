@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
-import timeForToday from "../../../Utils";
+import { timeForToday } from "../../../Utils";
 import CompanyReCommentPaintPresenter from "./CompanyReCommentPaintPresenter";
 import { DELETE_COMMENT_MUTATION } from "./CompanyReCommentPaintQueries";
 
@@ -121,9 +121,7 @@ export default function ({
     });
   };
 
-  const date = new window.Date(parseInt(createdAt));
-
-  const time = timeForToday(date);
+  const time = timeForToday(parseInt(createdAt));
 
   return (
     <>

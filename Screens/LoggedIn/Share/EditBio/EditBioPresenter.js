@@ -69,7 +69,6 @@ export default function EditBioPresenter({
   useEffect(() => {
     navigation.setOptions({
       headerRight: loading ? HeaderRightLoading : OkHeaderRight,
-      ...(loading && { headerLeft: () => null }),
     });
   }, [loading]);
 

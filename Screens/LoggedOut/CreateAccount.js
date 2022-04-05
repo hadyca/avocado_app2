@@ -37,10 +37,10 @@ export default function CreateAccount({ navigation }) {
         message: error,
       });
     } else {
-      return navigation.reset({
-        routes: [
-          { name: "ConfirmSecret", params: { email, username, password } },
-        ],
+      return navigation.navigate("ConfirmSecret", {
+        email,
+        username,
+        password,
       });
     }
   };
@@ -48,6 +48,9 @@ export default function CreateAccount({ navigation }) {
   // **개발용 화면 넘어가기
   // return navigation.navigate("ConfirmSecret", {
   //   email,
+  // });
+  // return navigation.reset({
+  //   routes: [{ name: "ConfirmSecret", params: { email, username, password } }],
   // });
 
   const [createAccountMutation, { loading }] = useMutation(

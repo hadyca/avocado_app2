@@ -31,7 +31,7 @@ const Button = styled.TouchableOpacity`
 `;
 
 const ButtonText = styled.Text`
-  color: ${(props) => (props.focus ? colors.black : colors.greyText)};
+  color: ${(props) => (props.focus ? colors.black : "#CCCCCC")};
   font-weight: bold;
   font-size: 15px;
   text-align: center;

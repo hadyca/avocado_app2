@@ -139,7 +139,6 @@ export default function EditUserPostFormPresenter({
         : !formState.isValid || !category
         ? NoHeaderRight
         : OkHeaderRight,
-      ...(loading && { headerLeft: () => null }),
     });
   }, [photo, loading, category, formState.isValid]);
 

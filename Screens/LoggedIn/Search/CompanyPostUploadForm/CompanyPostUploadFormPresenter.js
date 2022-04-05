@@ -137,7 +137,6 @@ export default function CompanyPostUploadFormPresenter({
         : !formState.isValid
         ? NoHeaderRight
         : OkHeaderRight,
-      ...(loading && { headerLeft: () => null }),
     });
   }, [photo, loading, formState.isValid]);
 

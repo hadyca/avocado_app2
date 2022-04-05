@@ -85,17 +85,21 @@ export default function EditProfilePresenter({
   const navigation = useNavigation();
 
   const goToEditAvatar = () => {
-    const newAvatar = new ReactNativeFile({
-      uri: avatarUrl,
-      name: `1.jpg`,
-      type: "image/jpeg",
-    });
-    if (!loading) {
-      editAvatarMutation({
-        variables: {
-          avatarUrl: newAvatar,
-        },
+    if (avatarUrl === "") {
+      navigation.pop();
+    } else {
+      const newAvatar = new ReactNativeFile({
+        uri: avatarUrl,
+        name: `1.jpg`,
+        type: "image/jpeg",
       });
+      if (!loading) {
+        editAvatarMutation({
+          variables: {
+            avatarUrl: newAvatar,
+          },
+        });
+      }
     }
   };
 
@@ -115,7 +119,6 @@ export default function EditProfilePresenter({
   useEffect(() => {
     navigation.setOptions({
       headerRight: loading ? HeaderRightLoading : OkHeaderRight,
-      ...(loading && { headerLeft: () => null }),
     });
   }, [loading, avatarUrl]);
 
@@ -154,9 +157,13 @@ export default function EditProfilePresenter({
         <Button onPress={goToEditBio}>
           <ButtonName>Bio</ButtonName>
           <ButtonTextView>
-            <ButtonText>
-              {bio ? bio : <AddBio>Add bio to profile</AddBio>}
-            </ButtonText>
+            {!bio ? (
+              <AddBio>Add bio to profile</AddBio>
+            ) : bio.length >= 10 ? (
+              <ButtonText>{`${bio.substr(0, 10)}...`}</ButtonText>
+            ) : (
+              <ButtonText>{bio}</ButtonText>
+            )}
             <Ionicons name="chevron-forward" color="black" size={17} />
           </ButtonTextView>
         </Button>
@@ -164,3 +171,16 @@ export default function EditProfilePresenter({
     </Container>
   );
 }
+
+// {
+//   content.length >= 20 ? (
+//     <Content>
+//       <ContentText>{content.substr(0, 20)}</ContentText>
+//       <MoreText>...more</MoreText>
+//     </Content>
+//   ) : (
+//     <Content>
+//       <ContentText>{content}</ContentText>
+//     </Content>
+//   );
+// }
