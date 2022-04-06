@@ -22,6 +22,7 @@ export const COMPANYPOST_QUERY = gql`
       content
       createdAt
       file {
+        id
         fileUrl
       }
       totalCompanyPostLikes

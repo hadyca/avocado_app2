@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const USERPOST_QUERY = gql`
-  query seeFavoriteUserPosts($offset: Int!) {
-    seeFavoriteUserPosts(offset: $offset) {
+  query seeUserAllPosts($userId: Int!, $offset: Int!) {
+    seeUserAllPosts(userId: $userId, offset: $offset) {
       id
       user {
         id

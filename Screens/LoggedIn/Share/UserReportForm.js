@@ -1,21 +1,15 @@
 import React from "react";
 import { Alert } from "react-native";
-import ScreenLayout from "../../../Components/ScreenLayout";
-import { gql, useMutation } from "@apollo/client";
-import { userPostCommentReportAry } from "../../../Constant";
-import styled from "styled-components/native";
-import { colors } from "../../../Colors";
 import { useNavigation } from "@react-navigation/native";
+import { gql, useMutation } from "@apollo/client";
+import styled from "styled-components/native";
+import ScreenLayout from "../../../Components/ScreenLayout";
+import { userReportAry } from "../../../Constant";
+import { colors } from "../../../Colors";
 
 const REPORT_MUTATION = gql`
-  mutation companyPostReCommentReport(
-    $companyPostReCommentId: Int!
-    $reason: String!
-  ) {
-    companyPostReCommentReport(
-      companyPostReCommentId: $companyPostReCommentId
-      reason: $reason
-    ) {
+  mutation userReport($userId: Int!, $reason: String!) {
+    userReport(userId: $userId, reason: $reason) {
       ok
       error
     }
@@ -41,20 +35,20 @@ const ReportView = styled.TouchableOpacity`
 
 const ReportText = styled.Text``;
 
-export default function CompanyPostReCommentReportForm({ route: { params } }) {
+export default function UserReportForm({ route: { params } }) {
   const navigation = useNavigation();
-  const goReportCompanyPostComment = () => {
+  const goReportUser = () => {
     Alert.alert("신고해주셔서 감사합니다.");
     navigation.pop();
   };
-  const [reportReCommentMutation, { loading }] = useMutation(REPORT_MUTATION, {
-    update: goReportCompanyPostComment,
+  const [reportUserMutation, { loading }] = useMutation(REPORT_MUTATION, {
+    update: goReportUser,
   });
 
   const goToReport = (item) => {
-    reportReCommentMutation({
+    reportUserMutation({
       variables: {
-        companyPostReCommentId: parseInt(params.id),
+        userId: parseInt(params.id),
         reason: item,
       },
     });
@@ -73,9 +67,9 @@ export default function CompanyPostReCommentReportForm({ route: { params } }) {
     <ScreenLayout>
       <Container>
         <TitleView>
-          <TitleText>댓글을 신고하는 이유를 선택해주세요!.</TitleText>
+          <TitleText>유저를 신고하는 이유를 선택해주세요.</TitleText>
         </TitleView>
-        {userPostCommentReportAry.map((item, index) => (
+        {userReportAry.map((item, index) => (
           <ReportView key={index} onPress={() => handleReport(item)}>
             <ReportText>{item}</ReportText>
           </ReportView>

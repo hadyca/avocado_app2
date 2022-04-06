@@ -48,6 +48,12 @@ export const categories_EN = [
 
 export const categories_VN = [];
 
+export const userReportAry = [
+  "부적절한 프로필 정보",
+  "다른 사람으로 가장",
+  "기타",
+];
+
 export const userPostReportAry = [
   "광고 / 홍보 글이에요",
   "누군가를 비방하는 글이에요",

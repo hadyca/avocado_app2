@@ -9,6 +9,7 @@ export const UPLOAD_COMPANY_POST_MUTATION = gql`
     uploadCompanyPost(fileUrl: $fileUrl, title: $title, content: $content) {
       id
       company {
+        id
         companyName
         aboutUs
         sector
@@ -25,6 +26,7 @@ export const UPLOAD_COMPANY_POST_MUTATION = gql`
       createdAt
       isMine
       file {
+        id
         fileUrl
       }
     }

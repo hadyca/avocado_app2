@@ -9,6 +9,7 @@ export const UPLOAD_USER_POST_MUTATION = gql`
     uploadUserPost(fileUrl: $fileUrl, content: $content, category: $category) {
       id
       user {
+        id
         username
         avatarUrl
       }
@@ -18,6 +19,7 @@ export const UPLOAD_USER_POST_MUTATION = gql`
       createdAt
       isMine
       file {
+        id
         fileUrl
       }
     }

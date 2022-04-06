@@ -1,13 +1,16 @@
 import { gql } from "@apollo/client";
 
 export const COMPANYPOST_QUERY = gql`
-  query seeCompanyPostByDistrict($addressStep2: String!, $offset: Int!) {
-    seeCompanyPostByDistrict(addressStep2: $addressStep2, offset: $offset) {
+  query seeCompanyAllPosts($companyId: Int!, $offset: Int!) {
+    seeCompanyAllPosts(companyId: $companyId, offset: $offset) {
       id
       company {
         id
         companyName
         aboutUs
+        addressStep1
+        addressStep2
+        addressStep3
         sector
         user {
           id

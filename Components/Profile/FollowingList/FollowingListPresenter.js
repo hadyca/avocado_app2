@@ -89,7 +89,7 @@ const ProfileText = styled.Text`
   text-align: center;
 `;
 
-export default function ProfileContentsPresenter({
+export default function FollowingListPresenter({
   data,
   loading,
   goToUserPost,

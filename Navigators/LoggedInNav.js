@@ -38,6 +38,10 @@ import CompanyPostReCommentReportForm from "../Screens/LoggedIn/Search/CompanyPo
 import EditProfile from "../Screens/LoggedIn/Share/EditProfile";
 import EditUsername from "../Screens/LoggedIn/Share/EditUsername";
 import EditBio from "../Screens/LoggedIn/Share/EditBio";
+import MyProfileSetting from "../Screens/LoggedIn/Share/MyProfileSetting";
+import UserReportForm from "../Screens/LoggedIn/Share/UserReportForm";
+import UserAllUserPost from "../Screens/LoggedIn/Share/UserAllUserPost";
+import UserAllCompanyPost from "../Screens/LoggedIn/Share/UserAllCompanyPost";
 
 const Stack = createStackNavigator();
 
@@ -52,11 +56,39 @@ export default function LoggedInNav() {
         component={TabsNav}
       />
       <Stack.Screen
+        name="UserAllCompanyPost"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={UserAllCompanyPost}
+      />
+      <Stack.Screen
+        name="UserAllUserPost"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={UserAllUserPost}
+      />
+      <Stack.Screen
         name="EditProfile"
         options={{
           headerBackTitleVisible: false,
         }}
         component={EditProfile}
+      />
+      <Stack.Screen
+        name="UserReportForm"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={UserReportForm}
+      />
+      <Stack.Screen
+        name="MyProfileSetting"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={MyProfileSetting}
       />
       <Stack.Screen
         name="EditUsername"

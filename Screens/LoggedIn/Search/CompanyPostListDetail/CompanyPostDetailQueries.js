@@ -22,6 +22,7 @@ export const POST_DETAIL_QUERY = gql`
         addressStep3
       }
       file {
+        id
         fileUrl
       }
       title

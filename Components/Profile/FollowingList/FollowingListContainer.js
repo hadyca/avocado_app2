@@ -1,8 +1,8 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
-import { TOGGLE_FOLLOWING_MUTATION } from "./ProfileContentsQueries";
-import ProfileContentsPresenter from "./ProfileContentsPresenter";
+import { TOGGLE_FOLLOWING_MUTATION } from "./FollowingListQueries";
+import FollowingListPresenter from "./FollowingListPresenter";
 import useMe from "../../../Hooks/useMe";
 
 export default function ({ data }) {
@@ -79,7 +79,7 @@ export default function ({ data }) {
   };
 
   return (
-    <ProfileContentsPresenter
+    <FollowingListPresenter
       data={data}
       loading={loading}
       goToUserPost={goToUserPost}
