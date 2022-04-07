@@ -94,6 +94,8 @@ export default function ProfileContentsPresenter({
   loading,
   goToUserPost,
   goToCompanyPost,
+  goToFollowing,
+  goToFollowers,
   toggleFollowingMutation,
   goToEditProfile,
 }) {
@@ -153,11 +155,11 @@ export default function ProfileContentsPresenter({
             </Section>
           </Column>
         ) : null}
-        <Column>
+        <Column onPress={goToFollowing}>
           <Number>{data?.seeProfile?.totalFollowing}</Number>
           <Section>Following</Section>
         </Column>
-        <Column>
+        <Column onPress={goToFollowers}>
           <Number>{data?.seeProfile?.totalFollowers}</Number>
           <Section>
             {data?.seeProfile?.totalFollowers > 1 ? "Followers" : "Follower"}

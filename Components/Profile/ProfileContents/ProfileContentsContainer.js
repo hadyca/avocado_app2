@@ -70,6 +70,20 @@ export default function ({ data }) {
     });
   };
 
+  const goToFollowing = () => {
+    navigation.navigate("FollowNav", {
+      id: data?.seeProfile?.id,
+      screenName: "Following",
+    });
+  };
+
+  const goToFollowers = () => {
+    navigation.navigate("FollowNav", {
+      id: data?.seeProfile?.id,
+      screenName: "Followers",
+    });
+  };
+
   const goToEditProfile = () => {
     navigation.navigate("EditProfile", {
       username: data?.seeProfile?.username,
@@ -84,6 +98,8 @@ export default function ({ data }) {
       loading={loading}
       goToUserPost={goToUserPost}
       goToCompanyPost={goToCompanyPost}
+      goToFollowing={goToFollowing}
+      goToFollowers={goToFollowers}
       toggleFollowingMutation={toggleFollowingMutation}
       goToEditProfile={goToEditProfile}
     />

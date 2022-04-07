@@ -1,22 +1,23 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import ScreenLayout from "../../../../Components/ScreenLayout";
-import { FOLLOWING_QUERY } from "./FollowingUserQueries";
-import FollowingUserPresenter from "./FollowingUserPresenter";
+import { FOLLOWING_QUERY } from "./FollowingQueries";
+import FollowingPresenter from "./FollowingPresenter";
+import FollowingList from "../../../../Components/Profile/FollowingList";
 
-export default function ({ route: { params } }) {
+export default function (id) {
   const [refreshing, setRefreshing] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
   const { data, loading, refetch, fetchMore } = useQuery(FOLLOWING_QUERY, {
     variables: {
-      userId: parseInt(params.id),
+      userId: parseInt(id),
       offset: 0,
     },
   });
 
   const renderPost = ({ item }) => {
     if (item.deleted === false) {
-      return <UserPost {...item} />;
+      return <FollowingList {...item} />;
     } else {
       return null;
     }
@@ -44,7 +45,7 @@ export default function ({ route: { params } }) {
 
   return (
     <ScreenLayout loading={loading}>
-      <FollowingUserPresenter
+      <FollowingPresenter
         handleFetch={handleFetch}
         refreshing={refreshing}
         refresh={refresh}

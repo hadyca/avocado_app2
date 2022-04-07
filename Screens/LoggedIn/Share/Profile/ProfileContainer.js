@@ -99,13 +99,7 @@ export default function ({ route: { params } }) {
 
   return (
     <ScreenLayout loading={loading}>
-      <ProfilePresenter
-        handleFetch={handleFetch}
-        refreshing={refreshing}
-        refresh={refresh}
-        data={data}
-        fetchLoading={fetchLoading}
-      />
+      <ProfilePresenter refreshing={refreshing} refresh={refresh} data={data} />
       <ActionSheet
         ref={myActionsheet}
         options={myOptionArray}

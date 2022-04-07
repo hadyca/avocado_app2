@@ -1,6 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import TabsNav from "./TabsNav";
+import FollowNav from "./FollowNav";
 import UserPostUploadForm from "../Screens/LoggedIn/UserPosts/UserPostUploadForm";
 import EditUserPostForm from "../Screens/LoggedIn/UserPosts/EditUserPostForm";
 import UserPostListDetail from "../Screens/LoggedIn/UserPosts/UserPostListDetail";
@@ -54,6 +55,14 @@ export default function LoggedInNav() {
           headerShown: false,
         }}
         component={TabsNav}
+      />
+      <Stack.Screen
+        name="FollowNav"
+        options={{
+          headerShown: false,
+          headerBackTitleVisible: false,
+        }}
+        component={FollowNav}
       />
       <Stack.Screen
         name="UserAllCompanyPost"

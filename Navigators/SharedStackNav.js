@@ -6,13 +6,13 @@ import UserPostList from "../Screens/LoggedIn/UserPosts/UserPostList";
 import SearchConditionNav from "./SearchConditionNav";
 import FavoritesNav from "./FavoritesNav";
 import Me from "../Screens/LoggedIn/Me/Me";
-import CompanyPostList from "../Screens/LoggedIn/Search/CompanyPostList";
+import Following from "../Screens/LoggedIn/Share/Following";
+import Followers from "../Screens/LoggedIn/Share/Followers";
 import { colors } from "../Colors";
-import Profile from "../Screens/LoggedIn/Share/Profile";
 
 const Stack = createStackNavigator();
 
-export default function SharedStackNav({ screenName }) {
+export default function SharedStackNav({ id, screenName }) {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -46,17 +46,32 @@ export default function SharedStackNav({ screenName }) {
         />
       ) : null}
       {screenName === "SearchConditionNav" ? (
-        <Stack.Screen name={"찾기"} component={SearchConditionNav} />
+        <Stack.Screen
+          name={"SearchConditionNav"}
+          component={SearchConditionNav}
+        />
       ) : null}
       {screenName === "UserPostList" ? (
         <Stack.Screen name={"UserPostList"} component={UserPostList} />
       ) : null}
       {screenName === "FavoritesNav" ? (
-        <Stack.Screen name={"즐겨 찾기"} component={FavoritesNav} />
+        <Stack.Screen name={"FavoritesNav"} component={FavoritesNav} />
       ) : null}
-      {screenName === "Me" ? <Stack.Screen name="Me21" component={Me} /> : null}
-      <Stack.Screen name="CompanyPostList" component={CompanyPostList} />
-      {/* <Stack.Screen name="Profile" component={Profile} /> */}
+      {screenName === "Me" ? <Stack.Screen name="Me" component={Me} /> : null}
+      {screenName === "Following" ? (
+        <Stack.Screen
+          name="Following"
+          options={{ headerShown: false }}
+          component={() => Following(id)}
+        />
+      ) : null}
+      {screenName === "Followers" ? (
+        <Stack.Screen
+          name="Followers"
+          options={{ headerShown: false }}
+          component={() => Followers(id)}
+        />
+      ) : null}
     </Stack.Navigator>
   );
 }

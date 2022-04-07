@@ -22,7 +22,7 @@ export default function FavoriteUserPostPresenter({
         onRefresh={refresh}
         style={{ width: "100%" }}
         showsVerticalScrollIndicator={false}
-        data={data?.seeFollowing}
+        data={data?.seeFollowers}
         keyExtractor={(item) => "" + item.id}
         renderItem={renderPost}
       />

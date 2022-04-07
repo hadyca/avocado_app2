@@ -1,7 +1,6 @@
 import React from "react";
-import { FlatList, ActivityIndicator, RefreshControl } from "react-native";
+import { RefreshControl } from "react-native";
 import styled from "styled-components/native";
-import { colors } from "../../../../Colors";
 import ProfileContents from "../../../../Components/Profile/ProfileContents";
 
 const Container = styled.ScrollView``;
