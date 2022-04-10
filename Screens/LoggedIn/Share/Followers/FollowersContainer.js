@@ -5,7 +5,7 @@ import { FOLLOWERS_QUERY } from "./FollowersQueries";
 import FollowersPresenter from "./FollowersPresenter";
 import FollowingList from "../../../../Components/Profile/FollowingList";
 
-export default function (id) {
+export default function ({ id }) {
   const [refreshing, setRefreshing] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
   const { data, loading, refetch, fetchMore } = useQuery(FOLLOWERS_QUERY, {
@@ -14,14 +14,7 @@ export default function (id) {
       offset: 0,
     },
   });
-
-  const renderPost = ({ item }) => {
-    if (item.deleted === false) {
-      return <FollowingList {...item} />;
-    } else {
-      return null;
-    }
-  };
+  const renderPost = ({ item }) => <FollowingList {...item} />;
 
   const refresh = async () => {
     setRefreshing(true);

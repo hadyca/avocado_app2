@@ -10,6 +10,8 @@ export const FOLLOWING_QUERY = gql`
         id
         companyName
       }
+      isFollowing
+      isMe
     }
   }
 `;

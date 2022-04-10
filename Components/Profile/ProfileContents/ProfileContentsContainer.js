@@ -73,6 +73,7 @@ export default function ({ data }) {
   const goToFollowing = () => {
     navigation.navigate("FollowNav", {
       id: data?.seeProfile?.id,
+      username: data?.seeProfile?.username,
       screenName: "Following",
     });
   };
@@ -80,6 +81,7 @@ export default function ({ data }) {
   const goToFollowers = () => {
     navigation.navigate("FollowNav", {
       id: data?.seeProfile?.id,
+      username: data?.seeProfile?.username,
       screenName: "Followers",
     });
   };

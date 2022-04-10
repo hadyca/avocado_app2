@@ -5,7 +5,14 @@ import { TOGGLE_FOLLOWING_MUTATION } from "./FollowingListQueries";
 import FollowingListPresenter from "./FollowingListPresenter";
 import useMe from "../../../Hooks/useMe";
 
-export default function ({ id }) {
+export default function ({
+  id,
+  username,
+  avatarUrl,
+  myCompany,
+  isFollowing,
+  isMe,
+}) {
   const navigation = useNavigation();
   const { data: userData } = useMe();
   const updateToggleFollowing = (cache, result) => {
@@ -65,7 +72,11 @@ export default function ({ id }) {
 
   return (
     <FollowingListPresenter
-      data={data}
+      username={username}
+      avatarUrl={avatarUrl}
+      myCompany={myCompany}
+      isFollowing={isFollowing}
+      isMe={isMe}
       loading={loading}
       goToProfile={goToProfile}
       toggleFollowingMutation={toggleFollowingMutation}

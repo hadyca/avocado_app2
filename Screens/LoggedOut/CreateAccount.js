@@ -140,7 +140,7 @@ export default function CreateAccount({ navigation }) {
             returnKeyType="next"
             onSubmitEditing={() => onNext(passwordRef)}
             onChangeText={(text) => onChange(text)}
-            value={value.trim()}
+            value={value}
             hasError={Boolean(formState?.errors?.username?.message)}
             onChange={clearLoginError}
             onFocus={() => {

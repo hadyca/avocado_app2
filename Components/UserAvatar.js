@@ -28,9 +28,7 @@ export default function UserAvatar({ username, uri }) {
       ) : (
         <Avatar
           resizeMode="cover"
-          source={{
-            uri: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png",
-          }}
+          source={require("../assets/blankProfile.png")}
         />
       )}
       <Username>{username}</Username>

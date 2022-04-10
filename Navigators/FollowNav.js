@@ -5,17 +5,16 @@ import FollowNav2 from "./FollowNav2";
 const Stack = createStackNavigator();
 
 export default function FollowNav({ route: { params } }) {
-  console.log(params, "!!빠람스");
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="FollowNav2"
         options={{
-          headerShown: false,
+          title: params.username,
           headerBackTitleVisible: false,
         }}
       >
-        {() => <FollowNav2 id={params.id} />}
+        {() => <FollowNav2 id={params.id} screenName={params.screenName} />}
       </Stack.Screen>
     </Stack.Navigator>
   );
