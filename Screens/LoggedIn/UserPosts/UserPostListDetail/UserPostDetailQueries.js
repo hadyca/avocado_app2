@@ -54,8 +54,21 @@ export const TOGGLE_USERPOST_LIKE_MUTATION = gql`
 export const TOGGLE_USERPOST_FAVORITE_MUTATION = gql`
   mutation toggleFavoriteUserPost($userPostId: Int!) {
     toggleFavoriteUserPost(userPostId: $userPostId) {
-      ok
-      error
+      id
+      user {
+        id
+        username
+        avatarUrl
+      }
+      content
+      category
+      totalUserPostLikes
+      createdAt
+      isMine
+      file {
+        id
+        fileUrl
+      }
     }
   }
 `;

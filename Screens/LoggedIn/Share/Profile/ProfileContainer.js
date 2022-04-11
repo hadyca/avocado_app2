@@ -10,9 +10,7 @@ import ProfilePresenter from "./ProfilePresenter";
 
 export default function ({ route: { params } }) {
   const navigation = useNavigation();
-
   const [refreshing, setRefreshing] = useState(false);
-  const [fetchLoading, setFetchLoading] = useState(false);
   const { data, loading, refetch } = useQuery(PROFILE_QUERY, {
     variables: {
       userId: parseInt(params.id),
@@ -23,20 +21,6 @@ export default function ({ route: { params } }) {
     setRefreshing(true);
     await refetch();
     setRefreshing(false);
-  };
-
-  const handleFetch = async () => {
-    if (loading) {
-      return;
-    } else {
-      setFetchLoading(true);
-      await fetchMore({
-        variables: {
-          offset: postData?.seeCompanyAllPosts?.length,
-        },
-      });
-      setFetchLoading(false);
-    }
   };
 
   const goToSetting = () => {

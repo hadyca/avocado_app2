@@ -17,11 +17,17 @@ const Header = styled.View`
   justify-content: space-around;
   align-items: center;
 `;
+
+const AvatarView = styled.View`
+  margin-right: 10px;
+  border-radius: 50px;
+  border: 0.5px solid ${colors.avatarBorder};
+`;
+
 const Avatar = styled.Image`
   width: 80px;
   height: 80px;
   border-radius: 50px;
-  margin-right: 10px;
 `;
 
 const Column = styled.TouchableOpacity`
@@ -76,11 +82,12 @@ const Info = styled.Text`
 `;
 
 const ProfileBtn = styled.TouchableOpacity`
-  background-color: ${(props) => (props.backgroundColor ? "blue" : "white")};
+  background-color: ${(props) =>
+    props.backgroundColor ? colors.blue : "white"};
   padding: 15px 7px;
   border-radius: 3px;
   width: 100%;
-  border: 1px blue solid;
+  border: 1px solid ${colors.borderThick};
 `;
 
 const ProfileText = styled.Text`
@@ -91,7 +98,6 @@ const ProfileText = styled.Text`
 
 export default function ProfileContentsPresenter({
   data,
-  loading,
   goToUserPost,
   goToCompanyPost,
   goToFollowing,
@@ -127,15 +133,19 @@ export default function ProfileContentsPresenter({
     <Container>
       <Header>
         {data?.seeProfile?.avatarUrl ? (
-          <Avatar
-            resizeMode="cover"
-            source={{ uri: data?.seeProfile?.avatarUrl }}
-          />
+          <AvatarView>
+            <Avatar
+              resizeMode="cover"
+              source={{ uri: data?.seeProfile?.avatarUrl }}
+            />
+          </AvatarView>
         ) : (
-          <Avatar
-            resizeMode="cover"
-            source={require("../../../assets/blankProfile.png")}
-          />
+          <AvatarView>
+            <Avatar
+              resizeMode="cover"
+              source={require("../../../assets/blankProfile.png")}
+            />
+          </AvatarView>
         )}
         <Column onPress={goToUserPost}>
           <Number>{data?.seeProfile?.totalUserPosts}</Number>

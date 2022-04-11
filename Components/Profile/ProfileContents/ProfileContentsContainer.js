@@ -48,30 +48,27 @@ export default function ({ data }) {
     }
   };
 
-  const [toggleFollowingMutation, { loading }] = useMutation(
-    TOGGLE_FOLLOWING_MUTATION,
-    {
-      variables: {
-        userId: parseInt(data?.seeProfile?.id),
-      },
-      update: updateToggleFollowing,
-    }
-  );
+  const [toggleFollowingMutation] = useMutation(TOGGLE_FOLLOWING_MUTATION, {
+    variables: {
+      userId: parseInt(data?.seeProfile?.id),
+    },
+    update: updateToggleFollowing,
+  });
 
   const goToUserPost = () => {
-    navigation.navigate("UserAllUserPost", {
+    navigation.push("UserAllUserPost", {
       id: data?.seeProfile?.id,
     });
   };
 
   const goToCompanyPost = () => {
-    navigation.navigate("UserAllCompanyPost", {
+    navigation.push("UserAllCompanyPost", {
       id: data?.seeProfile?.myCompany?.id,
     });
   };
 
   const goToFollowing = () => {
-    navigation.navigate("FollowNav", {
+    navigation.push("FollowNav", {
       id: data?.seeProfile?.id,
       username: data?.seeProfile?.username,
       screenName: "Following",
@@ -79,7 +76,7 @@ export default function ({ data }) {
   };
 
   const goToFollowers = () => {
-    navigation.navigate("FollowNav", {
+    navigation.push("FollowNav", {
       id: data?.seeProfile?.id,
       username: data?.seeProfile?.username,
       screenName: "Followers",
@@ -87,7 +84,7 @@ export default function ({ data }) {
   };
 
   const goToEditProfile = () => {
-    navigation.navigate("EditProfile", {
+    navigation.push("EditProfile", {
       username: data?.seeProfile?.username,
       bio: data?.seeProfile?.bio,
       avatarUrl: data?.seeProfile?.avatarUrl,
@@ -97,7 +94,6 @@ export default function ({ data }) {
   return (
     <ProfileContentsPresenter
       data={data}
-      loading={loading}
       goToUserPost={goToUserPost}
       goToCompanyPost={goToCompanyPost}
       goToFollowing={goToFollowing}

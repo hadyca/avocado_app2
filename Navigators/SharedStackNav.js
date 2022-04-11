@@ -6,13 +6,11 @@ import UserPostList from "../Screens/LoggedIn/UserPosts/UserPostList";
 import SearchConditionNav from "./SearchConditionNav";
 import FavoritesNav from "./FavoritesNav";
 import Me from "../Screens/LoggedIn/Me/Me";
-import Following from "../Screens/LoggedIn/Share/Following";
-import Followers from "../Screens/LoggedIn/Share/Followers";
 import { colors } from "../Colors";
 
 const Stack = createStackNavigator();
 
-export default function SharedStackNav({ id, screenName }) {
+export default function SharedStackNav({ screenName }) {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -58,20 +56,6 @@ export default function SharedStackNav({ id, screenName }) {
         <Stack.Screen name={"FavoritesNav"} component={FavoritesNav} />
       ) : null}
       {screenName === "Me" ? <Stack.Screen name="Me" component={Me} /> : null}
-      {screenName === "Following" ? (
-        <Stack.Screen
-          name="Following"
-          options={{ headerShown: false }}
-          component={() => Following(id)}
-        />
-      ) : null}
-      {screenName === "Followers" ? (
-        <Stack.Screen
-          name="Followers"
-          options={{ headerShown: false }}
-          component={() => Followers(id)}
-        />
-      ) : null}
     </Stack.Navigator>
   );
 }

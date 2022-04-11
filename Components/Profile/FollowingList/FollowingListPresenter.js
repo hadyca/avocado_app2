@@ -1,29 +1,61 @@
 import React from "react";
 import styled from "styled-components/native";
 import { colors } from "../../../Colors";
-import UserAvatar from "../../UserAvatar";
 
 const Container = styled.View`
-  margin: 10px;
+  justify-content: center;
 `;
 
-const Text = styled.Text``;
-
-const Separator = styled.View`
-  width: 100%;
-  height: 1px;
-  background-color: ${colors.borderThin};
+const SubContainer = styled.View`
+  height: 70px;
+  margin: 0px 15px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `;
 
-const ProfileBtn = styled.TouchableOpacity`
-  background-color: ${(props) => (props.backgroundColor ? "blue" : "white")};
-  padding: 15px 7px;
+const AvatarContainer = styled.TouchableOpacity`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
+const AvatarView = styled.View`
+  margin-right: 10px;
+  border-radius: 30px;
+  border: 0.5px solid ${colors.avatarBorder};
+`;
+
+const Avatar = styled.Image`
+  width: 55px;
+  height: 55px;
+  border-radius: 30px;
+`;
+
+const NameView = styled.View``;
+
+const Username = styled.Text`
+  color: ${colors.black};
+  font-weight: 600;
+`;
+
+const CompanyName = styled.Text`
+  color: ${colors.greyText};
+  font-size: 15px;
+`;
+
+const FollowView = styled.View``;
+
+const FollowBtn = styled.TouchableOpacity`
+  background-color: ${(props) =>
+    props.backgroundColor ? colors.blue : "white"};
+  width: 90px;
+  padding: 5px 7px;
   border-radius: 3px;
-  width: 100%;
-  border: 1px blue solid;
+  border: 1px solid ${colors.borderThick};
 `;
 
-const ProfileText = styled.Text`
+const FollowText = styled.Text`
   color: ${(props) => (props.backgroundColor ? "white" : "black")};
   font-weight: 600;
   text-align: center;
@@ -33,33 +65,50 @@ export default function FollowingListPresenter({
   goToProfile,
   username,
   avatarUrl,
-  myCompany,
+  companyName,
   isFollowing,
   isMe,
-  loading,
   toggleFollowingMutation,
 }) {
   const getButton = (isFollowing) => {
     if (isFollowing) {
       return (
-        <ProfileBtn backgroundColor={false} onPress={toggleFollowingMutation}>
-          <ProfileText backgroundColor={false}>Following</ProfileText>
-        </ProfileBtn>
+        <FollowBtn backgroundColor={false} onPress={toggleFollowingMutation}>
+          <FollowText backgroundColor={false}>Following</FollowText>
+        </FollowBtn>
       );
     } else {
       return (
-        <ProfileBtn backgroundColor={true} onPress={toggleFollowingMutation}>
-          <ProfileText backgroundColor={true}>Follow</ProfileText>
-        </ProfileBtn>
+        <FollowBtn backgroundColor={true} onPress={toggleFollowingMutation}>
+          <FollowText backgroundColor={true}>Follow</FollowText>
+        </FollowBtn>
       );
     }
   };
 
   return (
     <Container>
-      <UserAvatar uri={avatarUrl} username={username} />
-      {!isMe ? getButton(isFollowing) : null}
-      <Separator />
+      <SubContainer>
+        <AvatarContainer onPress={goToProfile}>
+          {avatarUrl ? (
+            <AvatarView>
+              <Avatar resizeMode="cover" source={{ uri: avatarUrl }} />
+            </AvatarView>
+          ) : (
+            <AvatarView>
+              <Avatar
+                resizeMode="cover"
+                source={require("../../../assets/blankProfile.png")}
+              />
+            </AvatarView>
+          )}
+          <NameView>
+            <Username>{username}</Username>
+            {companyName ? <CompanyName>{companyName}</CompanyName> : null}
+          </NameView>
+        </AvatarContainer>
+        <FollowView>{!isMe ? getButton(isFollowing) : null}</FollowView>
+      </SubContainer>
     </Container>
   );
 }

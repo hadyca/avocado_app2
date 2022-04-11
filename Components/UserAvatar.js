@@ -1,5 +1,4 @@
 import React from "react";
-import { View } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../Colors";
 
@@ -8,8 +7,13 @@ const Container = styled.View`
   align-items: center;
 `;
 
-const Avatar = styled.Image`
+const AvatarView = styled.View`
   margin-right: 10px;
+  border-radius: 12.5px;
+  border: 0.5px solid ${colors.avatarBorder};
+`;
+
+const Avatar = styled.Image`
   width: 25px;
   height: 25px;
   border-radius: 12.5px;
@@ -24,12 +28,16 @@ export default function UserAvatar({ username, uri }) {
   return (
     <Container>
       {uri ? (
-        <Avatar resizeMode="cover" source={{ uri: uri }} />
+        <AvatarView>
+          <Avatar resizeMode="cover" source={{ uri: uri }} />
+        </AvatarView>
       ) : (
-        <Avatar
-          resizeMode="cover"
-          source={require("../assets/blankProfile.png")}
-        />
+        <AvatarView>
+          <Avatar
+            resizeMode="cover"
+            source={require("../assets/blankProfile.png")}
+          />
+        </AvatarView>
       )}
       <Username>{username}</Username>
     </Container>

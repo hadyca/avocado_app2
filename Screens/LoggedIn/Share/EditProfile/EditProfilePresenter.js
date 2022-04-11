@@ -23,6 +23,11 @@ const Top = styled.TouchableOpacity`
   margin-top: 20px;
 `;
 
+const AvatarView = styled.View`
+  border-radius: 50px;
+  border: 0.5px solid ${colors.avatarBorder};
+`;
+
 const Avatar = styled.Image`
   width: 80px;
   height: 80px;
@@ -126,12 +131,16 @@ export default function EditProfilePresenter({
     <Container>
       <Top onPress={goToSelectAvatar}>
         {avatarUrl ? (
-          <Avatar resizeMode="cover" source={{ uri: avatarUrl }} />
+          <AvatarView>
+            <Avatar resizeMode="cover" source={{ uri: avatarUrl }} />
+          </AvatarView>
         ) : (
-          <Avatar
-            resizeMode="cover"
-            source={require("../../../../assets/blankProfile.png")}
-          />
+          <AvatarView>
+            <Avatar
+              resizeMode="cover"
+              source={require("../../../../assets/blankProfile.png")}
+            />
+          </AvatarView>
         )}
         <Background />
         <Ionicons

@@ -7,7 +7,11 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function SearchConditionNav() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarIndicatorStyle: { backgroundColor: "black" },
+      }}
+    >
       <Tab.Screen
         name="SearchConditionDistrict"
         component={SearchConditionDistrict}

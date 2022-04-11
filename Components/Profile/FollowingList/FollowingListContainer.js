@@ -22,35 +22,35 @@ export default function ({
       },
     } = result;
     if (ok) {
-      // const UserId = `User:${data?.seeFollowing?.id}`;
-      // cache.modify({
-      //   id: UserId,
-      //   fields: {
-      //     isFollowing(prev) {
-      //       return !prev;
-      //     },
-      //     totalFollowers(prev) {
-      //       if (data?.seeFollowing?.isFollowing) {
-      //         return prev - 1;
-      //       } else {
-      //         return prev + 1;
-      //       }
-      //     },
-      //   },
-      // });
-      // const { me } = userData;
-      // cache.modify({
-      //   id: `User:${me.id}`,
-      //   fields: {
-      //     totalFollowing(prev) {
-      //       if (data?.seeProfile?.isFollowing) {
-      //         return prev - 1;
-      //       } else {
-      //         return prev + 1;
-      //       }
-      //     },
-      //   },
-      // });
+      const UserId = `User:${id}`;
+      cache.modify({
+        id: UserId,
+        fields: {
+          isFollowing(prev) {
+            return !prev;
+          },
+          totalFollowers(prev) {
+            if (isFollowing) {
+              return prev - 1;
+            } else {
+              return prev + 1;
+            }
+          },
+        },
+      });
+      const { me } = userData;
+      cache.modify({
+        id: `User:${me.id}`,
+        fields: {
+          totalFollowing(prev) {
+            if (isFollowing) {
+              return prev - 1;
+            } else {
+              return prev + 1;
+            }
+          },
+        },
+      });
     }
   };
 
@@ -65,7 +65,7 @@ export default function ({
   );
 
   const goToProfile = () => {
-    navigation.navigate("Profile", {
+    navigation.push("Profile", {
       id,
     });
   };
@@ -74,10 +74,9 @@ export default function ({
     <FollowingListPresenter
       username={username}
       avatarUrl={avatarUrl}
-      myCompany={myCompany}
+      companyName={myCompany?.companyName}
       isFollowing={isFollowing}
       isMe={isMe}
-      loading={loading}
       goToProfile={goToProfile}
       toggleFollowingMutation={toggleFollowingMutation}
     />

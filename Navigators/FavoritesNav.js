@@ -7,7 +7,11 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function FavoritesNav() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarIndicatorStyle: { backgroundColor: "black" },
+      }}
+    >
       <Tab.Screen
         name="FavoriteUserPost"
         component={FavoriteUserPost}

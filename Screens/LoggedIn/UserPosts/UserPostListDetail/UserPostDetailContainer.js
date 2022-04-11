@@ -49,11 +49,9 @@ export default function ({ route: { params } }) {
 
   const updateToggleFavorite = (cache, result) => {
     const {
-      data: {
-        toggleFavoriteUserPost: { ok },
-      },
+      data: { toggleFavoriteUserPost },
     } = result;
-    if (ok) {
+    if (toggleFavoriteUserPost.id) {
       const UserPostId = `UserPost:${params.id}`;
       cache.modify({
         id: UserPostId,
@@ -64,8 +62,24 @@ export default function ({ route: { params } }) {
         },
       });
       if (data?.seeUserPost?.isFavorite) {
+        cache.evict({
+          id: "ROOT_QUERY",
+          fields: {
+            seeFavoriteUserPosts() {
+              return;
+            },
+          },
+        });
         Alert.alert("관심목록에서 삭제 되었습니다.");
       } else {
+        cache.modify({
+          id: "ROOT_QUERY",
+          fields: {
+            seeFavoriteUserPosts(prev) {
+              return [toggleFavoriteUserPost, ...prev];
+            },
+          },
+        });
         Alert.alert("관심목록에 추가 되었습니다.");
       }
     }
@@ -121,10 +135,11 @@ export default function ({ route: { params } }) {
     }
   );
 
-  const [toggleUserPostFavoriteMutation] = useMutation(
+  const [toggleUserPostFavoriteMutation, { error }] = useMutation(
     TOGGLE_USERPOST_FAVORITE_MUTATION,
     {
       update: updateToggleFavorite,
+      onError: (error) => Alert.alert(error.message),
     }
   );
 
@@ -191,6 +206,7 @@ export default function ({ route: { params } }) {
   let notMineOptionArray2 = ["관심목록에서 삭제", "신고", "취소"];
 
   const showActionSheet = () => {
+    console.log(data?.seeUserPost?.isFavorite);
     if (data?.seeUserPost?.isMine) {
       return myActionsheet.current.show();
     } else if (data?.seeUserPost?.isFavorite) {

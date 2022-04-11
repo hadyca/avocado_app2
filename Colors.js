@@ -10,6 +10,8 @@ export const colors = {
   borderThin: "#f1f3f6",
   focus: "#222222",
   error: "tomato",
+  avatarBorder: "#e4e6e7",
+  blue: "#0031bc",
 };
 
 //아보카도 껍데기 : #283B02
