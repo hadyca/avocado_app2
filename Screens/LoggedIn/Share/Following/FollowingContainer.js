@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import ScreenLayout from "../../../../Components/ScreenLayout";
 import { FOLLOWING_QUERY } from "./FollowingQueries";
@@ -36,6 +36,12 @@ export default function ({ id }) {
       setFetchLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (id) {
+      refetch();
+    }
+  }, []);
 
   return (
     <ScreenLayout loading={loading}>

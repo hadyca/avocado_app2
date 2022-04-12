@@ -78,8 +78,31 @@ export const TOGGLE_COMPANYPOST_LIKE_MUTATION = gql`
 export const TOGGLE_COMPANYPOST_FAVORITE_MUTATION = gql`
   mutation toggleFavoriteCompanyPost($companyPostId: Int!) {
     toggleFavoriteCompanyPost(companyPostId: $companyPostId) {
-      ok
-      error
+      id
+      company {
+        id
+        companyName
+        aboutUs
+        addressStep1
+        addressStep2
+        addressStep3
+        sector
+        user {
+          id
+          username
+          avatarUrl
+        }
+      }
+      title
+      content
+      createdAt
+      file {
+        id
+        fileUrl
+      }
+      totalCompanyPostLikes
+      totalCompanyPostComments
+      deleted
     }
   }
 `;

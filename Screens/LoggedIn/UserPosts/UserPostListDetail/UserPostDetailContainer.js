@@ -64,11 +64,7 @@ export default function ({ route: { params } }) {
       if (data?.seeUserPost?.isFavorite) {
         cache.evict({
           id: "ROOT_QUERY",
-          fields: {
-            seeFavoriteUserPosts() {
-              return;
-            },
-          },
+          fieldName: "seeFavoriteUserPosts",
         });
         Alert.alert("관심목록에서 삭제 되었습니다.");
       } else {
@@ -206,7 +202,6 @@ export default function ({ route: { params } }) {
   let notMineOptionArray2 = ["관심목록에서 삭제", "신고", "취소"];
 
   const showActionSheet = () => {
-    console.log(data?.seeUserPost?.isFavorite);
     if (data?.seeUserPost?.isMine) {
       return myActionsheet.current.show();
     } else if (data?.seeUserPost?.isFavorite) {

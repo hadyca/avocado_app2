@@ -177,7 +177,7 @@ export default function ProfileContentsPresenter({
       <SubHeader>
         <Bio>{data?.seeProfile?.bio}</Bio>
       </SubHeader>
-      {data?.seeProfile ? getButton(data.seeProfile) : null}
+      {data?.seeProfile ? getButton(data?.seeProfile) : null}
       <Bottom>
         {data?.seeProfile?.myCompany ? (
           <>

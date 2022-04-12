@@ -57,6 +57,7 @@ const Button = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 13px;
 `;
 
 const ButtonName = styled.Text``;
@@ -70,7 +71,6 @@ const ButtonTextView = styled.View`
 const ButtonText = styled.Text`
   color: ${colors.black};
   margin-right: 5px;
-  margin-bottom: 10px;
 `;
 
 const AddBio = styled.Text`
@@ -82,6 +82,7 @@ export default function EditProfilePresenter({
   goToSelectAvatar,
   goToEditUsername,
   goToEditBio,
+  isEdited,
   avatarUrl,
   username,
   bio,
@@ -90,7 +91,7 @@ export default function EditProfilePresenter({
   const navigation = useNavigation();
 
   const goToEditAvatar = () => {
-    if (avatarUrl === "") {
+    if (!isEdited) {
       navigation.pop();
     } else {
       const newAvatar = new ReactNativeFile({
@@ -98,6 +99,7 @@ export default function EditProfilePresenter({
         name: `1.jpg`,
         type: "image/jpeg",
       });
+
       if (!loading) {
         editAvatarMutation({
           variables: {
@@ -125,7 +127,7 @@ export default function EditProfilePresenter({
     navigation.setOptions({
       headerRight: loading ? HeaderRightLoading : OkHeaderRight,
     });
-  }, [loading, avatarUrl]);
+  }, [loading, avatarUrl, isEdited]);
 
   return (
     <Container>
@@ -178,16 +180,3 @@ export default function EditProfilePresenter({
     </Container>
   );
 }
-
-// {
-//   content.length >= 20 ? (
-//     <Content>
-//       <ContentText>{content.substr(0, 20)}</ContentText>
-//       <MoreText>...more</MoreText>
-//     </Content>
-//   ) : (
-//     <Content>
-//       <ContentText>{content}</ContentText>
-//     </Content>
-//   );
-// }

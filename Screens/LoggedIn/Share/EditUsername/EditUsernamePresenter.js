@@ -47,13 +47,17 @@ export default function EditUsernamePresenter({
   });
 
   const onValid = async ({ username }) => {
-    if (!loading) {
-      editUsernameMutation({
-        variables: {
-          username,
-          usernameEditDate: String(today),
-        },
-      });
+    if (originUsername === username) {
+      navigation.pop();
+    } else {
+      if (!loading) {
+        editUsernameMutation({
+          variables: {
+            username,
+            usernameEditDate: String(today),
+          },
+        });
+      }
     }
   };
 
@@ -96,7 +100,7 @@ export default function EditUsernamePresenter({
             required: true,
             pattern: {
               value: usernameRule,
-              message: "숫자와 영문만 사용 가능하며, 20자를 넘을 수 없습니다.",
+              message: "특수문자는 사용할 수 없으며, 20자를 넘을 수 없습니다.",
             },
           }}
           render={({ field: { onChange, value } }) => (

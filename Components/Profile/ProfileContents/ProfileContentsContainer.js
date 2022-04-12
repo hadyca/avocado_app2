@@ -10,12 +10,9 @@ export default function ({ data }) {
   const { data: userData } = useMe();
   const updateToggleFollowing = (cache, result) => {
     const {
-      data: {
-        toggleFollowing: { ok },
-      },
+      data: { toggleFollowing },
     } = result;
-
-    if (ok) {
+    if (toggleFollowing.id) {
       const UserId = `User:${data?.seeProfile?.id}`;
       cache.modify({
         id: UserId,

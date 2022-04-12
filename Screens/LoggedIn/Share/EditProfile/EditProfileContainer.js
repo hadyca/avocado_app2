@@ -8,6 +8,7 @@ import EditProfilePresenter from "./EditProfilePresenter";
 
 export default function ({ route: { params } }) {
   const navigation = useNavigation();
+  const [isEdited, setIsEdited] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState("");
 
   const updateAvatar = (cache, result) => {
@@ -39,11 +40,12 @@ export default function ({ route: { params } }) {
       aspect: [5, 3],
       quality: 0.2,
     });
-
     if (!result.cancelled) {
       setAvatarUrl(result.uri);
+      setIsEdited(true);
     }
   };
+
   const goToEditUsername = () => {
     navigation.navigate("EditUsername", {
       username: params.username,
@@ -85,6 +87,7 @@ export default function ({ route: { params } }) {
         goToSelectAvatar={goToSelectAvatar}
         goToEditUsername={goToEditUsername}
         goToEditBio={goToEditBio}
+        isEdited={isEdited}
         avatarUrl={avatarUrl}
         username={params.username}
         bio={params.bio}

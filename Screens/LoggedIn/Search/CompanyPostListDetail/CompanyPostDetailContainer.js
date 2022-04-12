@@ -51,11 +51,9 @@ export default function ({ route: { params } }) {
 
   const updateToggleFavorite = (cache, result) => {
     const {
-      data: {
-        toggleFavoriteCompanyPost: { ok },
-      },
+      data: { toggleFavoriteCompanyPost },
     } = result;
-    if (ok) {
+    if (toggleFavoriteCompanyPost.id) {
       const CompanyPostId = `CompanyPost:${params.id}`;
       cache.modify({
         id: CompanyPostId,
@@ -66,8 +64,20 @@ export default function ({ route: { params } }) {
         },
       });
       if (data?.seeCompanyPost?.isFavorite) {
+        cache.evict({
+          id: "ROOT_QUERY",
+          fieldName: "seeFavoriteCompanyPosts",
+        });
         Alert.alert("관심목록에서 삭제 되었습니다.");
       } else {
+        cache.modify({
+          id: "ROOT_QUERY",
+          fields: {
+            seeFavoriteCompanyPosts(prev) {
+              return [toggleFavoriteCompanyPost, ...prev];
+            },
+          },
+        });
         Alert.alert("관심목록에 추가 되었습니다.");
       }
     }
