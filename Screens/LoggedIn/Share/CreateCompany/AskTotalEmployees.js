@@ -42,15 +42,15 @@ export default function AskTotalEmployees({ route: { params } }) {
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextInput_Company
-            placeholder="Only number"
+            placeholder="Your company total Employees"
             autoCapitalize="none"
             returnKeyType="done"
             keyboardType="number-pad"
             onChangeText={(text) => onChange(text)}
-            value={value || ""}
+            value={value}
             hasError={false}
             onSubmitEditing={goToAskEmail}
-            maxLength={100}
+            maxLength={10}
           />
         )}
       />

@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { TouchableOpacity, ActivityIndicator } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { ReactNativeFile } from "apollo-upload-client";
+import ModalSelector from "react-native-modal-selector";
 import { colors } from "../../../../Colors";
+import { sectors } from "../../../../Constant";
 
 const HeaderRightText = styled.Text`
   color: ${colors.black};
@@ -77,33 +79,82 @@ const AddBio = styled.Text`
   color: ${colors.greyText};
 `;
 
+const CompanyTitle = styled.Text`
+  margin: 20px 0px 10px 0px;
+  font-size: 16px;
+  font-weight: bold;
+`;
+
+const Separator = styled.View`
+  width: 100%;
+  height: 1px;
+  background-color: ${colors.borderThin};
+`;
+
 export default function EditProfilePresenter({
   editAvatarMutation,
+  editSectorMutation,
   goToSelectAvatar,
   goToEditUsername,
   goToEditBio,
+  goToEditCompanyName,
+  goToEditAboutUs,
+  goToEditTotalEmployees,
   isEdited,
   avatarUrl,
   username,
   bio,
+  myCompany,
   loading,
+  companyLoading,
+  skiphandle,
 }) {
+  const [selectedSector, setSelectedSector] = useState(myCompany?.sector);
   const navigation = useNavigation();
 
-  const goToEditAvatar = () => {
-    if (!isEdited) {
+  const goToEditAvatar = async () => {
+    if (!isEdited && selectedSector === myCompany?.sector) {
       navigation.pop();
-    } else {
+    }
+    if (isEdited && selectedSector === myCompany?.sector) {
       const newAvatar = new ReactNativeFile({
         uri: avatarUrl,
         name: `1.jpg`,
         type: "image/jpeg",
       });
-
-      if (!loading) {
+      if (!companyLoading) {
         editAvatarMutation({
           variables: {
             avatarUrl: newAvatar,
+          },
+        });
+      }
+    }
+    if (!isEdited && selectedSector !== myCompany?.sector) {
+      if (!loading) {
+        editSectorMutation({
+          variables: {
+            sector: selectedSector,
+          },
+        });
+      }
+    }
+    if (isEdited && selectedSector !== myCompany?.sector) {
+      await skiphandle();
+      const newAvatar = new ReactNativeFile({
+        uri: avatarUrl,
+        name: `1.jpg`,
+        type: "image/jpeg",
+      });
+      if (!loading && !companyLoading) {
+        await editAvatarMutation({
+          variables: {
+            avatarUrl: newAvatar,
+          },
+        });
+        await editSectorMutation({
+          variables: {
+            sector: selectedSector,
           },
         });
       }
@@ -125,9 +176,10 @@ export default function EditProfilePresenter({
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: loading ? HeaderRightLoading : OkHeaderRight,
+      headerRight:
+        loading || companyLoading ? HeaderRightLoading : OkHeaderRight,
     });
-  }, [loading, avatarUrl, isEdited]);
+  }, [loading, companyLoading, avatarUrl, isEdited, selectedSector]);
 
   return (
     <Container>
@@ -176,6 +228,61 @@ export default function EditProfilePresenter({
             <Ionicons name="chevron-forward" color="black" size={17} />
           </ButtonTextView>
         </Button>
+        <Separator />
+        {myCompany ? (
+          <>
+            <CompanyTitle>Company Information</CompanyTitle>
+            <Button onPress={goToEditCompanyName}>
+              <ButtonName>Company</ButtonName>
+              <ButtonTextView>
+                <ButtonText>{myCompany?.companyName}</ButtonText>
+                <Ionicons name="chevron-forward" color="black" size={17} />
+              </ButtonTextView>
+            </Button>
+            <Button onPress={goToEditAboutUs}>
+              <ButtonName>About Us</ButtonName>
+              <ButtonTextView>
+                <ButtonText>
+                  {myCompany?.aboutUs.length >= 10 ? (
+                    <ButtonText>{`${myCompany?.aboutUs.substr(
+                      0,
+                      10
+                    )}...`}</ButtonText>
+                  ) : (
+                    <ButtonText>{myCompany?.aboutUs}</ButtonText>
+                  )}
+                </ButtonText>
+                <Ionicons name="chevron-forward" color="black" size={17} />
+              </ButtonTextView>
+            </Button>
+            <ModalSelector
+              data={sectors}
+              keyExtractor={(item) => item.id}
+              labelExtractor={(item) => item.value}
+              accessible={true}
+              onChange={(item) => {
+                setSelectedSector(item.value);
+              }}
+              // cancelText={"Cancel"}
+              optionContainerStyle={{ height: 500 }}
+            >
+              <Button>
+                <ButtonName>Sector</ButtonName>
+                <ButtonTextView>
+                  <ButtonText>{selectedSector}</ButtonText>
+                  <Ionicons name="chevron-forward" color="black" size={17} />
+                </ButtonTextView>
+              </Button>
+            </ModalSelector>
+            <Button onPress={goToEditTotalEmployees}>
+              <ButtonName>Total Employees</ButtonName>
+              <ButtonTextView>
+                <ButtonText>{`${myCompany?.totalEmployees} 명`}</ButtonText>
+                <Ionicons name="chevron-forward" color="black" size={17} />
+              </ButtonTextView>
+            </Button>
+          </>
+        ) : null}
       </Bottom>
     </Container>
   );

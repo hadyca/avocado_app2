@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@apollo/client";
 import ScreenLayout from "../../../../Components/ScreenLayout";
-import { EDIT_BIO_MUTATION } from "./EditBioQueries";
-import EditBioPresenter from "./EditBioPresenter";
+import { EDIT_COMPANY_MUTATION } from "./EditCompanyNameQueries";
+import EditCompanyNamePresenter from "./EditCompanyNamePresenter";
 
 export default function ({ route: { params } }) {
   const [counting, setCounting] = useState(0);
@@ -14,46 +14,49 @@ export default function ({ route: { params } }) {
     return setCounting(value.length);
   };
 
-  const updateBio = (cache, result) => {
+  const updateCompanyName = (cache, result) => {
     const {
-      data: { editProfile },
+      data: { editCompany },
     } = result;
-    if (editProfile.id) {
-      const UserId = `User:${editProfile.id}`;
+    if (editCompany.id) {
+      const CompanyId = `User:${editCompany.id}`;
       cache.modify({
-        id: UserId,
+        id: CompanyId,
         fields: {
-          bio() {
-            return editProfile.bio;
+          companyName() {
+            return editCompany.companyName;
           },
         },
       });
       navigation.navigate("EditProfile", {
         username: params.username,
-        bio: editProfile.bio,
-        myCompany: params.myCompany,
+        bio: params.bio,
+        myCompany: editCompany,
       });
     }
   };
 
-  const [editBioMutation, { loading }] = useMutation(EDIT_BIO_MUTATION, {
-    update: updateBio,
-  });
+  const [editCompanyNameMutation, { loading }] = useMutation(
+    EDIT_COMPANY_MUTATION,
+    {
+      update: updateCompanyName,
+    }
+  );
 
   useEffect(() => {
-    if (params.bio?.length) {
-      setCounting(params.bio?.length);
+    if (params.myCompany.companyName?.length) {
+      setCounting(params.myCompany.companyName?.length);
     }
   }, []);
 
   return (
     <ScreenLayout>
-      <EditBioPresenter
-        editBioMutation={editBioMutation}
+      <EditCompanyNamePresenter
+        editCompanyNameMutation={editCompanyNameMutation}
         countingText={countingText}
         counting={counting}
         loading={loading}
-        originBio={params.bio}
+        originCompanyName={params.myCompany.companyName}
       />
     </ScreenLayout>
   );

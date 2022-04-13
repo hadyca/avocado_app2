@@ -31,6 +31,7 @@ export default function ({ route: { params } }) {
       navigation.navigate("EditProfile", {
         username: editProfile.username,
         bio: params.bio,
+        myCompany: params.myCompany,
       });
     }
   };
@@ -38,7 +39,7 @@ export default function ({ route: { params } }) {
   const [editUsernameMutation, { loading }] = useMutation(
     EDIT_USERNAME_MUTATION,
     {
-      update: updateUsername,
+      onCompleted: updateUsername,
       onError: (error) => setErrorMessage(error.message),
     }
   );

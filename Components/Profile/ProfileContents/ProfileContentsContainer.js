@@ -85,6 +85,7 @@ export default function ({ data }) {
       username: data?.seeProfile?.username,
       bio: data?.seeProfile?.bio,
       avatarUrl: data?.seeProfile?.avatarUrl,
+      myCompany: data?.seeProfile?.myCompany,
     });
   };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
@@ -6,8 +6,6 @@ import { useForm, Controller } from "react-hook-form";
 import { colors } from "../../../../Colors";
 import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import { UnderBar } from "../../../../Components/Auth/AuthShared";
-import { usernameRule } from "../../../../RegExp";
-import FormError from "../../../../Components/Auth/FormError";
 
 const HeaderRightText = styled.Text`
   color: ${colors.black};
@@ -29,36 +27,29 @@ const CountingText = styled.Text`
   font-size: 11px;
 `;
 
-export default function EditUsernamePresenter({
-  editUsernameMutation,
+export default function EditCompanyNamePresenter({
+  editCompanyNameMutation,
   countingText,
   counting,
   loading,
-  originUsername,
-  today,
-  errorMessage,
+  originCompanyName,
 }) {
   const navigation = useNavigation();
 
   const { control, handleSubmit, formState } = useForm({
     defaultValues: {
-      username: originUsername,
+      companyName: originCompanyName,
     },
     mode: "onChange",
   });
 
-  const onValid = async ({ username }) => {
-    if (originUsername === username) {
-      navigation.pop();
-    } else {
-      if (!loading) {
-        editUsernameMutation({
-          variables: {
-            username,
-            usernameEditDate: String(today),
-          },
-        });
-      }
+  const onValid = async ({ companyName }) => {
+    if (!loading) {
+      editCompanyNameMutation({
+        variables: {
+          companyName,
+        },
+      });
     }
   };
 
@@ -95,33 +86,25 @@ export default function EditUsernamePresenter({
     <DismissKeyboard>
       <Container>
         <Controller
-          name="username"
+          name="companyName"
           control={control}
-          rules={{
-            required: true,
-            pattern: {
-              value: usernameRule,
-              message: "특수문자는 사용할 수 없으며, 20자를 넘을 수 없습니다.",
-            },
-          }}
+          rules={{ required: true }}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              placeholder="Username"
+              placeholder="Your Company Name"
               textAlignVertical={"top"}
-              maxLength={20}
+              maxLength={100}
               autoCapitalize="none"
               onChangeText={(text) => {
                 onChange(text);
                 countingText(text);
               }}
-              value={value.trim()}
+              value={value}
             />
           )}
         />
         <UnderBar />
-        <FormError message={formState?.errors?.username?.message} />
-        {errorMessage ? <FormError message={errorMessage} /> : null}
-        <CountingText>({counting}/20)</CountingText>
+        <CountingText>({counting}/100)</CountingText>
       </Container>
     </DismissKeyboard>
   );
