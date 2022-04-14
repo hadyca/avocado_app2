@@ -5,6 +5,7 @@ import * as ImagePicker from "expo-image-picker";
 import UserPostUploadFormPresenter from "./UserPostUploadFormPresenter";
 import { UPLOAD_USER_POST_MUTATION } from "./UserPostUploadFormQueries";
 import { ScreenNames } from "../../../../Constant";
+import useMe from "../../../../Hooks/useMe";
 
 export default function ({ route: { params } }) {
   const [photo, setPhoto] = useState([]);
@@ -12,18 +13,7 @@ export default function ({ route: { params } }) {
   const [screenName, setScreenName] = useState("");
 
   const navigation = useNavigation();
-
-  useEffect(() => {
-    (async () => {
-      if (Platform.OS !== "web") {
-        const { status } =
-          await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== "granted") {
-          alert("Sorry, we need camera roll permissions to make this work!");
-        }
-      }
-    })();
-  }, []);
+  const { data: userData } = useMe();
 
   const updateUploadUserPost = (cache, result) => {
     const {
@@ -35,6 +25,16 @@ export default function ({ route: { params } }) {
         fields: {
           seeAllUserPosts(prev) {
             return [uploadUserPost, ...prev];
+          },
+        },
+      });
+      const { me } = userData;
+      const UserId = `User:${me.id}`;
+      cache.modify({
+        id: UserId,
+        fields: {
+          totalUserPosts(prev) {
+            return prev + 1;
           },
         },
       });
@@ -91,6 +91,18 @@ export default function ({ route: { params } }) {
   };
 
   const goToCategory = () => navigation.navigate("PostCategory");
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     if (params.screenName) {

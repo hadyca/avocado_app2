@@ -1,7 +1,7 @@
 export const colors = {
   black: "#222222",
   greyBackround: "#F2F2F2",
-  greyText: "#CCCCCC",
+  greyText: "#666666",
   footerBackground: "#F7F7F7",
   backgraound: "#FFFFFF",
   buttonBackground: "#22DA93",
@@ -10,7 +10,8 @@ export const colors = {
   borderThin: "#f1f3f6",
   focus: "#222222",
   error: "tomato",
-  homeText: "#717171",
+  avatarBorder: "#e4e6e7",
+  blue: "#0031bc",
 };
 
 //아보카도 껍데기 : #283B02

@@ -7,20 +7,28 @@ const ME_QUERY = gql`
     me {
       id
       username
-      avatar
+      avatarUrl
+      myCompany {
+        id
+        companyName
+        email
+        addressStep1
+        addressStep2
+      }
     }
   }
 `;
 
 export default function useMe() {
   const hasToken = useReactiveVar(isLoggedInVar);
-  const { data } = useQuery(ME_QUERY, {
+  const { data, loading, refetch } = useQuery(ME_QUERY, {
     skip: !hasToken,
   });
+
   useEffect(() => {
     if (data?.me === null) {
       logUserOut();
     }
   }, [data]);
-  return { data };
+  return { data, loading, refetch };
 }

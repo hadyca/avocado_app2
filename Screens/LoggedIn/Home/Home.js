@@ -25,7 +25,7 @@ const Title = styled.Text`
 const Content = styled.Text`
   font-weight: 500;
   margin: 0px auto;
-  color: ${colors.homeText};
+  color: ${colors.greyText};
   font-size: 20px;
   margin-top: 5px;
 `;
@@ -43,7 +43,7 @@ const SubTitle = styled.Text`
 const SubContent = styled.Text`
   font-weight: 400;
   margin: 0px auto;
-  color: ${colors.homeText};
+  color: ${colors.greyText};
   font-size: 20px;
   margin-top: 10px;
 `;
@@ -93,6 +93,9 @@ export default function Home() {
             <Title></Title>
           </TitleImg>
           <Contents>
+            <TouchableOpacity onPress={goToCreateCompany}>
+              <Text>기업 회원 가입 하러 가기</Text>
+            </TouchableOpacity>
             <SubTitle>아보카도 소개</SubTitle>
             <SubContent>내용</SubContent>
           </Contents>
@@ -108,9 +111,6 @@ export default function Home() {
             <SubTitle>Footer</SubTitle>
             <SubContent>푸터 내용</SubContent>
           </Contents>
-          <TouchableOpacity onPress={goToCreateCompany}>
-            <Text>기업 회원 가입 하러 가기</Text>
-          </TouchableOpacity>
         </Container>
       </ScrollView>
     </ScreenLayout>

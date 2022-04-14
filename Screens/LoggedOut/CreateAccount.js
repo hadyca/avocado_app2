@@ -37,10 +37,10 @@ export default function CreateAccount({ navigation }) {
         message: error,
       });
     } else {
-      return navigation.reset({
-        routes: [
-          { name: "ConfirmSecret", params: { email, username, password } },
-        ],
+      return navigation.navigate("ConfirmSecret", {
+        email,
+        username,
+        password,
       });
     }
   };
@@ -48,6 +48,9 @@ export default function CreateAccount({ navigation }) {
   // **개발용 화면 넘어가기
   // return navigation.navigate("ConfirmSecret", {
   //   email,
+  // });
+  // return navigation.reset({
+  //   routes: [{ name: "ConfirmSecret", params: { email, username, password } }],
   // });
 
   const [createAccountMutation, { loading }] = useMutation(
@@ -125,7 +128,7 @@ export default function CreateAccount({ navigation }) {
           required: "사용자 이름은 필수 항목 입니다.",
           pattern: {
             value: usernameRule,
-            message: "숫자와 영문만 사용 가능하며, 20자를 넘을 수 없습니다.",
+            message: "특수문자는 사용할 수 없으며, 20자를 넘을 수 없습니다.",
           },
         }}
         control={control}
@@ -137,7 +140,7 @@ export default function CreateAccount({ navigation }) {
             returnKeyType="next"
             onSubmitEditing={() => onNext(passwordRef)}
             onChangeText={(text) => onChange(text)}
-            value={value || ""}
+            value={value}
             hasError={Boolean(formState?.errors?.username?.message)}
             onChange={clearLoginError}
             onFocus={() => {

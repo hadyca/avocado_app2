@@ -30,7 +30,7 @@ const TitleText = styled.Text`
 `;
 
 const ReportView = styled.TouchableOpacity`
-  padding: 25px 15px;
+  padding: 18px 15px;
   color: black;
   border-bottom-width: 1px;
   border-bottom-color: ${colors.borderThin};

@@ -1,13 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Platform,
   FlatList,
   KeyboardAvoidingView,
   Keyboard,
-  TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
 import { colors } from "../../../../Colors";
 import CommentForm from "../../../../Components/Post/CommentForm";
@@ -46,22 +44,6 @@ export default function UserPostDetailPresenter({
     setCommentUploading(true);
   };
 
-  const HeaderRight = () => (
-    <TouchableOpacity onPress={showActionSheet}>
-      <Ionicons
-        name="ellipsis-vertical"
-        color="grey"
-        size={18}
-        style={{ paddingLeft: 10, paddingRight: 10 }}
-      />
-    </TouchableOpacity>
-  );
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: HeaderRight,
-    });
-  }, []);
-
   return (
     <>
       <KeyboardAvoidingView
@@ -77,16 +59,15 @@ export default function UserPostDetailPresenter({
             <FlatList
               ListHeaderComponent={
                 <PostContents
-                  file={data?.seeUserPost?.file.length}
+                  file={data?.seeUserPost?.file}
                   data={data}
-                  userId={data?.userId}
+                  userId={data?.seeUserPost?.user?.id}
                   username={data?.seeUserPost?.user?.username}
-                  avatar={data?.seeUserPost?.user?.avatar}
-                  title={data?.seeUserPost?.title}
+                  avatarUrl={data?.seeUserPost?.user?.avatarUrl}
                   content={data?.seeUserPost?.content}
                   category={data?.seeUserPost?.category}
                   likeLoading={likeLoading}
-                  toggleUserPostLikeMutation={toggleUserPostLikeMutation}
+                  toggleLikeMutation={toggleUserPostLikeMutation}
                   isLiked={data?.seeUserPost?.isLiked}
                 />
               }
@@ -115,16 +96,15 @@ export default function UserPostDetailPresenter({
             <FlatList
               ListHeaderComponent={
                 <PostContents
-                  file={data?.seeUserPost?.file.length}
+                  file={data?.seeUserPost?.file}
                   data={data}
-                  userId={data?.userId}
+                  userId={data?.seeUserPost?.user?.id}
                   username={data?.seeUserPost?.user?.username}
-                  avatar={data?.seeUserPost?.user?.avatar}
-                  title={data?.seeUserPost?.title}
+                  avatarUrl={data?.seeUserPost?.user?.avatarUrl}
                   content={data?.seeUserPost?.content}
                   category={data?.seeUserPost?.category}
                   likeLoading={likeLoading}
-                  toggleUserPostLikeMutation={toggleUserPostLikeMutation}
+                  toggleLikeMutation={toggleUserPostLikeMutation}
                   isLiked={data?.seeUserPost?.isLiked}
                 />
               }

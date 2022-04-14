@@ -10,7 +10,7 @@ export const CREATE_COMMENT_MUTATION = gql`
       user {
         id
         username
-        avatar
+        avatarUrl
       }
     }
   }
@@ -32,7 +32,7 @@ export const CREATE_RECOMMENT_MUTATION = gql`
       user {
         id
         username
-        avatar
+        avatarUrl
       }
     }
   }

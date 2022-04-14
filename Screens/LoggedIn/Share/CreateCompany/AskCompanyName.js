@@ -1,19 +1,17 @@
-import React, { useState } from "react";
-import { Text } from "react-native";
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import styled from "styled-components/native";
 import AuthLayout from "../../../../Components/Auth/AuthLayout";
-import { Subtitle } from "../../../../Components/Auth/Subtitle";
 import {
   TextInput_Company,
   UnderBar,
 } from "../../../../Components/Auth/AuthShared";
 import AuthButton from "../../../../Components/Auth/AuthButton";
+import ProgressCreateCompany from "../../../../Components/Auth/ProgressCreateCompany";
 
 export default function AskCompanyName() {
   const navigation = useNavigation();
-  const [focus1, setFocus1] = useState(false);
   const { control, formState, getValues } = useForm({
     mode: "onChange",
   });
@@ -27,11 +25,7 @@ export default function AskCompanyName() {
 
   return (
     <AuthLayout>
-      <Subtitle>
-        기업 회원 가입해주셔서 감사합니다. 7개의 정보만 알려주시면 금방
-        끝납니다.
-      </Subtitle>
-      <Text>회사 이름을 알려주세요. 1/7</Text>
+      <ProgressCreateCompany title={"회사 이름을 알려주세요"} step={"1"} />
       <Controller
         name="companyName"
         rules={{
@@ -40,24 +34,18 @@ export default function AskCompanyName() {
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextInput_Company
-            placeholder="Company name"
+            placeholder="Your Company Name"
             autoCapitalize="none"
             returnKeyType="done"
             onChangeText={(text) => onChange(text)}
             value={value || ""}
             hasError={false}
             onSubmitEditing={goToAboutUs}
-            onFocus={() => {
-              setFocus1(true);
-            }}
-            onBlur={() => {
-              setFocus1(false);
-            }}
-            focus={focus1}
+            maxLength={100}
           />
         )}
       />
-      <UnderBar />
+      <UnderBar lastOne={true} />
       <AuthButton
         text="다음"
         disabled={!formState.isValid}

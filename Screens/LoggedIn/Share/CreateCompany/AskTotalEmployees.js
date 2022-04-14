@@ -3,13 +3,17 @@ import { Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import AuthLayout from "../../../../Components/Auth/AuthLayout";
-import { TextInput } from "../../../../Components/Auth/AuthShared";
+import {
+  TextInput,
+  TextInput_Company,
+  UnderBar,
+} from "../../../../Components/Auth/AuthShared";
 import AuthButton from "../../../../Components/Auth/AuthButton";
 import { onlyNumber } from "../../../../RegExp";
+import ProgressCreateCompany from "../../../../Components/Auth/ProgressCreateCompany";
 
 export default function AskTotalEmployees({ route: { params } }) {
   const navigation = useNavigation();
-  const [focus1, setFocus1] = useState(false);
   const { control, formState, getValues } = useForm({
     mode: "onChange",
   });
@@ -26,7 +30,7 @@ export default function AskTotalEmployees({ route: { params } }) {
 
   return (
     <AuthLayout>
-      <Text>총 임직원수를 알려주세요 (숫자만 넣어주세요.) 4/7</Text>
+      <ProgressCreateCompany title={"총 임직원 수를 알려주세요!"} step={"4"} />
       <Controller
         name="totalEmployees"
         rules={{
@@ -37,26 +41,20 @@ export default function AskTotalEmployees({ route: { params } }) {
         }}
         control={control}
         render={({ field: { onChange, value } }) => (
-          <TextInput
-            placeholder={""}
+          <TextInput_Company
+            placeholder="Your company total Employees"
             autoCapitalize="none"
             returnKeyType="done"
             keyboardType="number-pad"
             onChangeText={(text) => onChange(text)}
-            value={value || ""}
+            value={value}
             hasError={false}
             onSubmitEditing={goToAskEmail}
-            onFocus={() => {
-              setFocus1(true);
-            }}
-            onBlur={() => {
-              setFocus1(false);
-            }}
-            focus={focus1}
+            maxLength={10}
           />
         )}
       />
-
+      <UnderBar lastOne={true} />
       <AuthButton
         text="다음"
         disabled={!formState.isValid}

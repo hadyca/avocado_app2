@@ -23,18 +23,19 @@ const ButtonText = styled.Text`
   font-size: 15px;
   padding: 15px 2px 15px 2px;
 `;
+
 export default function SearchSmallDistrict({ districtCode }) {
   const navigation = useNavigation();
-  const goToCompanyPostList = (name) => {
-    navigation.navigate("CompanyPostList", {
-      smallDistrictName: name,
+  const goToCompanyPostList = (addressStep2) => {
+    navigation.navigate("CompanyPostByDistrict", {
+      addressStep2,
     });
   };
   return (
     <View>
-      {smallDistrict[districtCode].map((value, index) => (
-        <Button key={index} onPress={() => goToCompanyPostList(value)}>
-          <ButtonText key={index}>{value}</ButtonText>
+      {smallDistrict[districtCode].map((item, index) => (
+        <Button key={index} onPress={() => goToCompanyPostList(item.value)}>
+          <ButtonText key={index}>{item.value}</ButtonText>
           <Ionicons
             name="chevron-forward"
             color="black"

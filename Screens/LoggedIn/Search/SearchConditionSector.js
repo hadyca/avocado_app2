@@ -1,15 +1,18 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useScrollToTop } from "@react-navigation/native";
 import { Text } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
+import PostFormButton from "../../../Components/Post/PostFormButton";
+import { ScreenNames, sectors } from "../../../Constant";
+import useMe from "../../../Hooks/useMe";
 
 const Container = styled.ScrollView``;
 
 const Row = styled.View`
   margin-top: 20px;
   flex-direction: row;
-  justify-content: space-around;
+  flex-wrap: wrap;
 `;
 
 const Contents = styled.TouchableOpacity`
@@ -24,65 +27,59 @@ const WorkLogo = styled.Image`
   width: 50px;
 `;
 
-export default function SearchConditionIndustry() {
+export default function SearchConditionSector({ route: { params } }) {
+  const navigation = useNavigation();
+  const { data } = useMe();
   const ref = useRef(null);
   useScrollToTop(ref);
-  const navigation = useNavigation();
 
-  const sendData = (name) => {
-    navigation.navigate("CompanyPostList", {
-      sectorName: name,
+  const [companyOwner, setCompanyOwner] = useState(false);
+
+  const goToCompanyPostList = (sector) => {
+    navigation.navigate("CompanyPostBySector", {
+      sector,
     });
   };
 
+  const goToCompanyPostForm = () => {
+    return navigation.navigate("CompanyPostUploadForm", {
+      screenName: ScreenNames.SEARCH_SECTOR,
+    });
+  };
+
+  useEffect(() => {
+    if (params?.fromWhere === ScreenNames.SEARCH_SECTOR) {
+      navigation.navigate("CompanyPostListDetail", {
+        id: params?.id,
+      });
+    }
+  }, [params]);
+
+  useEffect(() => {
+    if (data?.me?.myCompany?.id) {
+      setCompanyOwner(true);
+    }
+  }, [data]);
+
   return (
-    <Container ref={ref}>
-      <Row>
-        <Contents onPress={() => sendData("서비스")}>
-          <WorkLogo
-            source={require("../../../assets/coffee.png")}
-            resizeMode="contain"
-          />
-          <Text>서비스</Text>
-        </Contents>
-        <Contents onPress={() => sendData("공장/제조")}>
-          <WorkLogo
-            source={require("../../../assets/coffee.png")}
-            resizeMode="contain"
-          />
-          <Text>공장/제조</Text>
-        </Contents>
-        <Contents onPress={() => sendData("배달")}>
-          <WorkLogo
-            source={require("../../../assets/coffee.png")}
-            resizeMode="contain"
-          />
-          <Text>배달</Text>
-        </Contents>
-      </Row>
-      <Row>
-        <Contents>
-          <WorkLogo
-            source={require("../../../assets/coffee.png")}
-            resizeMode="contain"
-          />
-          <Text>서비스업</Text>
-        </Contents>
-        <Contents>
-          <WorkLogo
-            source={require("../../../assets/coffee.png")}
-            resizeMode="contain"
-          />
-          <Text>서비스업</Text>
-        </Contents>
-        <Contents>
-          <WorkLogo
-            source={require("../../../assets/coffee.png")}
-            resizeMode="contain"
-          />
-          <Text>서비스업</Text>
-        </Contents>
-      </Row>
-    </Container>
+    <>
+      <Container ref={ref}>
+        <Row>
+          {sectors.map((item, index) => (
+            <Contents
+              key={index}
+              onPress={() => goToCompanyPostList(item.value)}
+            >
+              <WorkLogo
+                source={require("../../../assets/coffee.png")}
+                resizeMode="contain"
+              />
+              <Text>{item.value}</Text>
+            </Contents>
+          ))}
+        </Row>
+      </Container>
+      {companyOwner ? <PostFormButton onPress={goToCompanyPostForm} /> : null}
+    </>
   );
 }

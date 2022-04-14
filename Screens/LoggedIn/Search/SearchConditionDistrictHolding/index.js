@@ -1,0 +1,2 @@
+import SearchConditionDistrictContainer from "./SearchConditionDistrictContainer";
+export default SearchConditionDistrictContainer;

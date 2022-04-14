@@ -31,11 +31,6 @@ const CategoryText = styled.Text`
 const Header = styled.TouchableOpacity``;
 const Contents = styled.View``;
 
-const Title = styled.Text`
-  margin-top: 10px;
-  font-size: 16px;
-  font-weight: 900;
-`;
 const Content = styled.Text`
   margin-top: 10px;
   font-size: 14px;
@@ -55,11 +50,10 @@ export default function PostContents({
   data,
   userId,
   username,
-  avatar,
-  title,
+  avatarUrl,
   content,
   category,
-  toggleUserPostLikeMutation,
+  toggleLikeMutation,
   likeLoading,
   isLiked,
 }) {
@@ -80,7 +74,7 @@ export default function PostContents({
 
   return (
     <View>
-      {file !== 0 ? <ImageSlider data={data} /> : null}
+      {file.length !== 0 ? <ImageSlider file={file} /> : null}
       <Container>
         <CategoryView>
           <CategoryTouch onPress={() => goToCategoryScreen(category)}>
@@ -88,18 +82,17 @@ export default function PostContents({
           </CategoryTouch>
         </CategoryView>
         <Header onPress={goToProfile}>
-          <UserAvatar username={username} uri={avatar} />
+          <UserAvatar username={username} uri={avatarUrl} />
         </Header>
         <Separator />
         <Contents>
-          <Title>{title}</Title>
           <Content>{content}</Content>
         </Contents>
         <Actions>
           {likeLoading ? (
             <ActivityIndicator color="black" />
           ) : (
-            <Action onPress={toggleUserPostLikeMutation}>
+            <Action onPress={toggleLikeMutation}>
               <Ionicons
                 name={isLiked ? "heart" : "heart-outline"}
                 color={isLiked ? "tomato" : "black"}

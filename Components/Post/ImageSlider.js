@@ -22,7 +22,7 @@ const Dot = styled.Text`
   font-size: ${(props) => props.size / 40}px;
 `;
 
-export default function ImageSlider({ data }) {
+export default function ImageSlider({ file }) {
   const [active, setActive] = useState(0);
   const { width } = useWindowDimensions();
 
@@ -48,7 +48,7 @@ export default function ImageSlider({ data }) {
         showsHorizontalScrollIndicator={false}
         style={{ width, height }}
       >
-        {data?.seeUserPost?.file.map((item, index) => (
+        {file.map((item, index) => (
           <Img
             key={index}
             source={{ uri: item.fileUrl }}
@@ -57,7 +57,7 @@ export default function ImageSlider({ data }) {
         ))}
       </ScrollView>
       <DotView>
-        {data?.seeUserPost?.file.map((item, index) => (
+        {file.map((item, index) => (
           <Dot active={index === active} key={index} size={width}>
             ⬤
           </Dot>

@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import { KeyboardAvoidingView, ScrollView, RefreshControl } from "react-native";
 import styled from "styled-components/native";
-
 import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import CommentForm from "../../../../Components/Post/CommentForm";
 import UserPostComment from "../../../../Components/Post/UserPostComment";

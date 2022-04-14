@@ -3,12 +3,10 @@ import { useWindowDimensions } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../Colors";
-import timeForToday from "../../Utils";
+import { timeForToday } from "../../Utils";
 import UserAvatar from "../UserAvatar";
 
-const Container = styled.View`
-  margin-bottom: 10px;
-`;
+const Container = styled.View``;
 
 const HeaderContainer = styled.View`
   flex-direction: row;
@@ -19,15 +17,13 @@ const Header = styled.TouchableOpacity`
   margin: 10px;
 `;
 
-const IconView = styled.TouchableOpacity`
-  padding: 10px;
-`;
-
 const Contents = styled.TouchableOpacity`
   margin-left: 10px;
 `;
 
-const ImgContainer = styled.TouchableOpacity``;
+const ImgContainer = styled.TouchableOpacity`
+  margin-top: 8px;
+`;
 
 const MainImg = styled.Image`
   margin-top: 5px;
@@ -35,14 +31,7 @@ const MainImg = styled.Image`
   height: ${(props) => Math.ceil(props.height / 3)}px;
 `;
 
-const Title = styled.Text`
-  margin-top: 8px;
-  font-size: 16px;
-  font-weight: 600;
-`;
-
 const Content = styled.View`
-  font-size: 14px;
   margin-top: 5px;
   flex-direction: row;
   align-items: center;
@@ -56,7 +45,7 @@ const ContentText = styled.Text`
 const MoreText = styled.Text`
   margin-left: 5px;
   font-size: 12px;
-  color: ${colors.homeText};
+  color: ${colors.greyText};
 `;
 
 const LikeComment = styled.View`
@@ -67,34 +56,33 @@ const LikeComment = styled.View`
 
 const Likes = styled.Text`
   margin-right: 5px;
-  color: ${colors.homeText};
-  font-size: 11px;
+  color: ${colors.greyText};
+  font-size: 12px;
 `;
 
 const Comments = styled.Text`
-  color: ${colors.homeText};
-  font-size: 11px;
+  color: ${colors.greyText};
+  font-size: 12px;
 `;
 
 const Date = styled.Text`
   margin-top: 3px;
   margin-left: 10px;
-  color: ${colors.homeText};
-  font-size: 8px;
+  color: ${colors.greyText};
+  font-size: 10px;
 `;
 
 const Separator = styled.View`
   width: 100%;
   height: 5px;
   background-color: ${colors.borderThin};
-  margin-top: 20px;
+  margin-top: 10px;
 `;
 
 function CategoryUserPost({
   id,
   user,
   file,
-  title,
   content,
   totalUserPostLikes,
   totalUserPostComments,
@@ -102,9 +90,7 @@ function CategoryUserPost({
 }) {
   const { width, height } = useWindowDimensions();
 
-  const date = new window.Date(parseInt(createdAt));
-
-  const time = timeForToday(date);
+  const time = timeForToday(parseInt(createdAt));
 
   const navigation = useNavigation();
 
@@ -125,10 +111,9 @@ function CategoryUserPost({
     <Container>
       <HeaderContainer>
         <Header onPress={goToProfile}>
-          <UserAvatar username={user.username} uri={user.avatar} />
+          <UserAvatar username={user.username} uri={user.avatarUrl} />
         </Header>
       </HeaderContainer>
-
       {file.length > 0 ? (
         <ImgContainer onPress={goToPostDetail}>
           <MainImg
@@ -140,7 +125,6 @@ function CategoryUserPost({
         </ImgContainer>
       ) : null}
       <Contents onPress={goToPostDetail}>
-        <Title>{title}</Title>
         {content.length >= 20 ? (
           <Content>
             <ContentText>{content.substr(0, 20)}</ContentText>

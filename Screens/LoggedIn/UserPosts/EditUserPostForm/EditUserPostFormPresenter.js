@@ -44,13 +44,6 @@ const HeaderRightText = styled.Text`
   margin-right: 7px;
 `;
 
-const TitleInput = styled.TextInput`
-  padding: 15px 7px;
-  color: black;
-  border-bottom-width: 1px;
-  border-bottom-color: ${colors.borderThin};
-`;
-
 const CategoryView = styled.TouchableOpacity`
   border-bottom-width: 1px;
   border-bottom-color: ${colors.borderThin};
@@ -80,7 +73,6 @@ const DeleteBtn = styled.TouchableOpacity`
 `;
 
 export default function EditUserPostFormPresenter({
-  title,
   content,
   loading,
   userPostId,
@@ -96,13 +88,12 @@ export default function EditUserPostFormPresenter({
   const navigation = useNavigation();
   const { control, handleSubmit, formState } = useForm({
     defaultValues: {
-      title,
       content,
     },
     mode: "onChange",
   });
 
-  const onValid = async ({ title, content }) => {
+  const onValid = async ({ content }) => {
     const editedFileUrl = await photo.map((_, index) => {
       return new ReactNativeFile({
         uri: photo[index].fileUrl,
@@ -112,12 +103,11 @@ export default function EditUserPostFormPresenter({
     });
 
     if (!loading) {
-      handleEdit(title, content);
+      handleEdit(content);
       editUserPostMutation({
         variables: {
           userPostId: parseInt(userPostId),
           fileUrl: editedFileUrl,
-          title,
           content,
           category,
         },
@@ -149,7 +139,6 @@ export default function EditUserPostFormPresenter({
         : !formState.isValid || !category
         ? NoHeaderRight
         : OkHeaderRight,
-      ...(loading && { headerLeft: () => null }),
     });
   }, [photo, loading, category, formState.isValid]);
 
@@ -179,23 +168,6 @@ export default function EditUserPostFormPresenter({
         </ImageScroll>
       </ImageTop>
       <InputBottom>
-        <Controller
-          name="title"
-          rules={{
-            required: true,
-          }}
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <TitleInput
-              placeholder="Title"
-              autoCapitalize="none"
-              multiline={false}
-              returnKeyType="next"
-              onChangeText={(text) => onChange(text)}
-              value={value}
-            />
-          )}
-        />
         <CategoryView onPress={goToCategory}>
           <CategoryContainer>
             <Text>{category}</Text>

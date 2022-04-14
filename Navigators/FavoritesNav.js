@@ -1,27 +1,29 @@
 import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
+import FavoriteUserPost from "../Screens/LoggedIn/Favorites/FavoriteUserPost";
 import FavoriteCompanyPost from "../Screens/LoggedIn/Favorites/FavoriteCompanyPost";
-import FavoriteCompany from "../Screens/LoggedIn/Favorites/FavoriteCompany";
 
 const Tab = createMaterialTopTabNavigator();
-const Stack = createStackNavigator();
 
 export default function FavoritesNav() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarIndicatorStyle: { backgroundColor: "black" },
+      }}
+    >
+      <Tab.Screen
+        name="FavoriteUserPost"
+        component={FavoriteUserPost}
+        options={{
+          title: "관심 일반 게시글",
+        }}
+      />
       <Tab.Screen
         name="FavoriteCompanyPost"
         component={FavoriteCompanyPost}
         options={{
-          title: "좋아요 게시글 리스트",
-        }}
-      />
-      <Tab.Screen
-        name="FavoriteCompany"
-        component={FavoriteCompany}
-        options={{
-          title: "좋아요 회사 리스트",
+          title: "관심 채용 게시글",
         }}
       />
     </Tab.Navigator>

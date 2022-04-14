@@ -19,10 +19,10 @@ const Container = styled.View`
 const TextInput = styled.TextInput`
   width: 100%;
   height: 100%;
-  background-color: ${colors.backgraound}
-  padding: 13px
+  background-color: ${colors.backgraound};
+  padding: 13px;
   color: black;
-  border: 1px solid ${colors.borderThin};
+  border: 1px solid ${colors.borderThick};
 `;
 
 export default function EditUserPostReCommentFormPresenter({
@@ -79,7 +79,6 @@ export default function EditUserPostReCommentFormPresenter({
         : !formState.isValid
         ? NoHeaderRight
         : OkHeaderRight,
-      ...(loading && { headerLeft: () => null }),
     });
   }, [loading, formState.isValid]);
 

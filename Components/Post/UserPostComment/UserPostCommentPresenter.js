@@ -37,7 +37,7 @@ const SubContainer = styled.View`
 const Date = styled.Text`
   margin-top: 3px;
   margin-left: 35px;
-  color: ${colors.homeText};
+  color: ${colors.greyText};
   font-size: 12px;
 `;
 
@@ -47,7 +47,7 @@ const ReplyButton = styled.TouchableOpacity`
 `;
 
 const ReplyText = styled.Text`
-  color: ${colors.homeText};
+  color: ${colors.greyText};
   font-size: 12px;
   font-weight: bold;
 `;
@@ -67,7 +67,7 @@ export default function UserPostCommentPresenter({
     <Container>
       <HeaderContainer>
         <Header onPress={goToProfile}>
-          <UserAvatar username={user.username} uri={user.avatar} />
+          <UserAvatar username={user.username} uri={user.avatarUrl} />
         </Header>
         {!reCommentScreen ? (
           <IconView onPress={showActionSheet}>

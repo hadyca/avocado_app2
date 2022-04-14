@@ -104,7 +104,6 @@ export default function Login() {
             hasError={Boolean(formState?.errors?.password?.message)}
             onSubmitEditing={handleSubmit(onValid)}
             onChangeText={(text) => onChange(text)}
-            value={value}
             onChange={clearLoginError}
             onFocus={() => {
               setFocus2(true);

@@ -48,31 +48,56 @@ export const categories_EN = [
 
 export const categories_VN = [];
 
+export const userReportAry = [
+  "부적절한 프로필 정보",
+  "다른 사람으로 가장",
+  "기타",
+];
+
 export const userPostReportAry = [
-  "요상한 글이에요",
-  "문제가 많은 게시글이에요",
-  "너무 폭력적이에요",
-  "불법 판매 글이에요",
-  "이상한 사이트로 유도해요",
-  "유저가 못생겼을 거 같아요",
+  "광고 / 홍보 글이에요",
+  "누군가를 비방하는 글이에요",
+  "중복 / 도배 글이에요",
+  "정치 / 종교 관련 글이에요",
+  "금전을 요구하는 글이에요",
+  "불쾌감을 줄 수 있는 글이에요",
+  "불법 / 음란성 글이 포함 되어 있어요",
+  "다른 채팅 앱이나 사이트로 유도 해요",
+  "기타",
 ];
 
 export const userPostCommentReportAry = [
-  "악플이에요",
-  "댓글단 사람이 못생겼습니다.",
-  "댓글 test",
-  "댓글 test2",
+  "광고 / 홍보 댓글이에요",
+  "누군가를 비방하는 댓글이에요",
+  "중복 / 도배 댓글이에요",
+  "정치 / 종교 관련 댓글이에요",
+  "금전을 요구하는 댓글이에요",
+  "불쾌감을 줄 수 있는 댓글이에요",
+  "불법 / 음란성 댓글이 포함 되어 있어요",
+  "다른 채팅 앱이나 사이트로 유도 해요",
+  "기타",
+];
+
+export const companyPostReportAry = [
+  "광고 / 홍보 글이에요",
+  "누군가를 비방하는 글이에요",
+  "중복 / 도배 글이에요",
+  "정치 / 종교 관련 글이에요",
+  "금전을 요구하는 글이에요",
+  "불쾌감을 줄 수 있는 글이에요",
+  "불법 / 음란성 글이 포함 되어 있어요",
+  "다른 채팅 앱이나 사이트로 유도 해요",
+  "채용 관련 게시글이 아니에요",
 ];
 
 export const ScreenNames = {
   USER_POST_LIST: "UserPostList",
   CATEGORY_BOARD: "CategoryBoard",
+  SEARCH_DISTRICT: "SearchConditionDistrict",
+  SEARCH_SECTOR: "SearchConditionSector",
+  COMPANY_POST_BY_DISTRICT: "CompanyPostByDistrict",
+  COMPANY_POST_BY_SECTOR: "CompanyPostBySector",
 };
-
-export const createCompanyData_KR = [
-  "회사 이름을 알려주세요.",
-  "Email주소를 알려주세요.",
-];
 
 export const CategoryExplain_KR = [
   "여러 사람들과 일과 관련된 이야기를 해보세요.",
@@ -85,4 +110,14 @@ export const CategoryExplain_KR = [
   "오늘 하루 어땠는지 다른사람들과 이야기 해보세요.",
   "여러사람들과 정보를 공유하고 대화해보세요.",
   "다른사람들에게 질문이나 이야기를 해보세요.",
+];
+
+export const sectors = [
+  { id: 1, value: "sector1" },
+  { id: 2, value: "sector2" },
+  { id: 3, value: "sector3" },
+  { id: 4, value: "sector4" },
+  { id: 5, value: "sector5" },
+  { id: 6, value: "sector6" },
+  { id: 7, value: "sector7" },
 ];

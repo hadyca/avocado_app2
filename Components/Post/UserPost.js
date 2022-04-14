@@ -3,7 +3,7 @@ import { useWindowDimensions } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../Colors";
-import timeForToday from "../../Utils";
+import { timeForToday } from "../../Utils";
 import UserAvatar from "../UserAvatar";
 
 const Container = styled.View``;
@@ -48,11 +48,6 @@ const MainImg = styled.Image`
   height: ${(props) => Math.ceil(props.height / 3)}px;
 `;
 
-const Title = styled.Text`
-  font-size: 16px;
-  font-weight: 600;
-`;
-
 const Content = styled.View`
   margin-top: 5px;
   flex-direction: row;
@@ -67,7 +62,7 @@ const ContentText = styled.Text`
 const MoreText = styled.Text`
   margin-left: 5px;
   font-size: 12px;
-  color: ${colors.homeText};
+  color: ${colors.greyText};
 `;
 
 const LikeComment = styled.View`
@@ -78,19 +73,19 @@ const LikeComment = styled.View`
 
 const Likes = styled.Text`
   margin-right: 5px;
-  color: ${colors.homeText};
+  color: ${colors.greyText};
   font-size: 12px;
 `;
 
 const Comments = styled.Text`
-  color: ${colors.homeText};
+  color: ${colors.greyText};
   font-size: 12px;
 `;
 
 const Date = styled.Text`
   margin-top: 3px;
   margin-left: 10px;
-  color: ${colors.homeText};
+  color: ${colors.greyText};
   font-size: 10px;
 `;
 
@@ -105,7 +100,6 @@ function UserPost({
   id,
   user,
   file,
-  title,
   content,
   category,
   totalUserPostLikes,
@@ -114,9 +108,7 @@ function UserPost({
 }) {
   const { width, height } = useWindowDimensions();
 
-  const date = new window.Date(parseInt(createdAt));
-
-  const time = timeForToday(date);
+  const time = timeForToday(parseInt(createdAt));
 
   const navigation = useNavigation();
 
@@ -142,7 +134,7 @@ function UserPost({
     <Container>
       <HeaderContainer>
         <Header onPress={goToProfile}>
-          <UserAvatar username={user.username} uri={user.avatar} />
+          <UserAvatar username={user.username} uri={user.avatarUrl} />
         </Header>
       </HeaderContainer>
       <CategoryView>
@@ -161,7 +153,6 @@ function UserPost({
         </ImgContainer>
       ) : null}
       <Contents onPress={goToPostDetail}>
-        <Title>{title}</Title>
         {content.length >= 20 ? (
           <Content>
             <ContentText>{content.substr(0, 20)}</ContentText>

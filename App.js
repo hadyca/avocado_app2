@@ -1,5 +1,5 @@
 import AppLoading from "expo-app-loading";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { ApolloProvider, useReactiveVar } from "@apollo/client";
 import * as Font from "expo-font";
@@ -12,6 +12,7 @@ import client, { isLoggedInVar, tokenVar, logUserOut } from "./apollo";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
+
   const onFinish = () => setLoading(false);
   const isLoggedIn = useReactiveVar(isLoggedInVar);
 
@@ -40,6 +41,7 @@ export default function App() {
       />
     );
   }
+
   return (
     <ApolloProvider client={client}>
       <NavigationContainer>

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components/native";
+import { ActivityIndicator, Image, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
 import { AntDesign } from "@expo/vector-icons";
 import { colors } from "../../../../Colors";
 import ContentInput from "../../../../Components/Post/ContentInput";
-import { ActivityIndicator, Image, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { ReactNativeFile } from "apollo-upload-client";
 
@@ -42,13 +42,6 @@ const ImagePick = styled.TouchableOpacity`
 `;
 const CameraText = styled.Text`
   color: #868b94;
-`;
-
-const TitleInput = styled.TextInput`
-  padding: 15px 7px;
-  color: black;
-  border-bottom-width: 1px;
-  border-bottom-color: ${colors.borderThin};
 `;
 
 const CategoryView = styled.TouchableOpacity`
@@ -95,7 +88,7 @@ export default function UserPostUploadFormPresenter({
     mode: "onChange",
   });
 
-  const onValid = async ({ title, content }) => {
+  const onValid = async ({ content }) => {
     const fileUrl = await photo.map((_, index) => {
       return new ReactNativeFile({
         uri: photo[index].uri,
@@ -107,7 +100,6 @@ export default function UserPostUploadFormPresenter({
       uploadUserPostMutation({
         variables: {
           fileUrl,
-          title,
           content,
           category,
         },
@@ -140,7 +132,6 @@ export default function UserPostUploadFormPresenter({
         : !formState.isValid || !category
         ? NoHeaderRight
         : OkHeaderRight,
-      ...(loading && { headerLeft: () => null }),
     });
   }, [photo, loading, category, formState.isValid]);
 
@@ -170,23 +161,6 @@ export default function UserPostUploadFormPresenter({
         </ImageScroll>
       </ImageTop>
       <InputBottom>
-        <Controller
-          name="title"
-          rules={{
-            required: true,
-          }}
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <TitleInput
-              placeholder="Title"
-              autoCapitalize="none"
-              multiline={false}
-              returnKeyType="next"
-              onChangeText={(text) => onChange(text)}
-              value={value}
-            />
-          )}
-        />
         <CategoryView onPress={goToCategory}>
           {category ? (
             <CategoryContainer>

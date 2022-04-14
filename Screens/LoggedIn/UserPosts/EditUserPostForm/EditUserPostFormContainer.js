@@ -9,7 +9,6 @@ export default function ({ route: { params } }) {
   const [photo, setPhoto] = useState([]);
   const [countPhoto, setCountPhoto] = useState(0);
   const [screenName, setScreenName] = useState("");
-  const [editedTitle, setEditedTitle] = useState("");
   const [editedContent, setEditedContent] = useState("");
   const navigation = useNavigation();
 
@@ -25,9 +24,6 @@ export default function ({ route: { params } }) {
       cache.modify({
         id: UserPostId,
         fields: {
-          title() {
-            return editedTitle;
-          },
           content() {
             return editedContent;
           },
@@ -95,14 +91,12 @@ export default function ({ route: { params } }) {
     }
   }, []);
 
-  const handleEdit = (title, content) => {
-    setEditedTitle(title);
+  const handleEdit = (content) => {
     setEditedContent(content);
   };
 
   return (
     <EditUserPostFormPresenter
-      title={params.title}
       content={params.content}
       loading={loading}
       userPostId={params.id}
