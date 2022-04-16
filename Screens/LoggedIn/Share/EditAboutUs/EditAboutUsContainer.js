@@ -14,32 +14,16 @@ export default function ({ route: { params } }) {
     return setCounting(value.length);
   };
 
-  const updateAboutUs = (cache, result) => {
-    const {
-      data: { editCompany },
-    } = result;
-    if (editCompany.id) {
-      const CompanyId = `User:${editCompany.id}`;
-      cache.modify({
-        id: CompanyId,
-        fields: {
-          aboutUs() {
-            return editCompany.aboutUs;
-          },
-        },
-      });
-      navigation.navigate("EditProfile", {
-        username: params.username,
-        bio: params.bio,
-        myCompany: editCompany,
-      });
-    }
-  };
-
   const [editAboutUsMutation, { loading }] = useMutation(
     EDIT_COMPANY_MUTATION,
     {
-      update: updateAboutUs,
+      onCompleted: ({ editCompany }) => {
+        navigation.navigate("EditProfile", {
+          username: params.username,
+          bio: params.bio,
+          myCompany: editCompany,
+        });
+      },
     }
   );
 

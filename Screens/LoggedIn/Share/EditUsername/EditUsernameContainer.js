@@ -14,32 +14,16 @@ export default function ({ route: { params } }) {
     return setCounting(value.length);
   };
 
-  const updateUsername = (cache, result) => {
-    const {
-      data: { editProfile },
-    } = result;
-    if (editProfile.id) {
-      const UserId = `User:${editProfile.id}`;
-      cache.modify({
-        id: UserId,
-        fields: {
-          username() {
-            return editProfile.username;
-          },
-        },
-      });
-      navigation.navigate("EditProfile", {
-        username: editProfile.username,
-        bio: params.bio,
-        myCompany: params.myCompany,
-      });
-    }
-  };
-
   const [editUsernameMutation, { loading }] = useMutation(
     EDIT_USERNAME_MUTATION,
     {
-      onCompleted: updateUsername,
+      onCompleted: ({ editProfile }) => {
+        navigation.navigate("EditProfile", {
+          username: editProfile.username,
+          bio: params.bio,
+          myCompany: params.myCompany,
+        });
+      },
       onError: (error) => setErrorMessage(error.message),
     }
   );

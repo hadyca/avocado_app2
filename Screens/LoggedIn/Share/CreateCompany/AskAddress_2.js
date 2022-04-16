@@ -39,7 +39,7 @@ export default function AskAddress_2({ route: { params } }) {
     <AuthLayout>
       <ProgressCreateCompany
         title={"두번째 도시를 선택해 주세요."}
-        step={"7"}
+        step={"8"}
       />
       <ModalSelector
         data={smallDistrict[params.addressStep1.id - 1]}

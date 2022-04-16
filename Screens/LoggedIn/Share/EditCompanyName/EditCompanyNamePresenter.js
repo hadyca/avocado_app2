@@ -94,6 +94,7 @@ export default function EditCompanyNamePresenter({
               placeholder="Your Company Name"
               textAlignVertical={"top"}
               maxLength={100}
+              returnKeyType="done"
               autoCapitalize="none"
               onChangeText={(text) => {
                 onChange(text);

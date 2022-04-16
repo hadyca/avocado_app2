@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
-import { bigDistrict, smallDistrict } from "../../../../DistrictList";
+import { bigDistrict } from "../../../../DistrictList";
 import AuthLayout from "../../../../Components/Auth/AuthLayout";
 import {
   TextInput_Company,
@@ -38,7 +38,7 @@ export default function AskAddress_1({ route: { params } }) {
     <AuthLayout>
       <ProgressCreateCompany
         title={"첫번째 도시를 선택해 주세요."}
-        step={"6"}
+        step={"7"}
       />
       <ModalSelector
         data={bigDistrict}

@@ -8,18 +8,16 @@ import EditTotalEmployeesPresenter from "./EditTotalEmployeesPresenter";
 export default function ({ route: { params } }) {
   const navigation = useNavigation();
 
-  const completeTotalEmployees = ({ editCompany }) => {
-    navigation.navigate("EditProfile", {
-      username: params.username,
-      bio: params.bio,
-      myCompany: editCompany,
-    });
-  };
-
   const [editTotalEmployeesMutation, { loading }] = useMutation(
     EDIT_COMPANY_MUTATION,
     {
-      onCompleted: completeTotalEmployees,
+      onCompleted: ({ editCompany }) => {
+        navigation.navigate("EditProfile", {
+          username: params.username,
+          bio: params.bio,
+          myCompany: editCompany,
+        });
+      },
     }
   );
 

@@ -6,6 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import { colors } from "../../../../Colors";
 import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import { UnderBar } from "../../../../Components/Auth/AuthShared";
+import { onlyNumber } from "../../../../RegExp";
 
 const HeaderRightText = styled.Text`
   color: ${colors.black};
@@ -22,32 +23,25 @@ const TextInput = styled.TextInput`
   color: black;
 `;
 
-const CountingText = styled.Text`
-  color: ${colors.buttonBackground};
-  font-size: 11px;
-`;
-
-export default function EditAboutUsPresenter({
-  editAboutUsMutation,
-  countingText,
-  counting,
+export default function EditContactNumberPresenter({
+  editContactNumberMutation,
   loading,
-  originAboutUs,
+  originContactNumber,
 }) {
   const navigation = useNavigation();
 
   const { control, handleSubmit, formState } = useForm({
     defaultValues: {
-      aboutUs: originAboutUs,
+      contactNumber: originContactNumber,
     },
     mode: "onChange",
   });
 
-  const onValid = async ({ aboutUs }) => {
+  const onValid = async ({ contactNumber }) => {
     if (!loading) {
-      editAboutUsMutation({
+      editContactNumberMutation({
         variables: {
-          aboutUs,
+          contactNumber,
         },
       });
     }
@@ -84,26 +78,30 @@ export default function EditAboutUsPresenter({
     <DismissKeyboard>
       <Container>
         <Controller
-          name="aboutUs"
+          name="contactNumber"
           control={control}
-          rules={{ required: true }}
+          rules={{
+            required: true,
+            pattern: {
+              value: onlyNumber,
+            },
+          }}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              placeholder="ex)직원 복지가 좋은, 동나이 최고의 garment회사!"
+              placeholder="Your Contact Number"
               textAlignVertical={"top"}
-              maxLength={150}
-              autoCapitalize="none"
+              maxLength={50}
               returnKeyType="done"
+              keyboardType="number-pad"
+              autoCapitalize="none"
               onChangeText={(text) => {
                 onChange(text);
-                countingText(text);
               }}
               value={value}
             />
           )}
         />
         <UnderBar />
-        <CountingText>({counting}/150)</CountingText>
       </Container>
     </DismissKeyboard>
   );

@@ -33,7 +33,7 @@ export default function AskContactNumber({ route: { params } }) {
 
   return (
     <AuthLayout>
-      <ProgressCreateCompany title={"연락처를 알려주세요"} step={"5"} />
+      <ProgressCreateCompany title={"연락처를 알려주세요"} step={"6"} />
 
       <Controller
         name="contactNumber"
@@ -46,14 +46,14 @@ export default function AskContactNumber({ route: { params } }) {
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextInput_Company
-            placeholder="Contact Number"
+            placeholder="Your Contact Number"
             returnKeyType="done"
             keyboardType="number-pad"
             onChangeText={(text) => onChange(text)}
             value={value || ""}
             hasError={false}
             onSubmitEditing={goToAskAddress}
-            maxLength={100}
+            maxLength={50}
           />
         )}
       />

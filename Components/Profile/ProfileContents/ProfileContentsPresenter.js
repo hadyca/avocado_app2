@@ -89,7 +89,8 @@ const ProfileBtn = styled.TouchableOpacity`
   padding: 15px 7px;
   border-radius: 3px;
   width: 100%;
-  border: 1px solid ${colors.borderThick};
+  border: 1px solid
+    ${(props) => (props.backgroundColor ? colors.blue : colors.borderThick)};
 `;
 
 const ProfileText = styled.Text`
