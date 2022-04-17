@@ -51,18 +51,6 @@ const TitleInput = styled.TextInput`
   border-bottom-color: ${colors.borderThin};
 `;
 
-const CategoryView = styled.TouchableOpacity`
-  border-bottom-width: 1px;
-  border-bottom-color: ${colors.borderThin};
-`;
-
-const CategoryContainer = styled.View`
-  padding: 15px 7px;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-
 const ImageContainer = styled.View`
   margin-right: 20px;
   align-items: center;
@@ -176,6 +164,7 @@ export default function CompanyPostUploadFormPresenter({
             <TitleInput
               placeholder="Title"
               autoCapitalize="none"
+              maxLength={500}
               multiline={false}
               returnKeyType="next"
               onChangeText={(text) => onChange(text)}
@@ -183,19 +172,6 @@ export default function CompanyPostUploadFormPresenter({
             />
           )}
         />
-        {/* <CategoryView onPress={goToCategory}>
-          {category ? (
-            <CategoryContainer>
-              <Text>{category}</Text>
-              <Ionicons name="chevron-forward" color="black" size={17} />
-            </CategoryContainer>
-          ) : (
-            <CategoryContainer>
-              <Text>게시글의 주제를 정해주세요.</Text>
-              <Ionicons name="chevron-forward" color="black" size={17} />
-            </CategoryContainer>
-          )}
-        </CategoryView> */}
         <Controller
           name="content"
           rules={{
@@ -206,10 +182,10 @@ export default function CompanyPostUploadFormPresenter({
             <ContentInput
               multiline={true}
               textAlignVertical={"top"}
+              maxLength={1000}
               autoCapitalize="none"
               onChangeText={(text) => onChange(text)}
               value={value || ""}
-              // categoryName={category}
             />
           )}
         />

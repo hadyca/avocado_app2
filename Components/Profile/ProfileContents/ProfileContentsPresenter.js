@@ -52,9 +52,15 @@ const Bottom = styled.View`
   margin-top: 10px;
 `;
 
+const CompanyTitle = styled.Text`
+  margin: 20px 0px 20px 0px;
+  font-size: 24px;
+  font-weight: bold;
+`;
+
 const CompanyName = styled.Text`
   font-weight: bold;
-  font-size: 28px;
+  font-size: 22px;
 `;
 
 const AboutUs = styled.Text`
@@ -62,16 +68,15 @@ const AboutUs = styled.Text`
 `;
 
 const Address = styled.Text`
-  margin-top: 8px;
   margin-bottom: 10px;
-  font-size: 13px;
+  font-size: 12px;
 `;
 
 const InfoView = styled.View``;
 
 const Title = styled.Text`
   margin-top: 10px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
 `;
 
@@ -184,6 +189,7 @@ export default function ProfileContentsPresenter({
       <Bottom>
         {data?.seeProfile?.myCompany ? (
           <>
+            <CompanyTitle>Company Information</CompanyTitle>
             <CompanyName>
               {data?.seeProfile?.myCompany?.companyName}
             </CompanyName>

@@ -5,7 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { colors } from "../../../../Colors";
-import { Image, Text, TouchableOpacity, ActivityIndicator } from "react-native";
+import { Image, TouchableOpacity, ActivityIndicator } from "react-native";
 import { ReactNativeFile } from "apollo-upload-client";
 import ContentInput from "../../../../Components/Post/ContentInput";
 
@@ -173,6 +173,7 @@ export default function EditCompanyPostFormPresenter({
             <TitleInput
               placeholder="Title"
               autoCapitalize="none"
+              maxLength={500}
               multiline={false}
               returnKeyType="next"
               onChangeText={(text) => onChange(text)}
@@ -190,6 +191,7 @@ export default function EditCompanyPostFormPresenter({
             <ContentInput
               multiline={true}
               textAlignVertical={"top"}
+              maxLength={1000}
               autoCapitalize="none"
               onChangeText={(text) => onChange(text)}
               value={value || ""}

@@ -114,19 +114,7 @@ export default function EditAddressPresenter({
           optionContainerStyle={{ height: 500 }}
         >
           <TextView>
-            {/* <Controller
-              name="addressStep1"
-              control={control}
-              rules={{ required: true }}
-              render={() => (
-                <TextInput
-                  placeholder="Select your first city!"
-                  value={add_1.value}
-                />
-              )}
-            /> */}
             <TextInput value={add_1?.value} />
-
             <Ionicons
               name="chevron-forward"
               color="black"
@@ -146,19 +134,7 @@ export default function EditAddressPresenter({
           optionContainerStyle={{ height: 500 }}
         >
           <TextView>
-            {/* <Controller
-              name="addressStep1"
-              control={control}
-              rules={{ required: true }}
-              render={() => (
-                <TextInput
-                  placeholder="Select your first city!"
-                  value={add_1.value}
-                />
-              )}
-            /> */}
             <TextInput placeholder={"Select your second city!"} value={add_2} />
-
             <Ionicons
               name="chevron-forward"
               color="black"

@@ -48,7 +48,6 @@ export default function AskAddress_1({ route: { params } }) {
         onChange={(item) => {
           setAdd_1({ id: item.id, value: item.value });
         }}
-        // cancelText={"Cancel"}
         optionContainerStyle={{ height: 500 }}
       >
         <TextView>

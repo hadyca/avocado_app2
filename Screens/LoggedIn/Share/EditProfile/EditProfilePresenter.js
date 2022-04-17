@@ -15,7 +15,7 @@ const HeaderRightText = styled.Text`
   margin-right: 7px;
 `;
 
-const Container = styled.View`
+const Container = styled.ScrollView`
   margin: 20px;
 `;
 
@@ -80,7 +80,7 @@ const AddBio = styled.Text`
 `;
 
 const CompanyTitle = styled.Text`
-  margin: 20px 0px 10px 0px;
+  margin: 20px 0px 20px 0px;
   font-size: 16px;
   font-weight: bold;
 `;
@@ -226,7 +226,7 @@ export default function EditProfilePresenter({
             {!bio ? (
               <AddBio>Add bio to profile</AddBio>
             ) : bio.length >= 20 ? (
-              <ButtonText>{`${bio.substr(0, 20)}...`}</ButtonText>
+              <ButtonText>{`${bio.substring(0, 20)}...`}</ButtonText>
             ) : (
               <ButtonText>{bio}</ButtonText>
             )}
@@ -242,7 +242,7 @@ export default function EditProfilePresenter({
               <ButtonTextView>
                 <ButtonText>
                   {myCompany?.companyName.length >= 20 ? (
-                    <ButtonText>{`${myCompany?.companyName.substr(
+                    <ButtonText>{`${myCompany?.companyName.substring(
                       0,
                       20
                     )}...`}</ButtonText>
@@ -258,7 +258,7 @@ export default function EditProfilePresenter({
               <ButtonTextView>
                 <ButtonText>
                   {myCompany?.aboutUs.length >= 20 ? (
-                    <ButtonText>{`${myCompany?.aboutUs.substr(
+                    <ButtonText>{`${myCompany?.aboutUs.substring(
                       0,
                       20
                     )}...`}</ButtonText>
@@ -266,6 +266,17 @@ export default function EditProfilePresenter({
                     <ButtonText>{myCompany?.aboutUs}</ButtonText>
                   )}
                 </ButtonText>
+                <Ionicons name="chevron-forward" color="black" size={17} />
+              </ButtonTextView>
+            </Button>
+            <Button onPress={goToEditAddress}>
+              <ButtonName>Address</ButtonName>
+              <ButtonTextView>
+                {address.length >= 25 ? (
+                  <ButtonText>{`${address.substring(0, 25)}...`}</ButtonText>
+                ) : (
+                  <ButtonText>{address}</ButtonText>
+                )}
                 <Ionicons name="chevron-forward" color="black" size={17} />
               </ButtonTextView>
             </Button>
@@ -300,7 +311,7 @@ export default function EditProfilePresenter({
               <ButtonTextView>
                 <ButtonText>
                   {myCompany?.email.length >= 20 ? (
-                    <ButtonText>{`${myCompany?.email.substr(
+                    <ButtonText>{`${myCompany?.email.substring(
                       0,
                       20
                     )}...`}</ButtonText>
@@ -315,17 +326,6 @@ export default function EditProfilePresenter({
               <ButtonName>Contact Number</ButtonName>
               <ButtonTextView>
                 <ButtonText>{myCompany?.contactNumber}</ButtonText>
-                <Ionicons name="chevron-forward" color="black" size={17} />
-              </ButtonTextView>
-            </Button>
-            <Button onPress={goToEditAddress}>
-              <ButtonName>Address</ButtonName>
-              <ButtonTextView>
-                {address.length >= 30 ? (
-                  <ButtonText>{`${address.substr(0, 30)}...`}</ButtonText>
-                ) : (
-                  <ButtonText>{address}</ButtonText>
-                )}
                 <Ionicons name="chevron-forward" color="black" size={17} />
               </ButtonTextView>
             </Button>

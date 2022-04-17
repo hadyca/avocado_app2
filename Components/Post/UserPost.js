@@ -51,7 +51,7 @@ const MainImg = styled.Image`
 const Content = styled.View`
   margin-top: 5px;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-end;
 `;
 
 const ContentText = styled.Text`
@@ -155,7 +155,7 @@ function UserPost({
       <Contents onPress={goToPostDetail}>
         {content.length >= 20 ? (
           <Content>
-            <ContentText>{content.substr(0, 20)}</ContentText>
+            <ContentText>{content.substring(0, 20)}</ContentText>
             <MoreText>...more</MoreText>
           </Content>
         ) : (

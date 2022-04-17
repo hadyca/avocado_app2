@@ -3,9 +3,15 @@ import { useScrollToTop } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 import ScreenLayout from "../../../Components/ScreenLayout";
 import styled from "styled-components/native";
-import { useWindowDimensions, TouchableOpacity, Text } from "react-native";
+import {
+  useWindowDimensions,
+  TouchableOpacity,
+  Text,
+  Alert,
+} from "react-native";
 import { colors } from "../../../Colors";
 import { useNavigation } from "@react-navigation/native";
+import useMe from "../../../Hooks/useMe";
 
 const Container = styled.View`
   justify-content: center;
@@ -64,10 +70,17 @@ const ButtonText = styled.Text`
 export default function Home() {
   const ref = useRef(null);
   useScrollToTop(ref);
+
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
+
+  const { data } = useMe();
   const goToCreateCompany = () => {
-    navigation.navigate("AskCompanyName");
+    if (data?.me?.myCompany) {
+      Alert.alert("이미 가입되어 있습니다.");
+    } else {
+      navigation.navigate("AskCompanyName");
+    }
   };
 
   return (

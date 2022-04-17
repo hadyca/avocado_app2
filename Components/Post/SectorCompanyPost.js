@@ -17,6 +17,12 @@ const Header = styled.TouchableOpacity`
   margin: 10px;
 `;
 
+const CompanyName = styled.Text`
+  font-weight: bold;
+  font-size: 17px;
+  margin-top: 5px;
+`;
+
 const Contents = styled.TouchableOpacity`
   margin-left: 10px;
 `;
@@ -30,9 +36,21 @@ const MainImg = styled.Image`
   height: ${(props) => Math.ceil(props.height / 3)}px;
 `;
 
-const Title = styled.Text`
-  font-size: 16px;
-  font-weight: 600;
+const Content = styled.View`
+  margin-top: 5px;
+  flex-direction: row;
+  align-items: flex-end;
+`;
+
+const ContentText = styled.Text`
+  font-size: 14px;
+  color: ${colors.black};
+`;
+
+const MoreText = styled.Text`
+  margin-left: 5px;
+  font-size: 12px;
+  color: ${colors.greyText};
 `;
 
 const LikeComment = styled.View`
@@ -102,11 +120,8 @@ function SectorCompanyPost({
             username={company.user.username}
             uri={company.user.avatarUrl}
           />
+          <CompanyName>{company.companyName}</CompanyName>
         </Header>
-        <Text>{company.companyName}</Text>
-        <Text>{company.addressStep1}</Text>
-        <Text>{company.addressStep2}</Text>
-        <Text>{company.addressStep3}</Text>
       </HeaderContainer>
       {file.length > 0 ? (
         <ImgContainer onPress={goToPostDetail}>
@@ -119,7 +134,16 @@ function SectorCompanyPost({
         </ImgContainer>
       ) : null}
       <Contents onPress={goToPostDetail}>
-        <Title>{title}</Title>
+        {title.length >= 50 ? (
+          <Content>
+            <ContentText>{title.substring(0, 50)}</ContentText>
+            <MoreText>...more</MoreText>
+          </Content>
+        ) : (
+          <Content>
+            <ContentText>{title}</ContentText>
+          </Content>
+        )}
       </Contents>
       <LikeComment>
         <Likes>

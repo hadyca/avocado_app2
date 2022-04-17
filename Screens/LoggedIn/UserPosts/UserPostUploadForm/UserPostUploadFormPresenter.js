@@ -183,6 +183,7 @@ export default function UserPostUploadFormPresenter({
           render={({ field: { onChange, value } }) => (
             <ContentInput
               multiline={true}
+              maxLength={1000}
               textAlignVertical={"top"}
               autoCapitalize="none"
               onChangeText={(text) => onChange(text)}
