@@ -53,7 +53,7 @@ export default function AskContactNumber({ route: { params } }) {
             value={value || ""}
             hasError={false}
             onSubmitEditing={goToAskAddress}
-            maxLength={50}
+            maxLength={20}
           />
         )}
       />

@@ -90,7 +90,7 @@ export default function EditContactNumberPresenter({
             <TextInput
               placeholder="Your Contact Number"
               textAlignVertical={"top"}
-              maxLength={50}
+              maxLength={20}
               returnKeyType="done"
               keyboardType="number-pad"
               autoCapitalize="none"
