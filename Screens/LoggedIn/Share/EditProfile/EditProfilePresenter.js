@@ -288,7 +288,6 @@ export default function EditProfilePresenter({
               onChange={(item) => {
                 setSelectedSector(item.value);
               }}
-              // cancelText={"Cancel"}
               optionContainerStyle={{ height: 500 }}
             >
               <Button>

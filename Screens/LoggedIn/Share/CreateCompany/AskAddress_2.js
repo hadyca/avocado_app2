@@ -3,7 +3,6 @@ import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { smallDistrict } from "../../../../DistrictList";
-
 import AuthLayout from "../../../../Components/Auth/AuthLayout";
 import {
   TextInput_Company,

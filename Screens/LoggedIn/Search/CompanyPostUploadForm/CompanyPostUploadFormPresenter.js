@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { ActivityIndicator, Image, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
 import { AntDesign } from "@expo/vector-icons";
+import ModalSelector from "react-native-modal-selector";
 import { colors } from "../../../../Colors";
 import ContentInput from "../../../../Components/Post/ContentInput";
-import { ActivityIndicator, Image, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { ReactNativeFile } from "apollo-upload-client";
 import { TextInput } from "../../../../Components/Auth/AuthShared";
+import { time } from "../../../../Constant";
+import { typeOfWage } from "../../../../Constant";
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -59,13 +62,6 @@ const CameraText = styled.Text`
   color: #868b94;
 `;
 
-const TitleInput = styled.TextInput`
-  padding: 15px 7px;
-  color: black;
-  border-bottom-width: 1px;
-  border-bottom-color: ${colors.borderThin};
-`;
-
 const ImageContainer = styled.View`
   margin-right: 20px;
   align-items: center;
@@ -103,6 +99,19 @@ const DayText = styled.Text`
   font-weight: bold;
 `;
 
+const TimeContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px red solid;
+  width: 40%;
+`;
+
+const TextInputTime = styled.TextInput`
+  background-color: white;
+  color: black;
+`;
+
 export default function CompanyPostUploadFormPresenter({
   goToImageSelect,
   DeleteImg,
@@ -111,6 +120,7 @@ export default function CompanyPostUploadFormPresenter({
   loading,
   uploadCompanyPostMutation,
 }) {
+  const [selectedLanguage, setSelectedLanguage] = useState();
   const [mon, setMon] = useState(true);
   const [tue, setTue] = useState(true);
   const [wed, setWed] = useState(true);
@@ -118,6 +128,11 @@ export default function CompanyPostUploadFormPresenter({
   const [fri, setFri] = useState(true);
   const [sat, setSat] = useState(true);
   const [sun, setSun] = useState(false);
+  const [dayOption, setDayOption] = useState(false);
+  const [startTime, setStartTime] = useState({ label: "09:00", value: 540 });
+  const [finishTime, setFinishTime] = useState({ label: "18:00", value: 1080 });
+  const [timeOption, setTimeOption] = useState(false);
+  const [wageType, setWageType] = useState("월급");
 
   const navigation = useNavigation();
 
@@ -138,6 +153,17 @@ export default function CompanyPostUploadFormPresenter({
         variables: {
           fileUrl,
           title,
+          mon,
+          tue,
+          wed,
+          thu,
+          fri,
+          sat,
+          sun,
+          dayOption,
+          startTime: parseInt(startTime.value),
+          finishTime: parseInt(finishTime.value),
+          timeOption,
           content,
         },
       });
@@ -170,7 +196,22 @@ export default function CompanyPostUploadFormPresenter({
         ? NoHeaderRight
         : OkHeaderRight,
     });
-  }, [photo, loading, formState.isValid]);
+  }, [
+    photo,
+    loading,
+    formState.isValid,
+    mon,
+    tue,
+    wed,
+    thu,
+    fri,
+    sat,
+    sun,
+    dayOption,
+    startTime,
+    finishTime,
+    timeOption,
+  ]);
 
   return (
     <Container>
@@ -248,6 +289,55 @@ export default function CompanyPostUploadFormPresenter({
             <DayText>일</DayText>
           </Day>
         </DayContainer>
+        <Title>근무 시간</Title>
+        <Title>시작</Title>
+        <ModalSelector
+          data={time}
+          keyExtractor={(item) => item.id}
+          labelExtractor={(item) => item.label}
+          accessible={true}
+          onChange={(item) => {
+            setStartTime({ label: item.label, value: item.value });
+          }}
+          optionContainerStyle={{ height: 500 }}
+        >
+          <TimeContainer>
+            <TextInputTime value={startTime.label} />
+            <Ionicons name="chevron-forward" color="black" size={17} />
+          </TimeContainer>
+        </ModalSelector>
+        <Title>~</Title>
+        <ModalSelector
+          data={time}
+          keyExtractor={(item) => item.id}
+          labelExtractor={(item) => item.label}
+          accessible={true}
+          onChange={(item) => {
+            setFinishTime({ label: item.label, value: item.value });
+          }}
+          optionContainerStyle={{ height: 500 }}
+        >
+          <TimeContainer>
+            <TextInputTime value={finishTime.label} />
+            <Ionicons name="chevron-forward" color="black" size={17} />
+          </TimeContainer>
+        </ModalSelector>
+        <Title>임금</Title>
+        <ModalSelector
+          data={typeOfWage}
+          keyExtractor={(item) => item.id}
+          labelExtractor={(item) => item.value}
+          accessible={true}
+          onChange={(item) => {
+            setWageType(item.value);
+          }}
+          optionContainerStyle={{ height: 180 }}
+        >
+          <TimeContainer>
+            <TextInputTime value={wageType} />
+            <Ionicons name="chevron-forward" color="black" size={17} />
+          </TimeContainer>
+        </ModalSelector>
         <Title>세부 내용</Title>
         <Controller
           name="content"
