@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, Image, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
+import Checkbox from "expo-checkbox";
 import { Ionicons } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
 import { AntDesign } from "@expo/vector-icons";
@@ -111,6 +112,8 @@ const TextInputTime = styled.TextInput`
   background-color: white;
   color: black;
 `;
+
+// const TextInput = styled.TextInput``;
 
 export default function CompanyPostUploadFormPresenter({
   goToImageSelect,
@@ -322,6 +325,12 @@ export default function CompanyPostUploadFormPresenter({
             <Ionicons name="chevron-forward" color="black" size={17} />
           </TimeContainer>
         </ModalSelector>
+        <Checkbox
+          style={{ margin: 8 }}
+          value={true}
+          // onValueChange={setChecked}
+          color={true ? "#4630EB" : undefined}
+        />
         <Title>임금</Title>
         <ModalSelector
           data={typeOfWage}
@@ -331,7 +340,7 @@ export default function CompanyPostUploadFormPresenter({
           onChange={(item) => {
             setWageType(item.value);
           }}
-          optionContainerStyle={{ height: 180 }}
+          // optionContainerStyle={{ height: 180 }}
         >
           <TimeContainer>
             <TextInputTime value={wageType} />
@@ -346,7 +355,7 @@ export default function CompanyPostUploadFormPresenter({
           }}
           control={control}
           render={({ field: { onChange, value } }) => (
-            <ContentInput
+            <TextInput
               multiline={true}
               textAlignVertical={"top"}
               maxLength={1000}
