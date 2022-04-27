@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Image, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Image, TouchableOpacity, View } from "react-native";
 import styled from "styled-components/native";
 import Checkbox from "expo-checkbox";
 import { Ionicons } from "@expo/vector-icons";
@@ -13,6 +13,7 @@ import { ReactNativeFile } from "apollo-upload-client";
 import { TextInput } from "../../../../Components/Auth/AuthShared";
 import { time } from "../../../../Constant";
 import { typeOfWage } from "../../../../Constant";
+import NumberFormat from "react-number-format";
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -86,7 +87,7 @@ const DayContainer = styled.View`
 `;
 
 const Day = styled.TouchableOpacity`
-  background-color: ${(props) => (props.selected ? "red" : "white")};
+  background-color: ${(props) => (props.selected ? "#4d5158" : "white")};
   border-radius: 12.5px;
   border: 0.5px solid ${colors.borderThick};
   width: 40px;
@@ -98,6 +99,7 @@ const Day = styled.TouchableOpacity`
 
 const DayText = styled.Text`
   font-weight: bold;
+  color: ${(props) => (props.selected ? "white" : "black")};
 `;
 
 const TimeContainer = styled.View`
@@ -108,13 +110,26 @@ const TimeContainer = styled.View`
   width: 40%;
 `;
 
-const TextInputTime = styled.TextInput`
+const SelectBox = styled.TextInput`
   background-color: white;
   color: black;
 `;
 
-// const TextInput = styled.TextInput``;
+const VNDContainer = styled.View`
+  justify-content: center;
+  width: 40%;
+`;
 
+const WageInput = styled.TextInput`
+  width: 40%;
+  border: 1px red solid;
+`;
+
+const VND = styled.Text`
+  position: absolute;
+  right: 5px;
+  color: ${colors.greyText};
+`;
 export default function CompanyPostUploadFormPresenter({
   goToImageSelect,
   DeleteImg,
@@ -136,7 +151,7 @@ export default function CompanyPostUploadFormPresenter({
   const [finishTime, setFinishTime] = useState({ label: "18:00", value: 1080 });
   const [timeOption, setTimeOption] = useState(false);
   const [wageType, setWageType] = useState("월급");
-
+  const [wage, setWage] = useState();
   const navigation = useNavigation();
 
   const { control, handleSubmit, formState } = useForm({
@@ -271,25 +286,25 @@ export default function CompanyPostUploadFormPresenter({
         <Title>근무 요일</Title>
         <DayContainer>
           <Day selected={mon} onPress={() => setMon(!mon)}>
-            <DayText>월</DayText>
+            <DayText selected={mon}>월</DayText>
           </Day>
           <Day selected={tue} onPress={() => setTue(!tue)}>
-            <DayText>화</DayText>
+            <DayText selected={tue}>화</DayText>
           </Day>
           <Day selected={wed} onPress={() => setWed(!wed)}>
-            <DayText>수</DayText>
+            <DayText selected={wed}>수</DayText>
           </Day>
           <Day selected={thu} onPress={() => setThu(!thu)}>
-            <DayText>목</DayText>
+            <DayText selected={thu}>목</DayText>
           </Day>
           <Day selected={fri} onPress={() => setFri(!fri)}>
-            <DayText>금</DayText>
+            <DayText selected={fri}>금</DayText>
           </Day>
           <Day selected={sat} onPress={() => setSat(!sat)}>
-            <DayText>토</DayText>
+            <DayText selected={sat}>토</DayText>
           </Day>
           <Day selected={sun} onPress={() => setSun(!sun)}>
-            <DayText>일</DayText>
+            <DayText selected={sun}>일</DayText>
           </Day>
         </DayContainer>
         <Title>근무 시간</Title>
@@ -305,7 +320,7 @@ export default function CompanyPostUploadFormPresenter({
           optionContainerStyle={{ height: 500 }}
         >
           <TimeContainer>
-            <TextInputTime value={startTime.label} />
+            <SelectBox value={startTime.label} />
             <Ionicons name="chevron-forward" color="black" size={17} />
           </TimeContainer>
         </ModalSelector>
@@ -321,7 +336,7 @@ export default function CompanyPostUploadFormPresenter({
           optionContainerStyle={{ height: 500 }}
         >
           <TimeContainer>
-            <TextInputTime value={finishTime.label} />
+            <SelectBox value={finishTime.label} />
             <Ionicons name="chevron-forward" color="black" size={17} />
           </TimeContainer>
         </ModalSelector>
@@ -343,10 +358,47 @@ export default function CompanyPostUploadFormPresenter({
           // optionContainerStyle={{ height: 180 }}
         >
           <TimeContainer>
-            <TextInputTime value={wageType} />
+            <SelectBox value={wageType} />
             <Ionicons name="chevron-forward" color="black" size={17} />
           </TimeContainer>
         </ModalSelector>
+        <NumberFormat
+          value={wage}
+          displayType={"text"}
+          thousandSeparator={true}
+          prefix={" ₫ "}
+          renderText={(value) => (
+            <WageInput
+              autoCapitalize="none"
+              returnKeyType="done"
+              underlineColorAndroid="transparent"
+              onChangeText={(text) => setWage(text)}
+              value={value}
+              keyboardType="number-pad"
+              maxLength={20}
+            />
+          )}
+        />
+        {/* <Controller
+          name="wage"
+          rules={{
+            required: true,
+          }}
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <VNDContainer>
+              <WageInput
+                autoCapitalize="none"
+                returnKeyType="done"
+                keyboardType="number-pad"
+                onChangeText={(text) => onChange(text)}
+                value={value?.toLocaleString()}
+                maxLength={20}
+              />
+              <VND>VND</VND>
+            </VNDContainer>
+          )}
+        /> */}
         <Title>세부 내용</Title>
         <Controller
           name="content"
