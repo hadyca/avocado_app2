@@ -7,13 +7,10 @@ import { useForm, Controller } from "react-hook-form";
 import { AntDesign } from "@expo/vector-icons";
 import ModalSelector from "react-native-modal-selector";
 import { colors } from "../../../../Colors";
-import ContentInput from "../../../../Components/Post/ContentInput";
 import { useNavigation } from "@react-navigation/native";
 import { ReactNativeFile } from "apollo-upload-client";
-import { TextInput } from "../../../../Components/Auth/AuthShared";
 import { time } from "../../../../Constant";
 import { typeOfWage } from "../../../../Constant";
-import NumberFormat from "react-number-format";
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -31,15 +28,34 @@ const PictureContainer = styled.View`
   margin-bottom: 5px;
 `;
 
-const Title = styled.Text`
+const PictureTitle = styled.Text`
   font-weight: bold;
 `;
+
+const Title = styled.Text`
+  font-weight: bold;
+  margin: 40px 0px 20px 0px;
+`;
+
+const TextInput = styled.TextInput`
+  background-color: white;
+  padding: 15px 7px;
+  border-radius: 4px;
+  color: black;
+  border: 1px solid
+    ${(props) =>
+      props.hasError
+        ? colors.error
+        : props.focus
+        ? colors.focus
+        : colors.borderThick};
+`;
+
 const Opt = styled.Text`
   font-weight: bold;
   color: ${colors.greyText};
 `;
 const PictureSub = styled.Text`
-  margin-bottom: 5px;
   color: ${colors.greyText};
 `;
 
@@ -52,7 +68,7 @@ const InputBottom = styled.View`
   margin: 0px 10px 10px 10px;
 `;
 const ImagePick = styled.TouchableOpacity`
-  margin: 10px 20px 10px 0px;
+  margin: 10px 20px 0px 0px;
   width: 60px;
   height: 60px;
   justify-content: center;
@@ -102,34 +118,77 @@ const DayText = styled.Text`
   color: ${(props) => (props.selected ? "white" : "black")};
 `;
 
+const TimeTextContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 5px;
+`;
+
+const ModalContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+const Time = styled.Text`
+  width: 45%;
+`;
+
+const ModalView = styled.View`
+  width: 45%;
+  border: 1px solid ${colors.borderThick};
+  border-radius: 4px;
+`;
+
 const TimeContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border: 1px red solid;
-  width: 40%;
 `;
 
 const SelectBox = styled.TextInput`
-  background-color: white;
   color: black;
+  padding: 10px;
 `;
 
-const VNDContainer = styled.View`
-  justify-content: center;
-  width: 40%;
+const Wave = styled.Text`
+  width: 10%;
+  text-align: center;
+`;
+
+const CheckContainer = styled.View`
+  margin-top: 10px;
+  margin-left: -5px;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const CheckText = styled.Text``;
+
+const WageContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const WageInputContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  width: 50%;
+  border: 1px solid ${colors.borderThick};
+  border-radius: 4px;
+  padding: 10px;
 `;
 
 const WageInput = styled.TextInput`
-  width: 40%;
-  border: 1px red solid;
+  width: 100%;
+  margin-left: 13px;
 `;
 
-const VND = styled.Text`
+const Dong = styled.Text`
   position: absolute;
-  right: 5px;
-  color: ${colors.greyText};
+  left: 0px;
+  margin-left: 10px;
 `;
+
 export default function CompanyPostUploadFormPresenter({
   goToImageSelect,
   DeleteImg,
@@ -150,8 +209,9 @@ export default function CompanyPostUploadFormPresenter({
   const [startTime, setStartTime] = useState({ label: "09:00", value: 540 });
   const [finishTime, setFinishTime] = useState({ label: "18:00", value: 1080 });
   const [timeOption, setTimeOption] = useState(false);
+  const [wageOption, setWageOption] = useState(false);
   const [wageType, setWageType] = useState("월급");
-  const [wage, setWage] = useState();
+  const [num, setNum] = useState();
   const navigation = useNavigation();
 
   const { control, handleSubmit, formState } = useForm({
@@ -229,13 +289,26 @@ export default function CompanyPostUploadFormPresenter({
     startTime,
     finishTime,
     timeOption,
+    num,
   ]);
+
+  const inputWageFormat = (str) => {
+    const comma = (str) => {
+      str = String(str);
+      return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+    };
+    const uncomma = (str) => {
+      str = String(str);
+      return str.replace(/[^\d]+/g, "");
+    };
+    return comma(uncomma(str));
+  };
 
   return (
     <Container>
       <ImageTop>
         <PictureContainer>
-          <Title>사진 </Title>
+          <PictureTitle>사진 </PictureTitle>
           <Opt>(선택)</Opt>
         </PictureContainer>
         <PictureSub>
@@ -275,7 +348,7 @@ export default function CompanyPostUploadFormPresenter({
             <TextInput
               placeholder="공고 내용을 요약해서 적어주세요."
               autoCapitalize="none"
-              maxLength={500}
+              maxLength={100}
               multiline={false}
               returnKeyType="next"
               onChangeText={(text) => onChange(text)}
@@ -308,97 +381,119 @@ export default function CompanyPostUploadFormPresenter({
           </Day>
         </DayContainer>
         <Title>근무 시간</Title>
-        <Title>시작</Title>
-        <ModalSelector
-          data={time}
-          keyExtractor={(item) => item.id}
-          labelExtractor={(item) => item.label}
-          accessible={true}
-          onChange={(item) => {
-            setStartTime({ label: item.label, value: item.value });
-          }}
-          optionContainerStyle={{ height: 500 }}
-        >
-          <TimeContainer>
-            <SelectBox value={startTime.label} />
-            <Ionicons name="chevron-forward" color="black" size={17} />
-          </TimeContainer>
-        </ModalSelector>
-        <Title>~</Title>
-        <ModalSelector
-          data={time}
-          keyExtractor={(item) => item.id}
-          labelExtractor={(item) => item.label}
-          accessible={true}
-          onChange={(item) => {
-            setFinishTime({ label: item.label, value: item.value });
-          }}
-          optionContainerStyle={{ height: 500 }}
-        >
-          <TimeContainer>
-            <SelectBox value={finishTime.label} />
-            <Ionicons name="chevron-forward" color="black" size={17} />
-          </TimeContainer>
-        </ModalSelector>
-        <Checkbox
-          style={{ margin: 8 }}
-          value={true}
-          // onValueChange={setChecked}
-          color={true ? "#4630EB" : undefined}
-        />
+        <TimeTextContainer>
+          <Time>시작</Time>
+          <Time>종료</Time>
+        </TimeTextContainer>
+        <ModalContainer>
+          <ModalView>
+            <ModalSelector
+              data={time}
+              keyExtractor={(item) => item.id}
+              labelExtractor={(item) => item.label}
+              accessible={true}
+              onChange={(item) => {
+                setStartTime({ label: item.label, value: item.value });
+              }}
+              optionContainerStyle={{ height: 500 }}
+            >
+              <TimeContainer>
+                <SelectBox value={startTime.label} />
+                <Ionicons
+                  name="chevron-forward"
+                  color="black"
+                  size={17}
+                  style={{ marginRight: 10 }}
+                />
+              </TimeContainer>
+            </ModalSelector>
+          </ModalView>
+          <Wave>~</Wave>
+          <ModalView>
+            <ModalSelector
+              data={time}
+              keyExtractor={(item) => item.id}
+              labelExtractor={(item) => item.label}
+              accessible={true}
+              onChange={(item) => {
+                setFinishTime({ label: item.label, value: item.value });
+              }}
+              optionContainerStyle={{ height: 500 }}
+            >
+              <TimeContainer>
+                <SelectBox value={finishTime.label} />
+                <Ionicons
+                  name="chevron-forward"
+                  color="black"
+                  size={17}
+                  style={{ marginRight: 10 }}
+                />
+              </TimeContainer>
+            </ModalSelector>
+          </ModalView>
+        </ModalContainer>
+        <CheckContainer>
+          <Checkbox
+            value={timeOption}
+            onValueChange={setTimeOption}
+            color={true ? colors.blue : undefined}
+          />
+          <CheckText>협의 가능</CheckText>
+        </CheckContainer>
         <Title>임금</Title>
-        <ModalSelector
-          data={typeOfWage}
-          keyExtractor={(item) => item.id}
-          labelExtractor={(item) => item.value}
-          accessible={true}
-          onChange={(item) => {
-            setWageType(item.value);
-          }}
-          // optionContainerStyle={{ height: 180 }}
-        >
-          <TimeContainer>
-            <SelectBox value={wageType} />
-            <Ionicons name="chevron-forward" color="black" size={17} />
-          </TimeContainer>
-        </ModalSelector>
-        <NumberFormat
-          value={wage}
-          displayType={"text"}
-          thousandSeparator={true}
-          prefix={" ₫ "}
-          renderText={(value) => (
-            <WageInput
-              autoCapitalize="none"
-              returnKeyType="done"
-              underlineColorAndroid="transparent"
-              onChangeText={(text) => setWage(text)}
-              value={value}
-              keyboardType="number-pad"
-              maxLength={20}
-            />
-          )}
-        />
-        {/* <Controller
-          name="wage"
-          rules={{
-            required: true,
-          }}
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <VNDContainer>
-              <WageInput
-                autoCapitalize="none"
-                returnKeyType="done"
-                keyboardType="number-pad"
-                onChangeText={(text) => onChange(text)}
-                value={value?.toLocaleString()}
-                maxLength={20}
-              />
-              <VND>VND</VND>
-            </VNDContainer>
-          )}
-        /> */}
+        <WageContainer>
+          <ModalView>
+            <ModalSelector
+              data={typeOfWage}
+              keyExtractor={(item) => item.id}
+              labelExtractor={(item) => item.value}
+              accessible={true}
+              onChange={(item) => {
+                setWageType(item.value);
+              }}
+              // optionContainerStyle={{ height: 180 }}
+            >
+              <TimeContainer>
+                <SelectBox value={wageType} />
+                <Ionicons
+                  name="chevron-forward"
+                  color="black"
+                  size={17}
+                  style={{ marginRight: 10 }}
+                />
+              </TimeContainer>
+            </ModalSelector>
+          </ModalView>
+          <Controller
+            name="title"
+            rules={{
+              required: true,
+            }}
+            control={control}
+            render={() => (
+              <WageInputContainer>
+                <WageInput
+                  autoCapitalize="none"
+                  returnKeyType="done"
+                  underlineColorAndroid="transparent"
+                  onChangeText={(text) => setNum(inputWageFormat(text))}
+                  value={num}
+                  keyboardType="number-pad"
+                  maxLength={17}
+                />
+                <Dong>₫</Dong>
+              </WageInputContainer>
+            )}
+          />
+        </WageContainer>
+        <CheckContainer>
+          <Checkbox
+            value={wageOption}
+            onValueChange={setWageOption}
+            color={true ? colors.blue : undefined}
+          />
+          <CheckText>협의 가능</CheckText>
+        </CheckContainer>
         <Title>세부 내용</Title>
         <Controller
           name="content"
