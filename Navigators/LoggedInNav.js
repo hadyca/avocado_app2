@@ -46,6 +46,9 @@ import UserAllCompanyPost from "../Screens/LoggedIn/Share/UserAllCompanyPost";
 import EditCompanyName from "../Screens/LoggedIn/Share/EditCompanyName";
 import EditAboutUs from "../Screens/LoggedIn/Share/EditAboutUs";
 import EditTotalEmployees from "../Screens/LoggedIn/Share/EditTotalEmployees";
+import EditCompanyEmail from "../Screens/LoggedIn/Share/EditCompanyEmail";
+import EditContactNumber from "../Screens/LoggedIn/Share/EditContactNumber";
+import EditAddress from "../Screens/LoggedIn/Share/EditAddress";
 
 const Stack = createStackNavigator();
 
@@ -66,6 +69,27 @@ export default function LoggedInNav() {
           headerBackTitleVisible: false,
         }}
         component={FollowNav}
+      />
+      <Stack.Screen
+        name="EditAddress"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={EditAddress}
+      />
+      <Stack.Screen
+        name="EditContactNumber"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={EditContactNumber}
+      />
+      <Stack.Screen
+        name="EditCompanyEmail"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={EditCompanyEmail}
       />
       <Stack.Screen
         name="EditTotalEmployees"

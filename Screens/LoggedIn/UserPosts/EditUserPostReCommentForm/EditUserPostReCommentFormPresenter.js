@@ -96,7 +96,7 @@ export default function EditUserPostReCommentFormPresenter({
               placeholder="Please Write Comment"
               multiline={true}
               textAlignVertical={"top"}
-              // maxLength={120}
+              maxLength={500}
               maxHeight={120}
               autoCapitalize="none"
               onChangeText={onChange}

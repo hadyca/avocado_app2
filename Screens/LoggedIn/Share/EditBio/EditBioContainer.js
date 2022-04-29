@@ -14,30 +14,14 @@ export default function ({ route: { params } }) {
     return setCounting(value.length);
   };
 
-  const updateBio = (cache, result) => {
-    const {
-      data: { editProfile },
-    } = result;
-    if (editProfile.id) {
-      const UserId = `User:${editProfile.id}`;
-      cache.modify({
-        id: UserId,
-        fields: {
-          bio() {
-            return editProfile.bio;
-          },
-        },
-      });
+  const [editBioMutation, { loading }] = useMutation(EDIT_BIO_MUTATION, {
+    onCompleted: ({ editProfile }) => {
       navigation.navigate("EditProfile", {
         username: params.username,
         bio: editProfile.bio,
         myCompany: params.myCompany,
       });
-    }
-  };
-
-  const [editBioMutation, { loading }] = useMutation(EDIT_BIO_MUTATION, {
-    update: updateBio,
+    },
   });
 
   useEffect(() => {

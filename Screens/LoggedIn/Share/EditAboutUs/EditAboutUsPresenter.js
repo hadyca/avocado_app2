@@ -93,6 +93,7 @@ export default function EditAboutUsPresenter({
               textAlignVertical={"top"}
               maxLength={150}
               autoCapitalize="none"
+              returnKeyType="done"
               onChangeText={(text) => {
                 onChange(text);
                 countingText(text);

@@ -127,7 +127,7 @@ function CategoryUserPost({
       <Contents onPress={goToPostDetail}>
         {content.length >= 20 ? (
           <Content>
-            <ContentText>{content.substr(0, 20)}</ContentText>
+            <ContentText>{content.substring(0, 20)}</ContentText>
             <MoreText>...more</MoreText>
           </Content>
         ) : (

@@ -3,7 +3,6 @@ import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { smallDistrict } from "../../../../DistrictList";
-
 import AuthLayout from "../../../../Components/Auth/AuthLayout";
 import {
   TextInput_Company,
@@ -39,7 +38,7 @@ export default function AskAddress_2({ route: { params } }) {
     <AuthLayout>
       <ProgressCreateCompany
         title={"두번째 도시를 선택해 주세요."}
-        step={"7"}
+        step={"8"}
       />
       <ModalSelector
         data={smallDistrict[params.addressStep1.id - 1]}

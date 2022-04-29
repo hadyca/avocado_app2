@@ -108,6 +108,7 @@ export default function AskAddress_3({ route: { params } }) {
             placeholder="01 Công xã Paris, Bến Nghé"
             autoCapitalize="none"
             returnKeyType="done"
+            maxLength={100}
             onChangeText={(text) => onChange(text)}
             value={value || ""}
             hasError={false}

@@ -1,11 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { useForm, Controller } from "react-hook-form";
+import ModalSelector from "react-native-modal-selector";
+import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../../../../Colors";
 import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import { UnderBar } from "../../../../Components/Auth/AuthShared";
+import { smallDistrict } from "../../../../DistrictList";
+import { add } from "react-native-reanimated";
 
 const HeaderRightText = styled.Text`
   color: ${colors.black};
@@ -27,32 +31,46 @@ const CountingText = styled.Text`
   font-size: 11px;
 `;
 
-export default function EditCompanyNamePresenter({
-  editCompanyNameMutation,
+const TextView = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export default function EditAddressPresenter({
+  editAddressMutation,
   countingText,
   counting,
+  bigDistrict,
   loading,
-  originCompanyName,
+  originAddressStep3,
+  add_1,
+  add_2,
+  handleAdd1,
+  handleAdd2,
 }) {
-  const navigation = useNavigation();
+  // const [add_1, setAdd_1] = useState({});
+  // const [add_2, setAdd_2] = useState(addressStep2);
 
+  const navigation = useNavigation();
   const { control, handleSubmit, formState } = useForm({
     defaultValues: {
-      companyName: originCompanyName,
+      addressStep3: originAddressStep3,
     },
     mode: "onChange",
   });
 
-  const onValid = async ({ companyName }) => {
+  const onValid = async ({ addressStep3 }) => {
     if (!loading) {
-      editCompanyNameMutation({
+      editAddressMutation({
         variables: {
-          companyName,
+          addressStep1: add_1?.value,
+          addressStep2: add_2,
+          addressStep3: addressStep3,
         },
       });
     }
   };
-
   const NoHeaderRight = () => (
     <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
       <HeaderRightText>Done</HeaderRightText>
@@ -80,22 +98,61 @@ export default function EditCompanyNamePresenter({
         ? NoHeaderRight
         : OkHeaderRight,
     });
-  }, [loading, formState.isValid]);
+  }, [loading, formState.isValid, add_1, add_2]);
 
   return (
     <DismissKeyboard>
       <Container>
+        <ModalSelector
+          data={bigDistrict}
+          keyExtractor={(item) => item.id}
+          labelExtractor={(item) => item.value}
+          accessible={true}
+          onChange={(item) => {
+            handleAdd1(item.id, item.value);
+          }}
+          optionContainerStyle={{ height: 500 }}
+        >
+          <TextView>
+            <TextInput value={add_1?.value} />
+            <Ionicons
+              name="chevron-forward"
+              color="black"
+              size={17}
+              style={{ paddingTop: 15 }}
+            />
+          </TextView>
+        </ModalSelector>
+        <ModalSelector
+          data={smallDistrict[add_1?.id - 1]}
+          keyExtractor={(item) => item.id}
+          labelExtractor={(item) => item.value}
+          accessible={true}
+          onChange={(item) => {
+            handleAdd2(item.value);
+          }}
+          optionContainerStyle={{ height: 500 }}
+        >
+          <TextView>
+            <TextInput placeholder={"Select your second city!"} value={add_2} />
+            <Ionicons
+              name="chevron-forward"
+              color="black"
+              size={17}
+              style={{ paddingTop: 15 }}
+            />
+          </TextView>
+        </ModalSelector>
         <Controller
-          name="companyName"
+          name="addressStep3"
           control={control}
           rules={{ required: true }}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              placeholder="Your Company Name"
-              textAlignVertical={"top"}
+              placeholder="01 Công xã Paris, Bến Nghé"
               maxLength={100}
-              returnKeyType="done"
               autoCapitalize="none"
+              returnKeyType="done"
               onChangeText={(text) => {
                 onChange(text);
                 countingText(text);

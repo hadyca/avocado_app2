@@ -12,15 +12,6 @@ import { emailRule } from "../../../../RegExp";
 import FormError from "../../../../Components/Auth/FormError";
 import ProgressCreateCompany from "../../../../Components/Auth/ProgressCreateCompany";
 
-const CHECK_EMAIL_MUTATION = gql`
-  mutation checkEmail($email: String!) {
-    checkEmail(email: $email) {
-      ok
-      error
-    }
-  }
-`;
-
 export default function AskEmail({ route: { params } }) {
   const navigation = useNavigation();
   const { control, handleSubmit, getValues, formState, setError, clearErrors } =
@@ -28,42 +19,19 @@ export default function AskEmail({ route: { params } }) {
       mode: "onChange",
     });
 
-  const onCompleted = (data) => {
-    const {
-      checkEmail: { ok, error },
-    } = data;
+  const goToContactNumber = () => {
     const { email } = getValues();
-    if (!ok) {
-      return setError("result", {
-        message: error,
-      });
-    } else {
-      return navigation.navigate("AskContactNumber", {
-        companyName: params.companyName,
-        aboutUs: params.aboutUs,
-        sector: params.sector,
-        totalEmployees: params.totalEmployees,
-        email,
-      });
-    }
+    return navigation.navigate("AskContactNumber", {
+      companyName: params.companyName,
+      aboutUs: params.aboutUs,
+      sector: params.sector,
+      totalEmployees: params.totalEmployees,
+      email,
+    });
   };
-
-  const [checkEmailMutation, { loading }] = useMutation(CHECK_EMAIL_MUTATION, {
-    onCompleted,
-  });
 
   const clearEmailError = () => {
     clearErrors("result");
-  };
-
-  const onValid = (data) => {
-    if (!loading) {
-      checkEmailMutation({
-        variables: {
-          ...data,
-        },
-      });
-    }
   };
 
   return (
@@ -86,8 +54,8 @@ export default function AskEmail({ route: { params } }) {
             value={value || ""}
             onChange={clearEmailError}
             hasError={false}
-            onSubmitEditing={handleSubmit(onValid)}
-            maxLength={100}
+            onSubmitEditing={goToContactNumber}
+            maxLength={50}
           />
         )}
       />
@@ -99,8 +67,7 @@ export default function AskEmail({ route: { params } }) {
       <AuthButton
         text="다음"
         disabled={!formState.isValid}
-        loading={loading}
-        onPress={handleSubmit(onValid)}
+        onPress={goToContactNumber}
       />
     </AuthLayout>
   );

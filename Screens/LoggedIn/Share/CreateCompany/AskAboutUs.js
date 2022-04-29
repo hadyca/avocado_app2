@@ -49,7 +49,6 @@ export default function AskAboutUs({ route: { params } }) {
         name="aboutUs"
         rules={{
           required: true,
-          maxLength: 150,
         }}
         control={control}
         render={({ field: { onChange, value } }) => (

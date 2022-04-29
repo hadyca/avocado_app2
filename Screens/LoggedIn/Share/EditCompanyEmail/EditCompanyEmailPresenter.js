@@ -6,6 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import { colors } from "../../../../Colors";
 import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import { UnderBar } from "../../../../Components/Auth/AuthShared";
+import { emailRule } from "../../../../RegExp";
 
 const HeaderRightText = styled.Text`
   color: ${colors.black};
@@ -27,27 +28,27 @@ const CountingText = styled.Text`
   font-size: 11px;
 `;
 
-export default function EditAboutUsPresenter({
-  editAboutUsMutation,
+export default function EditCompanyEmailPresenter({
+  editEmailMutation,
   countingText,
   counting,
   loading,
-  originAboutUs,
+  originEmail,
 }) {
   const navigation = useNavigation();
 
   const { control, handleSubmit, formState } = useForm({
     defaultValues: {
-      aboutUs: originAboutUs,
+      email: originEmail,
     },
     mode: "onChange",
   });
 
-  const onValid = async ({ aboutUs }) => {
+  const onValid = async ({ email }) => {
     if (!loading) {
-      editAboutUsMutation({
+      editEmailMutation({
         variables: {
-          aboutUs,
+          email,
         },
       });
     }
@@ -84,15 +85,20 @@ export default function EditAboutUsPresenter({
     <DismissKeyboard>
       <Container>
         <Controller
-          name="aboutUs"
+          name="email"
           control={control}
-          rules={{ required: true }}
+          rules={{
+            required: true,
+            pattern: emailRule,
+          }}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              placeholder="ex)직원 복지가 좋은, 동나이 최고의 garment회사!"
+              placeholder="Your@Eamil.com"
               textAlignVertical={"top"}
-              maxLength={150}
+              maxLength={50}
               autoCapitalize="none"
+              returnKeyType="done"
+              keyboardType="email-address"
               onChangeText={(text) => {
                 onChange(text);
                 countingText(text);
@@ -102,7 +108,7 @@ export default function EditAboutUsPresenter({
           )}
         />
         <UnderBar />
-        <CountingText>({counting}/150)</CountingText>
+        <CountingText>({counting}/50)</CountingText>
       </Container>
     </DismissKeyboard>
   );

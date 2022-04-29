@@ -77,7 +77,6 @@ export default function ({ route: { params } }) {
   return (
     <ScreenLayout loading={loading}>
       <CompanyPostByDistrictPresenter
-        addressStep2={params.addressStep2}
         goToCompanyPostForm={goToCompanyPostForm}
         handleFetch={handleFetch}
         refreshing={refreshing}

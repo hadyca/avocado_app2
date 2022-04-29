@@ -38,7 +38,8 @@ const ImagePick = styled.TouchableOpacity`
   height: 60px;
   justify-content: center;
   align-items: center;
-  border: 1px;
+  border-radius: 5px;
+  border: 1px solid ${colors.borderThick};
 `;
 const CameraText = styled.Text`
   color: #868b94;
@@ -183,6 +184,7 @@ export default function UserPostUploadFormPresenter({
           render={({ field: { onChange, value } }) => (
             <ContentInput
               multiline={true}
+              maxLength={1000}
               textAlignVertical={"top"}
               autoCapitalize="none"
               onChangeText={(text) => onChange(text)}

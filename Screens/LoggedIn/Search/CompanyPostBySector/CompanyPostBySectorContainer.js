@@ -77,7 +77,6 @@ export default function ({ route: { params } }) {
   return (
     <ScreenLayout loading={loading}>
       <CompanyPostBySectorPresenter
-        sector={params.sector}
         goToCompanyPostForm={goToCompanyPostForm}
         handleFetch={handleFetch}
         refreshing={refreshing}

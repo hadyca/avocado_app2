@@ -11,6 +11,7 @@ export default function ContentInput({
   multiline,
   autoCapitalize,
   onChangeText,
+  maxLength,
   value,
   categoryName,
 }) {
@@ -39,6 +40,7 @@ export default function ContentInput({
           : CategoryExplain_KR[9]
       }
       autoCapitalize={autoCapitalize}
+      maxLength={maxLength}
       onChangeText={onChangeText}
       value={value || ""}
     />

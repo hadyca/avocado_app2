@@ -85,6 +85,30 @@ export default function ({ route: { params } }) {
     });
   };
 
+  const goToEditCompanyEmail = () => {
+    navigation.navigate("EditCompanyEmail", {
+      username: params.username,
+      bio: params.bio,
+      myCompany: params.myCompany,
+    });
+  };
+
+  const goToEditContactNumber = () => {
+    navigation.navigate("EditContactNumber", {
+      username: params.username,
+      bio: params.bio,
+      myCompany: params.myCompany,
+    });
+  };
+
+  const goToEditAddress = () => {
+    navigation.navigate("EditAddress", {
+      username: params.username,
+      bio: params.bio,
+      myCompany: params.myCompany,
+    });
+  };
+
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
@@ -120,6 +144,9 @@ export default function ({ route: { params } }) {
         goToEditCompanyName={goToEditCompanyName}
         goToEditAboutUs={goToEditAboutUs}
         goToEditTotalEmployees={goToEditTotalEmployees}
+        goToEditCompanyEmail={goToEditCompanyEmail}
+        goToEditContactNumber={goToEditContactNumber}
+        goToEditAddress={goToEditAddress}
         isEdited={isEdited}
         avatarUrl={avatarUrl}
         username={params.username}

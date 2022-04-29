@@ -120,10 +120,8 @@ export default function ({ route: { params } }) {
     <CompanyPostUploadFormPresenter
       goToImageSelect={goToImageSelect}
       DeleteImg={DeleteImg}
-      //   goToCategory={goToCategory}
       countPhoto={countPhoto}
       photo={photo}
-      //   category={params.category}
       loading={loading}
       uploadCompanyPostMutation={uploadCompanyPostMutation}
     />

@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
-import { TouchableOpacity, ActivityIndicator } from "react-native";
+import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useForm, Controller } from "react-hook-form";
 import styled from "styled-components/native";
-import DismissKeyboard from "../../../../Components/DismissKeyBoard";
+import { useForm, Controller } from "react-hook-form";
 import { colors } from "../../../../Colors";
+import DismissKeyboard from "../../../../Components/DismissKeyBoard";
+import { UnderBar } from "../../../../Components/Auth/AuthShared";
+import { onlyNumber } from "../../../../RegExp";
 
 const HeaderRightText = styled.Text`
   color: ${colors.black};
@@ -17,48 +19,35 @@ const Container = styled.View`
   margin: 10px;
 `;
 const TextInput = styled.TextInput`
-  width: 100%;
-  height: 100%;
-  background-color: ${colors.backgraound};
-  padding: 13px;
+  padding: 15px 7px 0px 3px;
   color: black;
-  border: 1px solid ${colors.borderThick};
 `;
 
-export default function EditUserPostReCommentFormPresenter({
+export default function EditContactNumberPresenter({
+  editContactNumberMutation,
   loading,
-  reCommentId,
-  OriginalPayload,
-  editCompanyPostCommentMutation,
-  handlePayload,
+  originContactNumber,
 }) {
   const navigation = useNavigation();
+
   const { control, handleSubmit, formState } = useForm({
     defaultValues: {
-      payload: OriginalPayload,
+      contactNumber: originContactNumber,
     },
     mode: "onChange",
   });
-  const onValid = ({ payload }) => {
+
+  const onValid = async ({ contactNumber }) => {
     if (!loading) {
-      handlePayload(payload);
-      editCompanyPostCommentMutation({
+      editContactNumberMutation({
         variables: {
-          reCommentId: parseInt(reCommentId),
-          payload,
+          contactNumber,
         },
       });
     }
   };
-  const HeaderRightLoading = () => (
-    <ActivityIndicator size="small" color="black" style={{ marginRight: 10 }} />
-  );
   const NoHeaderRight = () => (
-    <TouchableOpacity
-      disabled={true}
-      onPress={handleSubmit(onValid)}
-      style={{ marginRight: 10, opacity: 0.5 }}
-    >
+    <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
       <HeaderRightText>Done</HeaderRightText>
     </TouchableOpacity>
   );
@@ -72,6 +61,10 @@ export default function EditUserPostReCommentFormPresenter({
       <HeaderRightText>Done</HeaderRightText>
     </TouchableOpacity>
   );
+  const HeaderRightLoading = () => (
+    <ActivityIndicator size="small" color="black" style={{ marginRight: 10 }} />
+  );
+
   useEffect(() => {
     navigation.setOptions({
       headerRight: loading
@@ -81,29 +74,34 @@ export default function EditUserPostReCommentFormPresenter({
         : OkHeaderRight,
     });
   }, [loading, formState.isValid]);
-
   return (
     <DismissKeyboard>
       <Container>
         <Controller
-          name="payload"
-          rules={{
-            required: "comment is required",
-          }}
+          name="contactNumber"
           control={control}
+          rules={{
+            required: true,
+            pattern: {
+              value: onlyNumber,
+            },
+          }}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              placeholder="Please Write Comment"
-              multiline={true}
+              placeholder="Your Contact Number"
               textAlignVertical={"top"}
-              maxLength={500}
-              maxHeight={120}
+              maxLength={20}
+              returnKeyType="done"
+              keyboardType="number-pad"
               autoCapitalize="none"
-              onChangeText={onChange}
+              onChangeText={(text) => {
+                onChange(text);
+              }}
               value={value}
             />
           )}
         />
+        <UnderBar />
       </Container>
     </DismissKeyboard>
   );

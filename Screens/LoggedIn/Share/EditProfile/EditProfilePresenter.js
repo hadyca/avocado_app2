@@ -15,7 +15,7 @@ const HeaderRightText = styled.Text`
   margin-right: 7px;
 `;
 
-const Container = styled.View`
+const Container = styled.ScrollView`
   margin: 20px;
 `;
 
@@ -80,7 +80,7 @@ const AddBio = styled.Text`
 `;
 
 const CompanyTitle = styled.Text`
-  margin: 20px 0px 10px 0px;
+  margin: 20px 0px 20px 0px;
   font-size: 16px;
   font-weight: bold;
 `;
@@ -100,6 +100,9 @@ export default function EditProfilePresenter({
   goToEditCompanyName,
   goToEditAboutUs,
   goToEditTotalEmployees,
+  goToEditCompanyEmail,
+  goToEditContactNumber,
+  goToEditAddress,
   isEdited,
   avatarUrl,
   username,
@@ -110,6 +113,8 @@ export default function EditProfilePresenter({
   skiphandle,
 }) {
   const [selectedSector, setSelectedSector] = useState(myCompany?.sector);
+  const address = `${myCompany?.addressStep3}, ${myCompany?.addressStep2}, ${myCompany?.addressStep1}`;
+
   const navigation = useNavigation();
 
   const goToEditAvatar = async () => {
@@ -220,8 +225,8 @@ export default function EditProfilePresenter({
           <ButtonTextView>
             {!bio ? (
               <AddBio>Add bio to profile</AddBio>
-            ) : bio.length >= 10 ? (
-              <ButtonText>{`${bio.substr(0, 10)}...`}</ButtonText>
+            ) : bio.length >= 20 ? (
+              <ButtonText>{`${bio.substring(0, 20)}...`}</ButtonText>
             ) : (
               <ButtonText>{bio}</ButtonText>
             )}
@@ -235,7 +240,16 @@ export default function EditProfilePresenter({
             <Button onPress={goToEditCompanyName}>
               <ButtonName>Company</ButtonName>
               <ButtonTextView>
-                <ButtonText>{myCompany?.companyName}</ButtonText>
+                <ButtonText>
+                  {myCompany?.companyName.length >= 20 ? (
+                    <ButtonText>{`${myCompany?.companyName.substring(
+                      0,
+                      20
+                    )}...`}</ButtonText>
+                  ) : (
+                    <ButtonText>{myCompany?.companyName}</ButtonText>
+                  )}
+                </ButtonText>
                 <Ionicons name="chevron-forward" color="black" size={17} />
               </ButtonTextView>
             </Button>
@@ -243,15 +257,26 @@ export default function EditProfilePresenter({
               <ButtonName>About Us</ButtonName>
               <ButtonTextView>
                 <ButtonText>
-                  {myCompany?.aboutUs.length >= 10 ? (
-                    <ButtonText>{`${myCompany?.aboutUs.substr(
+                  {myCompany?.aboutUs.length >= 20 ? (
+                    <ButtonText>{`${myCompany?.aboutUs.substring(
                       0,
-                      10
+                      20
                     )}...`}</ButtonText>
                   ) : (
                     <ButtonText>{myCompany?.aboutUs}</ButtonText>
                   )}
                 </ButtonText>
+                <Ionicons name="chevron-forward" color="black" size={17} />
+              </ButtonTextView>
+            </Button>
+            <Button onPress={goToEditAddress}>
+              <ButtonName>Address</ButtonName>
+              <ButtonTextView>
+                {address.length >= 25 ? (
+                  <ButtonText>{`${address.substring(0, 25)}...`}</ButtonText>
+                ) : (
+                  <ButtonText>{address}</ButtonText>
+                )}
                 <Ionicons name="chevron-forward" color="black" size={17} />
               </ButtonTextView>
             </Button>
@@ -263,7 +288,6 @@ export default function EditProfilePresenter({
               onChange={(item) => {
                 setSelectedSector(item.value);
               }}
-              // cancelText={"Cancel"}
               optionContainerStyle={{ height: 500 }}
             >
               <Button>
@@ -278,6 +302,29 @@ export default function EditProfilePresenter({
               <ButtonName>Total Employees</ButtonName>
               <ButtonTextView>
                 <ButtonText>{`${myCompany?.totalEmployees} 명`}</ButtonText>
+                <Ionicons name="chevron-forward" color="black" size={17} />
+              </ButtonTextView>
+            </Button>
+            <Button onPress={goToEditCompanyEmail}>
+              <ButtonName>Email</ButtonName>
+              <ButtonTextView>
+                <ButtonText>
+                  {myCompany?.email.length >= 20 ? (
+                    <ButtonText>{`${myCompany?.email.substring(
+                      0,
+                      20
+                    )}...`}</ButtonText>
+                  ) : (
+                    <ButtonText>{myCompany?.email}</ButtonText>
+                  )}
+                </ButtonText>
+                <Ionicons name="chevron-forward" color="black" size={17} />
+              </ButtonTextView>
+            </Button>
+            <Button onPress={goToEditContactNumber}>
+              <ButtonName>Contact Number</ButtonName>
+              <ButtonTextView>
+                <ButtonText>{myCompany?.contactNumber}</ButtonText>
                 <Ionicons name="chevron-forward" color="black" size={17} />
               </ButtonTextView>
             </Button>

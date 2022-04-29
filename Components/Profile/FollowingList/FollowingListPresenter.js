@@ -52,7 +52,8 @@ const FollowBtn = styled.TouchableOpacity`
   width: 90px;
   padding: 5px 7px;
   border-radius: 3px;
-  border: 1px solid ${colors.borderThick};
+  border: 1px solid
+    ${(props) => (props.backgroundColor ? colors.blue : colors.borderThick)};
 `;
 
 const FollowText = styled.Text`

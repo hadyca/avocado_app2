@@ -95,7 +95,7 @@ export default function EditTotalEmployeesPresenter({
               autoCapitalize="none"
               returnKeyType="done"
               keyboardType="number-pad"
-              maxLength={10}
+              maxLength={7}
               onChangeText={(text) => onChange(text)}
               value={value}
             />
