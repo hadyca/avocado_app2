@@ -28,18 +28,14 @@ export const logUserOut = async () => {
 // });
 // for web
 
-const uploadHttpLink = createUploadLink({
-  uri: "http://10.0.2.2:4000/graphql",
-});
+// const uploadHttpLink = createUploadLink({
+//   uri: "http://10.0.2.2:4000/graphql",
+// });
 // for simulator
 
-// const uploadHttpLink = createUploadLink({
-<<<<<<< HEAD
-//   uri: "http://126b-175-41-44-233.ngrok.io/graphql",
-=======
-//   uri: "http://b0c3-182-160-125-147.ngrok.io/graphql",
->>>>>>> 26d1b74d670ad83c69d17a21b55f64fbd64a6eb1
-// });
+const uploadHttpLink = createUploadLink({
+  uri: "http://d34a-118-67-222-162.ngrok.io/graphql",
+});
 
 const authLink = setContext((_, { headers }) => {
   return {
