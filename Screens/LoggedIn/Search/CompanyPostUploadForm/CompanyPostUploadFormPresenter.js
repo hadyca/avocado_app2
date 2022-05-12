@@ -495,6 +495,7 @@ export default function CompanyPostUploadFormPresenter({
                   value={wageNum}
                   keyboardType="number-pad"
                   maxLength={17}
+                  label={"2222"}
                 />
                 <Dong>₫</Dong>
               </WageInputContainer>
