@@ -1,5 +1,5 @@
 import AppLoading from "expo-app-loading";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { ApolloProvider, useReactiveVar } from "@apollo/client";
 import * as Font from "expo-font";

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Image, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Image, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import Checkbox from "expo-checkbox";
 import { Ionicons } from "@expo/vector-icons";
@@ -486,14 +486,14 @@ export default function CompanyPostUploadFormPresenter({
             )}
           />
         </WageContainer>
-        <CheckContainer>
+        {/* <CheckContainer>
           <Checkbox
             value={wageOption}
             onValueChange={setWageOption}
             color={true ? colors.blue : undefined}
           />
           <CheckText>협의 가능</CheckText>
-        </CheckContainer>
+        </CheckContainer> */}
         <Title>세부 내용</Title>
         <Controller
           name="content"
