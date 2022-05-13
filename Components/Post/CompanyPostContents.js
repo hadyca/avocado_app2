@@ -57,6 +57,7 @@ export default function CompanyPostContents({
   avatarUrl,
   title,
   content,
+  wage,
   toggleLikeMutation,
   likeLoading,
   isLiked,
@@ -87,6 +88,7 @@ export default function CompanyPostContents({
         <Contents>
           <Title>{title}</Title>
           <Content>{content}</Content>
+          <Content>{wage}</Content>
         </Contents>
         <Actions>
           {likeLoading ? (

@@ -31,6 +31,7 @@ export const POST_DETAIL_QUERY = gql`
       isMine
       isLiked
       isFavorite
+      wage
       companyPostComments {
         id
         user {

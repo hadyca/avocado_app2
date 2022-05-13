@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
 import { AntDesign } from "@expo/vector-icons";
 import ModalSelector from "react-native-modal-selector";
+import NumberFormat from "react-number-format";
 import { colors } from "../../../../Colors";
 import { useNavigation } from "@react-navigation/native";
 import { ReactNativeFile } from "apollo-upload-client";
@@ -209,7 +210,6 @@ export default function CompanyPostUploadFormPresenter({
   const [finishTime, setFinishTime] = useState({ label: "18:00", value: 1080 });
   const [timeOption, setTimeOption] = useState(false);
   const [wageType, setWageType] = useState("월급");
-  const [wageNum, setWageNum] = useState();
   const [wageOption, setWageOption] = useState(false);
 
   const navigation = useNavigation();
@@ -294,21 +294,8 @@ export default function CompanyPostUploadFormPresenter({
     finishTime,
     timeOption,
     wageType,
-    wageNum,
     wageOption,
   ]);
-
-  const inputWageFormat = (str) => {
-    const comma = (str) => {
-      str = String(str);
-      return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
-    };
-    const uncomma = (str) => {
-      str = String(str);
-      return str.replace(/[^\d]+/g, "");
-    };
-    return comma(uncomma(str));
-  };
 
   return (
     <Container>
@@ -487,18 +474,24 @@ export default function CompanyPostUploadFormPresenter({
             }}
             control={control}
             render={({ field: { onChange, value } }) => (
-              <WageInputContainer>
-                <WageInput
-                  autoCapitalize="none"
-                  returnKeyType="done"
-                  onChangeText={(text) => setWageNum(inputWageFormat(text))}
-                  value={wageNum}
-                  keyboardType="number-pad"
-                  maxLength={17}
-                  label={"2222"}
-                />
-                <Dong>₫</Dong>
-              </WageInputContainer>
+              <NumberFormat
+                value={value}
+                displayType={"text"}
+                thousandSeparator={true}
+                renderText={(text) => (
+                  <WageInputContainer>
+                    <WageInput
+                      autoCapitalize="none"
+                      returnKeyType="done"
+                      onChangeText={onChange}
+                      value={text}
+                      keyboardType="number-pad"
+                      maxLength={17}
+                    />
+                    <Dong>₫</Dong>
+                  </WageInputContainer>
+                )}
+              />
             )}
           />
         </WageContainer>
@@ -510,7 +503,8 @@ export default function CompanyPostUploadFormPresenter({
             checkedCheckBoxColor={colors.buttonBackground}
           />
           <CheckText>협의 가능</CheckText>
-        </CheckContainer> */}
+        </CheckContainer>
+
         <Title>세부 내용</Title>
         <Controller
           name="content"
