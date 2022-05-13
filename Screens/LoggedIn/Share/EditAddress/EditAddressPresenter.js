@@ -9,7 +9,6 @@ import { colors } from "../../../../Colors";
 import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import { UnderBar } from "../../../../Components/Auth/AuthShared";
 import { smallDistrict } from "../../../../DistrictList";
-import { add } from "react-native-reanimated";
 
 const HeaderRightText = styled.Text`
   color: ${colors.black};

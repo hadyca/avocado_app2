@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, Image, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
-import Checkbox from "expo-checkbox";
+import CheckBox from "react-native-check-box";
 import { Ionicons } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
 import { AntDesign } from "@expo/vector-icons";
@@ -197,7 +197,6 @@ export default function CompanyPostUploadFormPresenter({
   loading,
   uploadCompanyPostMutation,
 }) {
-  const [selectedLanguage, setSelectedLanguage] = useState();
   const [mon, setMon] = useState(true);
   const [tue, setTue] = useState(true);
   const [wed, setWed] = useState(true);
@@ -209,16 +208,17 @@ export default function CompanyPostUploadFormPresenter({
   const [startTime, setStartTime] = useState({ label: "09:00", value: 540 });
   const [finishTime, setFinishTime] = useState({ label: "18:00", value: 1080 });
   const [timeOption, setTimeOption] = useState(false);
-  const [wageOption, setWageOption] = useState(false);
   const [wageType, setWageType] = useState("월급");
-  const [num, setNum] = useState();
+  const [wageNum, setWageNum] = useState();
+  const [wageOption, setWageOption] = useState(false);
+
   const navigation = useNavigation();
 
   const { control, handleSubmit, formState } = useForm({
     mode: "onChange",
   });
 
-  const onValid = async ({ title, content }) => {
+  const onValid = async ({ title, content, wage }) => {
     const fileUrl = await photo.map((_, index) => {
       return new ReactNativeFile({
         uri: photo[index].uri,
@@ -242,11 +242,15 @@ export default function CompanyPostUploadFormPresenter({
           startTime: parseInt(startTime.value),
           finishTime: parseInt(finishTime.value),
           timeOption,
+          wageType,
+          wage,
+          wageOption,
           content,
         },
       });
     }
   };
+
   const NoHeaderRight = () => (
     <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
       <HeaderRightText>Done</HeaderRightText>
@@ -289,7 +293,9 @@ export default function CompanyPostUploadFormPresenter({
     startTime,
     finishTime,
     timeOption,
-    num,
+    wageType,
+    wageNum,
+    wageOption,
   ]);
 
   const inputWageFormat = (str) => {
@@ -380,6 +386,15 @@ export default function CompanyPostUploadFormPresenter({
             <DayText selected={sun}>일</DayText>
           </Day>
         </DayContainer>
+        <CheckContainer>
+          <CheckBox
+            onClick={() => setDayOption(!dayOption)}
+            isChecked={dayOption}
+            checkBoxColor={colors.borderThick}
+            checkedCheckBoxColor={colors.buttonBackground}
+          />
+          <CheckText>협의 가능</CheckText>
+        </CheckContainer>
         <Title>근무 시간</Title>
         <TimeTextContainer>
           <Time>시작</Time>
@@ -433,10 +448,11 @@ export default function CompanyPostUploadFormPresenter({
           </ModalView>
         </ModalContainer>
         <CheckContainer>
-          <Checkbox
-            value={timeOption}
-            onValueChange={setTimeOption}
-            color={true ? colors.blue : undefined}
+          <CheckBox
+            onClick={() => setTimeOption(!timeOption)}
+            isChecked={timeOption}
+            checkBoxColor={colors.borderThick}
+            checkedCheckBoxColor={colors.buttonBackground}
           />
           <CheckText>협의 가능</CheckText>
         </CheckContainer>
@@ -465,32 +481,33 @@ export default function CompanyPostUploadFormPresenter({
             </ModalSelector>
           </ModalView>
           <Controller
-            name="title"
+            name="wage"
             rules={{
               required: true,
             }}
             control={control}
-            render={() => (
+            render={({ field: { onChange, value } }) => (
               <WageInputContainer>
                 <WageInput
                   autoCapitalize="none"
                   returnKeyType="done"
-                  underlineColorAndroid="transparent"
-                  onChangeText={(text) => setNum(inputWageFormat(text))}
-                  value={num}
+                  onChangeText={(text) => setWageNum(inputWageFormat(text))}
+                  value={wageNum}
                   keyboardType="number-pad"
                   maxLength={17}
+                  label={"2222"}
                 />
                 <Dong>₫</Dong>
               </WageInputContainer>
             )}
           />
         </WageContainer>
-        {/* <CheckContainer>
-          <Checkbox
-            value={wageOption}
-            onValueChange={setWageOption}
-            color={true ? colors.blue : undefined}
+        <CheckContainer>
+          <CheckBox
+            onClick={() => setWageOption(!wageOption)}
+            isChecked={wageOption}
+            checkBoxColor={colors.borderThick}
+            checkedCheckBoxColor={colors.buttonBackground}
           />
           <CheckText>협의 가능</CheckText>
         </CheckContainer> */}
