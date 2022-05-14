@@ -16,7 +16,7 @@ export const UPLOAD_COMPANY_POST_MUTATION = gql`
     $finishTime: Int!
     $timeOption: Boolean!
     $wageType: String!
-    $wage: Int!
+    $wage: String!
     $wageOption: Boolean!
     $content: String!
   ) {

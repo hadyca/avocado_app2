@@ -295,6 +295,7 @@ export default function CompanyPostUploadFormPresenter({
     finishTime,
     timeOption,
     wageType,
+    wageNum,
     wageOption,
   ]);
 
@@ -509,7 +510,6 @@ export default function CompanyPostUploadFormPresenter({
           />
           <CheckText>협의 가능</CheckText>
         </CheckContainer>
-
         <Title>세부 내용</Title>
         <Controller
           name="content"
