@@ -211,6 +211,7 @@ export default function CompanyPostUploadFormPresenter({
   const [timeOption, setTimeOption] = useState(false);
   const [wageType, setWageType] = useState("월급");
   const [wageOption, setWageOption] = useState(false);
+  const [wageNum, setWageNum] = useState();
 
   const navigation = useNavigation();
 
@@ -218,7 +219,7 @@ export default function CompanyPostUploadFormPresenter({
     mode: "onChange",
   });
 
-  const onValid = async ({ title, content, wage }) => {
+  const onValid = async ({ title, content }) => {
     const fileUrl = await photo.map((_, index) => {
       return new ReactNativeFile({
         uri: photo[index].uri,
@@ -243,7 +244,7 @@ export default function CompanyPostUploadFormPresenter({
           finishTime: parseInt(finishTime.value),
           timeOption,
           wageType,
-          wage,
+          wage: wageNum,
           wageOption,
           content,
         },
@@ -478,13 +479,17 @@ export default function CompanyPostUploadFormPresenter({
                 value={value}
                 displayType={"text"}
                 thousandSeparator={true}
-                renderText={(text) => (
+                onValueChange={(values) => {
+                  const { value } = values;
+                  setWageNum(value);
+                }}
+                renderText={(value) => (
                   <WageInputContainer>
                     <WageInput
                       autoCapitalize="none"
                       returnKeyType="done"
                       onChangeText={onChange}
-                      value={text}
+                      value={value}
                       keyboardType="number-pad"
                       maxLength={17}
                     />
