@@ -40,14 +40,14 @@ export default function TabsNav() {
         {() => <SharedStackNav screenName="UserPostList" />}
       </Tabs.Screen>
       <Tabs.Screen
-        name="SearchConditionNav1"
+        name="CompanyPostAll1"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName={"search"} color={color} focused={focused} />
           ),
         }}
       >
-        {() => <SharedStackNav screenName="SearchConditionNav" />}
+        {() => <SharedStackNav screenName="CompanyPostAll" />}
       </Tabs.Screen>
       <Tabs.Screen
         name="FavoritesNav1"

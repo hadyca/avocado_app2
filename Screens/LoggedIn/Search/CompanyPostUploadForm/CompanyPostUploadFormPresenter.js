@@ -210,7 +210,6 @@ export default function CompanyPostUploadFormPresenter({
   const [finishTime, setFinishTime] = useState({ label: "18:00", value: 1080 });
   const [timeOption, setTimeOption] = useState(false);
   const [wageType, setWageType] = useState("월급");
-  const [wageOption, setWageOption] = useState(false);
   const [wageNum, setWageNum] = useState();
 
   const navigation = useNavigation();
@@ -245,7 +244,6 @@ export default function CompanyPostUploadFormPresenter({
           timeOption,
           wageType,
           wage: wageNum,
-          wageOption,
           content,
         },
       });
@@ -296,7 +294,6 @@ export default function CompanyPostUploadFormPresenter({
     timeOption,
     wageType,
     wageNum,
-    wageOption,
   ]);
 
   return (
@@ -501,15 +498,6 @@ export default function CompanyPostUploadFormPresenter({
             )}
           />
         </WageContainer>
-        <CheckContainer>
-          <CheckBox
-            onClick={() => setWageOption(!wageOption)}
-            isChecked={wageOption}
-            checkBoxColor={colors.borderThick}
-            checkedCheckBoxColor={colors.buttonBackground}
-          />
-          <CheckText>협의 가능</CheckText>
-        </CheckContainer>
         <Title>세부 내용</Title>
         <Controller
           name="content"

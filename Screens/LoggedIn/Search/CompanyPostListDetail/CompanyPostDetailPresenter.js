@@ -62,6 +62,7 @@ export default function CompanyPostDetailPresenter({
                   avatarUrl={data?.seeCompanyPost?.company?.user?.avatarUrl}
                   title={data?.seeCompanyPost?.title}
                   content={data?.seeCompanyPost?.content}
+                  wage={data?.seeCompanyPost?.wage}
                   likeLoading={likeLoading}
                   toggleLikeMutation={toggleCompanyPostLikeMutation}
                   isLiked={data?.seeCompanyPost?.isLiked}

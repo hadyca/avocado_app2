@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Image } from "react-native";
 import Home from "../Screens/LoggedIn/Home/Home";
 import UserPostList from "../Screens/LoggedIn/UserPosts/UserPostList";
-import SearchConditionNav from "./SearchConditionNav";
+import CompanyPostAll from "../Screens/LoggedIn/Search/CompanyPostAll";
 import FavoritesNav from "./FavoritesNav";
 import Me from "../Screens/LoggedIn/Me";
 import { colors } from "../Colors";
@@ -43,14 +43,11 @@ export default function SharedStackNav({ screenName }) {
           }}
         />
       ) : null}
-      {screenName === "SearchConditionNav" ? (
-        <Stack.Screen
-          name={"SearchConditionNav"}
-          component={SearchConditionNav}
-        />
-      ) : null}
       {screenName === "UserPostList" ? (
         <Stack.Screen name={"UserPostList"} component={UserPostList} />
+      ) : null}
+      {screenName === "CompanyPostAll" ? (
+        <Stack.Screen name={"CompanyPostAll"} component={CompanyPostAll} />
       ) : null}
       {screenName === "FavoritesNav" ? (
         <Stack.Screen name={"FavoritesNav"} component={FavoritesNav} />

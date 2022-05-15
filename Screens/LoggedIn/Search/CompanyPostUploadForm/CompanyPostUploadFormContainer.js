@@ -4,7 +4,6 @@ import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import CompanyPostUploadFormPresenter from "./CompanyPostUploadFormPresenter";
 import { UPLOAD_COMPANY_POST_MUTATION } from "./CompanyPostUploadFormQueries";
-import { ScreenNames } from "../../../../Constant";
 import useMe from "../../../../Hooks/useMe";
 
 export default function ({ route: { params } }) {
@@ -32,36 +31,10 @@ export default function ({ route: { params } }) {
         },
       });
     }
-
-    if (screenName === ScreenNames.SEARCH_DISTRICT) {
-      navigation.navigate("SearchConditionDistrict", {
-        id: uploadCompanyPost.id,
-        fromWhere: screenName,
-      });
-    }
-
-    if (screenName === ScreenNames.SEARCH_SECTOR) {
-      navigation.navigate("SearchConditionSector", {
-        id: uploadCompanyPost.id,
-        fromWhere: screenName,
-      });
-    }
-
-    if (screenName === ScreenNames.COMPANY_POST_BY_DISTRICT) {
-      navigation.navigate("CompanyPostByDistrict", {
-        id: uploadCompanyPost.id,
-        addressStep2: params.addressStep2,
-        fromWhere: screenName,
-      });
-    }
-
-    if (screenName === ScreenNames.COMPANY_POST_BY_SECTOR) {
-      navigation.navigate("CompanyPostBySector", {
-        id: uploadCompanyPost.id,
-        sector: params.sector,
-        fromWhere: screenName,
-      });
-    }
+    navigation.navigate("CompanyPostAll", {
+      id: uploadCompanyPost.id,
+      fromWhere: screenName,
+    });
   };
 
   const [uploadCompanyPostMutation, { loading }] = useMutation(

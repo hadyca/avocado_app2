@@ -27,8 +27,6 @@ import AskAddress_3 from "../Screens/LoggedIn/Share/CreateCompany/AskAddress_3";
 import CreateCompanyFinish from "../Screens/LoggedIn/Share/CreateCompany/CreateCompanyFinish";
 import CompanyPostUploadForm from "../Screens/LoggedIn/Search/CompanyPostUploadForm";
 import CompanyPostListDetail from "../Screens/LoggedIn/Search/CompanyPostListDetail";
-import CompanyPostByDistrict from "../Screens/LoggedIn/Search/CompanyPostByDistrict";
-import CompanyPostBySector from "../Screens/LoggedIn/Search/CompanyPostBySector";
 import EditCompanyPostForm from "../Screens/LoggedIn/Search/EditCompanyPostForm";
 import CompanyReComment from "../Screens/LoggedIn/Search/CompanyReComment";
 import EditCompanyPostCommentForm from "../Screens/LoggedIn/Search/EditCompanyPostCommentForm";
@@ -49,6 +47,7 @@ import EditTotalEmployees from "../Screens/LoggedIn/Share/EditTotalEmployees";
 import EditCompanyEmail from "../Screens/LoggedIn/Share/EditCompanyEmail";
 import EditContactNumber from "../Screens/LoggedIn/Share/EditContactNumber";
 import EditAddress from "../Screens/LoggedIn/Share/EditAddress";
+import CompanyPostAll from "../Screens/LoggedIn/Search/CompanyPostAll";
 
 const Stack = createStackNavigator();
 
@@ -190,13 +189,6 @@ export default function LoggedInNav() {
         component={EditCompanyPostCommentForm}
       />
       <Stack.Screen
-        name="CompanyPostBySector"
-        options={{
-          headerBackTitleVisible: false,
-        }}
-        component={CompanyPostBySector}
-      />
-      <Stack.Screen
         name="EditCompanyPostReCommentForm"
         options={{
           headerBackTitleVisible: false,
@@ -216,13 +208,6 @@ export default function LoggedInNav() {
           headerBackTitleVisible: false,
         }}
         component={EditCompanyPostForm}
-      />
-      <Stack.Screen
-        name="CompanyPostByDistrict"
-        options={{
-          headerBackTitleVisible: false,
-        }}
-        component={CompanyPostByDistrict}
       />
       <Stack.Screen
         name="CompanyPostListDetail"

@@ -95,8 +95,7 @@ export const ScreenNames = {
   CATEGORY_BOARD: "CategoryBoard",
   SEARCH_DISTRICT: "SearchConditionDistrict",
   SEARCH_SECTOR: "SearchConditionSector",
-  COMPANY_POST_BY_DISTRICT: "CompanyPostByDistrict",
-  COMPANY_POST_BY_SECTOR: "CompanyPostBySector",
+  COMPANY_POST_ALL: "CompanyPostAll",
 };
 
 export const CategoryExplain_KR = [
