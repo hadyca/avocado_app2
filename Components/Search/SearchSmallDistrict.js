@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { smallDistrict } from "../../DistrictList";
 import styled from "styled-components/native";
 import { colors } from "../../Colors";
@@ -24,24 +24,19 @@ const ButtonText = styled.Text`
   padding: 15px 2px 15px 2px;
 `;
 
-export default function SearchSmallDistrict({ districtCode }) {
+export default function SearchSmallDistrict({ districtCode, handleAddress }) {
   const navigation = useNavigation();
   const goToCompanyPostList = (addressStep2) => {
-    navigation.navigate("CompanyPostByDistrict", {
-      addressStep2,
-    });
+    handleAddress(addressStep2);
   };
   return (
     <View>
+      <Button>
+        <ButtonText>전체</ButtonText>
+      </Button>
       {smallDistrict[districtCode].map((item, index) => (
         <Button key={index} onPress={() => goToCompanyPostList(item.value)}>
           <ButtonText key={index}>{item.value}</ButtonText>
-          <Ionicons
-            name="chevron-forward"
-            color="black"
-            size={17}
-            style={{ marginRight: 35 }}
-          />
         </Button>
       ))}
     </View>

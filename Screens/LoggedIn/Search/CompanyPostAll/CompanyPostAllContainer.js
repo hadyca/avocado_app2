@@ -79,7 +79,7 @@ export default function ({ route: { params } }) {
         handleFetch={handleFetch}
         refreshing={refreshing}
         refresh={refresh}
-        data={data}
+        data={data?.seeAllCompanyPosts}
         renderPost={renderPost}
         fetchLoading={fetchLoading}
         companyOwner={companyOwner}
