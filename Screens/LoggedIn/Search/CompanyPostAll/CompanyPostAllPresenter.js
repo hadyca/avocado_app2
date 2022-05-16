@@ -82,12 +82,13 @@ export default function CompanyPostAllPresenter({
   const [modalVisible, setModalVisible] = useState(false);
   const [districtCode, setDistrictCode] = useState(0);
   const [vnAll, setVnAll] = useState(false);
+  const [allVisible, setAllVisible] = useState(false);
   const [list, setList] = useState([]);
 
   const changeDistrictCode = (index) => {
     setDistrictCode(index);
   };
-  console.log(vnAll);
+  console.log(allVisible);
   return (
     <>
       <Modal
@@ -107,7 +108,9 @@ export default function CompanyPostAllPresenter({
                     selected={districtCode === index ? true : false}
                     onPress={() => {
                       changeDistrictCode(index);
+                      setAllVisible(true);
                       if (index === 0) {
+                        setAllVisible(false);
                         setVnAll(true);
                         setList([]);
                       }
@@ -124,7 +127,7 @@ export default function CompanyPostAllPresenter({
               </FirstScrollView>
               <SecondScrollView showsVerticalScrollIndicator={false}>
                 <View>
-                  {vnAll === false ? (
+                  {allVisible === true ? (
                     <Button
                       onPress={() => {
                         const newDistrict = bigDistrict.filter(
@@ -142,8 +145,13 @@ export default function CompanyPostAllPresenter({
                     <Button
                       key={index}
                       onPress={() => {
-                        if (list.includes(item.value)) {
+                        if (
+                          list.findIndex((v) => v.value === item.value) !== -1
+                        ) {
+                          //중복 삭제
+                          setList(list.filter((v) => v.value !== value));
                         } else {
+                          //배열 추가
                           setList([
                             ...list,
                             { id: item.id, value: item.value },
@@ -169,9 +177,9 @@ export default function CompanyPostAllPresenter({
               ) : null}
               {list.map((item, index) => (
                 <DistrictSet>
-                  <Text>{item.value}</Text>
+                  <Text key={index}>{item.value}</Text>
                   <TouchableOpacity key={index} onPress={() => setVnAll(false)}>
-                    <Text>X</Text>
+                    <Text key={index}>X</Text>
                   </TouchableOpacity>
                 </DistrictSet>
               ))}
