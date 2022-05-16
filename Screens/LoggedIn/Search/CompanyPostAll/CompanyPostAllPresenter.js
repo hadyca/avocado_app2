@@ -88,7 +88,7 @@ export default function CompanyPostAllPresenter({
   const changeDistrictCode = (index) => {
     setDistrictCode(index);
   };
-  console.log(allVisible);
+  console.log(list);
   return (
     <>
       <Modal
@@ -103,22 +103,28 @@ export default function CompanyPostAllPresenter({
           <ModalView>
             <DistrictContainer>
               <FirstScrollView showsVerticalScrollIndicator={false}>
+                <Button
+                  selected={districtCode === 0 ? true : false}
+                  onPress={() => {
+                    changeDistrictCode(0);
+                    setAllVisible(false);
+                    setVnAll(true);
+                    setList([]);
+                  }}
+                >
+                  <ButtonText>전체</ButtonText>
+                </Button>
                 {bigDistrict.map((item, index) => (
                   <Button
-                    selected={districtCode === index ? true : false}
+                    selected={districtCode === item.id ? true : false}
                     onPress={() => {
-                      changeDistrictCode(index);
+                      changeDistrictCode(item.id);
                       setAllVisible(true);
-                      if (index === 0) {
-                        setAllVisible(false);
-                        setVnAll(true);
-                        setList([]);
-                      }
                     }}
                     key={index}
                   >
                     <ButtonText
-                      selected={districtCode === index ? true : false}
+                      selected={districtCode === item.id ? true : false}
                     >
                       {item.value}
                     </ButtonText>
@@ -127,7 +133,7 @@ export default function CompanyPostAllPresenter({
               </FirstScrollView>
               <SecondScrollView showsVerticalScrollIndicator={false}>
                 <View>
-                  {allVisible === true ? (
+                  {/* {allVisible === true ? (
                     <Button
                       onPress={() => {
                         const newDistrict = bigDistrict.filter(
@@ -140,22 +146,16 @@ export default function CompanyPostAllPresenter({
                     >
                       <ButtonText>전체</ButtonText>
                     </Button>
-                  ) : null}
+                  ) : null} */}
                   {smallDistrict[districtCode].map((item, index) => (
                     <Button
-                      key={index}
+                      key={item.id}
                       onPress={() => {
-                        if (
-                          list.findIndex((v) => v.value === item.value) !== -1
-                        ) {
-                          //중복 삭제
-                          setList(list.filter((v) => v.value !== value));
+                        if (false) {
+                          console.log("항목 삭제");
                         } else {
                           //배열 추가
-                          setList([
-                            ...list,
-                            { id: item.id, value: item.value },
-                          ]);
+                          setList([...list, item.value]);
                           setVnAll(false);
                         }
                       }}
@@ -176,10 +176,10 @@ export default function CompanyPostAllPresenter({
                 </DistrictSet>
               ) : null}
               {list.map((item, index) => (
-                <DistrictSet>
-                  <Text key={index}>{item.value}</Text>
-                  <TouchableOpacity key={index} onPress={() => setVnAll(false)}>
-                    <Text key={index}>X</Text>
+                <DistrictSet key={index}>
+                  <Text>{item}</Text>
+                  <TouchableOpacity onPress={() => setVnAll(false)}>
+                    <Text>X</Text>
                   </TouchableOpacity>
                 </DistrictSet>
               ))}

@@ -1,5 +1,4 @@
 export const bigDistrict = [
-  { id: 0, value: "전체" },
   { id: 1, value: "Hà Nội" },
   { id: 2, value: "Hồ Chí Minh" },
   { id: 3, value: "Cần Thơ" },
