@@ -1,4 +1,5 @@
 export const bigDistrict = [
+  { id: 0, value: "전체" },
   { id: 1, value: "Hà Nội" },
   { id: 2, value: "Hồ Chí Minh" },
   { id: 3, value: "Cần Thơ" },
@@ -63,6 +64,8 @@ export const bigDistrict = [
   { id: 62, value: "Vĩnh Phúc" },
   { id: 63, value: "Yên Bái" },
 ];
+
+const vnNull = [];
 
 const haNoi = [
   { id: 1, value: "Sơn Tây" },
@@ -938,6 +941,7 @@ const yenBai = [
 
 //2급 행정구 배열
 export const smallDistrict = [
+  vnNull,
   haNoi,
   hoChiMinh,
   canTho,

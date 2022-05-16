@@ -10,8 +10,7 @@ import {
 import styled from "styled-components/native";
 import PostFormButton from "../../../../Components/Post/PostFormButton";
 import { colors } from "../../../../Colors";
-import { bigDistrict } from "../../../../DistrictList";
-import SearchSmallDistrict from "../../../../Components/Search/SearchSmallDistrict";
+import { bigDistrict, smallDistrict } from "../../../../DistrictList";
 
 const FetchView = styled.View`
   bottom: 30px;
@@ -20,6 +19,16 @@ const FetchView = styled.View`
 const ModalContainer = styled.View`
   flex: 1;
   justify-content: flex-end;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  background-color: blue;
+  margin-top: 100px;
+`;
+
+const ModalView = styled.View`
+  background-color: orange;
+  width: 100%;
+  height: 98%;
 `;
 
 const DistrictContainer = styled.View`
@@ -52,13 +61,14 @@ const ButtonText = styled.Text`
   padding: 15px 2px 15px 2px;
 `;
 
-const ModalView = styled.View`
-  background-color: red;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  width: 100%;
-  height: 90%;
+const ListContainer = styled.View`
+  flex-direction: row;
 `;
+
+const DistrictSet = styled.View`
+  flex-direction: row;
+`;
+
 export default function CompanyPostAllPresenter({
   goToCompanyPostForm,
   handleFetch,
@@ -71,11 +81,13 @@ export default function CompanyPostAllPresenter({
 }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [districtCode, setDistrictCode] = useState(0);
+  const [vnAll, setVnAll] = useState(false);
+  const [list, setList] = useState([]);
 
   const changeDistrictCode = (index) => {
     setDistrictCode(index);
   };
-
+  console.log(vnAll);
   return (
     <>
       <Modal
@@ -90,13 +102,16 @@ export default function CompanyPostAllPresenter({
           <ModalView>
             <DistrictContainer>
               <FirstScrollView showsVerticalScrollIndicator={false}>
-                <Button>
-                  <ButtonText>전체</ButtonText>
-                </Button>
                 {bigDistrict.map((item, index) => (
                   <Button
                     selected={districtCode === index ? true : false}
-                    onPress={() => changeDistrictCode(index)}
+                    onPress={() => {
+                      changeDistrictCode(index);
+                      if (index === 0) {
+                        setVnAll(true);
+                        setList([]);
+                      }
+                    }}
                     key={index}
                   >
                     <ButtonText
@@ -108,9 +123,59 @@ export default function CompanyPostAllPresenter({
                 ))}
               </FirstScrollView>
               <SecondScrollView showsVerticalScrollIndicator={false}>
-                <SearchSmallDistrict districtCode={districtCode} />
+                <View>
+                  {vnAll === false ? (
+                    <Button
+                      onPress={() => {
+                        const newDistrict = bigDistrict.filter(
+                          (i) => i.id === districtCode
+                        );
+                        setList([
+                          { id: 0, value: `${newDistrict[0].value} 전체` },
+                        ]);
+                      }}
+                    >
+                      <ButtonText>전체</ButtonText>
+                    </Button>
+                  ) : null}
+                  {smallDistrict[districtCode].map((item, index) => (
+                    <Button
+                      key={index}
+                      onPress={() => {
+                        if (list.includes(item.value)) {
+                        } else {
+                          setList([
+                            ...list,
+                            { id: item.id, value: item.value },
+                          ]);
+                          setVnAll(false);
+                        }
+                      }}
+                    >
+                      <ButtonText key={index}>{item.value}</ButtonText>
+                    </Button>
+                  ))}
+                </View>
               </SecondScrollView>
             </DistrictContainer>
+            <ListContainer>
+              {vnAll ? (
+                <DistrictSet>
+                  <Text>VN전체</Text>
+                  <TouchableOpacity onPress={() => setVnAll(false)}>
+                    <Text>X</Text>
+                  </TouchableOpacity>
+                </DistrictSet>
+              ) : null}
+              {list.map((item, index) => (
+                <DistrictSet>
+                  <Text>{item.value}</Text>
+                  <TouchableOpacity key={index} onPress={() => setVnAll(false)}>
+                    <Text>X</Text>
+                  </TouchableOpacity>
+                </DistrictSet>
+              ))}
+            </ListContainer>
             <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
               <Text>닫기</Text>
             </TouchableOpacity>
