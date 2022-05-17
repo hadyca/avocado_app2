@@ -88,7 +88,7 @@ export default function CompanyPostAllPresenter({
   const changeDistrictCode = (index) => {
     setDistrictCode(index);
   };
-  console.log(list);
+
   return (
     <>
       <Modal
@@ -133,29 +133,55 @@ export default function CompanyPostAllPresenter({
               </FirstScrollView>
               <SecondScrollView showsVerticalScrollIndicator={false}>
                 <View>
-                  {/* {allVisible === true ? (
+                  {allVisible === true ? (
                     <Button
                       onPress={() => {
+                        setVnAll(false);
                         const newDistrict = bigDistrict.filter(
                           (i) => i.id === districtCode
                         );
                         setList([
-                          { id: 0, value: `${newDistrict[0].value} 전체` },
+                          {
+                            id: districtCode,
+                            value: `${newDistrict[0].value} 전체`,
+                          },
                         ]);
                       }}
                     >
                       <ButtonText>전체</ButtonText>
                     </Button>
-                  ) : null} */}
+                  ) : null}
                   {smallDistrict[districtCode].map((item, index) => (
                     <Button
                       key={item.id}
                       onPress={() => {
-                        if (false) {
-                          console.log("항목 삭제");
+                        if (list.some((el) => el.value === item.value)) {
+                          setList(list.filter((el) => el.value !== item.value));
                         } else {
-                          //배열 추가
-                          setList([...list, item.value]);
+                          const newDistrict = bigDistrict.filter(
+                            (i) => i.id === districtCode
+                          );
+                          const test = list.filter(
+                            (el) => el.value !== `${newDistrict[0].value} 전체`
+                          );
+                          console.log(list);
+                          const test2 = [
+                            ...list,
+                            { id: districtCode, value: item.value },
+                          ];
+                          setList(() => {
+                            if (false) {
+                              test;
+                              test2;
+                            } else {
+                              test2;
+                            }
+                          });
+
+                          // setList([
+                          //   ...list,
+                          //   { id: districtCode, value: item.value },
+                          // ]);
                           setVnAll(false);
                         }
                       }}
@@ -177,9 +203,13 @@ export default function CompanyPostAllPresenter({
               ) : null}
               {list.map((item, index) => (
                 <DistrictSet key={index}>
-                  <Text>{item}</Text>
-                  <TouchableOpacity onPress={() => setVnAll(false)}>
-                    <Text>X</Text>
+                  <Text>{item.value}</Text>
+                  <TouchableOpacity
+                    onPress={() =>
+                      setList(list.filter((el) => el.value !== item.value))
+                    }
+                  >
+                    <Text> X </Text>
                   </TouchableOpacity>
                 </DistrictSet>
               ))}
