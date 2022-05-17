@@ -88,7 +88,7 @@ export default function CompanyPostAllPresenter({
   const changeDistrictCode = (index) => {
     setDistrictCode(index);
   };
-
+  console.log(list);
   return (
     <>
       <Modal
@@ -161,21 +161,13 @@ export default function CompanyPostAllPresenter({
                           const newDistrict = bigDistrict.filter(
                             (i) => i.id === districtCode
                           );
-                          const test = list.filter(
-                            (el) => el.value !== `${newDistrict[0].value} 전체`
-                          );
-                          console.log(list);
-                          const test2 = [
-                            ...list,
-                            { id: districtCode, value: item.value },
-                          ];
+
                           setList(() => {
-                            if (false) {
-                              test;
-                              test2;
-                            } else {
-                              test2;
-                            }
+                            list.filter(
+                              (el) =>
+                                el.value !== `${newDistrict[0].value} 전체`
+                            );
+                            console.log(list);
                           });
 
                           // setList([
@@ -201,7 +193,7 @@ export default function CompanyPostAllPresenter({
                   </TouchableOpacity>
                 </DistrictSet>
               ) : null}
-              {list.map((item, index) => (
+              {/* {list.map((item, index) => (
                 <DistrictSet key={index}>
                   <Text>{item.value}</Text>
                   <TouchableOpacity
@@ -212,7 +204,7 @@ export default function CompanyPostAllPresenter({
                     <Text> X </Text>
                   </TouchableOpacity>
                 </DistrictSet>
-              ))}
+              ))} */}
             </ListContainer>
             <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
               <Text>닫기</Text>
