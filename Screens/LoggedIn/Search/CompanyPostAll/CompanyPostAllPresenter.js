@@ -80,14 +80,10 @@ export default function CompanyPostAllPresenter({
   companyOwner,
 }) {
   const [modalVisible, setModalVisible] = useState(false);
-  const [districtCode, setDistrictCode] = useState(0);
+  const [districtCode, setDistrictCode] = useState();
   const [vnAll, setVnAll] = useState(false);
   const [allVisible, setAllVisible] = useState(false);
   const [list, setList] = useState([]);
-
-  const changeDistrictCode = (index) => {
-    setDistrictCode(index);
-  };
   console.log(list);
   return (
     <>
@@ -106,10 +102,16 @@ export default function CompanyPostAllPresenter({
                 <Button
                   selected={districtCode === 0 ? true : false}
                   onPress={() => {
-                    changeDistrictCode(0);
-                    setAllVisible(false);
-                    setVnAll(true);
-                    setList([]);
+                    if (vnAll) {
+                      setVnAll(false);
+                      setDistrictCode();
+                      setAllVisible(false);
+                    } else {
+                      setVnAll(true);
+                      setDistrictCode(0);
+                      setAllVisible(false);
+                      setList([]);
+                    }
                   }}
                 >
                   <ButtonText>전체</ButtonText>
@@ -118,7 +120,7 @@ export default function CompanyPostAllPresenter({
                   <Button
                     selected={districtCode === item.id ? true : false}
                     onPress={() => {
-                      changeDistrictCode(item.id);
+                      setDistrictCode(item.id);
                       setAllVisible(true);
                     }}
                     key={index}
@@ -136,51 +138,67 @@ export default function CompanyPostAllPresenter({
                   {allVisible === true ? (
                     <Button
                       onPress={() => {
-                        setVnAll(false);
                         const newDistrict = bigDistrict.filter(
                           (i) => i.id === districtCode
                         );
-                        setList([
-                          {
-                            id: districtCode,
-                            value: `${newDistrict[0].value} 전체`,
-                          },
-                        ]);
+                        if (
+                          list.some(
+                            (el) => el.value === `${newDistrict[0].value} 전체`
+                          )
+                        ) {
+                          setList(
+                            list.filter(
+                              (el) =>
+                                el.value !== `${newDistrict[0].value} 전체`
+                            )
+                          );
+                        } else {
+                          setVnAll(false);
+                          setList([
+                            {
+                              id: districtCode + 100,
+                              value: `${newDistrict[0].value} 전체`,
+                            },
+                          ]);
+                        }
                       }}
                     >
                       <ButtonText>전체</ButtonText>
                     </Button>
                   ) : null}
-                  {smallDistrict[districtCode].map((item, index) => (
-                    <Button
-                      key={item.id}
-                      onPress={() => {
-                        if (list.some((el) => el.value === item.value)) {
-                          setList(list.filter((el) => el.value !== item.value));
-                        } else {
-                          const newDistrict = bigDistrict.filter(
-                            (i) => i.id === districtCode
-                          );
+                  {districtCode > 0
+                    ? smallDistrict[districtCode].map((item, index) => (
+                        <Button
+                          key={item.id}
+                          onPress={() => {
+                            if (list.some((el) => el.value === item.value)) {
+                              setList(
+                                list.filter((el) => el.value !== item.value)
+                              );
+                            } else {
+                              const newDistrict = bigDistrict.filter(
+                                (i) => i.id === districtCode
+                              );
 
-                          setList(() => {
-                            list.filter(
-                              (el) =>
-                                el.value !== `${newDistrict[0].value} 전체`
-                            );
-                            console.log(list);
-                          });
+                              // setList(() => {
+                              //   list.filter(
+                              //     (el) =>
+                              //       el.value !== `${newDistrict[0].value} 전체`
+                              //   );
+                              // });
 
-                          // setList([
-                          //   ...list,
-                          //   { id: districtCode, value: item.value },
-                          // ]);
-                          setVnAll(false);
-                        }
-                      }}
-                    >
-                      <ButtonText key={index}>{item.value}</ButtonText>
-                    </Button>
-                  ))}
+                              setList([
+                                ...list,
+                                { id: districtCode, value: item.value },
+                              ]);
+                              setVnAll(false);
+                            }
+                          }}
+                        >
+                          <ButtonText key={index}>{item.value}</ButtonText>
+                        </Button>
+                      ))
+                    : null}
                 </View>
               </SecondScrollView>
             </DistrictContainer>
@@ -193,7 +211,7 @@ export default function CompanyPostAllPresenter({
                   </TouchableOpacity>
                 </DistrictSet>
               ) : null}
-              {/* {list.map((item, index) => (
+              {list.map((item, index) => (
                 <DistrictSet key={index}>
                   <Text>{item.value}</Text>
                   <TouchableOpacity
@@ -204,7 +222,7 @@ export default function CompanyPostAllPresenter({
                     <Text> X </Text>
                   </TouchableOpacity>
                 </DistrictSet>
-              ))} */}
+              ))}
             </ListContainer>
             <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
               <Text>닫기</Text>
