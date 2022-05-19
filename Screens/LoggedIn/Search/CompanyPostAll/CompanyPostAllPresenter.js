@@ -141,17 +141,18 @@ export default function CompanyPostAllPresenter({
                         const newDistrict = bigDistrict.filter(
                           (i) => i.id === districtCode
                         );
-                        if (
-                          list.some(
-                            (el) => el.value === `${newDistrict[0].value} 전체`
-                          )
-                        ) {
+                        const existAll = list.some(
+                          (el) => el.value === `${newDistrict[0].value} 전체`
+                        );
+                        if (existAll) {
+                          //address2 삭제
                           setList(
                             list.filter(
                               (el) =>
                                 el.value !== `${newDistrict[0].value} 전체`
                             )
                           );
+                          //
                         } else {
                           setVnAll(false);
                           setList([
@@ -171,26 +172,28 @@ export default function CompanyPostAllPresenter({
                         <Button
                           key={item.id}
                           onPress={() => {
-                            if (list.some((el) => el.value === item.value)) {
-                              setList(
-                                list.filter((el) => el.value !== item.value)
-                              );
-                            } else {
-                              const newDistrict = bigDistrict.filter(
-                                (i) => i.id === districtCode
-                              );
-
-                              // setList(() => {
-                              //   list.filter(
-                              //     (el) =>
-                              //       el.value !== `${newDistrict[0].value} 전체`
-                              //   );
-                              // });
-
+                            const toggleAddress2 = (id, value) => {
+                              if (list.some((el) => el.value === item.value)) {
+                                setList(
+                                  list.filter((el) => el.value !== item.value)
+                                );
+                              } else {
+                                setList([
+                                  ...list,
+                                  { id: districtCode, value: item.value },
+                                ]);
+                              }
+                            };
+                            if (
+                              list.some((el) => el.id === districtCode + 100)
+                            ) {
+                              list.splice(0, 1);
                               setList([
                                 ...list,
                                 { id: districtCode, value: item.value },
                               ]);
+                            } else {
+                              toggleAddress2(item.id, item.value);
                               setVnAll(false);
                             }
                           }}
