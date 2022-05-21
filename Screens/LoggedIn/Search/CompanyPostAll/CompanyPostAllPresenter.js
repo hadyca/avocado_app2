@@ -84,7 +84,25 @@ export default function CompanyPostAllPresenter({
   const [vnAll, setVnAll] = useState(false);
   const [allVisible, setAllVisible] = useState(false);
   const [list, setList] = useState([]);
-  console.log(list);
+  const existAddress2 = list.some((el) => el.id === districtCode);
+  const existAll = list.some((el) => el.id === districtCode + 100);
+
+  const toggleAddressAll = (value) => {
+    if (list.some((el) => el.id === districtCode + 100)) {
+      setList(list.filter((el) => el.id !== districtCode + 100));
+    } else {
+      setList([...list, { id: districtCode + 100, value: value }]);
+    }
+  };
+
+  const toggleAddress2 = (value) => {
+    if (list.some((el) => el.value === value)) {
+      setList(list.filter((el) => el.value !== value));
+    } else {
+      setList([...list, { id: districtCode, value: value }]);
+    }
+  };
+
   return (
     <>
       <Modal
@@ -141,26 +159,23 @@ export default function CompanyPostAllPresenter({
                         const newDistrict = bigDistrict.filter(
                           (i) => i.id === districtCode
                         );
-                        const existAll = list.some(
-                          (el) => el.value === `${newDistrict[0].value} 전체`
-                        );
-                        if (existAll) {
-                          //address2 삭제
-                          setList(
-                            list.filter(
-                              (el) =>
-                                el.value !== `${newDistrict[0].value} 전체`
-                            )
-                          );
-                          //
-                        } else {
-                          setVnAll(false);
+                        if (existAddress2) {
+                          for (let i = 0; i < list.length; i++) {
+                            if (list[i].id === districtCode) {
+                              list.splice(i, 1);
+                              i--;
+                            }
+                          }
                           setList([
+                            ...list,
                             {
                               id: districtCode + 100,
                               value: `${newDistrict[0].value} 전체`,
                             },
                           ]);
+                        } else {
+                          setVnAll(false);
+                          toggleAddressAll(`${newDistrict[0].value} 전체`);
                         }
                       }}
                     >
@@ -172,28 +187,19 @@ export default function CompanyPostAllPresenter({
                         <Button
                           key={item.id}
                           onPress={() => {
-                            const toggleAddress2 = (id, value) => {
-                              if (list.some((el) => el.value === item.value)) {
-                                setList(
-                                  list.filter((el) => el.value !== item.value)
-                                );
-                              } else {
-                                setList([
-                                  ...list,
-                                  { id: districtCode, value: item.value },
-                                ]);
+                            if (existAll) {
+                              for (let i = 0; i < list.length; i++) {
+                                if (list[i].id === districtCode + 100) {
+                                  list.splice(i, 1);
+                                  i--;
+                                }
                               }
-                            };
-                            if (
-                              list.some((el) => el.id === districtCode + 100)
-                            ) {
-                              list.splice(0, 1);
                               setList([
                                 ...list,
                                 { id: districtCode, value: item.value },
                               ]);
                             } else {
-                              toggleAddress2(item.id, item.value);
+                              toggleAddress2(item.value);
                               setVnAll(false);
                             }
                           }}
