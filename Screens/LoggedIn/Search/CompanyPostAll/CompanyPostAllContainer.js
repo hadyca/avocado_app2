@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useQuery } from "@apollo/client";
+import { useQuery, useLazyQuery } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import ScreenLayout from "../../../../Components/ScreenLayout";
 import { ScreenNames } from "../../../../Constant";
-import { COMPANYPOST_QUERY } from "./CompanyPostAllQueries";
+import {
+  COMPANYPOST_QUERY,
+  COMPANYPOST_DISTRICT_QUERY,
+} from "./CompanyPostAllQueries";
 import CompanyPostAllPresenter from "./CompanyPostAllPresenter";
 import AllCompanyPost from "../../../../Components/Post/AllCompanyPost";
 import useMe from "../../../../Hooks/useMe";
@@ -15,7 +18,22 @@ export default function ({ route: { params } }) {
   const [companyOwner, setCompanyOwner] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
+
   const { data, loading, refetch, fetchMore } = useQuery(COMPANYPOST_QUERY, {
+    variables: {
+      offset: 0,
+    },
+  });
+
+  const [
+    getData,
+    {
+      data: FData,
+      loading: FLoading,
+      refetch: FRefetch,
+      fetchMore: FFetchMore,
+    },
+  ] = useLazyQuery(COMPANYPOST_DISTRICT_QUERY, {
     variables: {
       offset: 0,
     },
@@ -72,6 +90,7 @@ export default function ({ route: { params } }) {
     }
   }, [userData]);
 
+  console.log(FData);
   return (
     <ScreenLayout loading={loading}>
       <CompanyPostAllPresenter
@@ -83,6 +102,8 @@ export default function ({ route: { params } }) {
         renderPost={renderPost}
         fetchLoading={fetchLoading}
         companyOwner={companyOwner}
+        getData={getData}
+        FData={FData}
       />
     </ScreenLayout>
   );

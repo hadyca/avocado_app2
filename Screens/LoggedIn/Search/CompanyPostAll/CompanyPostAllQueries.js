@@ -37,7 +37,11 @@ export const COMPANYPOST_QUERY = gql`
 
 export const COMPANYPOST_DISTRICT_QUERY = gql`
   query seeCompanyPostByDistrict(
-    $addressStep1: String
+    $addressStep1_1: String
+    $addressStep1_2: String
+    $addressStep1_3: String
+    $addressStep1_4: String
+    $addressStep1_5: String
     $addressStep2_1: String
     $addressStep2_2: String
     $addressStep2_3: String
@@ -46,7 +50,11 @@ export const COMPANYPOST_DISTRICT_QUERY = gql`
     $offset: Int!
   ) {
     seeCompanyPostByDistrict(
-      addressStep1: $addressStep1
+      addressStep1_1: $addressStep1_1
+      addressStep1_2: $addressStep1_2
+      addressStep1_3: $addressStep1_3
+      addressStep1_4: $addressStep1_4
+      addressStep1_5: $addressStep1_5
       addressStep2_1: $addressStep2_1
       addressStep2_2: $addressStep2_2
       addressStep2_3: $addressStep2_3

@@ -78,12 +78,16 @@ export default function CompanyPostAllPresenter({
   renderPost,
   fetchLoading,
   companyOwner,
+  getData,
+  FData,
 }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [districtCode, setDistrictCode] = useState();
   const [vnAll, setVnAll] = useState(false);
   const [allVisible, setAllVisible] = useState(false);
   const [list, setList] = useState([]);
+  // const [addressStep1_1, setAddressStep1_1] = useState("");
+
   const existAddress2 = list.some((el) => el.id === districtCode);
   const existAll = list.some((el) => el.id === districtCode + 100);
 
@@ -100,6 +104,15 @@ export default function CompanyPostAllPresenter({
       setList(list.filter((el) => el.value !== value));
     } else {
       setList([...list, { id: districtCode, value: value }]);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (vnAll) {
+      refresh();
+    }
+    if (list.length > 0) {
+      getData({ variables: { addressStep1_1: "Hồ Chí Minh" } });
     }
   };
 
@@ -235,6 +248,14 @@ export default function CompanyPostAllPresenter({
             </ListContainer>
             <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
               <Text>닫기</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setModalVisible(!modalVisible);
+                handleSubmit();
+              }}
+            >
+              <Text>확인</Text>
             </TouchableOpacity>
           </ModalView>
         </ModalContainer>
