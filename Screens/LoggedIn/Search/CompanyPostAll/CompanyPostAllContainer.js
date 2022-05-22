@@ -90,7 +90,6 @@ export default function ({ route: { params } }) {
     }
   }, [userData]);
 
-  console.log(FData);
   return (
     <ScreenLayout loading={loading}>
       <CompanyPostAllPresenter

@@ -8,6 +8,7 @@ import {
   Text,
 } from "react-native";
 import styled from "styled-components/native";
+import { Ionicons } from "@expo/vector-icons";
 import PostFormButton from "../../../../Components/Post/PostFormButton";
 import { colors } from "../../../../Colors";
 import { bigDistrict, smallDistrict } from "../../../../DistrictList";
@@ -38,27 +39,36 @@ const DistrictContainer = styled.View`
 `;
 
 const FirstScrollView = styled.ScrollView`
-  flex: 0.3;
+  flex: 0.45;
 `;
 
 const SecondScrollView = styled.ScrollView`
-  flex: 0.7;
+  flex: 0.55;
 `;
 
 const Button = styled.TouchableOpacity`
   background-color: ${(props) =>
-    props.selected ? colors.backgraound : colors.greyBackround};
+    props.selected ? colors.orangeBackground : colors.backgraound};
   width: 100%;
-  border-bottom-width: 1px;
-  border-bottom-color: ${colors.borderThin};
+`;
+
+const BtnTextContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
 `;
 
 const ButtonText = styled.Text`
-  color: ${(props) => (props.selected ? colors.black : colors.greyText)};
-  font-weight: bold;
+  color: ${(props) =>
+    props.selected ? colors.buttonBackground : colors.greyText};
   font-size: 15px;
-  text-align: center;
+  margin-left: 10px;
   padding: 15px 2px 15px 2px;
+  font-weight: ${(props) => (props.isAll ? "bold" : 600)};
+`;
+
+const CheckView = styled.View`
+  position: absolute;
+  right: 20px;
 `;
 
 const ListContainer = styled.View`
@@ -90,6 +100,7 @@ export default function CompanyPostAllPresenter({
 
   const existAddress2 = list.some((el) => el.id === districtCode);
   const existAll = list.some((el) => el.id === districtCode + 100);
+  const isAddress2 = (value) => list.some((el) => el.value === value);
 
   const toggleAddressAll = (value) => {
     if (list.some((el) => el.id === districtCode + 100)) {
@@ -100,7 +111,7 @@ export default function CompanyPostAllPresenter({
   };
 
   const toggleAddress2 = (value) => {
-    if (list.some((el) => el.value === value)) {
+    if (isAddress2(value)) {
       setList(list.filter((el) => el.value !== value));
     } else {
       setList([...list, { id: districtCode, value: value }]);
@@ -112,7 +123,7 @@ export default function CompanyPostAllPresenter({
       refresh();
     }
     if (list.length > 0) {
-      getData({ variables: { addressStep1_1: "Hồ Chí Minh" } });
+      getData({ variables: { addressStep1_1: "Hà Nội" } });
     }
   };
 
@@ -131,7 +142,6 @@ export default function CompanyPostAllPresenter({
             <DistrictContainer>
               <FirstScrollView showsVerticalScrollIndicator={false}>
                 <Button
-                  selected={districtCode === 0 ? true : false}
                   onPress={() => {
                     if (vnAll) {
                       setVnAll(false);
@@ -145,7 +155,21 @@ export default function CompanyPostAllPresenter({
                     }
                   }}
                 >
-                  <ButtonText>전체</ButtonText>
+                  <BtnTextContainer>
+                    <ButtonText selected={vnAll} isAll={true}>
+                      전체
+                    </ButtonText>
+                    {vnAll ? (
+                      <CheckView>
+                        <Ionicons
+                          name="checkmark"
+                          size={24}
+                          color="#f08450"
+                          styles={{ marginLeft: 200 }}
+                        />
+                      </CheckView>
+                    ) : null}
+                  </BtnTextContainer>
                 </Button>
                 {bigDistrict.map((item, index) => (
                   <Button
@@ -192,7 +216,20 @@ export default function CompanyPostAllPresenter({
                         }
                       }}
                     >
-                      <ButtonText>전체</ButtonText>
+                      <BtnTextContainer>
+                        <ButtonText selected={existAll} isAll={true}>
+                          전체
+                        </ButtonText>
+                        {existAll ? (
+                          <CheckView>
+                            <Ionicons
+                              name="checkmark"
+                              size={24}
+                              color="#f08450"
+                            />
+                          </CheckView>
+                        ) : null}
+                      </BtnTextContainer>
                     </Button>
                   ) : null}
                   {districtCode > 0
@@ -217,7 +254,23 @@ export default function CompanyPostAllPresenter({
                             }
                           }}
                         >
-                          <ButtonText key={index}>{item.value}</ButtonText>
+                          <BtnTextContainer>
+                            <ButtonText
+                              key={index}
+                              selected={isAddress2(item.value)}
+                            >
+                              {item.value}
+                            </ButtonText>
+                            {isAddress2(item.value) ? (
+                              <CheckView>
+                                <Ionicons
+                                  name="checkmark"
+                                  size={24}
+                                  color="#f08450"
+                                />
+                              </CheckView>
+                            ) : null}
+                          </BtnTextContainer>
                         </Button>
                       ))
                     : null}
