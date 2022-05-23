@@ -41,7 +41,7 @@ export default function AskAddress_2({ route: { params } }) {
         step={"8"}
       />
       <ModalSelector
-        data={smallDistrict[params.addressStep1.id - 1]}
+        data={smallDistrict[params.addressStep1.id]}
         keyExtractor={(item) => item.id}
         labelExtractor={(item) => item.value}
         accessible={true}

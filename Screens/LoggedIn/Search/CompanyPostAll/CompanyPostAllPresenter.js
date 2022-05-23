@@ -95,20 +95,11 @@ export default function CompanyPostAllPresenter({
   const [districtCode, setDistrictCode] = useState();
   const [vnAll, setVnAll] = useState(false);
   const [allVisible, setAllVisible] = useState(false);
-  const [list, setList] = useState([]);
-  // const [addressStep1_1, setAddressStep1_1] = useState("");
+  const [list, setList] = useState([]); //화면 출력용 (전체 + 2번째 지역 list)
 
   const existAddress2 = list.some((el) => el.id === districtCode);
   const existAll = list.some((el) => el.id === districtCode + 100);
   const isAddress2 = (value) => list.some((el) => el.value === value);
-
-  const toggleAddressAll = (value) => {
-    if (list.some((el) => el.id === districtCode + 100)) {
-      setList(list.filter((el) => el.id !== districtCode + 100));
-    } else {
-      setList([...list, { id: districtCode + 100, value: value }]);
-    }
-  };
 
   const toggleAddress2 = (value) => {
     if (isAddress2(value)) {
@@ -117,13 +108,27 @@ export default function CompanyPostAllPresenter({
       setList([...list, { id: districtCode, value: value }]);
     }
   };
-
   const handleSubmit = () => {
     if (vnAll) {
       refresh();
     }
     if (list.length > 0) {
-      getData({ variables: { addressStep1_1: "Hà Nội" } });
+      const BigList = list.filter((el) => el.id > 100);
+      const smallList = list.filter((el) => el.id < 100);
+      getData({
+        variables: {
+          addressStep1_1: BigList[0]?.value,
+          addressStep1_2: BigList[1]?.value,
+          addressStep1_3: BigList[2]?.value,
+          addressStep1_4: BigList[3]?.value,
+          addressStep1_5: BigList[4]?.value,
+          addressStep2_1: smallList[0]?.value,
+          addressStep2_2: smallList[1]?.value,
+          addressStep2_3: smallList[2]?.value,
+          addressStep2_4: smallList[3]?.value,
+          addressStep2_5: smallList[4]?.value,
+        },
+      });
     }
   };
 
@@ -196,6 +201,21 @@ export default function CompanyPostAllPresenter({
                         const newDistrict = bigDistrict.filter(
                           (i) => i.id === districtCode
                         );
+
+                        if (existAll) {
+                          setList(
+                            list.filter((el) => el.id !== districtCode + 100)
+                          );
+                        } else {
+                          setList([
+                            ...list,
+                            {
+                              id: districtCode + 100,
+                              value: newDistrict[0].value,
+                            },
+                          ]);
+                        }
+
                         if (existAddress2) {
                           for (let i = 0; i < list.length; i++) {
                             if (list[i].id === districtCode) {
@@ -207,12 +227,11 @@ export default function CompanyPostAllPresenter({
                             ...list,
                             {
                               id: districtCode + 100,
-                              value: `${newDistrict[0].value} 전체`,
+                              value: newDistrict[0].value,
                             },
                           ]);
                         } else {
                           setVnAll(false);
-                          toggleAddressAll(`${newDistrict[0].value} 전체`);
                         }
                       }}
                     >
@@ -288,7 +307,11 @@ export default function CompanyPostAllPresenter({
               ) : null}
               {list.map((item, index) => (
                 <DistrictSet key={index}>
-                  <Text>{item.value}</Text>
+                  {item.id > 100 ? (
+                    <Text>{item.value} 전체</Text>
+                  ) : (
+                    <Text>{item.value}</Text>
+                  )}
                   <TouchableOpacity
                     onPress={() =>
                       setList(list.filter((el) => el.value !== item.value))

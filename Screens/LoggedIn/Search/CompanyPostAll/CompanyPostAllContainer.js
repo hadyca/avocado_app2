@@ -89,9 +89,9 @@ export default function ({ route: { params } }) {
       setCompanyOwner(true);
     }
   }, [userData]);
-
+  console.log(FData);
   return (
-    <ScreenLayout loading={loading}>
+    <ScreenLayout loading={loading || FLoading}>
       <CompanyPostAllPresenter
         goToCompanyPostForm={goToCompanyPostForm}
         handleFetch={handleFetch}
