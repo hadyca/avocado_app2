@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   Text,
+  Alert,
 } from "react-native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
@@ -131,7 +132,6 @@ export default function CompanyPostAllPresenter({
       });
     }
   };
-
   return (
     <>
       <Modal
@@ -201,7 +201,6 @@ export default function CompanyPostAllPresenter({
                         const newDistrict = bigDistrict.filter(
                           (i) => i.id === districtCode
                         );
-
                         if (existAll) {
                           setList(
                             list.filter((el) => el.id !== districtCode + 100)
@@ -223,6 +222,7 @@ export default function CompanyPostAllPresenter({
                               i--;
                             }
                           }
+
                           setList([
                             ...list,
                             {
@@ -322,6 +322,7 @@ export default function CompanyPostAllPresenter({
                 </DistrictSet>
               ))}
             </ListContainer>
+            <Text>{list.length} / 5</Text>
             <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
               <Text>닫기</Text>
             </TouchableOpacity>
