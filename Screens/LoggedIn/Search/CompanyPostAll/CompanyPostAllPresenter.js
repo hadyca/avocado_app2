@@ -105,6 +105,8 @@ export default function CompanyPostAllPresenter({
   const toggleAddress2 = (value) => {
     if (isAddress2(value)) {
       setList(list.filter((el) => el.value !== value));
+    } else if (list.length > 4) {
+      Alert.alert("5개까지만 가능해요");
     } else {
       setList([...list, { id: districtCode, value: value }]);
     }
@@ -201,28 +203,18 @@ export default function CompanyPostAllPresenter({
                         const newDistrict = bigDistrict.filter(
                           (i) => i.id === districtCode
                         );
+
                         if (existAll) {
                           setList(
                             list.filter((el) => el.id !== districtCode + 100)
                           );
-                        } else {
-                          setList([
-                            ...list,
-                            {
-                              id: districtCode + 100,
-                              value: newDistrict[0].value,
-                            },
-                          ]);
-                        }
-
-                        if (existAddress2) {
+                        } else if (existAddress2) {
                           for (let i = 0; i < list.length; i++) {
                             if (list[i].id === districtCode) {
                               list.splice(i, 1);
                               i--;
                             }
                           }
-
                           setList([
                             ...list,
                             {
@@ -230,8 +222,17 @@ export default function CompanyPostAllPresenter({
                               value: newDistrict[0].value,
                             },
                           ]);
+                        } else if (list.length > 4) {
+                          Alert.alert("5개까지만 가능해요");
                         } else {
                           setVnAll(false);
+                          setList([
+                            ...list,
+                            {
+                              id: districtCode + 100,
+                              value: newDistrict[0].value,
+                            },
+                          ]);
                         }
                       }}
                     >
