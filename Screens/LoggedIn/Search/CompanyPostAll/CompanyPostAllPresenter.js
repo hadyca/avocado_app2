@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   FlatList,
   ActivityIndicator,
@@ -79,24 +79,28 @@ const ListContainer = styled.View`
 const DistrictSet = styled.View`
   flex-direction: row;
 `;
-
+const DistrictScroll = styled.ScrollView``;
 export default function CompanyPostAllPresenter({
   goToCompanyPostForm,
   handleFetch,
+  FHandleFetch,
   refreshing,
   refresh,
+  FRefresh,
   data,
+  FData,
   renderPost,
   fetchLoading,
   companyOwner,
   getData,
-  FData,
 }) {
+  const scrollViewRef = useRef();
   const [modalVisible, setModalVisible] = useState(false);
   const [districtCode, setDistrictCode] = useState();
   const [vnAll, setVnAll] = useState(false);
   const [allVisible, setAllVisible] = useState(false);
   const [list, setList] = useState([]); //화면 출력용 (전체 + 2번째 지역 list)
+  const [allResult, setAllResult] = useState(false);
 
   const existAddress2 = list.some((el) => el.id === districtCode);
   const existAll = list.some((el) => el.id === districtCode + 100);
@@ -114,10 +118,12 @@ export default function CompanyPostAllPresenter({
   const handleSubmit = () => {
     if (vnAll) {
       refresh();
+      setAllResult(true);
     }
     if (list.length > 0) {
       const BigList = list.filter((el) => el.id > 100);
       const smallList = list.filter((el) => el.id < 100);
+
       getData({
         variables: {
           addressStep1_1: BigList[0]?.value,
@@ -132,8 +138,10 @@ export default function CompanyPostAllPresenter({
           addressStep2_5: smallList[4]?.value,
         },
       });
+      setAllResult(false);
     }
   };
+
   return (
     <>
       <Modal
@@ -306,24 +314,33 @@ export default function CompanyPostAllPresenter({
                   </TouchableOpacity>
                 </DistrictSet>
               ) : null}
-              {list.map((item, index) => (
-                <DistrictSet key={index}>
-                  {item.id > 100 ? (
-                    <Text>{item.value} 전체</Text>
-                  ) : (
-                    <Text>{item.value}</Text>
-                  )}
-                  <TouchableOpacity
-                    onPress={() =>
-                      setList(list.filter((el) => el.value !== item.value))
-                    }
-                  >
-                    <Text> X </Text>
-                  </TouchableOpacity>
-                </DistrictSet>
-              ))}
+              <DistrictScroll
+                ref={scrollViewRef}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                onContentSizeChange={() =>
+                  scrollViewRef.current.scrollToEnd({ animated: true })
+                }
+              >
+                {list.map((item, index) => (
+                  <DistrictSet key={index}>
+                    {item.id > 100 ? (
+                      <Text>{item.value} 전체</Text>
+                    ) : (
+                      <Text>{item.value}</Text>
+                    )}
+                    <TouchableOpacity
+                      onPress={() =>
+                        setList(list.filter((el) => el.value !== item.value))
+                      }
+                    >
+                      <Text> X </Text>
+                    </TouchableOpacity>
+                  </DistrictSet>
+                ))}
+              </DistrictScroll>
             </ListContainer>
-            <Text>{list.length} / 5</Text>
+            <Text>{vnAll ? "1" : list.length} / 5</Text>
             <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
               <Text>닫기</Text>
             </TouchableOpacity>
@@ -341,17 +358,34 @@ export default function CompanyPostAllPresenter({
       <TouchableOpacity onPress={() => setModalVisible(true)}>
         <Text>지역 검색</Text>
       </TouchableOpacity>
-      <FlatList
-        onEndReachedThreshold={0.05}
-        onEndReached={handleFetch}
-        refreshing={refreshing}
-        onRefresh={refresh}
-        style={{ width: "100%" }}
-        showsVerticalScrollIndicator={false}
-        data={data}
-        keyExtractor={(item) => "" + item.id}
-        renderItem={renderPost}
-      />
+      {allResult ? (
+        <FlatList
+          onEndReachedThreshold={0.05}
+          onEndReached={handleFetch}
+          refreshing={refreshing}
+          onRefresh={refresh}
+          style={{ width: "100%" }}
+          showsVerticalScrollIndicator={false}
+          data={data}
+          keyExtractor={(item) => "" + item.id}
+          renderItem={renderPost}
+        />
+      ) : FData?.seeCompanyPostByDistrict?.length === 0 ? (
+        <Text>해당 지역에 구인글이 없어요 😂</Text>
+      ) : (
+        // <FlatList
+        //   onEndReachedThreshold={0.05}
+        //   onEndReached={FHandleFetch}
+        //   refreshing={refreshing}
+        //   onRefresh={FRefresh}
+        //   style={{ width: "100%" }}
+        //   showsVerticalScrollIndicator={false}
+        //   data={FData}
+        //   keyExtractor={(item) => "" + item.id}
+        //   renderItem={renderPost}
+        // />
+        <Text>구인글 발견</Text>
+      )}
       {fetchLoading ? (
         <FetchView>
           <ActivityIndicator color="black" />

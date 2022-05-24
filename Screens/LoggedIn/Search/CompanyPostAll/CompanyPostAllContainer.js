@@ -8,7 +8,7 @@ import {
   COMPANYPOST_DISTRICT_QUERY,
 } from "./CompanyPostAllQueries";
 import CompanyPostAllPresenter from "./CompanyPostAllPresenter";
-import AllCompanyPost from "../../../../Components/Post/AllCompanyPost";
+import CompanyPost from "../../../../Components/Post/CompanyPost";
 import useMe from "../../../../Hooks/useMe";
 
 export default function ({ route: { params } }) {
@@ -17,6 +17,7 @@ export default function ({ route: { params } }) {
 
   const [companyOwner, setCompanyOwner] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [FRefreshing, setFRefreshing] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
 
   const { data, loading, refetch, fetchMore } = useQuery(COMPANYPOST_QUERY, {
@@ -41,7 +42,7 @@ export default function ({ route: { params } }) {
 
   const renderPost = ({ item }) => {
     if (item.deleted === false) {
-      return <AllCompanyPost {...item} />;
+      return <CompanyPost {...item} />;
     } else {
       return null;
     }
@@ -53,6 +54,12 @@ export default function ({ route: { params } }) {
     setRefreshing(false);
   };
 
+  const FRefresh = async () => {
+    setRefreshing(true);
+    await FRefetch();
+    setRefreshing(false);
+  };
+
   const handleFetch = async () => {
     if (loading) {
       return;
@@ -61,6 +68,20 @@ export default function ({ route: { params } }) {
       await fetchMore({
         variables: {
           offset: data?.seeAllCompanyPosts?.length,
+        },
+      });
+      setFetchLoading(false);
+    }
+  };
+
+  const FHandleFetch = async () => {
+    if (FLoading) {
+      return;
+    } else {
+      setFetchLoading(true);
+      await FFetchMore({
+        variables: {
+          offset: FData?.seeCompanyPostByDistrict?.length,
         },
       });
       setFetchLoading(false);
@@ -89,20 +110,22 @@ export default function ({ route: { params } }) {
       setCompanyOwner(true);
     }
   }, [userData]);
-  console.log(FData);
+
   return (
     <ScreenLayout loading={loading || FLoading}>
       <CompanyPostAllPresenter
         goToCompanyPostForm={goToCompanyPostForm}
         handleFetch={handleFetch}
+        FHandleFetch={FHandleFetch}
         refreshing={refreshing}
         refresh={refresh}
+        FRefresh={FRefresh}
         data={data?.seeAllCompanyPosts}
         renderPost={renderPost}
         fetchLoading={fetchLoading}
         companyOwner={companyOwner}
         getData={getData}
-        FData={FData}
+        FData={FData?.seeCompanyPostByDistrict}
       />
     </ScreenLayout>
   );

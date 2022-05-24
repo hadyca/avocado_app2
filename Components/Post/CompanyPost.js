@@ -84,7 +84,7 @@ const Separator = styled.View`
   margin-top: 20px;
 `;
 
-function AllCompanyPost({
+function CompanyPost({
   id,
   company,
   title,
@@ -152,4 +152,4 @@ function AllCompanyPost({
   );
 }
 
-export default React.memo(AllCompanyPost);
+export default React.memo(CompanyPost);

@@ -36,7 +36,7 @@ export default function ReCommentPresenter({
       >
         <CommentContainer>
           <ScrollView
-            shshowsVerticalScrollIndicator={true}
+            showsVerticalScrollIndicator={true}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={refresh} />
             }

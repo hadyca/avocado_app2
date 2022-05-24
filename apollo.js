@@ -67,6 +67,7 @@ const cache = new InMemoryCache({
         seeCompanyAllPosts: offsetLimitPagination(["companyId"]),
         seeFollowing: offsetLimitPagination(["userId"]),
         seeFollowers: offsetLimitPagination(["userId"]),
+        seeCompanyPostByDistrict: offsetLimitPagination(),
       },
     },
   },
