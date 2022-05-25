@@ -120,6 +120,9 @@ function CompanyPost({
             uri={company.user.avatarUrl}
           />
           <CompanyName>{company.companyName}</CompanyName>
+          <CompanyName>
+            {company.addressStep1} / {company.addressStep2}
+          </CompanyName>
         </Header>
       </HeaderContainer>
       <Contents onPress={goToPostDetail}>

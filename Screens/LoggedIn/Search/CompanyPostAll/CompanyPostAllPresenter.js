@@ -125,6 +125,7 @@ export default function CompanyPostAllPresenter({
     }
 
     if (list.length > 0) {
+      setAllResult(false);
       const BigList = list.filter((el) => el.id > 100);
       const smallList = list.filter((el) => el.id < 100);
       getData({
@@ -141,7 +142,6 @@ export default function CompanyPostAllPresenter({
           addressStep2_5: smallList[4]?.value,
         },
       });
-      setAllResult(false);
     }
   };
 
@@ -376,18 +376,17 @@ export default function CompanyPostAllPresenter({
       ) : FData?.length === 0 ? (
         <Text>해당 지역에 구인글이 없어요 😂</Text>
       ) : (
-        // <FlatList
-        //   onEndReachedThreshold={0.05}
-        //   onEndReached={FHandleFetch}
-        //   refreshing={refreshing}
-        //   onRefresh={FRefresh}
-        //   style={{ width: "100%" }}
-        //   showsVerticalScrollIndicator={false}
-        //   data={FData}
-        //   keyExtractor={(item) => "" + item.id}
-        //   renderItem={renderPost}
-        // />
-        <Text>구인글 발견</Text>
+        <FlatList
+          onEndReachedThreshold={0.05}
+          onEndReached={FHandleFetch}
+          refreshing={refreshing}
+          onRefresh={FRefresh}
+          style={{ width: "100%" }}
+          showsVerticalScrollIndicator={false}
+          data={FData}
+          keyExtractor={(item) => "" + item.id}
+          renderItem={renderPost}
+        />
       )}
       {fetchLoading ? (
         <FetchView>
