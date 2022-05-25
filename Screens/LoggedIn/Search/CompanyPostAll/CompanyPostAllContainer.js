@@ -19,13 +19,12 @@ export default function ({ route: { params } }) {
   const [refreshing, setRefreshing] = useState(false);
   const [FRefreshing, setFRefreshing] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
-
+  const [newData, setNewData] = useState(null);
   const { data, loading, refetch, fetchMore } = useQuery(COMPANYPOST_QUERY, {
     variables: {
       offset: 0,
     },
   });
-
   const [
     getData,
     {
@@ -121,11 +120,11 @@ export default function ({ route: { params } }) {
         refresh={refresh}
         FRefresh={FRefresh}
         data={data?.seeAllCompanyPosts}
+        FData={FData?.seeCompanyPostByDistrict}
         renderPost={renderPost}
         fetchLoading={fetchLoading}
         companyOwner={companyOwner}
         getData={getData}
-        FData={FData?.seeCompanyPostByDistrict}
       />
     </ScreenLayout>
   );

@@ -93,6 +93,8 @@ export default function CompanyPostAllPresenter({
   fetchLoading,
   companyOwner,
   getData,
+  FLoading,
+  FRefetch,
 }) {
   const scrollViewRef = useRef();
   const [modalVisible, setModalVisible] = useState(false);
@@ -115,15 +117,16 @@ export default function CompanyPostAllPresenter({
       setList([...list, { id: districtCode, value: value }]);
     }
   };
+
   const handleSubmit = () => {
     if (vnAll) {
       refresh();
       setAllResult(true);
     }
+
     if (list.length > 0) {
       const BigList = list.filter((el) => el.id > 100);
       const smallList = list.filter((el) => el.id < 100);
-
       getData({
         variables: {
           addressStep1_1: BigList[0]?.value,
@@ -370,7 +373,7 @@ export default function CompanyPostAllPresenter({
           keyExtractor={(item) => "" + item.id}
           renderItem={renderPost}
         />
-      ) : FData?.seeCompanyPostByDistrict?.length === 0 ? (
+      ) : FData?.length === 0 ? (
         <Text>해당 지역에 구인글이 없어요 😂</Text>
       ) : (
         // <FlatList
