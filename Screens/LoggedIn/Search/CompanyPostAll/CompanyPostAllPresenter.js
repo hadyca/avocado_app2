@@ -93,8 +93,6 @@ export default function CompanyPostAllPresenter({
   fetchLoading,
   companyOwner,
   getData,
-  FLoading,
-  FRefetch,
 }) {
   const scrollViewRef = useRef();
   const [modalVisible, setModalVisible] = useState(false);
@@ -125,7 +123,6 @@ export default function CompanyPostAllPresenter({
     }
 
     if (list.length > 0) {
-      setAllResult(false);
       const BigList = list.filter((el) => el.id > 100);
       const smallList = list.filter((el) => el.id < 100);
       getData({
