@@ -100,7 +100,7 @@ export default function CompanyPostAllPresenter({
   const [vnAll, setVnAll] = useState(false);
   const [allVisible, setAllVisible] = useState(false);
   const [list, setList] = useState([]); //화면 출력용 (전체 + 2번째 지역 list)
-  const [allResult, setAllResult] = useState(false);
+  const [allResult, setAllResult] = useState(true);
 
   const existAddress2 = list.some((el) => el.id === districtCode);
   const existAll = list.some((el) => el.id === districtCode + 100);
@@ -115,7 +115,6 @@ export default function CompanyPostAllPresenter({
       setList([...list, { id: districtCode, value: value }]);
     }
   };
-
   const handleSubmit = () => {
     if (vnAll) {
       refresh();
@@ -123,6 +122,7 @@ export default function CompanyPostAllPresenter({
     }
 
     if (list.length > 0) {
+      setAllResult(false);
       const BigList = list.filter((el) => el.id > 100);
       const smallList = list.filter((el) => el.id < 100);
       getData({
