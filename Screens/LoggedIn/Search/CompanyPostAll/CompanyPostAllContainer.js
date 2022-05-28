@@ -17,15 +17,18 @@ export default function ({ route: { params } }) {
 
   const [companyOwner, setCompanyOwner] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const [FRefreshing, setFRefreshing] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
   const [isAllPost, setIsAllPost] = useState(true);
-  const { data, loading, refetch, fetchMore } = useQuery(COMPANYPOST_QUERY, {
-    variables: {
-      offset: 0,
-    },
-    onCompleted: () => setIsAllPost(true),
-  });
+  const { data, loading, refetch, fetchMore, networkStatus } = useQuery(
+    COMPANYPOST_QUERY,
+    {
+      variables: {
+        offset: 0,
+      },
+      notifyOnNetworkStatusChange: true,
+    }
+  );
+
   const [
     getData,
     {
@@ -112,6 +115,13 @@ export default function ({ route: { params } }) {
     }
   }, [userData]);
 
+  // useEffect(() => {
+  //   if (networkStatus === 4) {
+  //     console.log("리펫치");
+  //   }
+  // }, [refetch]);
+
+  console.log(networkStatus);
   return (
     <ScreenLayout loading={loading || FLoading}>
       <CompanyPostAllPresenter
@@ -128,6 +138,7 @@ export default function ({ route: { params } }) {
         companyOwner={companyOwner}
         getData={getData}
         isAllPost={isAllPost}
+        refetch={refetch}
       />
     </ScreenLayout>
   );

@@ -359,7 +359,7 @@ export default function CompanyPostAllPresenter({
       {isAllPost ? (
         <FlatList
           onEndReachedThreshold={0.05}
-          onEndReached={handleFetch}
+          // onEndReached={handleFetch}
           refreshing={refreshing}
           onRefresh={refresh}
           style={{ width: "100%" }}
