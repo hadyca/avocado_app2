@@ -93,6 +93,7 @@ export default function CompanyPostAllPresenter({
   fetchLoading,
   companyOwner,
   getData,
+  isAllPost,
 }) {
   const scrollViewRef = useRef();
   const [modalVisible, setModalVisible] = useState(false);
@@ -100,7 +101,6 @@ export default function CompanyPostAllPresenter({
   const [vnAll, setVnAll] = useState(false);
   const [allVisible, setAllVisible] = useState(false);
   const [list, setList] = useState([]); //화면 출력용 (전체 + 2번째 지역 list)
-  const [allResult, setAllResult] = useState(true);
 
   const existAddress2 = list.some((el) => el.id === districtCode);
   const existAll = list.some((el) => el.id === districtCode + 100);
@@ -118,11 +118,9 @@ export default function CompanyPostAllPresenter({
   const handleSubmit = () => {
     if (vnAll) {
       refresh();
-      setAllResult(true);
     }
 
     if (list.length > 0) {
-      setAllResult(false);
       const BigList = list.filter((el) => el.id > 100);
       const smallList = list.filter((el) => el.id < 100);
       getData({
@@ -341,9 +339,6 @@ export default function CompanyPostAllPresenter({
               </DistrictScroll>
             </ListContainer>
             <Text>{vnAll ? "1" : list.length} / 5</Text>
-            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-              <Text>닫기</Text>
-            </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 setModalVisible(!modalVisible);
@@ -352,13 +347,16 @@ export default function CompanyPostAllPresenter({
             >
               <Text>확인</Text>
             </TouchableOpacity>
+            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+              <Text>닫기</Text>
+            </TouchableOpacity>
           </ModalView>
         </ModalContainer>
       </Modal>
       <TouchableOpacity onPress={() => setModalVisible(true)}>
         <Text>지역 검색</Text>
       </TouchableOpacity>
-      {allResult ? (
+      {isAllPost ? (
         <FlatList
           onEndReachedThreshold={0.05}
           onEndReached={handleFetch}

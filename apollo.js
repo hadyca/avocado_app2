@@ -28,14 +28,14 @@ export const logUserOut = async () => {
 // });
 // for web
 
-const uploadHttpLink = createUploadLink({
-  uri: "http://10.0.2.2:4000/graphql",
-});
+// const uploadHttpLink = createUploadLink({
+//   uri: "http://10.0.2.2:4000/graphql",
+// });
 // for simulator
 
-// const uploadHttpLink = createUploadLink({
-//   uri: "http://0531-103-110-59-246.ngrok.io/graphql",
-// });
+const uploadHttpLink = createUploadLink({
+  uri: "http://22f7-103-110-59-246.ngrok.io/graphql",
+});
 
 const authLink = setContext((_, { headers }) => {
   return {
@@ -67,7 +67,18 @@ const cache = new InMemoryCache({
         seeCompanyAllPosts: offsetLimitPagination(["companyId"]),
         seeFollowing: offsetLimitPagination(["userId"]),
         seeFollowers: offsetLimitPagination(["userId"]),
-        // seeCompanyPostByDistrict: offsetLimitPagination(),
+        seeCompanyPostByDistrict: offsetLimitPagination([
+          "addressStep1_1",
+          "addressStep1_2",
+          "addressStep1_3",
+          "addressStep1_4",
+          "addressStep1_5",
+          "addressStep2_1",
+          "addressStep2_2",
+          "addressStep2_3",
+          "addressStep2_4",
+          "addressStep2_5",
+        ]),
       },
     },
   },

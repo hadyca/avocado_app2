@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, Image, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
-import CheckBox from "react-native-check-box";
+import Checkbox from "expo-checkbox";
 import { Ionicons } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
 import { AntDesign } from "@expo/vector-icons";
@@ -104,7 +104,8 @@ const DayContainer = styled.View`
 `;
 
 const Day = styled.TouchableOpacity`
-  background-color: ${(props) => (props.selected ? "#4d5158" : "white")};
+  background-color: ${(props) =>
+    props.selected ? colors.buttonBackground : "white"};
   border-radius: 12.5px;
   border: 0.5px solid ${colors.borderThick};
   width: 40px;
@@ -188,6 +189,20 @@ const Dong = styled.Text`
   position: absolute;
   left: 0px;
   margin-left: 10px;
+`;
+
+const ContentInput = styled.TextInput`
+  background-color: white;
+  padding: 15px 7px;
+  border-radius: 4px;
+  color: black;
+  border: 1px solid
+    ${(props) =>
+      props.hasError
+        ? colors.error
+        : props.focus
+        ? colors.focus
+        : colors.borderThick};
 `;
 
 export default function CompanyPostUploadFormPresenter({
@@ -373,11 +388,16 @@ export default function CompanyPostUploadFormPresenter({
           </Day>
         </DayContainer>
         <CheckContainer>
-          <CheckBox
+          {/* <CheckBox
             onClick={() => setDayOption(!dayOption)}
             isChecked={dayOption}
             checkBoxColor={colors.borderThick}
             checkedCheckBoxColor={colors.buttonBackground}
+          /> */}
+          <Checkbox
+            value={dayOption}
+            onValueChange={setDayOption}
+            color={dayOption ? colors.buttonBackground : colors.borderThick}
           />
           <CheckText>협의 가능</CheckText>
         </CheckContainer>
@@ -434,11 +454,16 @@ export default function CompanyPostUploadFormPresenter({
           </ModalView>
         </ModalContainer>
         <CheckContainer>
-          <CheckBox
+          {/* <CheckBox
             onClick={() => setTimeOption(!timeOption)}
             isChecked={timeOption}
             checkBoxColor={colors.borderThick}
             checkedCheckBoxColor={colors.buttonBackground}
+          /> */}
+          <Checkbox
+            value={timeOption}
+            onValueChange={setTimeOption}
+            color={timeOption ? colors.buttonBackground : colors.borderThick}
           />
           <CheckText>협의 가능</CheckText>
         </CheckContainer>
@@ -506,8 +531,9 @@ export default function CompanyPostUploadFormPresenter({
           }}
           control={control}
           render={({ field: { onChange, value } }) => (
-            <TextInput
+            <ContentInput
               multiline={true}
+              numberOfLines={4}
               textAlignVertical={"top"}
               maxLength={1000}
               autoCapitalize="none"

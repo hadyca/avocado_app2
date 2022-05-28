@@ -19,11 +19,12 @@ export default function ({ route: { params } }) {
   const [refreshing, setRefreshing] = useState(false);
   const [FRefreshing, setFRefreshing] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
-  const [newData, setNewData] = useState(null);
+  const [isAllPost, setIsAllPost] = useState(true);
   const { data, loading, refetch, fetchMore } = useQuery(COMPANYPOST_QUERY, {
     variables: {
       offset: 0,
     },
+    onCompleted: () => setIsAllPost(true),
   });
   const [
     getData,
@@ -37,6 +38,7 @@ export default function ({ route: { params } }) {
     variables: {
       offset: 0,
     },
+    onCompleted: () => setIsAllPost(false),
   });
 
   const renderPost = ({ item }) => {
@@ -125,6 +127,7 @@ export default function ({ route: { params } }) {
         fetchLoading={fetchLoading}
         companyOwner={companyOwner}
         getData={getData}
+        isAllPost={isAllPost}
       />
     </ScreenLayout>
   );
