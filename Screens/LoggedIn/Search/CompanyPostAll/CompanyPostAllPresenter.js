@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Text,
   Alert,
+  ScrollView,
+  RefreshControl,
 } from "react-native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
@@ -84,16 +86,21 @@ export default function CompanyPostAllPresenter({
   goToCompanyPostForm,
   handleFetch,
   FHandleFetch,
+  AllHandleFetch,
   refreshing,
   refresh,
   FRefresh,
+  AllRefresh,
   data,
   FData,
+  AllData,
   renderPost,
   fetchLoading,
   companyOwner,
   getData,
   isAllPost,
+  getAllData,
+  initData,
 }) {
   const scrollViewRef = useRef();
   const [modalVisible, setModalVisible] = useState(false);
@@ -117,7 +124,7 @@ export default function CompanyPostAllPresenter({
   };
   const handleSubmit = () => {
     if (vnAll) {
-      refresh();
+      getAllData();
     }
 
     if (list.length > 0) {
@@ -356,10 +363,10 @@ export default function CompanyPostAllPresenter({
       <TouchableOpacity onPress={() => setModalVisible(true)}>
         <Text>지역 검색</Text>
       </TouchableOpacity>
-      {isAllPost ? (
+      {initData ? (
         <FlatList
           onEndReachedThreshold={0.05}
-          // onEndReached={handleFetch}
+          onEndReached={handleFetch}
           refreshing={refreshing}
           onRefresh={refresh}
           style={{ width: "100%" }}
@@ -368,9 +375,19 @@ export default function CompanyPostAllPresenter({
           keyExtractor={(item) => "" + item.id}
           renderItem={renderPost}
         />
-      ) : FData?.length === 0 ? (
-        <Text>해당 지역에 구인글이 없어요 😂</Text>
-      ) : (
+      ) : isAllPost ? (
+        <FlatList
+          onEndReachedThreshold={0.05}
+          onEndReached={AllHandleFetch}
+          refreshing={refreshing}
+          onRefresh={AllRefresh}
+          style={{ width: "100%" }}
+          showsVerticalScrollIndicator={false}
+          data={AllData}
+          keyExtractor={(item) => "" + item.id}
+          renderItem={renderPost}
+        />
+      ) : FData?.length !== 0 ? (
         <FlatList
           onEndReachedThreshold={0.05}
           onEndReached={FHandleFetch}
@@ -382,7 +399,15 @@ export default function CompanyPostAllPresenter({
           keyExtractor={(item) => "" + item.id}
           renderItem={renderPost}
         />
-      )}
+      ) : !noData ? (
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={FRefresh} />
+          }
+        >
+          <Text>해당 지역에 구인글이 없어요 😂</Text>
+        </ScrollView>
+      ) : null}
       {fetchLoading ? (
         <FetchView>
           <ActivityIndicator color="black" />
