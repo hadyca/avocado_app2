@@ -100,7 +100,9 @@ export default function CompanyPostAllPresenter({
   getData,
   isAllPost,
   getAllData,
-  initData,
+  isInit,
+  existPost,
+  FRefetch,
 }) {
   const scrollViewRef = useRef();
   const [modalVisible, setModalVisible] = useState(false);
@@ -363,7 +365,7 @@ export default function CompanyPostAllPresenter({
       <TouchableOpacity onPress={() => setModalVisible(true)}>
         <Text>지역 검색</Text>
       </TouchableOpacity>
-      {initData ? (
+      {isInit ? (
         <FlatList
           onEndReachedThreshold={0.05}
           onEndReached={handleFetch}
@@ -387,7 +389,15 @@ export default function CompanyPostAllPresenter({
           keyExtractor={(item) => "" + item.id}
           renderItem={renderPost}
         />
-      ) : FData?.length !== 0 ? (
+      ) : !existPost || FData?.length === 0 ? (
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={FRefresh} />
+          }
+        >
+          <Text>해당 지역에 구인글이 없어요 😂</Text>
+        </ScrollView>
+      ) : (
         <FlatList
           onEndReachedThreshold={0.05}
           onEndReached={FHandleFetch}
@@ -399,15 +409,7 @@ export default function CompanyPostAllPresenter({
           keyExtractor={(item) => "" + item.id}
           renderItem={renderPost}
         />
-      ) : !noData ? (
-        <ScrollView
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={FRefresh} />
-          }
-        >
-          <Text>해당 지역에 구인글이 없어요 😂</Text>
-        </ScrollView>
-      ) : null}
+      )}
       {fetchLoading ? (
         <FetchView>
           <ActivityIndicator color="black" />
