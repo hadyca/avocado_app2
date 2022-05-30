@@ -124,6 +124,7 @@ export default function CompanyPostAllPresenter({
       setList([...list, { id: districtCode, value: value }]);
     }
   };
+
   const handleSubmit = () => {
     if (vnAll) {
       getAllData();
@@ -148,8 +149,7 @@ export default function CompanyPostAllPresenter({
       });
     }
   };
-  console.log(isInit, "초기");
-  console.log(isAllPost, "vn전체검색");
+
   return (
     <>
       <Modal

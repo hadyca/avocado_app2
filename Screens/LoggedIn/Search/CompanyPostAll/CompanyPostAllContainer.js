@@ -21,6 +21,7 @@ export default function ({ route: { params } }) {
   const [isInit, setIsInit] = useState(true);
   const [isAllPost, setIsAllPost] = useState(true);
   const [existPost, setExistPost] = useState(false);
+  const [searched, setSearched] = useState(false);
   const { data, loading, refetch, fetchMore } = useQuery(COMPANYPOST_QUERY, {
     variables: {
       offset: 0,
@@ -58,18 +59,12 @@ export default function ({ route: { params } }) {
       offset: 0,
     },
     onCompleted: () => {
-      const checkPost = FData?.seeCompanyPostByDistrict.some(
-        (el) => el.deleted === false
-      );
       setIsInit(false);
       setIsAllPost(false);
-      if (checkPost) {
-        setExistPost(true);
-      } else {
-        setExistPost(false);
-      }
+      setSearched(true);
     },
   });
+
   const renderPost = ({ item }) => {
     if (item.deleted === false) {
       return <CompanyPost {...item} />;
@@ -160,6 +155,19 @@ export default function ({ route: { params } }) {
       setCompanyOwner(true);
     }
   }, [userData]);
+
+  useEffect(() => {
+    const checkPost = FData?.seeCompanyPostByDistrict.some(
+      (el) => el.deleted === false
+    );
+    if (checkPost) {
+      setExistPost(true);
+    } else {
+      setExistPost(false);
+    }
+    setSearched(false);
+  }, [searched]);
+
   return (
     <ScreenLayout loading={loading || FLoading || AllLoading}>
       <CompanyPostAllPresenter
