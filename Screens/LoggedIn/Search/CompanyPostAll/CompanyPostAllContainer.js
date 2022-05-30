@@ -160,7 +160,6 @@ export default function ({ route: { params } }) {
       setCompanyOwner(true);
     }
   }, [userData]);
-  console.log(isInit);
   return (
     <ScreenLayout loading={loading || FLoading || AllLoading}>
       <CompanyPostAllPresenter

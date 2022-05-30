@@ -148,7 +148,8 @@ export default function CompanyPostAllPresenter({
       });
     }
   };
-
+  console.log(isInit, "초기");
+  console.log(isAllPost, "vn전체검색");
   return (
     <>
       <Modal
