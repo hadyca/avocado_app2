@@ -102,7 +102,6 @@ export default function CompanyPostAllPresenter({
   getAllData,
   isInit,
   existPost,
-  FRefetch,
 }) {
   const scrollViewRef = useRef();
   const [modalVisible, setModalVisible] = useState(false);
@@ -390,15 +389,7 @@ export default function CompanyPostAllPresenter({
           keyExtractor={(item) => "" + item.id}
           renderItem={renderPost}
         />
-      ) : !existPost || FData?.length === 0 ? (
-        <ScrollView
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={FRefresh} />
-          }
-        >
-          <Text>해당 지역에 구인글이 없어요 😂</Text>
-        </ScrollView>
-      ) : (
+      ) : existPost && FData?.length !== 0 ? (
         <FlatList
           onEndReachedThreshold={0.05}
           onEndReached={FHandleFetch}
@@ -410,6 +401,14 @@ export default function CompanyPostAllPresenter({
           keyExtractor={(item) => "" + item.id}
           renderItem={renderPost}
         />
+      ) : (
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={FRefresh} />
+          }
+        >
+          <Text>해당 지역에 구인글이 없어요 😂</Text>
+        </ScrollView>
       )}
       {fetchLoading ? (
         <FetchView>

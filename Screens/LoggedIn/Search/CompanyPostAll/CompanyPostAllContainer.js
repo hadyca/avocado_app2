@@ -20,8 +20,7 @@ export default function ({ route: { params } }) {
   const [fetchLoading, setFetchLoading] = useState(false);
   const [isInit, setIsInit] = useState(true);
   const [isAllPost, setIsAllPost] = useState(true);
-  const [existPost, setExistPost] = useState(false);
-  const [searched, setSearched] = useState(false);
+  const [existPost, setExistPost] = useState(true);
   const { data, loading, refetch, fetchMore } = useQuery(COMPANYPOST_QUERY, {
     variables: {
       offset: 0,
@@ -58,10 +57,17 @@ export default function ({ route: { params } }) {
     variables: {
       offset: 0,
     },
-    onCompleted: () => {
+    onCompleted: ({ seeCompanyPostByDistrict }) => {
       setIsInit(false);
       setIsAllPost(false);
-      setSearched(true);
+      const checkPost = seeCompanyPostByDistrict.some(
+        (el) => el.deleted === false
+      );
+      if (checkPost) {
+        setExistPost(true);
+      } else {
+        setExistPost(false);
+      }
     },
   });
 
@@ -156,41 +162,28 @@ export default function ({ route: { params } }) {
     }
   }, [userData]);
 
-  useEffect(() => {
-    const checkPost = FData?.seeCompanyPostByDistrict.some(
-      (el) => el.deleted === false
-    );
-    if (checkPost) {
-      setExistPost(true);
-    } else {
-      setExistPost(false);
-    }
-    setSearched(false);
-  }, [searched]);
-
   return (
     <ScreenLayout loading={loading || FLoading || AllLoading}>
       <CompanyPostAllPresenter
         goToCompanyPostForm={goToCompanyPostForm}
         handleFetch={handleFetch}
-        FHandleFetch={FHandleFetch}
         AllHandleFetch={AllHandleFetch}
+        FHandleFetch={FHandleFetch}
         refreshing={refreshing}
         refresh={refresh}
-        FRefresh={FRefresh}
         AllRefresh={AllRefresh}
+        FRefresh={FRefresh}
         data={data?.seeAllCompanyPosts}
-        FData={FData?.seeCompanyPostByDistrict}
         AllData={AllData?.seeAllCompanyPosts}
+        FData={FData?.seeCompanyPostByDistrict}
         renderPost={renderPost}
         fetchLoading={fetchLoading}
-        companyOwner={companyOwner}
-        getData={getData}
         getAllData={getAllData}
+        getData={getData}
         isInit={isInit}
         isAllPost={isAllPost}
         existPost={existPost}
-        FRefetch={FRefetch}
+        companyOwner={companyOwner}
       />
     </ScreenLayout>
   );
