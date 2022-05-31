@@ -7,7 +7,6 @@ export const POST_QUERY = gql`
       ...UserPostFragment
       totalUserPostLikes
       totalUserPostComments
-      deleted
     }
   }
   ${USER_POST_FRAGMENT}

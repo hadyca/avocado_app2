@@ -20,7 +20,6 @@ export default function ({ route: { params } }) {
   const [fetchLoading, setFetchLoading] = useState(false);
   const [isInit, setIsInit] = useState(true);
   const [isAllPost, setIsAllPost] = useState(true);
-  const [existPost, setExistPost] = useState(true);
   const { data, loading, refetch, fetchMore } = useQuery(COMPANYPOST_QUERY, {
     variables: {
       offset: 0,
@@ -60,23 +59,11 @@ export default function ({ route: { params } }) {
     onCompleted: ({ seeCompanyPostByDistrict }) => {
       setIsInit(false);
       setIsAllPost(false);
-      const checkPost = seeCompanyPostByDistrict.some(
-        (el) => el.deleted === false
-      );
-      if (checkPost) {
-        setExistPost(true);
-      } else {
-        setExistPost(false);
-      }
     },
   });
 
   const renderPost = ({ item }) => {
-    if (item.deleted === false) {
-      return <CompanyPost {...item} />;
-    } else {
-      return null;
-    }
+    return <CompanyPost {...item} />;
   };
 
   const refresh = async () => {
@@ -182,7 +169,6 @@ export default function ({ route: { params } }) {
         getData={getData}
         isInit={isInit}
         isAllPost={isAllPost}
-        existPost={existPost}
         companyOwner={companyOwner}
       />
     </ScreenLayout>

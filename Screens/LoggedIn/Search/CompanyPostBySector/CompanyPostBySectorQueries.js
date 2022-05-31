@@ -27,7 +27,6 @@ export const COMPANYPOST_QUERY = gql`
       }
       totalCompanyPostLikes
       totalCompanyPostComments
-      deleted
     }
   }
 `;

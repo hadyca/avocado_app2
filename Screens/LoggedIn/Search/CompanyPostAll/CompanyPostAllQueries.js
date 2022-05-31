@@ -30,7 +30,6 @@ export const COMPANYPOST_QUERY = gql`
       createdAt
       totalCompanyPostLikes
       totalCompanyPostComments
-      deleted
     }
   }
 `;
@@ -89,7 +88,6 @@ export const COMPANYPOST_DISTRICT_QUERY = gql`
       createdAt
       totalCompanyPostLikes
       totalCompanyPostComments
-      deleted
     }
   }
 `;

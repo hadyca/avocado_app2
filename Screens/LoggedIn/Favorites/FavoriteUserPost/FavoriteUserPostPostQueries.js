@@ -18,7 +18,6 @@ export const USERPOST_QUERY = gql`
       }
       totalUserPostLikes
       totalUserPostComments
-      deleted
     }
   }
 `;

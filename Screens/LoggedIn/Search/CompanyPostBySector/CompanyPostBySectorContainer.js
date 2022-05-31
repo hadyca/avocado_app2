@@ -23,11 +23,7 @@ export default function ({ route: { params } }) {
   });
 
   const renderPost = ({ item }) => {
-    if (item.deleted === false) {
-      return <SectorCompanyPost {...item} />;
-    } else {
-      return null;
-    }
+    return <SectorCompanyPost {...item} />;
   };
 
   const refresh = async () => {

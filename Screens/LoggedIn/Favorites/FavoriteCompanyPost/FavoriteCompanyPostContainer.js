@@ -15,11 +15,7 @@ export default function () {
   });
 
   const renderPost = ({ item }) => {
-    if (item.deleted === false) {
-      return <FavoriteCompanyPost {...item} />;
-    } else {
-      return null;
-    }
+    return <FavoriteCompanyPost {...item} />;
   };
 
   const refresh = async () => {

@@ -21,11 +21,7 @@ export default function ({ route: { params } }) {
   const { width, height } = useWindowDimensions();
 
   const renderPost = ({ item }) => {
-    if (item.deleted === false) {
-      return <CategoryUserPost {...item} />;
-    } else {
-      return null;
-    }
+    return <CategoryUserPost {...item} />;
   };
 
   const refresh = async () => {
@@ -57,13 +53,9 @@ export default function ({ route: { params } }) {
 
   useEffect(() => {
     if (params?.fromWhere === ScreenNames.CATEGORY_BOARD) {
-      refetch();
       navigation.navigate("UserPostListDetail", {
         id: params?.id,
       });
-    } else {
-      return;
-      refetch();
     }
   }, [params]);
 

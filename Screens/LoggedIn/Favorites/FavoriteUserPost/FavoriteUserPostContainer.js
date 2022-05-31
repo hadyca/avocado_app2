@@ -15,11 +15,7 @@ export default function () {
   });
 
   const renderPost = ({ item }) => {
-    if (item.deleted === false) {
-      return <UserPost {...item} />;
-    } else {
-      return null;
-    }
+    return <UserPost {...item} />;
   };
 
   const refresh = async () => {

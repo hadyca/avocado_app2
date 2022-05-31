@@ -79,7 +79,7 @@ export default function CompanyPostContents({
 
   return (
     <View>
-      {file.length !== 0 ? <ImageSlider file={file} /> : null}
+      {file?.length !== 0 ? <ImageSlider file={file} /> : null}
       <Container>
         <Header onPress={goToProfile}>
           <UserAvatar username={username} uri={avatarUrl} />

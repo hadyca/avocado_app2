@@ -142,7 +142,7 @@ function UserPost({
           <CategoryText>{category}</CategoryText>
         </CategoryTouch>
       </CategoryView>
-      {file.length > 0 ? (
+      {file?.length > 0 ? (
         <ImgContainer onPress={goToPostDetail}>
           <MainImg
             resizeMode="cover"

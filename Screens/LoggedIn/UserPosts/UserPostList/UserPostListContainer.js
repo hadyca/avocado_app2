@@ -50,11 +50,7 @@ export default function ({ route: { params } }) {
   };
 
   const renderPost = ({ item }) => {
-    if (item.deleted === false) {
-      return <UserPost {...item} />;
-    } else {
-      return null;
-    }
+    return <UserPost {...item} />;
   };
 
   useEffect(() => {
@@ -64,7 +60,7 @@ export default function ({ route: { params } }) {
       });
     }
   }, [params]);
-
+  console.log(data);
   return (
     <ScreenLayout loading={loading}>
       <UserPostListPresenter

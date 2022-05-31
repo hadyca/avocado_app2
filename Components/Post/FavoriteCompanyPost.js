@@ -124,7 +124,7 @@ function FavoriteCompanyPost({
           <CompanyName>{company.companyName}</CompanyName>
         </Header>
       </HeaderContainer>
-      {file.length > 0 ? (
+      {file?.length > 0 ? (
         <ImgContainer onPress={goToPostDetail}>
           <MainImg
             resizeMode="cover"

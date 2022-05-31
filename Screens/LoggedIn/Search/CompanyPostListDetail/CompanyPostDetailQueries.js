@@ -103,7 +103,6 @@ export const TOGGLE_COMPANYPOST_FAVORITE_MUTATION = gql`
       }
       totalCompanyPostLikes
       totalCompanyPostComments
-      deleted
     }
   }
 `;

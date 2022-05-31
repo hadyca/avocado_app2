@@ -114,7 +114,7 @@ function CategoryUserPost({
           <UserAvatar username={user.username} uri={user.avatarUrl} />
         </Header>
       </HeaderContainer>
-      {file.length > 0 ? (
+      {file?.length > 0 ? (
         <ImgContainer onPress={goToPostDetail}>
           <MainImg
             resizeMode="cover"

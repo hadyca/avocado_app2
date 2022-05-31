@@ -74,7 +74,7 @@ export default function PostContents({
 
   return (
     <View>
-      {file.length !== 0 ? <ImageSlider file={file} /> : null}
+      {file?.length !== 0 ? <ImageSlider file={file} /> : null}
       <Container>
         <CategoryView>
           <CategoryTouch onPress={() => goToCategoryScreen(category)}>

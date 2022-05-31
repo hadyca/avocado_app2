@@ -101,7 +101,6 @@ export default function CompanyPostAllPresenter({
   isAllPost,
   getAllData,
   isInit,
-  existPost,
 }) {
   const scrollViewRef = useRef();
   const [modalVisible, setModalVisible] = useState(false);
@@ -389,7 +388,7 @@ export default function CompanyPostAllPresenter({
           keyExtractor={(item) => "" + item.id}
           renderItem={renderPost}
         />
-      ) : existPost && FData?.length !== 0 ? (
+      ) : FData?.length !== 0 ? (
         <FlatList
           onEndReachedThreshold={0.05}
           onEndReached={FHandleFetch}
