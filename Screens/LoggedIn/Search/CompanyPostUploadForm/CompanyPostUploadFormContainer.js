@@ -20,6 +20,14 @@ export default function ({ route: { params } }) {
     } = result;
 
     if (uploadCompanyPost.id) {
+      cache.modify({
+        id: "ROOT_QUERY",
+        fields: {
+          seeCompanyAllPosts(prev) {
+            return [uploadUserPost, ...prev];
+          },
+        },
+      });
       const { me } = userData;
       const UserId = `User:${me.id}`;
       cache.modify({

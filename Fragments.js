@@ -12,6 +12,7 @@ export const USER_POST_FRAGMENT = gql`
     category
     createdAt
     file {
+      id
       fileUrl
     }
   }

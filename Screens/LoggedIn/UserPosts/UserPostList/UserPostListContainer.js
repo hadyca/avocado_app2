@@ -60,7 +60,7 @@ export default function ({ route: { params } }) {
       });
     }
   }, [params]);
-  console.log(data);
+
   return (
     <ScreenLayout loading={loading}>
       <UserPostListPresenter

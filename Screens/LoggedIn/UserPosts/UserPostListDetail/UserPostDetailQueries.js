@@ -1,20 +1,35 @@
 import { gql } from "@apollo/client";
-import {
-  USER_POST_COMMENT_FRAGMENT,
-  USER_POST_FRAGMENT,
-} from "../../../../Fragments";
 
 export const POST_DETAIL_QUERY = gql`
   query seeUserPost($userPostId: Int!) {
     seeUserPost(userPostId: $userPostId) {
+      id
+      user {
+        id
+        username
+        avatarUrl
+      }
+      content
+      category
+      createdAt
+      file {
+        id
+        fileUrl
+      }
       isLiked
       isMine
       isFavorite
-      ...UserPostFragment
       totalUserPostComments
-      # for comment scroll
       userPostComments {
-        ...UserPostCommentFragment
+        id
+        user {
+          id
+          username
+          avatarUrl
+        }
+        payload
+        isMine
+        createdAt
         userPostReComments {
           id
           user {
@@ -29,8 +44,6 @@ export const POST_DETAIL_QUERY = gql`
       }
     }
   }
-  ${USER_POST_FRAGMENT}
-  ${USER_POST_COMMENT_FRAGMENT}
 `;
 
 export const DELETE_USERPOST_MUTATION = gql`

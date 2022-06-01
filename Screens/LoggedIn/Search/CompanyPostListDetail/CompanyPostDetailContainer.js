@@ -90,9 +90,13 @@ export default function ({ route: { params } }) {
       },
     } = result;
     if (ok) {
-      const CompanyPostId = `CompanyPost:${params.id}`;
       cache.evict({
-        id: CompanyPostId,
+        id: "ROOT_QUERY",
+        fieldName: "seeAllCompanyPosts",
+      });
+      cache.evict({
+        id: "ROOT_QUERY",
+        fieldName: "seeCompanyAllPosts",
       });
       const { me } = userData;
       const UserId = `User:${me.id}`;

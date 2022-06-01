@@ -88,9 +88,17 @@ export default function ({ route: { params } }) {
       },
     } = result;
     if (ok) {
-      const UserPostId = `UserPost:${params.id}`;
       cache.evict({
-        id: UserPostId,
+        id: "ROOT_QUERY",
+        fieldName: "seeAllUserPosts",
+      });
+      cache.evict({
+        id: "ROOT_QUERY",
+        fieldName: "seeUserCategoryPost",
+      });
+      cache.evict({
+        id: "ROOT_QUERY",
+        fieldName: "seeUserAllPosts",
       });
       const { me } = userData;
       const UserId = `User:${me.id}`;
@@ -102,9 +110,9 @@ export default function ({ route: { params } }) {
           },
         },
       });
+      Alert.alert("게시글이 삭제 되었습니다.");
+      navigation.pop();
     }
-    Alert.alert("게시글이 삭제 되었습니다.");
-    navigation.pop();
   };
   const { data, loading, refetch } = useQuery(POST_DETAIL_QUERY, {
     variables: {

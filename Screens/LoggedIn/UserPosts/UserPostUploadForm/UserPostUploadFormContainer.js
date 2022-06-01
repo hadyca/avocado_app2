@@ -29,6 +29,9 @@ export default function ({ route: { params } }) {
           seeUserCategoryPost(prev) {
             return [uploadUserPost, ...prev];
           },
+          seeUserAllPosts(prev) {
+            return [uploadUserPost, ...prev];
+          },
         },
       });
       const { me } = userData;

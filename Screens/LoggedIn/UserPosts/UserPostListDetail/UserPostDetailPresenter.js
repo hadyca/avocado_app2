@@ -32,10 +32,7 @@ export default function UserPostDetailPresenter({
   refresh,
   statusBarHeight,
   userPostId,
-  showActionSheet,
 }) {
-  const navigation = useNavigation();
-
   const [commentUploading, setCommentUploading] = useState(false);
 
   let detailRef = useRef();

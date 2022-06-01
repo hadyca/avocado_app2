@@ -56,7 +56,7 @@ export default function ({ route: { params } }) {
     variables: {
       offset: 0,
     },
-    onCompleted: ({ seeCompanyPostByDistrict }) => {
+    onCompleted: () => {
       setIsInit(false);
       setIsAllPost(false);
     },
