@@ -10,6 +10,7 @@ export const isLoggedInVar = makeVar(false);
 export const tokenVar = makeVar("");
 
 const TOKEN = "token";
+const DISTRICT_LIST = "districtList";
 
 export const logUserIn = async (token) => {
   await AsyncStorage.setItem(TOKEN, token);
@@ -21,6 +22,11 @@ export const logUserOut = async () => {
   await AsyncStorage.removeItem(TOKEN);
   isLoggedInVar(false);
   tokenVar(null);
+};
+
+export const handleDistrict = async (userId, ...test) => {
+  const userDistrict = `${userId}District`;
+  await AsyncStorage.setItem(userDistrict, JSON.stringify(test));
 };
 
 // const uploadHttpLink = createUploadLink({

@@ -15,6 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import PostFormButton from "../../../../Components/Post/PostFormButton";
 import { colors } from "../../../../Colors";
 import { bigDistrict, smallDistrict } from "../../../../DistrictList";
+import { handleDistrict } from "../../../../apollo";
 
 const FetchView = styled.View`
   bottom: 30px;
@@ -101,17 +102,19 @@ export default function CompanyPostAllPresenter({
   isAllPost,
   getAllData,
   isInit,
+  userId,
+  initDistrict,
 }) {
   const scrollViewRef = useRef();
   const [modalVisible, setModalVisible] = useState(false);
   const [districtCode, setDistrictCode] = useState();
   const [vnAll, setVnAll] = useState(false);
   const [allVisible, setAllVisible] = useState(false);
-  const [list, setList] = useState([]); //화면 출력용 (전체 + 2번째 지역 list)
+  const [list, setList] = useState(initDistrict ? initDistrict : []); //화면 출력용 (전체 + 2번째 지역 list)
 
-  const existAddress2 = list.some((el) => el.id === districtCode);
-  const existAll = list.some((el) => el.id === districtCode + 100);
-  const isAddress2 = (value) => list.some((el) => el.value === value);
+  const existAddress2 = list?.some((el) => el.id === districtCode);
+  const existAll = list?.some((el) => el.id === districtCode + 100);
+  const isAddress2 = (value) => list?.some((el) => el.value === value);
 
   const toggleAddress2 = (value) => {
     if (isAddress2(value)) {
@@ -123,7 +126,8 @@ export default function CompanyPostAllPresenter({
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    await handleDistrict(userId, ...list);
     if (vnAll) {
       getAllData();
     }

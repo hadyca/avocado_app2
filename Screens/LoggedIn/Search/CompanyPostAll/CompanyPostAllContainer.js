@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useQuery, useLazyQuery, NetworkStatus } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import ScreenLayout from "../../../../Components/ScreenLayout";
 import { ScreenNames } from "../../../../Constant";
 import {
@@ -20,6 +21,8 @@ export default function ({ route: { params } }) {
   const [fetchLoading, setFetchLoading] = useState(false);
   const [isInit, setIsInit] = useState(true);
   const [isAllPost, setIsAllPost] = useState(true);
+  const [initDistrict, setInitDistrict] = useState([]);
+
   const { data, loading, refetch, fetchMore } = useQuery(COMPANYPOST_QUERY, {
     variables: {
       offset: 0,
@@ -149,6 +152,20 @@ export default function ({ route: { params } }) {
     }
   }, [userData]);
 
+  const userId = userData?.me?.id;
+
+  useEffect(async () => {
+    if (userData) {
+      const userDistrict = `${userId}District`;
+      console.log(userDistrict);
+      const result = await AsyncStorage.getItem(userDistrict);
+      const getDistrict = JSON.parse(result);
+      if (getDistrict) {
+        setInitDistrict(getDistrict);
+      }
+    }
+  }, []);
+
   return (
     <ScreenLayout loading={loading || FLoading || AllLoading}>
       <CompanyPostAllPresenter
@@ -170,6 +187,8 @@ export default function ({ route: { params } }) {
         isInit={isInit}
         isAllPost={isAllPost}
         companyOwner={companyOwner}
+        userId={userId}
+        initDistrict={initDistrict}
       />
     </ScreenLayout>
   );
