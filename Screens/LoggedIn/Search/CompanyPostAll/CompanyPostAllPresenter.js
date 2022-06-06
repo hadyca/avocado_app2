@@ -104,6 +104,7 @@ export default function CompanyPostAllPresenter({
   isInit,
   userId,
   initDistrict,
+  setCheck,
 }) {
   const scrollViewRef = useRef();
   const [modalVisible, setModalVisible] = useState(false);
@@ -127,6 +128,7 @@ export default function CompanyPostAllPresenter({
   };
 
   const handleSubmit = async () => {
+    setCheck(true);
     await handleDistrict(userId, ...list);
     if (vnAll) {
       getAllData();

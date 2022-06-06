@@ -22,6 +22,7 @@ export default function ({ route: { params } }) {
   const [isInit, setIsInit] = useState(true);
   const [isAllPost, setIsAllPost] = useState(true);
   const [initDistrict, setInitDistrict] = useState([]);
+  const [check, setCheck] = useState(false);
 
   const { data, loading, refetch, fetchMore } = useQuery(COMPANYPOST_QUERY, {
     variables: {
@@ -164,7 +165,7 @@ export default function ({ route: { params } }) {
         setInitDistrict(getDistrict);
       }
     }
-  }, []);
+  }, [check]);
 
   return (
     <ScreenLayout loading={loading || FLoading || AllLoading}>
@@ -189,6 +190,7 @@ export default function ({ route: { params } }) {
         companyOwner={companyOwner}
         userId={userId}
         initDistrict={initDistrict}
+        setCheck={setCheck}
       />
     </ScreenLayout>
   );
