@@ -131,6 +131,7 @@ export default function CompanyPostAllPresenter({
 
   const handleSubmit = async () => {
     setCheck(true);
+
     await handleAllVn(userId, vnAll);
     await handleDistrict(userId, ...list);
     if (vnAll) {
@@ -179,7 +180,7 @@ export default function CompanyPostAllPresenter({
                       setAllVisible(false);
                     } else {
                       setVnAll(true);
-                      setDistrictCode(0);
+                      setDistrictCode();
                       setAllVisible(false);
                       setList([]);
                     }
@@ -363,7 +364,11 @@ export default function CompanyPostAllPresenter({
             >
               <Text>확인</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+            <TouchableOpacity
+              onPress={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
               <Text>닫기</Text>
             </TouchableOpacity>
           </ModalView>

@@ -22,8 +22,8 @@ export default function ({ route: { params } }) {
   const [isInit, setIsInit] = useState(true);
   const [isAllPost, setIsAllPost] = useState(true);
   const [vnAll, setVnAll] = useState(false);
-  const [list, setList] = useState([]); //화면 출력용 (전체 + 2번째 지역 list)
-  const [visibleList, setVisibleList] = useState([]);
+  const [list, setList] = useState([]); //출력용 (전체 + 2번째 지역 list)
+
   const [check, setCheck] = useState(false);
 
   const { data, loading, refetch, fetchMore } = useQuery(COMPANYPOST_QUERY, {
@@ -166,6 +166,7 @@ export default function ({ route: { params } }) {
       const resultDistrict = await AsyncStorage.getItem(userDistrict);
       const getDistrict = JSON.parse(resultDistrict);
       if (getVnAll) {
+        setCheck(false);
         setVnAll(true);
       } else if (getDistrict.length > 0) {
         setCheck(false);
