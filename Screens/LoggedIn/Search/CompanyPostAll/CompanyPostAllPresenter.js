@@ -83,6 +83,10 @@ const DistrictSet = styled.View`
   flex-direction: row;
 `;
 const DistrictScroll = styled.ScrollView``;
+
+const BottomContainer = styled.View`
+  height: 100px;
+`;
 export default function CompanyPostAllPresenter({
   goToCompanyPostForm,
   handleFetch,
@@ -320,57 +324,59 @@ export default function CompanyPostAllPresenter({
                 </View>
               </SecondScrollView>
             </DistrictContainer>
-            <ListContainer>
-              {vnAll ? (
-                <DistrictSet>
-                  <Text>VN전체</Text>
-                  <TouchableOpacity onPress={() => setVnAll(false)}>
-                    <Text>X</Text>
-                  </TouchableOpacity>
-                </DistrictSet>
-              ) : null}
-              <DistrictScroll
-                ref={scrollViewRef}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                onContentSizeChange={() =>
-                  scrollViewRef.current.scrollToEnd({ animated: true })
-                }
-              >
-                {list.map((item, index) => (
-                  <DistrictSet key={index}>
-                    {item.id > 100 ? (
-                      <Text>{item.value} 전체</Text>
-                    ) : (
-                      <Text>{item.value}</Text>
-                    )}
-                    <TouchableOpacity
-                      onPress={() =>
-                        setList(list.filter((el) => el.value !== item.value))
-                      }
-                    >
-                      <Text> X </Text>
+            <BottomContainer>
+              <ListContainer>
+                {vnAll ? (
+                  <DistrictSet>
+                    <Text>VN전체</Text>
+                    <TouchableOpacity onPress={() => setVnAll(false)}>
+                      <Text>X</Text>
                     </TouchableOpacity>
                   </DistrictSet>
-                ))}
-              </DistrictScroll>
-            </ListContainer>
-            <Text>{vnAll ? "1" : list.length} / 5</Text>
-            <TouchableOpacity
-              onPress={() => {
-                setModalVisible(!modalVisible);
-                handleSubmit();
-              }}
-            >
-              <Text>확인</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setModalVisible(!modalVisible);
-              }}
-            >
-              <Text>닫기</Text>
-            </TouchableOpacity>
+                ) : null}
+                <DistrictScroll
+                  ref={scrollViewRef}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                  onContentSizeChange={() =>
+                    scrollViewRef.current.scrollToEnd({ animated: true })
+                  }
+                >
+                  {list.map((item, index) => (
+                    <DistrictSet key={index}>
+                      {item.id > 100 ? (
+                        <Text>{item.value} 전체</Text>
+                      ) : (
+                        <Text>{item.value}</Text>
+                      )}
+                      <TouchableOpacity
+                        onPress={() =>
+                          setList(list.filter((el) => el.value !== item.value))
+                        }
+                      >
+                        <Text> X </Text>
+                      </TouchableOpacity>
+                    </DistrictSet>
+                  ))}
+                </DistrictScroll>
+              </ListContainer>
+              <Text>{vnAll ? "1" : list.length} / 5</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                  handleSubmit();
+                }}
+              >
+                <Text>확인</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <Text>닫기</Text>
+              </TouchableOpacity>
+            </BottomContainer>
           </ModalView>
         </ModalContainer>
       </Modal>

@@ -10,7 +10,6 @@ export const isLoggedInVar = makeVar(false);
 export const tokenVar = makeVar("");
 
 const TOKEN = "token";
-const DISTRICT_LIST = "districtList";
 
 export const logUserIn = async (token) => {
   await AsyncStorage.setItem(TOKEN, token);
@@ -39,14 +38,14 @@ export const handleDistrict = async (userId, ...test) => {
 // });
 // for web
 
-const uploadHttpLink = createUploadLink({
-  uri: "http://10.0.2.2:4000/graphql",
-});
+// const uploadHttpLink = createUploadLink({
+//   uri: "http://10.0.2.2:4000/graphql",
+// });
 // for simulator
 
-// const uploadHttpLink = createUploadLink({
-//   uri: "https://ab46-103-231-176-166.in.ngrok.io/graphql",
-// });
+const uploadHttpLink = createUploadLink({
+  uri: "http://50cd-103-231-176-166.ngrok.io/graphql",
+});
 
 const authLink = setContext((_, { headers }) => {
   return {

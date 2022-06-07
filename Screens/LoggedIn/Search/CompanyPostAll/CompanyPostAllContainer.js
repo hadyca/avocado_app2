@@ -165,10 +165,11 @@ export default function ({ route: { params } }) {
       const getVnAll = JSON.parse(resultVnAll);
       const resultDistrict = await AsyncStorage.getItem(userDistrict);
       const getDistrict = JSON.parse(resultDistrict);
+
       if (getVnAll) {
         setCheck(false);
         setVnAll(true);
-      } else if (getDistrict.length > 0) {
+      } else if (getDistrict?.length > 0) {
         setCheck(false);
         setList(getDistrict);
         const bigList = getDistrict.filter((el) => el.id > 100);
