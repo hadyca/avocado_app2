@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useQuery, useLazyQuery, NetworkStatus } from "@apollo/client";
+import { useQuery, useLazyQuery } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ScreenLayout from "../../../../Components/ScreenLayout";
@@ -21,7 +21,9 @@ export default function ({ route: { params } }) {
   const [fetchLoading, setFetchLoading] = useState(false);
   const [isInit, setIsInit] = useState(true);
   const [isAllPost, setIsAllPost] = useState(true);
-  const [initDistrict, setInitDistrict] = useState([]);
+  const [vnAll, setVnAll] = useState(false);
+  const [list, setList] = useState([]); //화면 출력용 (전체 + 2번째 지역 list)
+  const [visibleList, setVisibleList] = useState([]);
   const [check, setCheck] = useState(false);
 
   const { data, loading, refetch, fetchMore } = useQuery(COMPANYPOST_QUERY, {
@@ -158,11 +160,32 @@ export default function ({ route: { params } }) {
   useEffect(async () => {
     if (userData) {
       const userDistrict = `${userId}District`;
-      console.log(userDistrict);
-      const result = await AsyncStorage.getItem(userDistrict);
-      const getDistrict = JSON.parse(result);
-      if (getDistrict) {
-        setInitDistrict(getDistrict);
+      const userVnAll = `${userId}VnAll`;
+      const resultVnAll = await AsyncStorage.getItem(userVnAll);
+      const getVnAll = JSON.parse(resultVnAll);
+      const resultDistrict = await AsyncStorage.getItem(userDistrict);
+      const getDistrict = JSON.parse(resultDistrict);
+      if (getVnAll) {
+        setVnAll(true);
+      } else if (getDistrict.length > 0) {
+        setCheck(false);
+        setList(getDistrict);
+        const bigList = getDistrict.filter((el) => el.id > 100);
+        const smallList = getDistrict.filter((el) => el.id < 100);
+        getData({
+          variables: {
+            addressStep1_1: bigList[0]?.value,
+            addressStep1_2: bigList[1]?.value,
+            addressStep1_3: bigList[2]?.value,
+            addressStep1_4: bigList[3]?.value,
+            addressStep1_5: bigList[4]?.value,
+            addressStep2_1: smallList[0]?.value,
+            addressStep2_2: smallList[1]?.value,
+            addressStep2_3: smallList[2]?.value,
+            addressStep2_4: smallList[3]?.value,
+            addressStep2_5: smallList[4]?.value,
+          },
+        });
       }
     }
   }, [check]);
@@ -189,8 +212,11 @@ export default function ({ route: { params } }) {
         isAllPost={isAllPost}
         companyOwner={companyOwner}
         userId={userId}
-        initDistrict={initDistrict}
+        list={list}
+        setList={setList}
         setCheck={setCheck}
+        vnAll={vnAll}
+        setVnAll={setVnAll}
       />
     </ScreenLayout>
   );

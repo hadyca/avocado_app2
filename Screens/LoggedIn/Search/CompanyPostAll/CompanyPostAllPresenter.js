@@ -15,7 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import PostFormButton from "../../../../Components/Post/PostFormButton";
 import { colors } from "../../../../Colors";
 import { bigDistrict, smallDistrict } from "../../../../DistrictList";
-import { handleDistrict } from "../../../../apollo";
+import { handleAllVn, handleDistrict } from "../../../../apollo";
 
 const FetchView = styled.View`
   bottom: 30px;
@@ -103,15 +103,17 @@ export default function CompanyPostAllPresenter({
   getAllData,
   isInit,
   userId,
-  initDistrict,
+  list,
+  setList,
   setCheck,
+  vnAll,
+  setVnAll,
 }) {
   const scrollViewRef = useRef();
   const [modalVisible, setModalVisible] = useState(false);
   const [districtCode, setDistrictCode] = useState();
-  const [vnAll, setVnAll] = useState(false);
+
   const [allVisible, setAllVisible] = useState(false);
-  const [list, setList] = useState(initDistrict ? initDistrict : []); //화면 출력용 (전체 + 2번째 지역 list)
 
   const existAddress2 = list?.some((el) => el.id === districtCode);
   const existAll = list?.some((el) => el.id === districtCode + 100);
@@ -129,21 +131,22 @@ export default function CompanyPostAllPresenter({
 
   const handleSubmit = async () => {
     setCheck(true);
+    await handleAllVn(userId, vnAll);
     await handleDistrict(userId, ...list);
     if (vnAll) {
       getAllData();
     }
 
     if (list.length > 0) {
-      const BigList = list.filter((el) => el.id > 100);
+      const bigList = list.filter((el) => el.id > 100);
       const smallList = list.filter((el) => el.id < 100);
       getData({
         variables: {
-          addressStep1_1: BigList[0]?.value,
-          addressStep1_2: BigList[1]?.value,
-          addressStep1_3: BigList[2]?.value,
-          addressStep1_4: BigList[3]?.value,
-          addressStep1_5: BigList[4]?.value,
+          addressStep1_1: bigList[0]?.value,
+          addressStep1_2: bigList[1]?.value,
+          addressStep1_3: bigList[2]?.value,
+          addressStep1_4: bigList[3]?.value,
+          addressStep1_5: bigList[4]?.value,
           addressStep2_1: smallList[0]?.value,
           addressStep2_2: smallList[1]?.value,
           addressStep2_3: smallList[2]?.value,
@@ -223,7 +226,6 @@ export default function CompanyPostAllPresenter({
                         const newDistrict = bigDistrict.filter(
                           (i) => i.id === districtCode
                         );
-
                         if (existAll) {
                           setList(
                             list.filter((el) => el.id !== districtCode + 100)

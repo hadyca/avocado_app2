@@ -24,6 +24,11 @@ export const logUserOut = async () => {
   tokenVar(null);
 };
 
+export const handleAllVn = async (userId, boolean) => {
+  const userVnAll = `${userId}VnAll`;
+  await AsyncStorage.setItem(userVnAll, JSON.stringify(boolean));
+};
+
 export const handleDistrict = async (userId, ...test) => {
   const userDistrict = `${userId}District`;
   await AsyncStorage.setItem(userDistrict, JSON.stringify(test));
