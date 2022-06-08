@@ -23,6 +23,7 @@ export default function ({ route: { params } }) {
   const [isAllPost, setIsAllPost] = useState(true);
   const [vnAll, setVnAll] = useState(false);
   const [list, setList] = useState([]); //출력용 (전체 + 2번째 지역 list)
+  const [realList, setRealList] = useState([]);
 
   const [check, setCheck] = useState(false);
 
@@ -159,6 +160,7 @@ export default function ({ route: { params } }) {
 
   useEffect(async () => {
     if (userData) {
+      setCheck(false);
       const userDistrict = `${userId}District`;
       const userVnAll = `${userId}VnAll`;
       const resultVnAll = await AsyncStorage.getItem(userVnAll);
@@ -167,11 +169,11 @@ export default function ({ route: { params } }) {
       const getDistrict = JSON.parse(resultDistrict);
 
       if (getVnAll) {
-        setCheck(false);
         setVnAll(true);
       } else if (getDistrict?.length > 0) {
-        setCheck(false);
-        setList(getDistrict);
+        // setList(getDistrict);
+        setRealList(getDistrict);
+        //화면 뿌려주기용
         const bigList = getDistrict.filter((el) => el.id > 100);
         const smallList = getDistrict.filter((el) => el.id < 100);
         getData({
@@ -219,6 +221,8 @@ export default function ({ route: { params } }) {
         setCheck={setCheck}
         vnAll={vnAll}
         setVnAll={setVnAll}
+        realList={realList}
+        setRealList={setRealList}
       />
     </ScreenLayout>
   );
