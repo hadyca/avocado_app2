@@ -139,11 +139,10 @@ export default function CompanyPostAllPresenter({
     setCheck(true);
     await handleAllVn(userId, vnAll);
     await handleDistrict(userId, ...list);
-    if (vnAll) {
+    if (vnAll || list.length === 0) {
       getAllData();
-    }
-    if (list.length > 0) {
-      // setRealList(list);
+      setRealList([]);
+    } else if (list.length > 0) {
       const bigList = list.filter((el) => el.id > 100);
       const smallList = list.filter((el) => el.id < 100);
       getData({
@@ -388,11 +387,12 @@ export default function CompanyPostAllPresenter({
       >
         <Text>지역 검색</Text>
       </TouchableOpacity>
-      {/* {realList.length > 0
-        ? realList.map((item, index) => {
-            <Text key={index}>{item.value}</Text>;
-          })
-        : null} */}
+
+      {vnAll ? (
+        <Text>VN 전체</Text>
+      ) : realList?.length > 0 ? (
+        realList.map((item, index) => <Text key={index}>{item.value}</Text>)
+      ) : null}
       {isInit ? (
         <FlatList
           onEndReachedThreshold={0.05}

@@ -171,7 +171,8 @@ export default function ({ route: { params } }) {
       if (getVnAll) {
         setVnAll(true);
       } else if (getDistrict?.length > 0) {
-        setList(getDistrict);
+        // setList(getDistrict);
+        setRealList(getDistrict);
         //화면 뿌려주기용
         const bigList = getDistrict.filter((el) => el.id > 100);
         const smallList = getDistrict.filter((el) => el.id < 100);
