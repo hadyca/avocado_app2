@@ -22,6 +22,7 @@ export default function ({ route: { params } }) {
   const [isInit, setIsInit] = useState(true);
   const [isAllPost, setIsAllPost] = useState(true);
   const [vnAll, setVnAll] = useState(false);
+  const [realVnAll, setRealVnAll] = useState(false);
   const [list, setList] = useState([]); //출력용 (전체 + 2번째 지역 list)
   const [realList, setRealList] = useState([]);
 
@@ -169,10 +170,11 @@ export default function ({ route: { params } }) {
       const getDistrict = JSON.parse(resultDistrict);
 
       if (getVnAll) {
+        setRealVnAll(true);
         setVnAll(true);
       } else if (getDistrict?.length > 0) {
-        // setList(getDistrict);
         setRealList(getDistrict);
+        setList(getDistrict);
         //화면 뿌려주기용
         const bigList = getDistrict.filter((el) => el.id > 100);
         const smallList = getDistrict.filter((el) => el.id < 100);
@@ -221,6 +223,8 @@ export default function ({ route: { params } }) {
         setCheck={setCheck}
         vnAll={vnAll}
         setVnAll={setVnAll}
+        realVnAll={realVnAll}
+        setRealVnAll={setRealVnAll}
         realList={realList}
         setRealList={setRealList}
       />

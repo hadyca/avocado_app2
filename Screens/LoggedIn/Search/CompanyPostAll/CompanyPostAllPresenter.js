@@ -114,6 +114,8 @@ export default function CompanyPostAllPresenter({
   setVnAll,
   realList,
   setRealList,
+  realVnAll,
+  setRealVnAll,
 }) {
   const scrollViewRef = useRef();
   const [modalVisible, setModalVisible] = useState(false);
@@ -139,10 +141,11 @@ export default function CompanyPostAllPresenter({
     setCheck(true);
     await handleAllVn(userId, vnAll);
     await handleDistrict(userId, ...list);
-    if (vnAll || list.length === 0) {
+    if (vnAll) {
       getAllData();
       setRealList([]);
     } else if (list.length > 0) {
+      setRealVnAll(false);
       const bigList = list.filter((el) => el.id > 100);
       const smallList = list.filter((el) => el.id < 100);
       getData({
@@ -159,6 +162,10 @@ export default function CompanyPostAllPresenter({
           addressStep2_5: smallList[4]?.value,
         },
       });
+    } else {
+      getAllData();
+      setRealVnAll(false);
+      setRealList([]);
     }
   };
 
@@ -372,6 +379,8 @@ export default function CompanyPostAllPresenter({
               <TouchableOpacity
                 onPress={() => {
                   setModalVisible(!modalVisible);
+                  setVnAll(realVnAll);
+                  setList(realList);
                 }}
               >
                 <Text>닫기</Text>
@@ -388,11 +397,17 @@ export default function CompanyPostAllPresenter({
         <Text>지역 검색</Text>
       </TouchableOpacity>
 
-      {vnAll ? (
+      {realVnAll ? (
         <Text>VN 전체</Text>
-      ) : realList?.length > 0 ? (
-        realList.map((item, index) => <Text key={index}>{item.value}</Text>)
-      ) : null}
+      ) : (
+        realList.map((item, index) =>
+          item.id > 100 ? (
+            <Text key={index}>{item.value} 전체</Text>
+          ) : (
+            <Text key={index}>{item.value}</Text>
+          )
+        )
+      )}
       {isInit ? (
         <FlatList
           onEndReachedThreshold={0.05}
