@@ -26,6 +26,7 @@ const Logo = styled.Image`
 export default function AuthLayout({ children }) {
   const [statusBarHeight, setStatusBarHeight] = useState(0);
   const { StatusBarManager } = NativeModules;
+
   useEffect(() => {
     Platform.OS == "ios"
       ? StatusBarManager.getHeight((statusBarFrameData) => {
@@ -36,6 +37,7 @@ export default function AuthLayout({ children }) {
   const dismissKeyboard = () => {
     Keyboard.dismiss();
   };
+
   return (
     <TouchableWithoutFeedback
       style={{ flex: 1 }}

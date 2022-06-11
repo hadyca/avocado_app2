@@ -1,8 +1,7 @@
 import React from "react";
-import { gql, useMutation } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
-import AuthLayout from "../../../../Components/Auth/AuthLayout";
+import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
 import {
   TextInput_Company,
   UnderBar,
@@ -35,7 +34,7 @@ export default function AskEmail({ route: { params } }) {
   };
 
   return (
-    <AuthLayout>
+    <CreatCompanyLayout>
       <ProgressCreateCompany title={"이메일 주소를 알려주세요!"} step={"5"} />
       <Controller
         name="email"
@@ -69,6 +68,6 @@ export default function AskEmail({ route: { params } }) {
         disabled={!formState.isValid}
         onPress={goToContactNumber}
       />
-    </AuthLayout>
+    </CreatCompanyLayout>
   );
 }

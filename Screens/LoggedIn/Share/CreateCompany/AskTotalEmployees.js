@@ -1,10 +1,8 @@
-import React, { useState } from "react";
-import { Text } from "react-native";
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
-import AuthLayout from "../../../../Components/Auth/AuthLayout";
+import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
 import {
-  TextInput,
   TextInput_Company,
   UnderBar,
 } from "../../../../Components/Auth/AuthShared";
@@ -29,7 +27,7 @@ export default function AskTotalEmployees({ route: { params } }) {
   };
 
   return (
-    <AuthLayout>
+    <CreatCompanyLayout>
       <ProgressCreateCompany title={"총 임직원 수를 알려주세요!"} step={"4"} />
       <Controller
         name="totalEmployees"
@@ -61,6 +59,6 @@ export default function AskTotalEmployees({ route: { params } }) {
         loading={false}
         onPress={goToAskEmail}
       />
-    </AuthLayout>
+    </CreatCompanyLayout>
   );
 }

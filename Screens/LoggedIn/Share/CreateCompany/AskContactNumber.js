@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
-import AuthLayout from "../../../../Components/Auth/AuthLayout";
+import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
 import {
-  TextInput,
   TextInput_Company,
   UnderBar,
 } from "../../../../Components/Auth/AuthShared";
@@ -32,7 +30,7 @@ export default function AskContactNumber({ route: { params } }) {
   };
 
   return (
-    <AuthLayout>
+    <CreatCompanyLayout>
       <ProgressCreateCompany title={"연락처를 알려주세요"} step={"6"} />
 
       <Controller
@@ -65,6 +63,6 @@ export default function AskContactNumber({ route: { params } }) {
         loading={false}
         onPress={goToAskAddress}
       />
-    </AuthLayout>
+    </CreatCompanyLayout>
   );
 }

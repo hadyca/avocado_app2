@@ -1,9 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { bigDistrict } from "../../../../DistrictList";
-import AuthLayout from "../../../../Components/Auth/AuthLayout";
+import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
 import {
   TextInput_Company,
   UnderBar,
@@ -35,7 +35,7 @@ export default function AskAddress_1({ route: { params } }) {
   };
 
   return (
-    <AuthLayout>
+    <CreatCompanyLayout>
       <ProgressCreateCompany
         title={"첫번째 도시를 선택해 주세요."}
         step={"7"}
@@ -70,6 +70,6 @@ export default function AskAddress_1({ route: { params } }) {
         loading={false}
         onPress={goToAddress_2}
       />
-    </AuthLayout>
+    </CreatCompanyLayout>
   );
 }

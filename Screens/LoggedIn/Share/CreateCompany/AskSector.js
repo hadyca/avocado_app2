@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
-import AuthLayout from "../../../../Components/Auth/AuthLayout";
+import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
 import AuthButton from "../../../../Components/Auth/AuthButton";
 import {
   TextInput_Company,
@@ -31,7 +31,7 @@ export default function AskSector({ route: { params } }) {
   };
 
   return (
-    <AuthLayout>
+    <CreatCompanyLayout>
       <ProgressCreateCompany
         title={"어떤 업종인지 선택해 주세요!"}
         step={"3"}
@@ -68,6 +68,6 @@ export default function AskSector({ route: { params } }) {
         loading={false}
         onPress={goTototalEmployees}
       />
-    </AuthLayout>
+    </CreatCompanyLayout>
   );
 }

@@ -1,18 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { View, Text, useWindowDimensions, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
-import { bigDistrict, smallDistrict } from "../../../../DistrictList";
 import styled from "styled-components/native";
-import AuthLayout from "../../../../Components/Auth/AuthLayout";
-import { Subtitle } from "../../../../Components/Auth/Subtitle";
+import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
 import {
   TextInput_Company,
   UnderBar,
 } from "../../../../Components/Auth/AuthShared";
 import AuthButton from "../../../../Components/Auth/AuthButton";
-import ModalSelector from "react-native-modal-selector";
 import FormError from "../../../../Components/Auth/FormError";
 import ProgressCreateCompany from "../../../../Components/Auth/ProgressCreateCompany";
 
@@ -92,7 +88,7 @@ export default function AskAddress_3({ route: { params } }) {
   };
 
   return (
-    <AuthLayout>
+    <CreatCompanyLayout>
       <ProgressCreateCompany
         title={"마지막 세부주소를 입력해 주세요."}
         step={"9"}
@@ -131,6 +127,6 @@ export default function AskAddress_3({ route: { params } }) {
         loading={loading}
         onPress={handleSubmit(onValid)}
       />
-    </AuthLayout>
+    </CreatCompanyLayout>
   );
 }

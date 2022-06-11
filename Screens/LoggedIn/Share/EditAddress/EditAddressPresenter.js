@@ -123,7 +123,7 @@ export default function EditAddressPresenter({
           </TextView>
         </ModalSelector>
         <ModalSelector
-          data={smallDistrict[add_1?.id - 1]}
+          data={smallDistrict[add_1?.id]}
           keyExtractor={(item) => item.id}
           labelExtractor={(item) => item.value}
           accessible={true}

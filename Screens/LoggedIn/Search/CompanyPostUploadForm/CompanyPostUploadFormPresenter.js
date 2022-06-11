@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Image, TouchableOpacity } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  TouchableOpacity,
+  NativeModules,
+  Platform,
+  KeyboardAvoidingView,
+} from "react-native";
 import styled from "styled-components/native";
 import Checkbox from "expo-checkbox";
 import { Ionicons } from "@expo/vector-icons";
@@ -226,6 +233,8 @@ export default function CompanyPostUploadFormPresenter({
   const [timeOption, setTimeOption] = useState(false);
   const [wageType, setWageType] = useState("월급");
   const [wageNum, setWageNum] = useState();
+  const [statusBarHeight, setStatusBarHeight] = useState(0);
+  const { StatusBarManager } = NativeModules;
 
   const navigation = useNavigation();
 
@@ -285,6 +294,14 @@ export default function CompanyPostUploadFormPresenter({
   );
 
   useEffect(() => {
+    Platform.OS == "ios"
+      ? StatusBarManager.getHeight((statusBarFrameData) => {
+          setStatusBarHeight(statusBarFrameData.height);
+        })
+      : null;
+  }, []);
+
+  useEffect(() => {
     navigation.setOptions({
       headerRight: loading
         ? HeaderRightLoading
@@ -313,236 +330,246 @@ export default function CompanyPostUploadFormPresenter({
 
   return (
     <Container>
-      <ImageTop>
-        <PictureContainer>
-          <PictureTitle>사진 </PictureTitle>
-          <Opt>(선택)</Opt>
-        </PictureContainer>
-        <PictureSub>
-          구인글에 사진이 있으면 더 많은 사람들이 확인해요.
-        </PictureSub>
-        <ImageScroll horizontal={true} showsHorizontalScrollIndicator={false}>
-          <ImagePick onPress={goToImageSelect}>
-            <Ionicons name={"camera"} color={"#868B94"} size={30} />
-            <CameraText>{`${countPhoto} / 5`}</CameraText>
-          </ImagePick>
-          {photo.length > 0
-            ? photo.map((item, index) => {
-                return (
-                  <ImageContainer key={index}>
-                    <Image
-                      source={{ uri: item.uri }}
-                      style={{ height: 60, width: 60 }}
-                    />
-                    <DeleteBtn onPress={() => DeleteImg(index)}>
-                      <AntDesign name="closecircle" size={16} color="black" />
-                    </DeleteBtn>
-                  </ImageContainer>
-                );
-              })
-            : null}
-        </ImageScroll>
-      </ImageTop>
-      <InputBottom>
-        <Title>제목</Title>
-        <Controller
-          name="title"
-          rules={{
-            required: true,
-          }}
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              placeholder="공고 내용을 요약해서 적어주세요."
-              autoCapitalize="none"
-              maxLength={100}
-              multiline={false}
-              returnKeyType="next"
-              onChangeText={(text) => onChange(text)}
-              value={value}
-            />
-          )}
-        />
-        <Title>근무 요일</Title>
-        <DayContainer>
-          <Day selected={mon} onPress={() => setMon(!mon)}>
-            <DayText selected={mon}>월</DayText>
-          </Day>
-          <Day selected={tue} onPress={() => setTue(!tue)}>
-            <DayText selected={tue}>화</DayText>
-          </Day>
-          <Day selected={wed} onPress={() => setWed(!wed)}>
-            <DayText selected={wed}>수</DayText>
-          </Day>
-          <Day selected={thu} onPress={() => setThu(!thu)}>
-            <DayText selected={thu}>목</DayText>
-          </Day>
-          <Day selected={fri} onPress={() => setFri(!fri)}>
-            <DayText selected={fri}>금</DayText>
-          </Day>
-          <Day selected={sat} onPress={() => setSat(!sat)}>
-            <DayText selected={sat}>토</DayText>
-          </Day>
-          <Day selected={sun} onPress={() => setSun(!sun)}>
-            <DayText selected={sun}>일</DayText>
-          </Day>
-        </DayContainer>
-        <CheckContainer>
-          {/* <CheckBox
-            onClick={() => setDayOption(!dayOption)}
-            isChecked={dayOption}
-            checkBoxColor={colors.borderThick}
-            checkedCheckBoxColor={colors.buttonBackground}
-          /> */}
-          <Checkbox
-            value={dayOption}
-            onValueChange={setDayOption}
-            color={dayOption ? colors.buttonBackground : colors.borderThick}
-          />
-          <CheckText>협의 가능</CheckText>
-        </CheckContainer>
-        <Title>근무 시간</Title>
-        <TimeTextContainer>
-          <Time>시작</Time>
-          <Time>종료</Time>
-        </TimeTextContainer>
-        <ModalContainer>
-          <ModalView>
-            <ModalSelector
-              data={time}
-              keyExtractor={(item) => item.id}
-              labelExtractor={(item) => item.label}
-              accessible={true}
-              onChange={(item) => {
-                setStartTime({ label: item.label, value: item.value });
-              }}
-              optionContainerStyle={{ height: 500 }}
-            >
-              <TimeContainer>
-                <SelectBox value={startTime.label} />
-                <Ionicons
-                  name="chevron-forward"
-                  color="black"
-                  size={17}
-                  style={{ marginRight: 10 }}
-                />
-              </TimeContainer>
-            </ModalSelector>
-          </ModalView>
-          <Wave>~</Wave>
-          <ModalView>
-            <ModalSelector
-              data={time}
-              keyExtractor={(item) => item.id}
-              labelExtractor={(item) => item.label}
-              accessible={true}
-              onChange={(item) => {
-                setFinishTime({ label: item.label, value: item.value });
-              }}
-              optionContainerStyle={{ height: 500 }}
-            >
-              <TimeContainer>
-                <SelectBox value={finishTime.label} />
-                <Ionicons
-                  name="chevron-forward"
-                  color="black"
-                  size={17}
-                  style={{ marginRight: 10 }}
-                />
-              </TimeContainer>
-            </ModalSelector>
-          </ModalView>
-        </ModalContainer>
-        <CheckContainer>
-          {/* <CheckBox
-            onClick={() => setTimeOption(!timeOption)}
-            isChecked={timeOption}
-            checkBoxColor={colors.borderThick}
-            checkedCheckBoxColor={colors.buttonBackground}
-          /> */}
-          <Checkbox
-            value={timeOption}
-            onValueChange={setTimeOption}
-            color={timeOption ? colors.buttonBackground : colors.borderThick}
-          />
-          <CheckText>협의 가능</CheckText>
-        </CheckContainer>
-        <Title>임금</Title>
-        <WageContainer>
-          <ModalView>
-            <ModalSelector
-              data={typeOfWage}
-              keyExtractor={(item) => item.id}
-              labelExtractor={(item) => item.value}
-              accessible={true}
-              onChange={(item) => {
-                setWageType(item.value);
-              }}
-              // optionContainerStyle={{ height: 180 }}
-            >
-              <TimeContainer>
-                <SelectBox value={wageType} />
-                <Ionicons
-                  name="chevron-forward"
-                  color="black"
-                  size={17}
-                  style={{ marginRight: 10 }}
-                />
-              </TimeContainer>
-            </ModalSelector>
-          </ModalView>
+      <KeyboardAvoidingView
+        style={{
+          width: "100%",
+        }}
+        behavior={Platform.OS === "ios" ? "padding" : null}
+        keyboardVerticalOffset={
+          Platform.OS === "ios" ? statusBarHeight + 100 : null
+        }
+      >
+        <ImageTop>
+          <PictureContainer>
+            <PictureTitle>사진 </PictureTitle>
+            <Opt>(선택)</Opt>
+          </PictureContainer>
+          <PictureSub>
+            구인글에 사진이 있으면 더 많은 사람들이 확인해요.
+          </PictureSub>
+          <ImageScroll horizontal={true} showsHorizontalScrollIndicator={false}>
+            <ImagePick onPress={goToImageSelect}>
+              <Ionicons name={"camera"} color={"#868B94"} size={30} />
+              <CameraText>{`${countPhoto} / 5`}</CameraText>
+            </ImagePick>
+            {photo.length > 0
+              ? photo.map((item, index) => {
+                  return (
+                    <ImageContainer key={index}>
+                      <Image
+                        source={{ uri: item.uri }}
+                        style={{ height: 60, width: 60 }}
+                      />
+                      <DeleteBtn onPress={() => DeleteImg(index)}>
+                        <AntDesign name="closecircle" size={16} color="black" />
+                      </DeleteBtn>
+                    </ImageContainer>
+                  );
+                })
+              : null}
+          </ImageScroll>
+        </ImageTop>
+        <InputBottom>
+          <Title>제목</Title>
           <Controller
-            name="wage"
+            name="title"
             rules={{
               required: true,
             }}
             control={control}
             render={({ field: { onChange, value } }) => (
-              <NumberFormat
+              <TextInput
+                placeholder="공고 내용을 요약해서 적어주세요."
+                autoCapitalize="none"
+                maxLength={100}
+                multiline={false}
+                returnKeyType="next"
+                onChangeText={(text) => onChange(text)}
                 value={value}
-                displayType={"text"}
-                thousandSeparator={true}
-                onValueChange={(values) => {
-                  const { value } = values;
-                  setWageNum(value);
-                }}
-                renderText={(value) => (
-                  <WageInputContainer>
-                    <WageInput
-                      autoCapitalize="none"
-                      returnKeyType="done"
-                      onChangeText={onChange}
-                      value={value}
-                      keyboardType="number-pad"
-                      maxLength={17}
-                    />
-                    <Dong>₫</Dong>
-                  </WageInputContainer>
-                )}
               />
             )}
           />
-        </WageContainer>
-        <Title>세부 내용</Title>
-        <Controller
-          name="content"
-          rules={{
-            required: true,
-          }}
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <ContentInput
-              multiline={true}
-              numberOfLines={4}
-              textAlignVertical={"top"}
-              maxLength={1000}
-              autoCapitalize="none"
-              onChangeText={(text) => onChange(text)}
-              value={value || ""}
+          <Title>근무 요일</Title>
+          <DayContainer>
+            <Day selected={mon} onPress={() => setMon(!mon)}>
+              <DayText selected={mon}>월</DayText>
+            </Day>
+            <Day selected={tue} onPress={() => setTue(!tue)}>
+              <DayText selected={tue}>화</DayText>
+            </Day>
+            <Day selected={wed} onPress={() => setWed(!wed)}>
+              <DayText selected={wed}>수</DayText>
+            </Day>
+            <Day selected={thu} onPress={() => setThu(!thu)}>
+              <DayText selected={thu}>목</DayText>
+            </Day>
+            <Day selected={fri} onPress={() => setFri(!fri)}>
+              <DayText selected={fri}>금</DayText>
+            </Day>
+            <Day selected={sat} onPress={() => setSat(!sat)}>
+              <DayText selected={sat}>토</DayText>
+            </Day>
+            <Day selected={sun} onPress={() => setSun(!sun)}>
+              <DayText selected={sun}>일</DayText>
+            </Day>
+          </DayContainer>
+          <CheckContainer>
+            {/* <CheckBox
+            onClick={() => setDayOption(!dayOption)}
+            isChecked={dayOption}
+            checkBoxColor={colors.borderThick}
+            checkedCheckBoxColor={colors.buttonBackground}
+          /> */}
+            <Checkbox
+              value={dayOption}
+              onValueChange={setDayOption}
+              color={dayOption ? colors.buttonBackground : colors.borderThick}
             />
-          )}
-        />
-      </InputBottom>
+            <CheckText>협의 가능</CheckText>
+          </CheckContainer>
+          <Title>근무 시간</Title>
+          <TimeTextContainer>
+            <Time>시작</Time>
+            <Time>종료</Time>
+          </TimeTextContainer>
+          <ModalContainer>
+            <ModalView>
+              <ModalSelector
+                data={time}
+                keyExtractor={(item) => item.id}
+                labelExtractor={(item) => item.label}
+                accessible={true}
+                onChange={(item) => {
+                  setStartTime({ label: item.label, value: item.value });
+                }}
+                optionContainerStyle={{ height: 500 }}
+              >
+                <TimeContainer>
+                  <SelectBox value={startTime.label} />
+                  <Ionicons
+                    name="chevron-forward"
+                    color="black"
+                    size={17}
+                    style={{ marginRight: 10 }}
+                  />
+                </TimeContainer>
+              </ModalSelector>
+            </ModalView>
+            <Wave>~</Wave>
+            <ModalView>
+              <ModalSelector
+                data={time}
+                keyExtractor={(item) => item.id}
+                labelExtractor={(item) => item.label}
+                accessible={true}
+                onChange={(item) => {
+                  setFinishTime({ label: item.label, value: item.value });
+                }}
+                optionContainerStyle={{ height: 500 }}
+              >
+                <TimeContainer>
+                  <SelectBox value={finishTime.label} />
+                  <Ionicons
+                    name="chevron-forward"
+                    color="black"
+                    size={17}
+                    style={{ marginRight: 10 }}
+                  />
+                </TimeContainer>
+              </ModalSelector>
+            </ModalView>
+          </ModalContainer>
+          <CheckContainer>
+            {/* <CheckBox
+            onClick={() => setTimeOption(!timeOption)}
+            isChecked={timeOption}
+            checkBoxColor={colors.borderThick}
+            checkedCheckBoxColor={colors.buttonBackground}
+          /> */}
+            <Checkbox
+              value={timeOption}
+              onValueChange={setTimeOption}
+              color={timeOption ? colors.buttonBackground : colors.borderThick}
+            />
+            <CheckText>협의 가능</CheckText>
+          </CheckContainer>
+          <Title>임금</Title>
+          <WageContainer>
+            <ModalView>
+              <ModalSelector
+                data={typeOfWage}
+                keyExtractor={(item) => item.id}
+                labelExtractor={(item) => item.value}
+                accessible={true}
+                onChange={(item) => {
+                  setWageType(item.value);
+                }}
+                // optionContainerStyle={{ height: 180 }}
+              >
+                <TimeContainer>
+                  <SelectBox value={wageType} />
+                  <Ionicons
+                    name="chevron-forward"
+                    color="black"
+                    size={17}
+                    style={{ marginRight: 10 }}
+                  />
+                </TimeContainer>
+              </ModalSelector>
+            </ModalView>
+            <Controller
+              name="wage"
+              rules={{
+                required: true,
+              }}
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <NumberFormat
+                  value={value}
+                  displayType={"text"}
+                  thousandSeparator={true}
+                  onValueChange={(values) => {
+                    const { value } = values;
+                    setWageNum(value);
+                  }}
+                  renderText={(value) => (
+                    <WageInputContainer>
+                      <WageInput
+                        autoCapitalize="none"
+                        returnKeyType="done"
+                        onChangeText={onChange}
+                        value={value}
+                        keyboardType="number-pad"
+                        maxLength={17}
+                      />
+                      <Dong>₫</Dong>
+                    </WageInputContainer>
+                  )}
+                />
+              )}
+            />
+          </WageContainer>
+          <Title>세부 내용</Title>
+          <Controller
+            name="content"
+            rules={{
+              required: true,
+            }}
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <ContentInput
+                multiline={true}
+                numberOfLines={4}
+                textAlignVertical={"top"}
+                maxLength={1000}
+                autoCapitalize="none"
+                onChangeText={(text) => onChange(text)}
+                value={value || ""}
+              />
+            )}
+          />
+        </InputBottom>
+      </KeyboardAvoidingView>
     </Container>
   );
 }

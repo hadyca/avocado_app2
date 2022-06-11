@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import styled from "styled-components/native";
-import AuthLayout from "../../../../Components/Auth/AuthLayout";
+import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
 import {
   TextInput_Company,
   UnderBar,
@@ -40,7 +40,7 @@ export default function AskAboutUs({ route: { params } }) {
   };
 
   return (
-    <AuthLayout>
+    <CreatCompanyLayout>
       <ProgressCreateCompany
         title={"어떤 회사인지 멋지게 소개해주세요!"}
         step={"2"}
@@ -78,6 +78,6 @@ export default function AskAboutUs({ route: { params } }) {
         loading={false}
         onPress={goToAskSector}
       />
-    </AuthLayout>
+    </CreatCompanyLayout>
   );
 }

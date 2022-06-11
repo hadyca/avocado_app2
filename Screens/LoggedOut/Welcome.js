@@ -6,7 +6,7 @@ import AuthButton from "../../Components/Auth/AuthButton";
 import AuthLayout from "../../Components/Auth/AuthLayout";
 
 const LoginLink = styled.Text`
-  color: ${colors.linkText};
+  color: ${colors.buttonBackground};
   font-weight: 600;
   margin-top: 20px;
   text-align: center;

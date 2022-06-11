@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { smallDistrict } from "../../../../DistrictList";
-import AuthLayout from "../../../../Components/Auth/AuthLayout";
+import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
 import {
   TextInput_Company,
   UnderBar,
@@ -35,7 +35,7 @@ export default function AskAddress_2({ route: { params } }) {
     });
   };
   return (
-    <AuthLayout>
+    <CreatCompanyLayout>
       <ProgressCreateCompany
         title={"두번째 도시를 선택해 주세요."}
         step={"8"}
@@ -71,6 +71,6 @@ export default function AskAddress_2({ route: { params } }) {
         loading={false}
         onPress={goToAddress_3}
       />
-    </AuthLayout>
+    </CreatCompanyLayout>
   );
 }
