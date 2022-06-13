@@ -21,8 +21,8 @@ import { time } from "../../../../Constant";
 import { typeOfWage } from "../../../../Constant";
 
 const Container = styled.ScrollView`
-  flex: 1;
   background-color: ${colors.backgraound};
+  border: solid red 1px;
 `;
 
 const HeaderRightText = styled.Text`
@@ -45,7 +45,7 @@ const Title = styled.Text`
   margin: 40px 0px 20px 0px;
 `;
 
-const TextInput = styled.TextInput`
+const TitleInput = styled.TextInput`
   background-color: white;
   padding: 15px 7px;
   border-radius: 4px;
@@ -330,6 +330,36 @@ export default function CompanyPostUploadFormPresenter({
 
   return (
     <Container>
+      <ImageTop>
+        <PictureContainer>
+          <PictureTitle>사진 </PictureTitle>
+          <Opt>(선택)</Opt>
+        </PictureContainer>
+        <PictureSub>
+          구인글에 사진이 있으면 더 많은 사람들이 확인해요.
+        </PictureSub>
+        <ImageScroll horizontal={true} showsHorizontalScrollIndicator={false}>
+          <ImagePick onPress={goToImageSelect}>
+            <Ionicons name={"camera"} color={"#868B94"} size={30} />
+            <CameraText>{`${countPhoto} / 5`}</CameraText>
+          </ImagePick>
+          {photo.length > 0
+            ? photo.map((item, index) => {
+                return (
+                  <ImageContainer key={index}>
+                    <Image
+                      source={{ uri: item.uri }}
+                      style={{ height: 60, width: 60 }}
+                    />
+                    <DeleteBtn onPress={() => DeleteImg(index)}>
+                      <AntDesign name="closecircle" size={16} color="black" />
+                    </DeleteBtn>
+                  </ImageContainer>
+                );
+              })
+            : null}
+        </ImageScroll>
+      </ImageTop>
       <KeyboardAvoidingView
         style={{
           width: "100%",
@@ -339,36 +369,6 @@ export default function CompanyPostUploadFormPresenter({
           Platform.OS === "ios" ? statusBarHeight + 100 : null
         }
       >
-        <ImageTop>
-          <PictureContainer>
-            <PictureTitle>사진 </PictureTitle>
-            <Opt>(선택)</Opt>
-          </PictureContainer>
-          <PictureSub>
-            구인글에 사진이 있으면 더 많은 사람들이 확인해요.
-          </PictureSub>
-          <ImageScroll horizontal={true} showsHorizontalScrollIndicator={false}>
-            <ImagePick onPress={goToImageSelect}>
-              <Ionicons name={"camera"} color={"#868B94"} size={30} />
-              <CameraText>{`${countPhoto} / 5`}</CameraText>
-            </ImagePick>
-            {photo.length > 0
-              ? photo.map((item, index) => {
-                  return (
-                    <ImageContainer key={index}>
-                      <Image
-                        source={{ uri: item.uri }}
-                        style={{ height: 60, width: 60 }}
-                      />
-                      <DeleteBtn onPress={() => DeleteImg(index)}>
-                        <AntDesign name="closecircle" size={16} color="black" />
-                      </DeleteBtn>
-                    </ImageContainer>
-                  );
-                })
-              : null}
-          </ImageScroll>
-        </ImageTop>
         <InputBottom>
           <Title>제목</Title>
           <Controller
@@ -378,7 +378,7 @@ export default function CompanyPostUploadFormPresenter({
             }}
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
+              <TitleInput
                 placeholder="공고 내용을 요약해서 적어주세요."
                 autoCapitalize="none"
                 maxLength={100}
