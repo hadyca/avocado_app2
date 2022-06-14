@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   ActivityIndicator,
   Image,
@@ -14,6 +14,7 @@ import { useForm, Controller } from "react-hook-form";
 import { AntDesign } from "@expo/vector-icons";
 import ModalSelector from "react-native-modal-selector";
 import NumberFormat from "react-number-format";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { colors } from "../../../../Colors";
 import { useNavigation } from "@react-navigation/native";
 import { ReactNativeFile } from "apollo-upload-client";
@@ -22,7 +23,6 @@ import { typeOfWage } from "../../../../Constant";
 
 const Container = styled.ScrollView`
   background-color: ${colors.backgraound};
-  border: solid red 1px;
 `;
 
 const HeaderRightText = styled.Text`
@@ -200,6 +200,7 @@ const Dong = styled.Text`
 
 const ContentInput = styled.TextInput`
   background-color: white;
+  min-height: 100px;
   padding: 15px 7px;
   border-radius: 4px;
   color: black;
@@ -220,6 +221,7 @@ export default function CompanyPostUploadFormPresenter({
   loading,
   uploadCompanyPostMutation,
 }) {
+  let ref = useRef();
   const [mon, setMon] = useState(true);
   const [tue, setTue] = useState(true);
   const [wed, setWed] = useState(true);
@@ -330,45 +332,44 @@ export default function CompanyPostUploadFormPresenter({
 
   return (
     <Container>
-      <ImageTop>
-        <PictureContainer>
-          <PictureTitle>사진 </PictureTitle>
-          <Opt>(선택)</Opt>
-        </PictureContainer>
-        <PictureSub>
-          구인글에 사진이 있으면 더 많은 사람들이 확인해요.
-        </PictureSub>
-        <ImageScroll horizontal={true} showsHorizontalScrollIndicator={false}>
-          <ImagePick onPress={goToImageSelect}>
-            <Ionicons name={"camera"} color={"#868B94"} size={30} />
-            <CameraText>{`${countPhoto} / 5`}</CameraText>
-          </ImagePick>
-          {photo.length > 0
-            ? photo.map((item, index) => {
-                return (
-                  <ImageContainer key={index}>
-                    <Image
-                      source={{ uri: item.uri }}
-                      style={{ height: 60, width: 60 }}
-                    />
-                    <DeleteBtn onPress={() => DeleteImg(index)}>
-                      <AntDesign name="closecircle" size={16} color="black" />
-                    </DeleteBtn>
-                  </ImageContainer>
-                );
-              })
-            : null}
-        </ImageScroll>
-      </ImageTop>
       <KeyboardAvoidingView
-        style={{
-          width: "100%",
-        }}
+        enabled
         behavior={Platform.OS === "ios" ? "padding" : null}
         keyboardVerticalOffset={
-          Platform.OS === "ios" ? statusBarHeight + 100 : null
+          Platform.OS === "ios" ? statusBarHeight + 50 : null
         }
+        style={{ flex: 1 }}
       >
+        <ImageTop>
+          <PictureContainer>
+            <PictureTitle>사진 </PictureTitle>
+            <Opt>(선택)</Opt>
+          </PictureContainer>
+          <PictureSub>
+            구인글에 사진이 있으면 더 많은 사람들이 확인해요.
+          </PictureSub>
+          <ImageScroll horizontal={true} showsHorizontalScrollIndicator={false}>
+            <ImagePick onPress={goToImageSelect}>
+              <Ionicons name={"camera"} color={"#868B94"} size={30} />
+              <CameraText>{`${countPhoto} / 5`}</CameraText>
+            </ImagePick>
+            {photo.length > 0
+              ? photo.map((item, index) => {
+                  return (
+                    <ImageContainer key={index}>
+                      <Image
+                        source={{ uri: item.uri }}
+                        style={{ height: 60, width: 60 }}
+                      />
+                      <DeleteBtn onPress={() => DeleteImg(index)}>
+                        <AntDesign name="closecircle" size={16} color="black" />
+                      </DeleteBtn>
+                    </ImageContainer>
+                  );
+                })
+              : null}
+          </ImageScroll>
+        </ImageTop>
         <InputBottom>
           <Title>제목</Title>
           <Controller
@@ -414,12 +415,6 @@ export default function CompanyPostUploadFormPresenter({
             </Day>
           </DayContainer>
           <CheckContainer>
-            {/* <CheckBox
-            onClick={() => setDayOption(!dayOption)}
-            isChecked={dayOption}
-            checkBoxColor={colors.borderThick}
-            checkedCheckBoxColor={colors.buttonBackground}
-          /> */}
             <Checkbox
               value={dayOption}
               onValueChange={setDayOption}
@@ -480,12 +475,6 @@ export default function CompanyPostUploadFormPresenter({
             </ModalView>
           </ModalContainer>
           <CheckContainer>
-            {/* <CheckBox
-            onClick={() => setTimeOption(!timeOption)}
-            isChecked={timeOption}
-            checkBoxColor={colors.borderThick}
-            checkedCheckBoxColor={colors.buttonBackground}
-          /> */}
             <Checkbox
               value={timeOption}
               onValueChange={setTimeOption}

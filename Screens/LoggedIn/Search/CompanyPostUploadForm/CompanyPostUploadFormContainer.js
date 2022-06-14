@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Platform } from "react-native";
 import { useMutation } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
