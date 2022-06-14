@@ -200,7 +200,7 @@ const Dong = styled.Text`
 
 const ContentInput = styled.TextInput`
   background-color: white;
-  min-height: 100px;
+  height: 300px;
   padding: 15px 7px;
   border-radius: 4px;
   color: black;
@@ -332,14 +332,7 @@ export default function CompanyPostUploadFormPresenter({
 
   return (
     <Container>
-      <KeyboardAvoidingView
-        enabled
-        behavior={Platform.OS === "ios" ? "padding" : null}
-        keyboardVerticalOffset={
-          Platform.OS === "ios" ? statusBarHeight + 50 : null
-        }
-        style={{ flex: 1 }}
-      >
+      <KeyboardAwareScrollView extraScrollHeight={50}>
         <ImageTop>
           <PictureContainer>
             <PictureTitle>사진 </PictureTitle>
@@ -558,7 +551,7 @@ export default function CompanyPostUploadFormPresenter({
             )}
           />
         </InputBottom>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     </Container>
   );
 }

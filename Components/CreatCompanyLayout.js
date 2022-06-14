@@ -9,7 +9,7 @@ const Container = styled.View`
 `;
 
 const TopContainer = styled.View`
-  flex: 0.3;
+  flex: 0.5;
   justify-content: center;
 `;
 
