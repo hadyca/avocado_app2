@@ -26,8 +26,9 @@ const ModalContainer = styled.View`
   justify-content: flex-end;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  background-color: blue;
+  background-color: ${colors.backgraound}
   margin-top: 100px;
+  border: 1px grey solid;
 `;
 
 const ModalView = styled.View`
@@ -396,7 +397,6 @@ export default function CompanyPostAllPresenter({
       >
         <Text>지역 검색</Text>
       </TouchableOpacity>
-
       {realVnAll ? (
         <Text>VN 전체</Text>
       ) : (
