@@ -26,7 +26,8 @@ const ModalContainer = styled.View`
   justify-content: flex-end;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  background-color: ${colors.backgraound}
+  /* background-color: ${colors.backgraound} */
+  background-color: red;
   margin-top: 100px;
   border: 1px grey solid;
 `;
