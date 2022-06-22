@@ -26,22 +26,66 @@ const ModalContainer = styled.View`
   justify-content: flex-end;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  /* background-color: ${colors.backgraound} */
-  background-color: red;
+  background-color: ${colors.backgraound};
   margin-top: 100px;
-  border: 1px grey solid;
+  border: 1px ${colors.borderThin} solid;
 `;
 
 const ModalView = styled.View`
-  background-color: orange;
+  background-color: ${colors.backgraound};
   width: 100%;
   height: 98%;
+`;
+
+const ModalTop = styled.View``;
+
+const TopContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+`;
+
+const TopText = styled.Text`
+  font-weight: bold;
+  font-size: 16px;
+  margin-left: 10px;
+`;
+
+const CountingContainer = styled.View`
+  margin-right: 10px;
+  flex-direction: row;
+`;
+const Counting = styled.Text`
+  color: ${colors.buttonBackground};
+`;
+const Counting2 = styled.Text`
+  color: ${colors.borderThick};
+`;
+
+const TopContainer2 = styled.View`
+  flex-direction: row;
+  margin-bottom: 20px;
+`;
+
+const DistrictText = styled.Text`
+  flex: 0.45;
+  text-align: center;
+`;
+
+const DistrictText2 = styled.Text`
+  flex: 0.55;
+  text-align: center;
 `;
 
 const DistrictContainer = styled.View`
   flex: 1;
   flex-direction: row;
   background-color: ${colors.backgraound};
+  border-top-color: ${colors.borderThin};
+  border-bottom-color: ${colors.borderThin};
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-style: solid;
 `;
 
 const FirstScrollView = styled.ScrollView`
@@ -183,6 +227,19 @@ export default function CompanyPostAllPresenter({
       >
         <ModalContainer>
           <ModalView>
+            <ModalTop>
+              <TopContainer>
+                <TopText>희망근무지 선택</TopText>
+                <CountingContainer>
+                  <Counting>{vnAll ? "1" : list.length}</Counting>
+                  <Counting2>/5</Counting2>
+                </CountingContainer>
+              </TopContainer>
+              <TopContainer2>
+                <DistrictText>지역1</DistrictText>
+                <DistrictText2>지역2</DistrictText2>
+              </TopContainer2>
+            </ModalTop>
             <DistrictContainer>
               <FirstScrollView showsVerticalScrollIndicator={false}>
                 <Button
@@ -369,7 +426,6 @@ export default function CompanyPostAllPresenter({
                   ))}
                 </DistrictScroll>
               </ListContainer>
-              <Text>{vnAll ? "1" : list.length} / 5</Text>
               <TouchableOpacity
                 onPress={() => {
                   setModalVisible(!modalVisible);
