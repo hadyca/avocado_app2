@@ -127,12 +127,49 @@ const ListContainer = styled.View`
 
 const DistrictSet = styled.View`
   flex-direction: row;
+  margin: 10px;
 `;
+
+const ListText = styled.Text``;
+
 const DistrictScroll = styled.ScrollView``;
 
-const BottomContainer = styled.View`
-  height: 100px;
+const BottomContainer = styled.View``;
+const FinalContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 10px;
 `;
+
+const CloseText = styled.Text``;
+
+const OkText = styled.Text`
+  color: ${colors.buttonBackground};
+`;
+
+const TopView = styled.View`
+  background-color: ${colors.borderThin};
+`;
+
+const SearchTouch = styled.TouchableOpacity`
+  background-color: ${colors.backgraound};
+  border: 1px ${colors.borderThick} solid;
+  border-radius: 5px;
+  justify-content: center;
+  margin: 10px;
+  height: 35px;
+`;
+
+const SearchContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-around;
+`;
+
+const SearchText = styled.Text`
+  font-size: 12px;
+  font-weight: 700;
+`;
+
 export default function CompanyPostAllPresenter({
   goToCompanyPostForm,
   handleFetch,
@@ -394,9 +431,9 @@ export default function CompanyPostAllPresenter({
               <ListContainer>
                 {vnAll ? (
                   <DistrictSet>
-                    <Text>VN전체</Text>
+                    <ListText>VN전체</ListText>
                     <TouchableOpacity onPress={() => setVnAll(false)}>
-                      <Text>X</Text>
+                      <Ionicons name="close-outline" size={20} color="black" />
                     </TouchableOpacity>
                   </DistrictSet>
                 ) : null}
@@ -411,60 +448,77 @@ export default function CompanyPostAllPresenter({
                   {list.map((item, index) => (
                     <DistrictSet key={index}>
                       {item.id > 100 ? (
-                        <Text>{item.value} 전체</Text>
+                        <ListText>{item.value} 전체</ListText>
                       ) : (
-                        <Text>{item.value}</Text>
+                        <ListText>{item.value}</ListText>
                       )}
                       <TouchableOpacity
                         onPress={() =>
                           setList(list.filter((el) => el.value !== item.value))
                         }
                       >
-                        <Text> X </Text>
+                        <Ionicons
+                          name="close-outline"
+                          size={20}
+                          color="black"
+                        />
                       </TouchableOpacity>
                     </DistrictSet>
                   ))}
                 </DistrictScroll>
               </ListContainer>
-              <TouchableOpacity
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                  handleSubmit();
-                }}
-              >
-                <Text>확인</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                  setVnAll(realVnAll);
-                  setList(realList);
-                }}
-              >
-                <Text>닫기</Text>
-              </TouchableOpacity>
+              <FinalContainer>
+                <TouchableOpacity
+                  onPress={() => {
+                    setModalVisible(!modalVisible);
+                    setVnAll(realVnAll);
+                    setList(realList);
+                  }}
+                >
+                  <CloseText>닫기</CloseText>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    setModalVisible(!modalVisible);
+                    handleSubmit();
+                  }}
+                >
+                  <OkText>확인</OkText>
+                </TouchableOpacity>
+              </FinalContainer>
             </BottomContainer>
           </ModalView>
         </ModalContainer>
       </Modal>
-      <TouchableOpacity
-        onPress={() => {
-          setModalVisible(true);
-        }}
-      >
-        <Text>지역 검색</Text>
-      </TouchableOpacity>
-      {realVnAll ? (
-        <Text>VN 전체</Text>
-      ) : (
-        realList.map((item, index) =>
-          item.id > 100 ? (
-            <Text key={index}>{item.value} 전체</Text>
-          ) : (
-            <Text key={index}>{item.value}</Text>
-          )
-        )
-      )}
+      <TopView>
+        <SearchTouch
+          onPress={() => {
+            setModalVisible(true);
+          }}
+        >
+          <SearchContainer>
+            {realVnAll ? (
+              <SearchText>VN 전체</SearchText>
+            ) : realList.length === 1 && realList[0].id > 100 ? (
+              <SearchText>{realList[0].value} 전체</SearchText>
+            ) : realList.length === 1 && realList[0].id < 100 ? (
+              <SearchText>{realList[0].value} </SearchText>
+            ) : realList.length > 1 && realList[0].id > 100 ? (
+              <SearchText>
+                {realList[0].value} 전체 외 {realList.length - 1}건
+              </SearchText>
+            ) : realList.length > 1 && realList[0].id < 100 ? (
+              <SearchText>
+                {realList[0].value} 외 {realList.length - 1}건
+              </SearchText>
+            ) : (
+              <SearchText>지역 찾기</SearchText>
+            )}
+            <Ionicons name="chevron-down" size={16} color="black" />
+          </SearchContainer>
+        </SearchTouch>
+      </TopView>
+
       {isInit ? (
         <FlatList
           onEndReachedThreshold={0.05}
