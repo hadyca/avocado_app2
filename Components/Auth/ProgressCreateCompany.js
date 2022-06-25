@@ -12,15 +12,27 @@ const Title = styled.Text`
   font-size: 18px;
 `;
 
+const ProgressContainer = styled.View`
+  flex-direction: row;
+`;
 const Progress = styled.Text`
   font-size: 18px;
+  color: ${colors.buttonBackground};
+`;
+
+const Nine = styled.Text`
+  font-size: 18px;
+  color: ${colors.borderThick};
 `;
 
 export default function ProgressCreateCompany({ title, step }) {
   return (
     <TitleView>
       <Title>{title}</Title>
-      <Progress>{step} / 9</Progress>
+      <ProgressContainer>
+        <Progress>{step}</Progress>
+        <Nine>/9</Nine>
+      </ProgressContainer>
     </TitleView>
   );
 }
