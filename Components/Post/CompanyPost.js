@@ -1,10 +1,10 @@
 import React from "react";
-import { useWindowDimensions, Text } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../Colors";
 import { timeForToday } from "../../Utils";
 import UserAvatar from "../UserAvatar";
+import BaseInfo from "./BaseInfo";
 
 const Container = styled.View``;
 
@@ -18,22 +18,11 @@ const Header = styled.TouchableOpacity`
 `;
 
 const CompanyName = styled.Text`
-  font-weight: bold;
-  font-size: 17px;
   margin-top: 5px;
 `;
 
 const Contents = styled.TouchableOpacity`
   margin-left: 10px;
-`;
-
-const ImgContainer = styled.TouchableOpacity`
-  margin-bottom: 8px;
-`;
-
-const MainImg = styled.Image`
-  width: ${(props) => props.width}px;
-  height: ${(props) => Math.ceil(props.height / 3)}px;
 `;
 
 const Content = styled.View`
@@ -88,12 +77,17 @@ function CompanyPost({
   id,
   company,
   title,
+  wage,
+  wageType,
+  workingDay,
+  dayOption,
+  startTime,
+  finishTime,
+  timeOption,
   totalCompanyPostLikes,
   totalCompanyPostComments,
   createdAt,
 }) {
-  const { width, height } = useWindowDimensions();
-
   const time = timeForToday(parseInt(createdAt));
 
   const navigation = useNavigation();
@@ -119,9 +113,9 @@ function CompanyPost({
             username={company.user.username}
             uri={company.user.avatarUrl}
           />
-          <CompanyName>{company.companyName}</CompanyName>
           <CompanyName>
-            {company.addressStep1} / {company.addressStep2}
+            {company.companyName} · {company.addressStep1} ·{" "}
+            {company.addressStep2}
           </CompanyName>
         </Header>
       </HeaderContainer>
@@ -137,6 +131,15 @@ function CompanyPost({
           </Content>
         )}
       </Contents>
+      <BaseInfo
+        wageType={wageType}
+        wage={wage}
+        workingDay={workingDay}
+        dayOption={dayOption}
+        startTime={startTime}
+        finishTime={finishTime}
+        timeOption={timeOption}
+      />
       <LikeComment>
         <Likes>
           {totalCompanyPostLikes > 1

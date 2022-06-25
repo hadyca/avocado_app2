@@ -127,6 +127,8 @@ const ListContainer = styled.View`
 
 const DistrictSet = styled.View`
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   margin: 10px;
 `;
 
@@ -138,7 +140,7 @@ const BottomContainer = styled.View``;
 const FinalContainer = styled.View`
   flex-direction: row;
   justify-content: space-around;
-  margin: 10px;
+  margin: 10px 10px 30px 10px;
 `;
 
 const CloseText = styled.Text``;
@@ -158,11 +160,13 @@ const SearchTouch = styled.TouchableOpacity`
   justify-content: center;
   margin: 10px;
   height: 35px;
+  width: 50%;
 `;
 
 const SearchContainer = styled.View`
   flex-direction: row;
   justify-content: space-around;
+  align-items: center;
 `;
 
 const SearchText = styled.Text`
