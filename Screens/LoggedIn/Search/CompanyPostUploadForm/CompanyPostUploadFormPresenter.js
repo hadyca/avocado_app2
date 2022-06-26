@@ -20,6 +20,7 @@ import { useNavigation } from "@react-navigation/native";
 import { ReactNativeFile } from "apollo-upload-client";
 import { time } from "../../../../Constant";
 import { typeOfWage } from "../../../../Constant";
+import FormError from "../../../../Components/Auth/FormError";
 
 const Container = styled.ScrollView`
   background-color: ${colors.backgraound};
@@ -165,13 +166,15 @@ const Wave = styled.Text`
 `;
 
 const CheckContainer = styled.View`
-  margin-top: 10px;
+  margin-top: 15px;
   margin-left: -5px;
   flex-direction: row;
   align-items: center;
 `;
 
-const CheckText = styled.Text``;
+const CheckText = styled.Text`
+  margin-left: 5px;
+`;
 
 const WageContainer = styled.View`
   flex-direction: row;
@@ -182,9 +185,15 @@ const WageInputContainer = styled.View`
   flex-direction: row;
   align-items: center;
   width: 50%;
-  border: 1px solid ${colors.borderThick};
   border-radius: 4px;
   padding: 10px;
+  border: 1px solid
+    ${(props) =>
+      props.hasError
+        ? colors.error
+        : props.focus
+        ? colors.focus
+        : colors.borderThick};
 `;
 
 const WageInput = styled.TextInput`
@@ -240,7 +249,7 @@ export default function CompanyPostUploadFormPresenter({
 
   const navigation = useNavigation();
 
-  const { control, handleSubmit, formState } = useForm({
+  const { control, handleSubmit, formState, setError, clearErrors } = useForm({
     mode: "onChange",
   });
 
@@ -276,12 +285,6 @@ export default function CompanyPostUploadFormPresenter({
     }
   };
 
-  const NoHeaderRight = () => (
-    <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
-      <HeaderRightText>Done</HeaderRightText>
-    </TouchableOpacity>
-  );
-
   const OkHeaderRight = () => (
     <TouchableOpacity
       disabled={false}
@@ -305,11 +308,7 @@ export default function CompanyPostUploadFormPresenter({
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: loading
-        ? HeaderRightLoading
-        : !formState.isValid
-        ? NoHeaderRight
-        : OkHeaderRight,
+      headerRight: loading ? HeaderRightLoading : OkHeaderRight,
     });
   }, [
     photo,
@@ -368,7 +367,7 @@ export default function CompanyPostUploadFormPresenter({
           <Controller
             name="title"
             rules={{
-              required: true,
+              required: "제목을 넣어주세요.",
             }}
             control={control}
             render={({ field: { onChange, value } }) => (
@@ -380,9 +379,11 @@ export default function CompanyPostUploadFormPresenter({
                 returnKeyType="next"
                 onChangeText={(text) => onChange(text)}
                 value={value}
+                hasError={Boolean(formState?.errors?.title)}
               />
             )}
           />
+          <FormError message={formState?.errors?.title?.message} />
           <Title>근무 요일</Title>
           <DayContainer>
             <Day selected={mon} onPress={() => setMon(!mon)}>
@@ -502,7 +503,7 @@ export default function CompanyPostUploadFormPresenter({
             <Controller
               name="wage"
               rules={{
-                required: true,
+                required: "임금정보를 넣어주세요.",
               }}
               control={control}
               render={({ field: { onChange, value } }) => (
@@ -515,7 +516,9 @@ export default function CompanyPostUploadFormPresenter({
                     setWageNum(value);
                   }}
                   renderText={(value) => (
-                    <WageInputContainer>
+                    <WageInputContainer
+                      hasError={Boolean(formState?.errors?.wage)}
+                    >
                       <WageInput
                         autoCapitalize="none"
                         returnKeyType="done"
@@ -531,11 +534,12 @@ export default function CompanyPostUploadFormPresenter({
               )}
             />
           </WageContainer>
+          <FormError message={formState?.errors?.wage?.message} />
           <Title>세부 내용</Title>
           <Controller
             name="content"
             rules={{
-              required: true,
+              required: "구인글 내용을 넣어주세요.",
             }}
             control={control}
             render={({ field: { onChange, value } }) => (
@@ -547,9 +551,11 @@ export default function CompanyPostUploadFormPresenter({
                 autoCapitalize="none"
                 onChangeText={(text) => onChange(text)}
                 value={value || ""}
+                hasError={Boolean(formState?.errors?.content)}
               />
             )}
           />
+          <FormError message={formState?.errors?.content?.message} />
         </InputBottom>
       </KeyboardAwareScrollView>
     </Container>

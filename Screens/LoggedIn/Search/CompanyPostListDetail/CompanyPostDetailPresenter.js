@@ -39,7 +39,6 @@ export default function CompanyPostDetailPresenter({
   const handleComment = () => {
     setCommentUploading(true);
   };
-
   return (
     <>
       <KeyboardAvoidingView
@@ -56,13 +55,18 @@ export default function CompanyPostDetailPresenter({
               ListHeaderComponent={
                 <CompanyPostContents
                   file={data?.seeCompanyPost?.file}
-                  data={data}
                   userId={data?.seeCompanyPost?.company?.user?.id}
                   username={data?.seeCompanyPost?.company?.user?.username}
                   avatarUrl={data?.seeCompanyPost?.company?.user?.avatarUrl}
                   title={data?.seeCompanyPost?.title}
                   content={data?.seeCompanyPost?.content}
                   wage={data?.seeCompanyPost?.wage}
+                  wageType={data?.seeCompanyPost?.wageType}
+                  workingDay={data?.seeCompanyPost?.workingDay}
+                  dayOption={data?.seeCompanyPost?.dayOption}
+                  startTime={data?.seeCompanyPost?.startTime}
+                  finishTime={data?.seeCompanyPost?.finishTime}
+                  timeOption={data?.seeCompanyPost?.timeOption}
                   likeLoading={likeLoading}
                   toggleLikeMutation={toggleCompanyPostLikeMutation}
                   isLiked={data?.seeCompanyPost?.isLiked}
@@ -94,14 +98,18 @@ export default function CompanyPostDetailPresenter({
               ListHeaderComponent={
                 <CompanyPostContents
                   file={data?.seeCompanyPost?.file}
-                  data={data}
                   userId={data?.seeCompanyPost?.company?.user?.id}
                   username={data?.seeCompanyPost?.company?.user?.username}
                   avatarUrl={data?.seeCompanyPost?.company?.user?.avatarUrl}
                   title={data?.seeCompanyPost?.title}
                   content={data?.seeCompanyPost?.content}
                   wage={data?.seeCompanyPost?.wage}
-                  category={data?.seeCompanyPost?.category}
+                  wageType={data?.seeCompanyPost?.wageType}
+                  workingDay={data?.seeCompanyPost?.workingDay}
+                  dayOption={data?.seeCompanyPost?.dayOption}
+                  startTime={data?.seeCompanyPost?.startTime}
+                  finishTime={data?.seeCompanyPost?.finishTime}
+                  timeOption={data?.seeCompanyPost?.timeOption}
                   likeLoading={likeLoading}
                   toggleLikeMutation={toggleCompanyPostLikeMutation}
                   isLiked={data?.seeCompanyPost?.isLiked}

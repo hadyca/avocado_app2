@@ -32,7 +32,6 @@ const Content = styled.View`
 `;
 
 const ContentText = styled.Text`
-  font-size: 14px;
   color: ${colors.black};
 `;
 
@@ -130,16 +129,16 @@ function CompanyPost({
             <ContentText>{title}</ContentText>
           </Content>
         )}
+        <BaseInfo
+          wageType={wageType}
+          wage={wage}
+          workingDay={workingDay}
+          dayOption={dayOption}
+          startTime={startTime}
+          finishTime={finishTime}
+          timeOption={timeOption}
+        />
       </Contents>
-      <BaseInfo
-        wageType={wageType}
-        wage={wage}
-        workingDay={workingDay}
-        dayOption={dayOption}
-        startTime={startTime}
-        finishTime={finishTime}
-        timeOption={timeOption}
-      />
       <LikeComment>
         <Likes>
           {totalCompanyPostLikes > 1

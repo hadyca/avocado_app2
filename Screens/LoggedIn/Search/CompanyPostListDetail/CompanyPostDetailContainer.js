@@ -1,16 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Platform, NativeModules, Alert, TouchableOpacity } from "react-native";
 import { useMutation, useQuery } from "@apollo/client";
-import CompanyPostDetailPresenter from "./CompanyPostDetailPresenter";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import ActionSheet from "@alessiocancian/react-native-actionsheet";
 import {
   POST_DETAIL_QUERY,
   DELETE_COMPANYPOST_MUTATION,
   TOGGLE_COMPANYPOST_LIKE_MUTATION,
   TOGGLE_COMPANYPOST_FAVORITE_MUTATION,
 } from "./CompanyPostDetailQueries";
-import ActionSheet from "@alessiocancian/react-native-actionsheet";
+import CompanyPostDetailPresenter from "./CompanyPostDetailPresenter";
 import CompanyPostComment from "../../../../Components/Post/CompanyPostComment";
 import ScreenLayout from "../../../../Components/ScreenLayout";
 import useMe from "../../../../Hooks/useMe";
