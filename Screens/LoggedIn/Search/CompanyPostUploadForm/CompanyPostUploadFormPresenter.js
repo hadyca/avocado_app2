@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   NativeModules,
   Platform,
-  KeyboardAvoidingView,
 } from "react-native";
 import styled from "styled-components/native";
 import Checkbox from "expo-checkbox";
@@ -249,11 +248,10 @@ export default function CompanyPostUploadFormPresenter({
 
   const navigation = useNavigation();
 
-  const { control, handleSubmit, formState, setError, clearErrors } = useForm({
-    mode: "onChange",
-  });
+  const { control, handleSubmit, formState, setError, clearErrors } = useForm();
 
-  const onValid = async ({ title, content }) => {
+  const onValid = async ({ title, content, wage }) => {
+    console.log(wageNum);
     const fileUrl = await photo.map((_, index) => {
       return new ReactNativeFile({
         uri: photo[index].uri,
@@ -288,7 +286,15 @@ export default function CompanyPostUploadFormPresenter({
   const OkHeaderRight = () => (
     <TouchableOpacity
       disabled={false}
-      onPress={handleSubmit(onValid)}
+      onPress={
+        formState?.errors?.title
+          ? ref.current?.scrollTo({ y: 0 })
+          : formState?.errors?.wage
+          ? ref.current?.scrollTo({ y: 500 })
+          : formState?.errors?.content
+          ? ref.current?.scrollToEnd()
+          : handleSubmit(onValid)
+      }
       style={{ marginRight: 10, opacity: 1 }}
     >
       <HeaderRightText>Done</HeaderRightText>
@@ -311,26 +317,26 @@ export default function CompanyPostUploadFormPresenter({
       headerRight: loading ? HeaderRightLoading : OkHeaderRight,
     });
   }, [
-    photo,
+    // photo,
     loading,
-    formState.isValid,
-    mon,
-    tue,
-    wed,
-    thu,
-    fri,
-    sat,
-    sun,
-    dayOption,
-    startTime,
-    finishTime,
-    timeOption,
-    wageType,
-    wageNum,
+    formState?.errors,
+    // mon,
+    // tue,
+    // wed,
+    // thu,
+    // fri,
+    // sat,
+    // sun,
+    // dayOption,
+    // startTime,
+    // finishTime,
+    // timeOption,
+    // wageType,
+    // wageNum,
   ]);
 
   return (
-    <Container>
+    <Container ref={ref}>
       <KeyboardAwareScrollView extraScrollHeight={50}>
         <ImageTop>
           <PictureContainer>
@@ -551,6 +557,9 @@ export default function CompanyPostUploadFormPresenter({
                 autoCapitalize="none"
                 onChangeText={(text) => onChange(text)}
                 value={value || ""}
+                placeholder={
+                  "예) 업무 예시, 사내 복지, 근무 여건, 지원자가 갖추어야 할 능력, 우대 사항 등"
+                }
                 hasError={Boolean(formState?.errors?.content)}
               />
             )}
