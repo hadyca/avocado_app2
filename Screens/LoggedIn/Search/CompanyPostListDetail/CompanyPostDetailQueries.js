@@ -31,6 +31,21 @@ export const POST_DETAIL_QUERY = gql`
       isMine
       isLiked
       isFavorite
+      workingDay {
+        id
+        monday
+        tuesday
+        wednesday
+        thursday
+        friday
+        saturday
+        sunday
+      }
+      dayOption
+      startTime
+      finishTime
+      timeOption
+      wageType
       wage
       companyPostComments {
         id

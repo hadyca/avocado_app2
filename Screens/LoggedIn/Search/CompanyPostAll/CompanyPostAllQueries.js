@@ -20,6 +20,13 @@ export const COMPANYPOST_QUERY = gql`
       content
       workingDay {
         id
+        monday
+        tuesday
+        wednesday
+        thursday
+        friday
+        saturday
+        sunday
       }
       dayOption
       startTime
@@ -78,6 +85,13 @@ export const COMPANYPOST_DISTRICT_QUERY = gql`
       content
       workingDay {
         id
+        monday
+        tuesday
+        wednesday
+        thursday
+        friday
+        saturday
+        sunday
       }
       dayOption
       startTime
