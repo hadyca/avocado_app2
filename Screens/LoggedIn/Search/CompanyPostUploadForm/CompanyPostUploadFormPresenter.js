@@ -249,7 +249,14 @@ export default function CompanyPostUploadFormPresenter({
   const [statusBarHeight, setStatusBarHeight] = useState(0);
   const { StatusBarManager } = NativeModules;
 
-  const { control, handleSubmit, formState, setError, clearErrors } = useForm();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setError,
+    clearErrors,
+  } = useForm();
+
   const onValid = async ({ title, content }) => {
     const fileUrl = await photo.map((_, index) => {
       return new ReactNativeFile({
@@ -289,6 +296,17 @@ export default function CompanyPostUploadFormPresenter({
         })
       : null;
   }, []);
+
+  useEffect(() => {
+    if (!mon && !tue && !wed && !thu && !fri && !sat && !sun) {
+      setError("day", { message: "최소 1개 이상 요일을 넣어주세요." });
+    }
+  }, [mon, tue, wed, thu, fri, sat, sun]);
+
+  // useEffect(()=>{
+  //   if(form)
+
+  // }, [])
 
   return (
     <>
@@ -348,68 +366,78 @@ export default function CompanyPostUploadFormPresenter({
                   returnKeyType="next"
                   onChangeText={(text) => onChange(text)}
                   value={value}
-                  hasError={Boolean(formState?.errors?.title)}
+                  hasError={Boolean(errors?.title)}
                 />
               )}
             />
-            <FormError message={formState?.errors?.title?.message} />
+            <FormError message={errors?.title?.message} />
             <Title>근무 요일</Title>
-            {/* <DayContainer>
-              <Day selected={mon} onPress={() => setMon(!mon)}>
+            <DayContainer>
+              <Day
+                selected={mon}
+                onPress={() => {
+                  setMon(!mon);
+                  clearErrors("day");
+                }}
+              >
                 <DayText selected={mon}>월</DayText>
               </Day>
-              <Day selected={tue} onPress={() => setTue(!tue)}>
+              <Day
+                selected={tue}
+                onPress={() => {
+                  setTue(!tue);
+                  clearErrors("day");
+                }}
+              >
                 <DayText selected={tue}>화</DayText>
               </Day>
-              <Day selected={wed} onPress={() => setWed(!wed)}>
+              <Day
+                selected={wed}
+                onPress={() => {
+                  setWed(!wed);
+                  clearErrors("day");
+                }}
+              >
                 <DayText selected={wed}>수</DayText>
               </Day>
-              <Day selected={thu} onPress={() => setThu(!thu)}>
+              <Day
+                selected={thu}
+                onPress={() => {
+                  setThu(!thu);
+                  clearErrors("day");
+                }}
+              >
                 <DayText selected={thu}>목</DayText>
               </Day>
-              <Day selected={fri} onPress={() => setFri(!fri)}>
+              <Day
+                selected={fri}
+                onPress={() => {
+                  setFri(!fri);
+                  clearErrors("day");
+                }}
+              >
                 <DayText selected={fri}>금</DayText>
               </Day>
-              <Day selected={sat} onPress={() => setSat(!sat)}>
+              <Day
+                selected={sat}
+                onPress={() => {
+                  setSat(!sat);
+                  clearErrors("day");
+                }}
+              >
                 <DayText selected={sat}>토</DayText>
               </Day>
-              <Day selected={sun} onPress={() => setSun(!sun)}>
+              <Day
+                selected={sun}
+                onPress={() => {
+                  setSun(!sun);
+                  clearErrors("day");
+                }}
+              >
                 <DayText selected={sun}>일</DayText>
               </Day>
-            </DayContainer> */}
-            <Controller
-              name="day"
-              rules={{
-                required: "잉",
-              }}
-              control={control}
-              render={() => (
-                <DayContainer>
-                  <Day selected={mon} onPress={() => setMon(!mon)}>
-                    <DayText selected={mon}>월</DayText>
-                  </Day>
-                  <Day selected={tue} onPress={() => setTue(!tue)}>
-                    <DayText selected={tue}>화</DayText>
-                  </Day>
-                  <Day selected={wed} onPress={() => setWed(!wed)}>
-                    <DayText selected={wed}>수</DayText>
-                  </Day>
-                  <Day selected={thu} onPress={() => setThu(!thu)}>
-                    <DayText selected={thu}>목</DayText>
-                  </Day>
-                  <Day selected={fri} onPress={() => setFri(!fri)}>
-                    <DayText selected={fri}>금</DayText>
-                  </Day>
-                  <Day selected={sat} onPress={() => setSat(!sat)}>
-                    <DayText selected={sat}>토</DayText>
-                  </Day>
-                  <Day selected={sun} onPress={() => setSun(!sun)}>
-                    <DayText selected={sun}>일</DayText>
-                  </Day>
-                </DayContainer>
-              )}
-            />
-            <FormError message={formState?.errors?.day?.message} />
+            </DayContainer>
+            <FormError message={errors?.day?.message} />
 
             <CheckContainer>
               <Checkbox
@@ -521,9 +549,7 @@ export default function CompanyPostUploadFormPresenter({
                       setWageNum(value);
                     }}
                     renderText={(value) => (
-                      <WageInputContainer
-                        hasError={Boolean(formState?.errors?.wage)}
-                      >
+                      <WageInputContainer hasError={Boolean(errors?.wage)}>
                         <WageInput
                           autoCapitalize="none"
                           returnKeyType="done"
@@ -539,7 +565,7 @@ export default function CompanyPostUploadFormPresenter({
                 )}
               />
             </WageContainer>
-            <FormError message={formState?.errors?.wage?.message} />
+            <FormError message={errors?.wage?.message} />
             <Title>세부 내용</Title>
             <Controller
               name="content"
@@ -559,11 +585,11 @@ export default function CompanyPostUploadFormPresenter({
                   placeholder={
                     "예) 업무 예시, 사내 복지, 근무 여건, 지원자가 갖추어야 할 능력, 우대 사항 등"
                   }
-                  hasError={Boolean(formState?.errors?.content)}
+                  hasError={Boolean(errors?.content)}
                 />
               )}
             />
-            <FormError message={formState?.errors?.content?.message} />
+            <FormError message={errors?.content?.message} />
           </InputBottom>
         </KeyboardAwareScrollView>
       </Container>

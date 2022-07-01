@@ -35,12 +35,6 @@ const ContentText = styled.Text`
   color: ${colors.black};
 `;
 
-const MoreText = styled.Text`
-  margin-left: 5px;
-  font-size: 12px;
-  color: ${colors.greyText};
-`;
-
 const LikeComment = styled.View`
   margin-left: 10px;
   flex-direction: row;
@@ -119,7 +113,7 @@ function CompanyPost({
         </Header>
       </HeaderContainer>
       <Contents onPress={goToPostDetail}>
-        {title.length >= 50 ? (
+        {/* {title.length >= 50 ? (
           <Content>
             <ContentText>{title.substring(0, 50)}</ContentText>
             <MoreText>...more</MoreText>
@@ -128,7 +122,11 @@ function CompanyPost({
           <Content>
             <ContentText>{title}</ContentText>
           </Content>
-        )}
+        )} */}
+
+        <Content>
+          <ContentText>{title}</ContentText>
+        </Content>
         <BaseInfo
           wageType={wageType}
           wage={wage}
