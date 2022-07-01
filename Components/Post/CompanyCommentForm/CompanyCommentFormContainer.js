@@ -37,7 +37,7 @@ export default function ({
       const newCacheComment = cache.writeFragment({
         data: newComment,
         fragment: gql`
-          fragment BSName on CompanyPostComment {
+          fragment BSName3 on CompanyPostComment {
             id
             createdAt
             isMine
@@ -86,7 +86,7 @@ export default function ({
       const newCacheComment = cache.writeFragment({
         data: newComment,
         fragment: gql`
-          fragment BSName2 on CompanyPostReComment {
+          fragment BSName4 on CompanyPostReComment {
             id
             createdAt
             isMine

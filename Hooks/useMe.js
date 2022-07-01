@@ -12,6 +12,7 @@ const ME_QUERY = gql`
         id
         companyName
         email
+        contactNumber
         addressStep1
         addressStep2
       }

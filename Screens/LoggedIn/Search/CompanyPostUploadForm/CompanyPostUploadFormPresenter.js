@@ -231,6 +231,7 @@ export default function CompanyPostUploadFormPresenter({
   photo,
   loading,
   uploadCompanyPostMutation,
+  userData,
 }) {
   let ref = useRef();
   const [mon, setMon] = useState(true);
@@ -248,14 +249,19 @@ export default function CompanyPostUploadFormPresenter({
   const [wageNum, setWageNum] = useState();
   const [statusBarHeight, setStatusBarHeight] = useState(0);
   const { StatusBarManager } = NativeModules;
-
+  console.log(userData);
   const {
     control,
     handleSubmit,
     formState: { errors },
     setError,
     clearErrors,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      contactNumber: userData?.me?.myCompany?.contactNumber,
+      email: userData?.me?.myCompany?.email,
+    },
+  });
 
   const onValid = async ({ title, content }) => {
     const fileUrl = await photo.map((_, index) => {
@@ -371,6 +377,46 @@ export default function CompanyPostUploadFormPresenter({
               )}
             />
             <FormError message={errors?.title?.message} />
+            <Title>연락처</Title>
+            <Controller
+              name="contactNumber"
+              rules={{
+                required: "연락처를 넣어주세요.",
+              }}
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <TitleInput
+                  placeholder={"0103323232"}
+                  autoCapitalize="none"
+                  returnKeyType="done"
+                  onChangeText={onChange}
+                  value={value}
+                  keyboardType="number-pad"
+                  maxLength={17}
+                />
+              )}
+            />
+            {/* <FormError message={errors?.title?.message} /> */}
+            <Title>이메일</Title>
+            <Controller
+              name="email"
+              rules={{
+                required: "이메일을 넣어주세요.",
+              }}
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <TitleInput
+                  placeholder="abc@gamil.com"
+                  autoCapitalize="none"
+                  maxLength={100}
+                  multiline={false}
+                  returnKeyType="next"
+                  onChangeText={(text) => onChange(text)}
+                  value={value}
+                  hasError={Boolean(errors?.email)}
+                />
+              )}
+            />
             <Title>근무 요일</Title>
             <DayContainer>
               <Day

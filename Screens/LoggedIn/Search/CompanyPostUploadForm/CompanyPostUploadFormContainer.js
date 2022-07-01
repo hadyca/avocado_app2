@@ -106,6 +106,7 @@ export default function ({ route: { params } }) {
       photo={photo}
       loading={loading}
       uploadCompanyPostMutation={uploadCompanyPostMutation}
+      userData={userData}
     />
   );
 }
