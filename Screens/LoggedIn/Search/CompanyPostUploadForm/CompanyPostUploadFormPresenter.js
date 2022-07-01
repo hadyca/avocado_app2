@@ -1,12 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import {
-  ActivityIndicator,
-  Image,
-  TouchableOpacity,
-  NativeModules,
-  Platform,
-  Text,
-} from "react-native";
+import { Image, NativeModules, Platform } from "react-native";
 import styled from "styled-components/native";
 import Checkbox from "expo-checkbox";
 import { Ionicons } from "@expo/vector-icons";
@@ -256,10 +249,7 @@ export default function CompanyPostUploadFormPresenter({
   const [statusBarHeight, setStatusBarHeight] = useState(0);
   const { StatusBarManager } = NativeModules;
 
-  const { control, handleSubmit, formState, setError, clearErrors } = useForm({
-    mode: "onChange",
-  });
-
+  const { control, handleSubmit, formState, setError, clearErrors } = useForm();
   const onValid = async ({ title, content }) => {
     const fileUrl = await photo.map((_, index) => {
       return new ReactNativeFile({
@@ -291,26 +281,6 @@ export default function CompanyPostUploadFormPresenter({
       });
     }
   };
-  const OkHeaderRight = () => (
-    <TouchableOpacity
-      disabled={false}
-      onPress={
-        formState?.errors?.title
-          ? ref.current?.scrollTo({ y: 0 })
-          : formState?.errors?.wage
-          ? ref.current?.scrollTo({ y: 500 })
-          : formState?.errors?.content
-          ? ref.current?.scrollToEnd()
-          : handleSubmit(onValid)
-      }
-      style={{ marginRight: 10, opacity: 1 }}
-    >
-      <HeaderRightText>Done</HeaderRightText>
-    </TouchableOpacity>
-  );
-  const HeaderRightLoading = () => (
-    <ActivityIndicator size="small" color="black" style={{ marginRight: 10 }} />
-  );
 
   useEffect(() => {
     Platform.OS == "ios"
@@ -319,33 +289,6 @@ export default function CompanyPostUploadFormPresenter({
         })
       : null;
   }, []);
-
-  // useEffect(
-  //   () => {
-  //     navigation.setOptions({
-  //       headerRight: loading ? HeaderRightLoading : OkHeaderRight,
-  //     });
-  //   },
-  //   [
-  //     photo,
-  //     loading,
-  //     formState,
-  //     wageNum,
-  //     mon,
-  //     tue,
-  //     wed,
-  //     thu,
-  //     fri,
-  //     sat,
-  //     sun,
-  //     dayOption,
-  //     startTime,
-  //     finishTime,
-  //     timeOption,
-  //     wageType,
-  //     wageNum,
-  //   ]
-  // );
 
   return (
     <>
@@ -411,7 +354,7 @@ export default function CompanyPostUploadFormPresenter({
             />
             <FormError message={formState?.errors?.title?.message} />
             <Title>근무 요일</Title>
-            <DayContainer>
+            {/* <DayContainer>
               <Day selected={mon} onPress={() => setMon(!mon)}>
                 <DayText selected={mon}>월</DayText>
               </Day>
@@ -433,7 +376,41 @@ export default function CompanyPostUploadFormPresenter({
               <Day selected={sun} onPress={() => setSun(!sun)}>
                 <DayText selected={sun}>일</DayText>
               </Day>
-            </DayContainer>
+            </DayContainer> */}
+            <Controller
+              name="day"
+              rules={{
+                required: "잉",
+              }}
+              control={control}
+              render={() => (
+                <DayContainer>
+                  <Day selected={mon} onPress={() => setMon(!mon)}>
+                    <DayText selected={mon}>월</DayText>
+                  </Day>
+                  <Day selected={tue} onPress={() => setTue(!tue)}>
+                    <DayText selected={tue}>화</DayText>
+                  </Day>
+                  <Day selected={wed} onPress={() => setWed(!wed)}>
+                    <DayText selected={wed}>수</DayText>
+                  </Day>
+                  <Day selected={thu} onPress={() => setThu(!thu)}>
+                    <DayText selected={thu}>목</DayText>
+                  </Day>
+                  <Day selected={fri} onPress={() => setFri(!fri)}>
+                    <DayText selected={fri}>금</DayText>
+                  </Day>
+                  <Day selected={sat} onPress={() => setSat(!sat)}>
+                    <DayText selected={sat}>토</DayText>
+                  </Day>
+                  <Day selected={sun} onPress={() => setSun(!sun)}>
+                    <DayText selected={sun}>일</DayText>
+                  </Day>
+                </DayContainer>
+              )}
+            />
+            <FormError message={formState?.errors?.day?.message} />
+
             <CheckContainer>
               <Checkbox
                 value={dayOption}
@@ -593,15 +570,7 @@ export default function CompanyPostUploadFormPresenter({
       <SubmitContainer>
         <AuthButton
           text={"작성 완료"}
-          onPress={() => {
-            formState?.errors?.title
-              ? ref.current?.scrollTo({ y: 0 })
-              : formState?.errors?.wage
-              ? ref.current?.scrollTo({ y: 500 })
-              : formState?.errors?.content
-              ? ref.current?.scrollToEnd()
-              : handleSubmit(onValid);
-          }}
+          onPress={handleSubmit(onValid)}
           loading={loading}
         />
       </SubmitContainer>
