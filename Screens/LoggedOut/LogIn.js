@@ -64,10 +64,7 @@ export default function Login() {
       <Controller
         name="email"
         rules={{
-          pattern: {
-            value: emailRule,
-            message: "이메일 주소가 올바르지 않습니다.",
-          },
+          required: true,
         }}
         control={control}
         render={({ field: { onChange, value } }) => (

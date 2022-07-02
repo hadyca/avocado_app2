@@ -132,7 +132,15 @@ export default function BaseInfo({
           style={{ width: 25 }}
         />
         <BaseText>{contactNumber}</BaseText>
-        {timeOption ? <BaseText>협의</BaseText> : null}
+      </DataContainer>
+      <DataContainer>
+        <MaterialIcons
+          name="email"
+          size={18}
+          color={colors.greyText}
+          style={{ width: 25 }}
+        />
+        <BaseText>{email}</BaseText>
       </DataContainer>
     </BaseDataContainer>
   );

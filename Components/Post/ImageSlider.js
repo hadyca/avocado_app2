@@ -48,20 +48,22 @@ export default function ImageSlider({ file }) {
         showsHorizontalScrollIndicator={false}
         style={{ width, height }}
       >
-        {file.map((item, index) => (
-          <Img
-            key={index}
-            source={{ uri: item.fileUrl }}
-            style={{ width, height, resizeMode: "cover" }}
-          />
-        ))}
+        {file &&
+          file.map((item, index) => (
+            <Img
+              key={index}
+              source={{ uri: item.fileUrl }}
+              style={{ width, height, resizeMode: "cover" }}
+            />
+          ))}
       </ScrollView>
       <DotView>
-        {file.map((item, index) => (
-          <Dot active={index === active} key={index} size={width}>
-            ⬤
-          </Dot>
-        ))}
+        {file &&
+          file.map((item, index) => (
+            <Dot active={index === active} key={index} size={width}>
+              ⬤
+            </Dot>
+          ))}
       </DotView>
     </Container>
   );

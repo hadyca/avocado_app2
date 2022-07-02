@@ -73,7 +73,7 @@ export default function UserPostReCommentReportForm({ route: { params } }) {
     <ScreenLayout>
       <Container>
         <TitleView>
-          <TitleText>댓글을 신고하는 이유를 선택해주세요!.</TitleText>
+          <TitleText>댓글을 신고하는 이유를 선택해주세요.</TitleText>
         </TitleView>
         {userPostCommentReportAry.map((item, index) => (
           <ReportView key={index} onPress={() => handleReport(item)}>
