@@ -47,6 +47,8 @@ export const POST_DETAIL_QUERY = gql`
       timeOption
       wageType
       wage
+      contactNumber
+      email
       companyPostComments {
         id
         user {

@@ -67,6 +67,8 @@ export default function CompanyPostDetailPresenter({
                   startTime={data?.seeCompanyPost?.startTime}
                   finishTime={data?.seeCompanyPost?.finishTime}
                   timeOption={data?.seeCompanyPost?.timeOption}
+                  contactNumber={data?.seeCompanyPost?.contactNumber}
+                  email={data?.seeCompanyPost?.email}
                   likeLoading={likeLoading}
                   toggleLikeMutation={toggleCompanyPostLikeMutation}
                   isLiked={data?.seeCompanyPost?.isLiked}
@@ -110,6 +112,8 @@ export default function CompanyPostDetailPresenter({
                   startTime={data?.seeCompanyPost?.startTime}
                   finishTime={data?.seeCompanyPost?.finishTime}
                   timeOption={data?.seeCompanyPost?.timeOption}
+                  contactNumber={data?.seeCompanyPost?.contactNumber}
+                  email={data?.seeCompanyPost?.email}
                   likeLoading={likeLoading}
                   toggleLikeMutation={toggleCompanyPostLikeMutation}
                   isLiked={data?.seeCompanyPost?.isLiked}

@@ -77,6 +77,8 @@ function CompanyPost({
   startTime,
   finishTime,
   timeOption,
+  contactNumber,
+  email,
   totalCompanyPostLikes,
   totalCompanyPostComments,
   createdAt,
@@ -135,6 +137,8 @@ function CompanyPost({
           startTime={startTime}
           finishTime={finishTime}
           timeOption={timeOption}
+          contactNumber={contactNumber}
+          email={email}
         />
       </Contents>
       <LikeComment>

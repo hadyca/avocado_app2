@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components/native";
-import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome, MaterialIcons, Entypo } from "@expo/vector-icons";
 import { time } from "../../Constant";
 import { colors } from "../../Colors";
 
@@ -28,6 +28,8 @@ export default function BaseInfo({
   startTime,
   finishTime,
   timeOption,
+  contactNumber,
+  email,
 }) {
   const [commaWage, setCommaWage] = useState();
   const [dayArray, setDayArray] = useState([]);
@@ -120,6 +122,16 @@ export default function BaseInfo({
         <BaseText>
           {start}~{finish}
         </BaseText>
+        {timeOption ? <BaseText>협의</BaseText> : null}
+      </DataContainer>
+      <DataContainer>
+        <Entypo
+          name="mobile"
+          size={18}
+          color={colors.greyText}
+          style={{ width: 25 }}
+        />
+        <BaseText>{contactNumber}</BaseText>
         {timeOption ? <BaseText>협의</BaseText> : null}
       </DataContainer>
     </BaseDataContainer>

@@ -17,6 +17,8 @@ export const UPLOAD_COMPANY_POST_MUTATION = gql`
     $timeOption: Boolean!
     $wageType: String!
     $wage: String!
+    $contactNumber: String!
+    $email: String!
     $content: String!
   ) {
     uploadCompanyPost(
@@ -35,6 +37,8 @@ export const UPLOAD_COMPANY_POST_MUTATION = gql`
       timeOption: $timeOption
       wageType: $wageType
       wage: $wage
+      contactNumber: $contactNumber
+      email: $email
       content: $content
     ) {
       id
@@ -67,6 +71,8 @@ export const UPLOAD_COMPANY_POST_MUTATION = gql`
       timeOption
       wageType
       wage
+      contactNumber
+      email
       content
       totalCompanyPostLikes
       createdAt

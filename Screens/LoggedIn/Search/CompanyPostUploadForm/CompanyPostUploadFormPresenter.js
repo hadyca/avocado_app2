@@ -14,7 +14,7 @@ import { time } from "../../../../Constant";
 import { typeOfWage } from "../../../../Constant";
 import FormError from "../../../../Components/Auth/FormError";
 import AuthButton from "../../../../Components/Auth/AuthButton";
-
+import { emailRule } from "../../../../RegExp";
 const Container = styled.ScrollView`
   background-color: ${colors.backgraound};
 `;
@@ -249,7 +249,7 @@ export default function CompanyPostUploadFormPresenter({
   const [wageNum, setWageNum] = useState();
   const [statusBarHeight, setStatusBarHeight] = useState(0);
   const { StatusBarManager } = NativeModules;
-  console.log(userData);
+
   const {
     control,
     handleSubmit,
@@ -263,7 +263,7 @@ export default function CompanyPostUploadFormPresenter({
     },
   });
 
-  const onValid = async ({ title, content }) => {
+  const onValid = async ({ title, contactNumber, email, content }) => {
     const fileUrl = await photo.map((_, index) => {
       return new ReactNativeFile({
         uri: photo[index].uri,
@@ -289,6 +289,8 @@ export default function CompanyPostUploadFormPresenter({
           timeOption,
           wageType,
           wage: wageNum,
+          contactNumber,
+          email,
           content,
         },
       });
@@ -308,11 +310,6 @@ export default function CompanyPostUploadFormPresenter({
       setError("day", { message: "최소 1개 이상 요일을 넣어주세요." });
     }
   }, [mon, tue, wed, thu, fri, sat, sun]);
-
-  // useEffect(()=>{
-  //   if(form)
-
-  // }, [])
 
   return (
     <>
@@ -381,12 +378,12 @@ export default function CompanyPostUploadFormPresenter({
             <Controller
               name="contactNumber"
               rules={{
-                required: "연락처를 넣어주세요.",
+                required: "연락처를 입력해 주세요.",
               }}
               control={control}
               render={({ field: { onChange, value } }) => (
                 <TitleInput
-                  placeholder={"0103323232"}
+                  placeholder={"0941112222"}
                   autoCapitalize="none"
                   returnKeyType="done"
                   onChangeText={onChange}
@@ -396,12 +393,16 @@ export default function CompanyPostUploadFormPresenter({
                 />
               )}
             />
-            {/* <FormError message={errors?.title?.message} /> */}
+            <FormError message={errors?.contactNumber?.message} />
             <Title>이메일</Title>
             <Controller
               name="email"
               rules={{
-                required: "이메일을 넣어주세요.",
+                required: "이메일 주소를 입력해 주세요.",
+                pattern: {
+                  value: emailRule,
+                  message: "이메일 주소가 올바르지 않습니다.",
+                },
               }}
               control={control}
               render={({ field: { onChange, value } }) => (
@@ -417,6 +418,7 @@ export default function CompanyPostUploadFormPresenter({
                 />
               )}
             />
+            <FormError message={errors?.email?.message} />
             <Title>근무 요일</Title>
             <DayContainer>
               <Day

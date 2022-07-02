@@ -34,6 +34,8 @@ export const COMPANYPOST_QUERY = gql`
       timeOption
       wageType
       wage
+      contactNumber
+      email
       createdAt
       totalCompanyPostLikes
       totalCompanyPostComments
@@ -99,6 +101,8 @@ export const COMPANYPOST_DISTRICT_QUERY = gql`
       timeOption
       wageType
       wage
+      contactNumber
+      email
       createdAt
       totalCompanyPostLikes
       totalCompanyPostComments

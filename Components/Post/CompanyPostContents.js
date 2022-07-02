@@ -46,6 +46,8 @@ export default function CompanyPostContents({
   startTime,
   finishTime,
   timeOption,
+  contactNumber,
+  email,
   toggleLikeMutation,
   likeLoading,
   isLiked,
@@ -76,6 +78,8 @@ export default function CompanyPostContents({
           startTime={startTime}
           finishTime={finishTime}
           timeOption={timeOption}
+          contactNumber={contactNumber}
+          email={email}
         />
         <Content>{content}</Content>
         <Actions>

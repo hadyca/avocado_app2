@@ -88,7 +88,10 @@ export default function CreateAccount({ navigation }) {
         name="email"
         rules={{
           required: "이메일은 필수 항목 입니다.",
-          pattern: emailRule,
+          pattern: {
+            value: emailRule,
+            message: "이메일 주소가 올바르지 않습니다.",
+          },
         }}
         control={control}
         render={({ field: { onChange, value } }) => (
