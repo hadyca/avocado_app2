@@ -68,9 +68,12 @@ export default function ConfirmSecret({ route: { params } }) {
     REQUEST_SECRET_MUTATION
   );
 
-  const [confirmSecretMutation] = useMutation(CONFIRM_SECRET, {
-    onCompleted,
-  });
+  const [confirmSecretMutation, { loading: confirmLoading }] = useMutation(
+    CONFIRM_SECRET,
+    {
+      onCompleted,
+    }
+  );
 
   const onValid = (data) => {
     if (!loading) {
@@ -208,7 +211,7 @@ export default function ConfirmSecret({ route: { params } }) {
         text="인증번호 확인"
         disabled={finish}
         onPress={handleSubmit(onValid)}
-        loading={false}
+        loading={confirmLoading}
       />
       <AuthButton
         text="인증메일 다시 받기"
