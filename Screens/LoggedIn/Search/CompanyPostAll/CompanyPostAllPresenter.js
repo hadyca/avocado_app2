@@ -532,7 +532,7 @@ export default function CompanyPostAllPresenter({
           style={{ width: "100%" }}
           showsVerticalScrollIndicator={false}
           data={data}
-          keyExtractor={(item) => "" + item.id}
+          keyExtractor={(item, index) => "" + (item.id + index)}
           renderItem={renderPost}
         />
       ) : isAllPost ? (
@@ -544,7 +544,7 @@ export default function CompanyPostAllPresenter({
           style={{ width: "100%" }}
           showsVerticalScrollIndicator={false}
           data={AllData}
-          keyExtractor={(item) => "" + item.id}
+          keyExtractor={(item, index) => "" + (item.id + index)}
           renderItem={renderPost}
         />
       ) : FData?.length !== 0 ? (
@@ -556,7 +556,7 @@ export default function CompanyPostAllPresenter({
           style={{ width: "100%" }}
           showsVerticalScrollIndicator={false}
           data={FData}
-          keyExtractor={(item) => "" + item.id}
+          keyExtractor={(item, index) => "" + (item.id + index)}
           renderItem={renderPost}
         />
       ) : (
