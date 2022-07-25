@@ -11,7 +11,6 @@ export const COMPANYPOST_QUERY = gql`
         addressStep1
         addressStep2
         addressStep3
-        sector
         user {
           id
           username

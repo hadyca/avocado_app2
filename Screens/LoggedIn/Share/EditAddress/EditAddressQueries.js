@@ -14,7 +14,6 @@ export const EDIT_COMPANY_MUTATION = gql`
       id
       companyName
       aboutUs
-      sector
       totalEmployees
       email
       contactNumber

@@ -31,7 +31,7 @@ export default function ProgressCreateCompany({ title, step }) {
       <Title>{title}</Title>
       <ProgressContainer>
         <Progress>{step}</Progress>
-        <Nine>/9</Nine>
+        <Nine>/8</Nine>
       </ProgressContainer>
     </TitleView>
   );

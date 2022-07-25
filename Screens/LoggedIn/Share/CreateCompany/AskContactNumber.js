@@ -22,7 +22,6 @@ export default function AskContactNumber({ route: { params } }) {
     navigation.navigate("AskAddress_1", {
       companyName: params.companyName,
       aboutUs: params.aboutUs,
-      sector: params.sector,
       totalEmployees: params.totalEmployees,
       email: params.email,
       contactNumber,
@@ -31,7 +30,7 @@ export default function AskContactNumber({ route: { params } }) {
 
   return (
     <CreatCompanyLayout>
-      <ProgressCreateCompany title={"연락처를 알려주세요"} step={"6"} />
+      <ProgressCreateCompany title={"연락처를 알려주세요"} step={"5"} />
 
       <Controller
         name="contactNumber"

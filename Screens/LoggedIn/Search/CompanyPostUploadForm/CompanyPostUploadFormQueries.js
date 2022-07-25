@@ -46,7 +46,6 @@ export const UPLOAD_COMPANY_POST_MUTATION = gql`
         id
         companyName
         aboutUs
-        sector
         totalEmployees
         email
         contactNumber

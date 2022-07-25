@@ -280,24 +280,6 @@ export default function EditProfilePresenter({
                 <Ionicons name="chevron-forward" color="black" size={17} />
               </ButtonTextView>
             </Button>
-            <ModalSelector
-              data={sectors}
-              keyExtractor={(item) => item.id}
-              labelExtractor={(item) => item.value}
-              accessible={true}
-              onChange={(item) => {
-                setSelectedSector(item.value);
-              }}
-              optionContainerStyle={{ height: 500 }}
-            >
-              <Button>
-                <ButtonName>Sector</ButtonName>
-                <ButtonTextView>
-                  <ButtonText>{selectedSector}</ButtonText>
-                  <Ionicons name="chevron-forward" color="black" size={17} />
-                </ButtonTextView>
-              </Button>
-            </ModalSelector>
             <Button onPress={goToEditTotalEmployees}>
               <ButtonName>Total Employees</ButtonName>
               <ButtonTextView>

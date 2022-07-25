@@ -67,7 +67,7 @@ export default function UserPostReportForm({ route: { params } }) {
     <ScreenLayout>
       <Container>
         <TitleView>
-          <TitleText>게시글을 신고하는 이유를 선택해주세요.</TitleText>
+          <TitleText>게시글을 신고하는 이유를 선택해 주세요.</TitleText>
         </TitleView>
         {userPostReportAry.map((item, index) => (
           <ReportView key={index} onPress={() => handleReport(item)}>
