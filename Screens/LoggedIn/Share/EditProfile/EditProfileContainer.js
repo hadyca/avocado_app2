@@ -13,24 +13,10 @@ export default function ({ route: { params } }) {
   const navigation = useNavigation();
   const [isEdited, setIsEdited] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState("");
-  const [skipPop, setSkipPop] = useState(false);
 
   const [editAvatarMutation, { loading }] = useMutation(EDIT_AVATAR_MUTATION, {
-    onCompleted: () => {
-      if (!skipPop) {
-        navigation.pop();
-      } else {
-        return;
-      }
-    },
+    onCompleted: () => navigation.pop(),
   });
-
-  const [editSectorMutation, { loading: companyLoading }] = useMutation(
-    EDIT_COMPANY_MUTATION,
-    {
-      onCompleted: () => navigation.pop(),
-    }
-  );
 
   const goToSelectAvatar = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -129,15 +115,10 @@ export default function ({ route: { params } }) {
     }
   }, []);
 
-  const skiphandle = () => {
-    setSkipPop(true);
-  };
-
   return (
     <ScreenLayout>
       <EditProfilePresenter
         editAvatarMutation={editAvatarMutation}
-        editSectorMutation={editSectorMutation}
         goToSelectAvatar={goToSelectAvatar}
         goToEditUsername={goToEditUsername}
         goToEditBio={goToEditBio}
@@ -153,8 +134,6 @@ export default function ({ route: { params } }) {
         bio={params.bio}
         myCompany={params.myCompany}
         loading={loading}
-        companyLoading={companyLoading}
-        skiphandle={skiphandle}
       />
     </ScreenLayout>
   );

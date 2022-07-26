@@ -87,7 +87,7 @@ export default function AskAddress_3({ route: { params } }) {
   return (
     <CreatCompanyLayout>
       <ProgressCreateCompany
-        title={"마지막 세부주소를 입력해 주세요."}
+        title={"마지막 세부 주소를 입력해 주세요."}
         step={"8"}
       />
       <Controller

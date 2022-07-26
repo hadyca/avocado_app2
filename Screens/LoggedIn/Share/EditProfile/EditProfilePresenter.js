@@ -4,9 +4,7 @@ import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { ReactNativeFile } from "apollo-upload-client";
-import ModalSelector from "react-native-modal-selector";
 import { colors } from "../../../../Colors";
-import { sectors } from "../../../../Constant";
 
 const HeaderRightText = styled.Text`
   color: ${colors.black};
@@ -93,7 +91,6 @@ const Separator = styled.View`
 
 export default function EditProfilePresenter({
   editAvatarMutation,
-  editSectorMutation,
   goToSelectAvatar,
   goToEditUsername,
   goToEditBio,
@@ -109,60 +106,25 @@ export default function EditProfilePresenter({
   bio,
   myCompany,
   loading,
-  companyLoading,
-  skiphandle,
 }) {
-  const [selectedSector, setSelectedSector] = useState(myCompany?.sector);
   const address = `${myCompany?.addressStep3}, ${myCompany?.addressStep2}, ${myCompany?.addressStep1}`;
 
   const navigation = useNavigation();
-
   const goToEditAvatar = async () => {
-    if (!isEdited && selectedSector === myCompany?.sector) {
+    if (!isEdited) {
       navigation.pop();
     }
-    if (isEdited && selectedSector === myCompany?.sector) {
+    if (isEdited) {
       const newAvatar = new ReactNativeFile({
         uri: avatarUrl,
         name: `1.jpg`,
         type: "image/jpeg",
       });
-      if (!companyLoading) {
-        editAvatarMutation({
-          variables: {
-            avatarUrl: newAvatar,
-          },
-        });
-      }
-    }
-    if (!isEdited && selectedSector !== myCompany?.sector) {
-      if (!loading) {
-        editSectorMutation({
-          variables: {
-            sector: selectedSector,
-          },
-        });
-      }
-    }
-    if (isEdited && selectedSector !== myCompany?.sector) {
-      await skiphandle();
-      const newAvatar = new ReactNativeFile({
-        uri: avatarUrl,
-        name: `1.jpg`,
-        type: "image/jpeg",
+      editAvatarMutation({
+        variables: {
+          avatarUrl: newAvatar,
+        },
       });
-      if (!loading && !companyLoading) {
-        await editAvatarMutation({
-          variables: {
-            avatarUrl: newAvatar,
-          },
-        });
-        await editSectorMutation({
-          variables: {
-            sector: selectedSector,
-          },
-        });
-      }
     }
   };
 
@@ -181,10 +143,9 @@ export default function EditProfilePresenter({
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight:
-        loading || companyLoading ? HeaderRightLoading : OkHeaderRight,
+      headerRight: loading ? HeaderRightLoading : OkHeaderRight,
     });
-  }, [loading, companyLoading, avatarUrl, isEdited, selectedSector]);
+  }, [loading, avatarUrl, isEdited]);
 
   return (
     <Container>
