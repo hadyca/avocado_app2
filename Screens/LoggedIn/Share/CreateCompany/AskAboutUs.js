@@ -67,7 +67,7 @@ export default function AskAboutUs({ route: { params } }) {
               maxLength={150}
             />
             <UnderBar lastOne={false} />
-            <CountingText>글자수 제한 ({counting}/150)</CountingText>
+            <CountingText>글자 수 제한 ({counting}/150)</CountingText>
           </AboutUsView>
         )}
       />
