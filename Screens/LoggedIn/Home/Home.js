@@ -76,6 +76,7 @@ export default function Home() {
 
   const { data } = useMe();
   const goToCreateCompany = () => {
+    navigation.navigate("CreateCompanyFinish");
     if (data?.me?.myCompany) {
       Alert.alert("이미 가입되어 있습니다.");
     } else {
