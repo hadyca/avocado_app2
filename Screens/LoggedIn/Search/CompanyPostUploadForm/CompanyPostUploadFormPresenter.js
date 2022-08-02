@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, NativeModules, Platform } from "react-native";
 import styled from "styled-components/native";
 import Checkbox from "expo-checkbox";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
-import { AntDesign } from "@expo/vector-icons";
 import ModalSelector from "react-native-modal-selector";
 import NumberFormat from "react-number-format";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -15,16 +14,11 @@ import { typeOfWage } from "../../../../Constant";
 import FormError from "../../../../Components/Auth/FormError";
 import AuthButton from "../../../../Components/Auth/AuthButton";
 import { emailRule } from "../../../../RegExp";
+
 const Container = styled.ScrollView`
   background-color: ${colors.backgraound};
 `;
 
-const HeaderRightText = styled.Text`
-  color: ${colors.black};
-  font-size: 16px;
-  font-weight: 600;
-  margin-right: 7px;
-`;
 const PictureContainer = styled.View`
   flex-direction: row;
   margin-bottom: 5px;
@@ -233,7 +227,6 @@ export default function CompanyPostUploadFormPresenter({
   uploadCompanyPostMutation,
   userData,
 }) {
-  let ref = useRef();
   const [mon, setMon] = useState(true);
   const [tue, setTue] = useState(true);
   const [wed, setWed] = useState(true);
@@ -313,7 +306,7 @@ export default function CompanyPostUploadFormPresenter({
 
   return (
     <>
-      <Container ref={ref}>
+      <Container>
         <KeyboardAwareScrollView extraScrollHeight={50}>
           <ImageTop>
             <PictureContainer>

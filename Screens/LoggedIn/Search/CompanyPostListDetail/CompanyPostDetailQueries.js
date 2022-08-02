@@ -32,13 +32,13 @@ export const POST_DETAIL_QUERY = gql`
       isFavorite
       workingDay {
         id
-        monday
-        tuesday
-        wednesday
-        thursday
-        friday
-        saturday
-        sunday
+        mon
+        tue
+        wed
+        thu
+        fri
+        sat
+        sun
       }
       dayOption
       startTime

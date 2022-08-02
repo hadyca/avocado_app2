@@ -165,7 +165,15 @@ export default function ({ route: { params } }) {
       title: data?.seeCompanyPost?.title,
       content: data?.seeCompanyPost?.content,
       file: data?.seeCompanyPost?.file,
-      screenName: params.fromWhere,
+      workingDay: data?.seeCompanyPost?.workingDay,
+      dayOption: data?.seeCompanyPost?.dayOption,
+      startTime: data?.seeCompanyPost?.startTime,
+      finishTime: data?.seeCompanyPost?.finishTime,
+      timeOption: data?.seeCompanyPost?.timeOption,
+      wageType: data?.seeCompanyPost?.wageType,
+      wage: data?.seeCompanyPost?.wage,
+      contactNumber: data?.seeCompanyPost?.contactNumber,
+      email: data?.seeCompanyPost?.email,
     });
   };
 
