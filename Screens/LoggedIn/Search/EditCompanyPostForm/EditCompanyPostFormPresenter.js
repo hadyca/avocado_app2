@@ -247,8 +247,8 @@ export default function EditCompanyPostFormPresenter({
   const [sat, setSat] = useState(originWorkingDay.sat);
   const [sun, setSun] = useState(originWorkingDay.sun);
   const [dayOption, setDayOption] = useState(originDayOption);
-  const [startTime, setStartTime] = useState({ label: "09:00", value: 540 });
-  const [finishTime, setFinishTime] = useState({ label: "18:00", value: 1080 });
+  const [startTime, setStartTime] = useState({});
+  const [finishTime, setFinishTime] = useState({});
   const [timeOption, setTimeOption] = useState(originTimeOption);
   const [wageType, setWageType] = useState(originWageType);
   const [wageNum, setWageNum] = useState(originWage);
@@ -269,7 +269,6 @@ export default function EditCompanyPostFormPresenter({
       wage: originWage,
     },
   });
-
   const onValid = async ({ title, contactNumber, email, content }) => {
     const editedFileUrl = await photo.map((_, index) => {
       return new ReactNativeFile({
@@ -319,6 +318,19 @@ export default function EditCompanyPostFormPresenter({
       setError("day", { message: "최소 1개 이상 요일을 넣어주세요." });
     }
   }, [mon, tue, wed, thu, fri, sat, sun]);
+
+  useEffect(() => {
+    time.filter((i) => {
+      if (i.value === originStartTime) {
+        setStartTime({ label: i.label, value: i.value });
+      }
+    });
+    time.filter((i) => {
+      if (i.value === originFinishTime) {
+        setFinishTime({ label: i.label, value: i.value });
+      }
+    });
+  }, []);
 
   return (
     <>

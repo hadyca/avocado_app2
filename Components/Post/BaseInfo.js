@@ -46,7 +46,7 @@ export default function BaseInfo({
     workingDay.sat && newAry.push("토");
     workingDay.sun && newAry.push("일");
     setDayArray(newAry);
-  }, []);
+  }, [workingDay]);
 
   useEffect(() => {
     const startTimeTrans = time.filter((item) => item.value === startTime);
@@ -54,12 +54,12 @@ export default function BaseInfo({
 
     const finishTimeTrans = time.filter((item) => item.value === finishTime);
     setFinish(finishTimeTrans[0].label);
-  }, []);
+  }, [startTime, finishTime]);
 
   useEffect(() => {
     const commaTrans = wage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     setCommaWage(commaTrans);
-  }, []);
+  }, [wage]);
 
   return (
     <BaseDataContainer>
