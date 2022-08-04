@@ -189,7 +189,7 @@ export default function ProfileContentsPresenter({
       <Bottom>
         {data?.seeProfile?.myCompany ? (
           <>
-            <CompanyTitle>Company Information</CompanyTitle>
+            <CompanyTitle>Company Info</CompanyTitle>
             <CompanyName>
               {data?.seeProfile?.myCompany?.companyName}
             </CompanyName>

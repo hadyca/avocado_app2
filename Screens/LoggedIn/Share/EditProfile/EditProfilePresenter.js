@@ -197,7 +197,7 @@ export default function EditProfilePresenter({
         <Separator />
         {myCompany ? (
           <>
-            <CompanyTitle>Company Information</CompanyTitle>
+            <CompanyTitle>Company Info</CompanyTitle>
             <Button onPress={goToEditCompanyName}>
               <ButtonName>Company</ButtonName>
               <ButtonTextView>

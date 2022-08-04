@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, TouchableOpacity } from "react-native";
+import { ActivityIndicator, TouchableOpacity, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { useForm, Controller } from "react-hook-form";
@@ -52,12 +52,23 @@ export default function EditUsernamePresenter({
       navigation.pop();
     } else {
       if (!loading) {
-        editUsernameMutation({
-          variables: {
-            username,
-            usernameEditDate: String(today),
-          },
-        });
+        Alert.alert(
+          "30일 이내 다시 변경 할 수 없습니다. 그래도 하시겠어요?",
+          "",
+          [
+            { text: "Cancel" },
+            {
+              text: "Ok",
+              onPress: () =>
+                editUsernameMutation({
+                  variables: {
+                    username,
+                    usernameEditDate: String(today),
+                  },
+                }),
+            },
+          ]
+        );
       }
     }
   };
