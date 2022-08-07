@@ -5,10 +5,12 @@ import { categories_KR, CategoryExplain_KR } from "../../Constant";
 const SContentInput = styled.TextInput`
   padding: 15px 7px;
   color: black;
+  min-height: 250px;
 `;
 
 export default function ContentInput({
   multiline,
+  textAlignVertical,
   autoCapitalize,
   onChangeText,
   maxLength,
@@ -41,6 +43,7 @@ export default function ContentInput({
       }
       autoCapitalize={autoCapitalize}
       maxLength={maxLength}
+      textAlignVertical={"top"}
       onChangeText={onChangeText}
       value={value || ""}
     />
