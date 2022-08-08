@@ -28,7 +28,7 @@ export default function MyProfileSetting() {
   return (
     <ScreenLayout>
       <Button onPress={() => null}>
-        <ButtonText>MyProfileSetting 화면</ButtonText>
+        <ButtonText>계정안내</ButtonText>
         <Ionicons
           name="chevron-forward"
           color="black"
@@ -37,7 +37,7 @@ export default function MyProfileSetting() {
         />
       </Button>
       <Button onPress={() => null}>
-        <ButtonText>MyProfileSetting 화면</ButtonText>
+        <ButtonText>알림</ButtonText>
         <Ionicons
           name="chevron-forward"
           color="black"
@@ -46,7 +46,34 @@ export default function MyProfileSetting() {
         />
       </Button>
       <Button onPress={() => null}>
-        <ButtonText>MyProfileSetting 화면</ButtonText>
+        <ButtonText>문의하기</ButtonText>
+        <Ionicons
+          name="chevron-forward"
+          color="black"
+          size={17}
+          style={{ marginRight: 20 }}
+        />
+      </Button>
+      <Button onPress={() => null}>
+        <ButtonText>이용약관</ButtonText>
+        <Ionicons
+          name="chevron-forward"
+          color="black"
+          size={17}
+          style={{ marginRight: 20 }}
+        />
+      </Button>
+      <Button onPress={() => null}>
+        <ButtonText>개인정보처리방침</ButtonText>
+        <Ionicons
+          name="chevron-forward"
+          color="black"
+          size={17}
+          style={{ marginRight: 20 }}
+        />
+      </Button>
+      <Button onPress={() => null}>
+        <ButtonText>현재 1.0.0 / 최신 1.0.0</ButtonText>
         <Ionicons
           name="chevron-forward"
           color="black"
