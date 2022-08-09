@@ -30,7 +30,9 @@ export default function () {
   };
 
   const goToSetting = () => {
-    navigation.navigate("MyProfileSetting");
+    navigation.navigate("MyProfileSetting", {
+      email: userData.me.email,
+    });
   };
 
   const goToReportForm = () => {
