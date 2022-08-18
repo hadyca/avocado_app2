@@ -10,15 +10,16 @@ import QuestionPresenter from "./QuestionPresenter";
 export default function ({ route: { params } }) {
   const navigation = useNavigation();
 
-  const { data, loading } = useMutation(QUESTION_MUTATION, {
-    // variables: {
-    //   userId: parseInt(params.id),
-    // },
+  const [questionMutation, { loading }] = useMutation(QUESTION_MUTATION, {
+    onCompleted: () => navigation.pop(),
   });
 
   return (
     <ScreenLayout loading={loading}>
-      <QuestionPresenter />
+      <QuestionPresenter
+        questionMutation={questionMutation}
+        loading={loading}
+      />
     </ScreenLayout>
   );
 }
