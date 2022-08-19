@@ -53,7 +53,7 @@ export default function EditUsernamePresenter({
     } else {
       if (!loading) {
         Alert.alert(
-          "30일 이내 다시 변경 할 수 없습니다. 그래도 하시겠어요?",
+          "30일 이내 다시 변경 할 수 없습니다.\n그래도 하시겠어요?",
           "",
           [
             { text: "Cancel" },

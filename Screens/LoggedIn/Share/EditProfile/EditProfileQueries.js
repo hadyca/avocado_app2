@@ -9,19 +9,19 @@ export const EDIT_AVATAR_MUTATION = gql`
   }
 `;
 
-export const EDIT_COMPANY_MUTATION = gql`
-  mutation editCompany($sector: String) {
-    editCompany(sector: $sector) {
-      id
-      companyName
-      aboutUs
-      sector
-      totalEmployees
-      email
-      contactNumber
-      addressStep1
-      addressStep2
-      addressStep3
-    }
-  }
-`;
+// export const EDIT_COMPANY_MUTATION = gql`
+//   mutation editCompany($sector: String) {
+//     editCompany(sector: $sector) {
+//       id
+//       companyName
+//       aboutUs
+//       sector
+//       totalEmployees
+//       email
+//       contactNumber
+//       addressStep1
+//       addressStep2
+//       addressStep3
+//     }
+//   }
+// `;

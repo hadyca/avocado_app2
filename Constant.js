@@ -168,3 +168,11 @@ export const typeOfWage = [
   { id: 3, value: "월급" },
   { id: 4, value: "건당" },
 ];
+
+export const questionType = [
+  { id: 1, value: "일반 문의" },
+  { id: 2, value: "서비스 오류 제보" },
+  { id: 3, value: "계정 분실" },
+  { id: 4, value: "서비스 개선 의견" },
+  { id: 5, value: "비즈니스 문의" },
+];

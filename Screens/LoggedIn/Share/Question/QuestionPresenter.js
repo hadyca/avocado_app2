@@ -1,16 +1,22 @@
 import React, { useState } from "react";
-import { Text } from "react-native";
+import { Alert } from "react-native";
 import styled from "styled-components/native";
 import { useForm, Controller } from "react-hook-form";
 import ModalSelector from "react-native-modal-selector";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../../../../Colors";
 import AuthButton from "../../../../Components/Auth/AuthButton";
-import { questionType } from "../../../../DistrictList";
 import { emailRule } from "../../../../RegExp";
+import { questionType } from "../../../../Constant";
 
 const Container = styled.ScrollView`
   margin: 10px;
+`;
+
+const Title = styled.Text`
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 15px;
 `;
 
 const TextView = styled.View`
@@ -69,6 +75,7 @@ export default function QuestionPresenter({ questionMutation, loading }) {
   return (
     <>
       <Container>
+        <Title>유형</Title>
         <ModalSelector
           data={questionType}
           keyExtractor={(item) => item.id}
@@ -77,13 +84,22 @@ export default function QuestionPresenter({ questionMutation, loading }) {
           onChange={(item) => {
             setType({ id: item.id, value: item.value });
           }}
-          optionContainerStyle={{ height: 500 }}
+          // optionContainerStyle={{ height: 500 }}
         >
           <TextView>
-            <TypeInput placeholder={"Type"} value={type.value} />
-            <Ionicons name="chevron-forward" color="black" size={17} />
+            <TypeInput
+              placeholder={"문의 유형을 선택하세요."}
+              value={type.value}
+            />
+            <Ionicons
+              name="chevron-forward"
+              color="black"
+              size={17}
+              style={{ marginRight: 10 }}
+            />
           </TextView>
         </ModalSelector>
+        <Title>내용</Title>
         <Controller
           name="content"
           rules={{
@@ -99,10 +115,10 @@ export default function QuestionPresenter({ questionMutation, loading }) {
               autoCapitalize="none"
               onChangeText={(text) => onChange(text)}
               value={value || ""}
-              placeholder={"적으시오"}
             />
           )}
         />
+        <Title>Email</Title>
         <Controller
           name="email"
           rules={{
@@ -115,7 +131,7 @@ export default function QuestionPresenter({ questionMutation, loading }) {
           control={control}
           render={({ field: { onChange, value } }) => (
             <TitleInput
-              placeholder="abc@gamil.com"
+              placeholder="답변 받을 이메일을 입력하세요."
               autoCapitalize="none"
               maxLength={100}
               multiline={false}

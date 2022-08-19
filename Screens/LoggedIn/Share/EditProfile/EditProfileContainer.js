@@ -3,10 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@apollo/client";
 import * as ImagePicker from "expo-image-picker";
 import ScreenLayout from "../../../../Components/ScreenLayout";
-import {
-  EDIT_AVATAR_MUTATION,
-  EDIT_COMPANY_MUTATION,
-} from "./EditProfileQueries";
+import { EDIT_AVATAR_MUTATION } from "./EditProfileQueries";
 import EditProfilePresenter from "./EditProfilePresenter";
 
 export default function ({ route: { params } }) {

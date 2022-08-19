@@ -1005,9 +1005,3 @@ export const smallDistrict = [
   vinhPhuc,
   yenBai,
 ];
-
-export const questionType = [
-  { id: 1, value: "서비스 개선" },
-  { id: 2, value: "프로그램 버그" },
-  { id: 3, value: "기타 등등" },
-];
