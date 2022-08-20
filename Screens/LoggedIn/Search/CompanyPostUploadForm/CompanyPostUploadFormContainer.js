@@ -25,7 +25,7 @@ export default function ({ route: { params } }) {
         id: "ROOT_QUERY",
         fields: {
           seeCompanyAllPosts(prev) {
-            return [uploadUserPost, ...prev];
+            return [uploadCompanyPost, ...prev];
           },
         },
       });

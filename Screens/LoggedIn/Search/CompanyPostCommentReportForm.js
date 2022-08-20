@@ -48,7 +48,7 @@ export default function CompanyPostCommentReportForm({ route: { params } }) {
     navigation.pop();
   };
   const [reportCommentMutation, { loading }] = useMutation(REPORT_MUTATION, {
-    update: goReportCompanyPostComment,
+    onCompleted: goReportCompanyPostComment,
   });
 
   const goToReport = (item) => {

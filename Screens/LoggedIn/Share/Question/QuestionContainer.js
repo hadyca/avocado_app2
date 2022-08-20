@@ -1,28 +1,24 @@
 import React, { useEffect, useState, useRef } from "react";
-import { TouchableOpacity } from "react-native";
 import { useMutation } from "@apollo/client";
+import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
 import ScreenLayout from "../../../../Components/ScreenLayout";
 import { QUESTION_MUTATION } from "./QuestionQueries";
 import QuestionPresenter from "./QuestionPresenter";
-import useMe from "../../../../Hooks/useMe";
 
 export default function ({ route: { params } }) {
-  const { data: userData } = useMe();
   const navigation = useNavigation();
 
+  const goToBack = () => {
+    Alert.alert("접수 되었습니다. \n빠른 시일 내에 답변 드리겠습니다.");
+    navigation.pop();
+  };
+
   const [questionMutation, { loading }] = useMutation(QUESTION_MUTATION, {
-    onCompleted: () => navigation.pop(),
+    onCompleted: goToBack,
   });
 
   return (
-    <ScreenLayout loading={loading}>
-      <QuestionPresenter
-        questionMutation={questionMutation}
-        loading={loading}
-        email={userData?.email}
-      />
-    </ScreenLayout>
+    <QuestionPresenter questionMutation={questionMutation} loading={loading} />
   );
 }

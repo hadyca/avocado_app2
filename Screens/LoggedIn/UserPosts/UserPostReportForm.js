@@ -42,7 +42,7 @@ export default function UserPostReportForm({ route: { params } }) {
     navigation.pop();
   };
   const [reportPostMutation, { loading }] = useMutation(REPORT_MUTATION, {
-    update: goReportUserPost,
+    onCompleted: goReportUserPost,
   });
 
   const goToReport = (item) => {
