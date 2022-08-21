@@ -132,7 +132,7 @@ export default function ({
   const [createReCommentMutation, { loading: ReCommentLoading }] = useMutation(
     CREATE_RECOMMENT_MUTATION,
     {
-      onCompleted: updateReComment,
+      update: updateReComment,
       onError: () => {
         Alert.alert("존재하지 않는 코멘트 입니다.");
         navigation.pop();

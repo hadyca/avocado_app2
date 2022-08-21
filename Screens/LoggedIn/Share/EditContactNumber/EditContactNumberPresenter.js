@@ -9,7 +9,7 @@ import { UnderBar } from "../../../../Components/Auth/AuthShared";
 import { onlyNumber } from "../../../../RegExp";
 
 const HeaderRightText = styled.Text`
-  color: ${colors.black};
+  color: ${(props) => (props.ok ? colors.buttonBackground : colors.black)};
   font-size: 16px;
   font-weight: 600;
   margin-right: 7px;
@@ -48,7 +48,7 @@ export default function EditContactNumberPresenter({
   };
   const NoHeaderRight = () => (
     <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
-      <HeaderRightText>Done</HeaderRightText>
+      <HeaderRightText>완료</HeaderRightText>
     </TouchableOpacity>
   );
 
@@ -58,7 +58,7 @@ export default function EditContactNumberPresenter({
       onPress={handleSubmit(onValid)}
       style={{ marginRight: 10, opacity: 1 }}
     >
-      <HeaderRightText>Done</HeaderRightText>
+      <HeaderRightText ok={true}>완료</HeaderRightText>
     </TouchableOpacity>
   );
   const HeaderRightLoading = () => (

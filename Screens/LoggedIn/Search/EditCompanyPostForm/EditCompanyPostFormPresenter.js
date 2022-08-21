@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, NativeModules, Platform } from "react-native";
+import { Image, NativeModules, Platform, Alert } from "react-native";
 import styled from "styled-components/native";
 import Checkbox from "expo-checkbox";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
@@ -38,13 +38,7 @@ const TitleInput = styled.TextInput`
   padding: 15px 7px;
   border-radius: 4px;
   color: black;
-  border: 1px solid
-    ${(props) =>
-      props.hasError
-        ? colors.error
-        : props.focus
-        ? colors.focus
-        : colors.borderThick};
+  border: 1px solid ${colors.borderThick};
 `;
 
 const Opt = styled.Text`
@@ -174,13 +168,7 @@ const WageInputContainer = styled.View`
   width: 50%;
   border-radius: 4px;
   padding: 10px;
-  border: 1px solid
-    ${(props) =>
-      props.hasError
-        ? colors.error
-        : props.focus
-        ? colors.focus
-        : colors.borderThick};
+  border: 1px solid ${colors.borderThick};
 `;
 
 const WageInput = styled.TextInput`
@@ -200,13 +188,7 @@ const ContentInput = styled.TextInput`
   padding: 15px 7px;
   border-radius: 4px;
   color: black;
-  border: 1px solid
-    ${(props) =>
-      props.hasError
-        ? colors.error
-        : props.focus
-        ? colors.focus
-        : colors.borderThick};
+  border: 1px solid ${colors.borderThick};
 `;
 
 const SubmitContainer = styled.View`
@@ -269,49 +251,64 @@ export default function EditCompanyPostFormPresenter({
       wage: originWage,
     },
   });
+
   const onValid = async ({ title, contactNumber, email, content }) => {
-    const editedFileUrl = await photo.map((_, index) => {
-      return new ReactNativeFile({
-        uri: photo[index].fileUrl,
-        name: `${index}.jpg`,
-        type: "image/jpeg",
+    if (!title) {
+      Alert.alert("제목을 입력해주세요.");
+    } else if (!contactNumber) {
+      Alert.alert("연락처를 입력해주세요.");
+    } else if (!email) {
+      Alert.alert("이메일을 입력해주세요.");
+    } else if (!emailRule.test(email)) {
+      Alert.alert("이메일 형식이 잘못 되었습니다.");
+    } else if (!wageNum) {
+      Alert.alert("임금을 입력해주세요.");
+    } else if (!content) {
+      Alert.alert("세부 내용을 입력해주세요.");
+    } else {
+      const editedFileUrl = await photo.map((_, index) => {
+        return new ReactNativeFile({
+          uri: photo[index].fileUrl,
+          name: `${index}.jpg`,
+          type: "image/jpeg",
+        });
       });
-    });
-    if (!loading) {
-      handleEdit(title, content, wageNum);
-      editCompanyPostMutation({
-        variables: {
-          companyPostId: parseInt(companyPostId),
-          fileUrl: editedFileUrl,
-          title,
-          mon,
-          tue,
-          wed,
-          thu,
-          fri,
-          sat,
-          sun,
-          dayOption,
-          startTime: parseInt(startTime.value),
-          finishTime: parseInt(finishTime.value),
-          timeOption,
-          wageType,
-          wage: wageNum,
-          contactNumber,
-          email,
-          content,
-        },
-      });
+      if (!loading) {
+        handleEdit(title, content, wageNum);
+        editCompanyPostMutation({
+          variables: {
+            companyPostId: parseInt(companyPostId),
+            fileUrl: editedFileUrl,
+            title,
+            mon,
+            tue,
+            wed,
+            thu,
+            fri,
+            sat,
+            sun,
+            dayOption,
+            startTime: parseInt(startTime.value),
+            finishTime: parseInt(finishTime.value),
+            timeOption,
+            wageType,
+            wage: wageNum,
+            contactNumber,
+            email,
+            content,
+          },
+        });
+      }
     }
   };
 
-  useEffect(() => {
-    Platform.OS == "ios"
-      ? StatusBarManager.getHeight((statusBarFrameData) => {
-          setStatusBarHeight(statusBarFrameData.height);
-        })
-      : null;
-  }, []);
+  // useEffect(() => {
+  //   Platform.OS == "ios"
+  //     ? StatusBarManager.getHeight((statusBarFrameData) => {
+  //         setStatusBarHeight(statusBarFrameData.height);
+  //       })
+  //     : null;
+  // }, []);
 
   useEffect(() => {
     if (!mon && !tue && !wed && !thu && !fri && !sat && !sun) {
@@ -377,9 +374,6 @@ export default function EditCompanyPostFormPresenter({
             <Title>제목</Title>
             <Controller
               name="title"
-              rules={{
-                required: "제목을 넣어주세요.",
-              }}
               control={control}
               render={({ field: { onChange, value } }) => (
                 <TitleInput
@@ -390,17 +384,12 @@ export default function EditCompanyPostFormPresenter({
                   returnKeyType="next"
                   onChangeText={(text) => onChange(text)}
                   value={value}
-                  hasError={Boolean(errors?.title)}
                 />
               )}
             />
-            <FormError message={errors?.title?.message} />
             <Title>연락처</Title>
             <Controller
               name="contactNumber"
-              rules={{
-                required: "연락처를 입력해 주세요.",
-              }}
               control={control}
               render={({ field: { onChange, value } }) => (
                 <TitleInput
@@ -414,17 +403,9 @@ export default function EditCompanyPostFormPresenter({
                 />
               )}
             />
-            <FormError message={errors?.contactNumber?.message} />
             <Title>이메일</Title>
             <Controller
               name="email"
-              rules={{
-                required: "이메일 주소를 입력해 주세요.",
-                pattern: {
-                  value: emailRule,
-                  message: "이메일 주소가 올바르지 않습니다.",
-                },
-              }}
               control={control}
               render={({ field: { onChange, value } }) => (
                 <TitleInput
@@ -435,11 +416,9 @@ export default function EditCompanyPostFormPresenter({
                   returnKeyType="next"
                   onChangeText={(text) => onChange(text)}
                   value={value}
-                  hasError={Boolean(errors?.email)}
                 />
               )}
             />
-            <FormError message={errors?.email?.message} />
             <Title>근무 요일</Title>
             <DayContainer>
               <Day
@@ -507,7 +486,6 @@ export default function EditCompanyPostFormPresenter({
               </Day>
             </DayContainer>
             <FormError message={errors?.day?.message} />
-
             <CheckContainer>
               <Checkbox
                 value={dayOption}
@@ -604,9 +582,6 @@ export default function EditCompanyPostFormPresenter({
               </ModalView>
               <Controller
                 name="wage"
-                rules={{
-                  required: "임금정보를 넣어주세요.",
-                }}
                 control={control}
                 render={({ field: { onChange, value } }) => (
                   <NumberFormat
@@ -618,7 +593,7 @@ export default function EditCompanyPostFormPresenter({
                       setWageNum(value);
                     }}
                     renderText={(value) => (
-                      <WageInputContainer hasError={Boolean(errors?.wage)}>
+                      <WageInputContainer>
                         <WageInput
                           autoCapitalize="none"
                           returnKeyType="done"
@@ -634,13 +609,9 @@ export default function EditCompanyPostFormPresenter({
                 )}
               />
             </WageContainer>
-            <FormError message={errors?.wage?.message} />
             <Title>세부 내용</Title>
             <Controller
               name="content"
-              rules={{
-                required: "구인글 내용을 넣어주세요.",
-              }}
               control={control}
               render={({ field: { onChange, value } }) => (
                 <ContentInput
@@ -654,11 +625,9 @@ export default function EditCompanyPostFormPresenter({
                   placeholder={
                     "예) 업무 예시, 사내 복지, 근무 여건, 지원자가 갖추어야 할 능력, 우대 사항 등"
                   }
-                  hasError={Boolean(errors?.content)}
                 />
               )}
             />
-            <FormError message={errors?.content?.message} />
           </InputBottom>
         </KeyboardAwareScrollView>
       </Container>

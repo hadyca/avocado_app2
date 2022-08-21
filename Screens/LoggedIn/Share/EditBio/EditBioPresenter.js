@@ -8,7 +8,7 @@ import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import { UnderBar } from "../../../../Components/Auth/AuthShared";
 
 const HeaderRightText = styled.Text`
-  color: ${colors.black};
+  color: ${(props) => (props.ok ? colors.buttonBackground : colors.black)};
   font-size: 16px;
   font-weight: 600;
   margin-right: 7px;
@@ -58,7 +58,7 @@ export default function EditBioPresenter({
       onPress={handleSubmit(onValid)}
       style={{ marginRight: 10, opacity: 1 }}
     >
-      <HeaderRightText>Done</HeaderRightText>
+      <HeaderRightText ok={true}>완료</HeaderRightText>
     </TouchableOpacity>
   );
 

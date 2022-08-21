@@ -245,6 +245,8 @@ export default function CompanyPostUploadFormPresenter({
       Alert.alert("연락처를 입력해주세요.");
     } else if (!email) {
       Alert.alert("이메일을 입력해주세요.");
+    } else if (!emailRule.test(email)) {
+      Alert.alert("이메일 형식이 잘못 되었습니다.");
     } else if (!wageNum) {
       Alert.alert("임금을 입력해주세요.");
     } else if (!content) {
