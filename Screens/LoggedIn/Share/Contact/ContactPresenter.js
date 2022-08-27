@@ -55,7 +55,7 @@ const TitleInput = styled.TextInput`
   border: 1px solid ${colors.borderThick};
 `;
 
-export default function QuestionPresenter({ questionMutation, loading }) {
+export default function ContactPresenter({ contactMutation, loading }) {
   const [type, setType] = useState({});
   const { control, handleSubmit } = useForm();
 
@@ -70,7 +70,7 @@ export default function QuestionPresenter({ questionMutation, loading }) {
       Alert.alert("이메일 형식이 잘못 되었습니다.");
     } else {
       if (!loading) {
-        questionMutation({
+        contactMutation({
           variables: {
             type: type.value,
             content,

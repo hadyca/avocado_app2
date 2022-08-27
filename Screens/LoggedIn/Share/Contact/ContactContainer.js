@@ -2,9 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { useMutation } from "@apollo/client";
 import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import ScreenLayout from "../../../../Components/ScreenLayout";
-import { QUESTION_MUTATION } from "./QuestionQueries";
-import QuestionPresenter from "./QuestionPresenter";
+import { CONTACT_MUTATION } from "./ContactQueries";
+import ContactPresenter from "./ContactPresenter";
 
 export default function ({ route: { params } }) {
   const navigation = useNavigation();
@@ -14,11 +13,11 @@ export default function ({ route: { params } }) {
     navigation.pop();
   };
 
-  const [questionMutation, { loading }] = useMutation(QUESTION_MUTATION, {
+  const [contactMutation, { loading }] = useMutation(CONTACT_MUTATION, {
     onCompleted: goToBack,
   });
 
   return (
-    <QuestionPresenter questionMutation={questionMutation} loading={loading} />
+    <ContactPresenter contactMutation={contactMutation} loading={loading} />
   );
 }

@@ -50,7 +50,7 @@ export default function MyProfileSetting({ route: { params } }) {
           style={{ marginRight: 20 }}
         />
       </Button>
-      <Button onPress={() => navigation.navigate("Question")}>
+      <Button onPress={() => navigation.navigate("Contact")}>
         <ButtonText>문의하기</ButtonText>
         <Ionicons
           name="chevron-forward"

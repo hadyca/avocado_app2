@@ -9,12 +9,8 @@ import { TextInput } from "../../Components/Auth/AuthShared";
 import { emailRule, passwordRule, usernameRule } from "../../RegExp";
 
 const CREATE_ACCOUNT_MUTATION = gql`
-  mutation createAccount(
-    $email: String!
-    $username: String!
-    $password: String!
-  ) {
-    createAccount(email: $email, username: $username, password: $password) {
+  mutation createAccount($email: String!, $username: String!) {
+    createAccount(email: $email, username: $username) {
       ok
       error
     }
