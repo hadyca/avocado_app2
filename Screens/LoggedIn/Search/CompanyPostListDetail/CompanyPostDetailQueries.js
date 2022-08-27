@@ -13,7 +13,6 @@ export const POST_DETAIL_QUERY = gql`
         }
         companyName
         aboutUs
-        sector
         totalEmployees
         email
         contactNumber
@@ -33,13 +32,13 @@ export const POST_DETAIL_QUERY = gql`
       isFavorite
       workingDay {
         id
-        monday
-        tuesday
-        wednesday
-        thursday
-        friday
-        saturday
-        sunday
+        mon
+        tue
+        wed
+        thu
+        fri
+        sat
+        sun
       }
       dayOption
       startTime
@@ -104,7 +103,6 @@ export const TOGGLE_COMPANYPOST_FAVORITE_MUTATION = gql`
         addressStep1
         addressStep2
         addressStep3
-        sector
         user {
           id
           username

@@ -7,11 +7,8 @@ export const COMPANYPOST_QUERY = gql`
       company {
         id
         companyName
-        aboutUs
         addressStep1
         addressStep2
-        addressStep3
-        sector
         user {
           id
           username
@@ -20,11 +17,25 @@ export const COMPANYPOST_QUERY = gql`
       }
       title
       content
-      createdAt
-      file {
+      workingDay {
         id
-        fileUrl
+        mon
+        tue
+        wed
+        thu
+        fri
+        sat
+        sun
       }
+      dayOption
+      startTime
+      finishTime
+      timeOption
+      wageType
+      wage
+      contactNumber
+      email
+      createdAt
       totalCompanyPostLikes
       totalCompanyPostComments
     }

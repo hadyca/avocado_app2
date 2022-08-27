@@ -16,7 +16,6 @@ const CREATE_COMPANY_MUTATION = gql`
   mutation createCompany(
     $companyName: String!
     $aboutUs: String!
-    $sector: String!
     $totalEmployees: Int!
     $email: String!
     $contactNumber: String!
@@ -27,7 +26,6 @@ const CREATE_COMPANY_MUTATION = gql`
     createCompany(
       companyName: $companyName
       aboutUs: $aboutUs
-      sector: $sector
       totalEmployees: $totalEmployees
       email: $email
       contactNumber: $contactNumber
@@ -75,7 +73,6 @@ export default function AskAddress_3({ route: { params } }) {
         variables: {
           companyName: params.companyName,
           aboutUs: params.aboutUs,
-          sector: params.sector,
           totalEmployees: parseInt(params.totalEmployees),
           email: params.email,
           contactNumber: params.contactNumber,
@@ -90,8 +87,8 @@ export default function AskAddress_3({ route: { params } }) {
   return (
     <CreatCompanyLayout>
       <ProgressCreateCompany
-        title={"마지막 세부주소를 입력해 주세요."}
-        step={"9"}
+        title={"마지막 세부 주소를 입력해 주세요."}
+        step={"8"}
       />
       <Controller
         name="addressStep3"

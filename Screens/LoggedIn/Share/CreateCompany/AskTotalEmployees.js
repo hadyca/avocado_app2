@@ -21,14 +21,13 @@ export default function AskTotalEmployees({ route: { params } }) {
     navigation.navigate("AskEmail", {
       companyName: params.companyName,
       aboutUs: params.aboutUs,
-      sector: params.sector,
       totalEmployees,
     });
   };
 
   return (
     <CreatCompanyLayout>
-      <ProgressCreateCompany title={"총 임직원 수를 알려주세요!"} step={"4"} />
+      <ProgressCreateCompany title={"총 임직원 수를 알려주세요!"} step={"3"} />
       <Controller
         name="totalEmployees"
         rules={{

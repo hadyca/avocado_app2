@@ -26,7 +26,6 @@ export default function AskAddress_2({ route: { params } }) {
     navigation.navigate("AskAddress_3", {
       companyName: params.companyName,
       aboutUs: params.aboutUs,
-      sector: params.sector,
       totalEmployees: params.totalEmployees,
       email: params.email,
       contactNumber: params.contactNumber,
@@ -38,7 +37,7 @@ export default function AskAddress_2({ route: { params } }) {
     <CreatCompanyLayout>
       <ProgressCreateCompany
         title={"두번째 도시를 선택해 주세요."}
-        step={"8"}
+        step={"7"}
       />
       <ModalSelector
         data={smallDistrict[params.addressStep1.id]}

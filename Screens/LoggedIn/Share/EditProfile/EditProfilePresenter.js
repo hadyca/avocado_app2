@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { TouchableOpacity, ActivityIndicator } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { ReactNativeFile } from "apollo-upload-client";
-import ModalSelector from "react-native-modal-selector";
 import { colors } from "../../../../Colors";
-import { sectors } from "../../../../Constant";
 
 const HeaderRightText = styled.Text`
-  color: ${colors.black};
+  color: ${(props) => (props.ok ? colors.buttonBackground : colors.black)};
   font-size: 16px;
   font-weight: 600;
   margin-right: 7px;
@@ -59,7 +57,7 @@ const Button = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 13px;
+  margin-bottom: 17px;
 `;
 
 const ButtonName = styled.Text``;
@@ -93,7 +91,6 @@ const Separator = styled.View`
 
 export default function EditProfilePresenter({
   editAvatarMutation,
-  editSectorMutation,
   goToSelectAvatar,
   goToEditUsername,
   goToEditBio,
@@ -109,60 +106,25 @@ export default function EditProfilePresenter({
   bio,
   myCompany,
   loading,
-  companyLoading,
-  skiphandle,
 }) {
-  const [selectedSector, setSelectedSector] = useState(myCompany?.sector);
   const address = `${myCompany?.addressStep3}, ${myCompany?.addressStep2}, ${myCompany?.addressStep1}`;
 
   const navigation = useNavigation();
-
   const goToEditAvatar = async () => {
-    if (!isEdited && selectedSector === myCompany?.sector) {
+    if (!isEdited) {
       navigation.pop();
     }
-    if (isEdited && selectedSector === myCompany?.sector) {
+    if (isEdited) {
       const newAvatar = new ReactNativeFile({
         uri: avatarUrl,
         name: `1.jpg`,
         type: "image/jpeg",
       });
-      if (!companyLoading) {
-        editAvatarMutation({
-          variables: {
-            avatarUrl: newAvatar,
-          },
-        });
-      }
-    }
-    if (!isEdited && selectedSector !== myCompany?.sector) {
-      if (!loading) {
-        editSectorMutation({
-          variables: {
-            sector: selectedSector,
-          },
-        });
-      }
-    }
-    if (isEdited && selectedSector !== myCompany?.sector) {
-      await skiphandle();
-      const newAvatar = new ReactNativeFile({
-        uri: avatarUrl,
-        name: `1.jpg`,
-        type: "image/jpeg",
+      editAvatarMutation({
+        variables: {
+          avatarUrl: newAvatar,
+        },
       });
-      if (!loading && !companyLoading) {
-        await editAvatarMutation({
-          variables: {
-            avatarUrl: newAvatar,
-          },
-        });
-        await editSectorMutation({
-          variables: {
-            sector: selectedSector,
-          },
-        });
-      }
     }
   };
 
@@ -172,7 +134,7 @@ export default function EditProfilePresenter({
       onPress={goToEditAvatar}
       style={{ marginRight: 10, opacity: 1 }}
     >
-      <HeaderRightText>Done</HeaderRightText>
+      <HeaderRightText ok={true}>완료</HeaderRightText>
     </TouchableOpacity>
   );
   const HeaderRightLoading = () => (
@@ -181,10 +143,9 @@ export default function EditProfilePresenter({
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight:
-        loading || companyLoading ? HeaderRightLoading : OkHeaderRight,
+      headerRight: loading ? HeaderRightLoading : OkHeaderRight,
     });
-  }, [loading, companyLoading, avatarUrl, isEdited, selectedSector]);
+  }, [loading, avatarUrl, isEdited]);
 
   return (
     <Container>
@@ -236,7 +197,7 @@ export default function EditProfilePresenter({
         <Separator />
         {myCompany ? (
           <>
-            <CompanyTitle>Company Information</CompanyTitle>
+            <CompanyTitle>Company Info</CompanyTitle>
             <Button onPress={goToEditCompanyName}>
               <ButtonName>Company</ButtonName>
               <ButtonTextView>
@@ -280,24 +241,6 @@ export default function EditProfilePresenter({
                 <Ionicons name="chevron-forward" color="black" size={17} />
               </ButtonTextView>
             </Button>
-            <ModalSelector
-              data={sectors}
-              keyExtractor={(item) => item.id}
-              labelExtractor={(item) => item.value}
-              accessible={true}
-              onChange={(item) => {
-                setSelectedSector(item.value);
-              }}
-              optionContainerStyle={{ height: 500 }}
-            >
-              <Button>
-                <ButtonName>Sector</ButtonName>
-                <ButtonTextView>
-                  <ButtonText>{selectedSector}</ButtonText>
-                  <Ionicons name="chevron-forward" color="black" size={17} />
-                </ButtonTextView>
-              </Button>
-            </ModalSelector>
             <Button onPress={goToEditTotalEmployees}>
               <ButtonName>Total Employees</ButtonName>
               <ButtonTextView>

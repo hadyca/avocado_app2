@@ -6,6 +6,7 @@ const TitleView = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 30px;
 `;
 
 const Title = styled.Text`
@@ -31,7 +32,7 @@ export default function ProgressCreateCompany({ title, step }) {
       <Title>{title}</Title>
       <ProgressContainer>
         <Progress>{step}</Progress>
-        <Nine>/9</Nine>
+        <Nine>/8</Nine>
       </ProgressContainer>
     </TitleView>
   );

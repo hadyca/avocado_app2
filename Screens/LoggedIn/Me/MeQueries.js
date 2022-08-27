@@ -29,7 +29,6 @@ export const PROFILE_QUERY = gql`
         addressStep2
         addressStep3
         email
-        sector
         aboutUs
         contactNumber
         totalEmployees

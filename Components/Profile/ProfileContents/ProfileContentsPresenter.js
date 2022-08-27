@@ -189,7 +189,7 @@ export default function ProfileContentsPresenter({
       <Bottom>
         {data?.seeProfile?.myCompany ? (
           <>
-            <CompanyTitle>Company Information</CompanyTitle>
+            <CompanyTitle>Company Info</CompanyTitle>
             <CompanyName>
               {data?.seeProfile?.myCompany?.companyName}
             </CompanyName>
@@ -199,8 +199,6 @@ export default function ProfileContentsPresenter({
             </Address>
             <Separator />
             <InfoView>
-              <Title>Sector</Title>
-              <Info>{data?.seeProfile?.myCompany?.sector}</Info>
               <Separator />
               <Title>Number of employees</Title>
               <Info>{`${data?.seeProfile?.myCompany?.totalEmployees} 명`}</Info>

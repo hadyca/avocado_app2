@@ -8,9 +8,9 @@ import { EDIT_COMPANYPOST_MUTATION } from "./EditCompanyPostFormQueries";
 export default function ({ route: { params } }) {
   const [photo, setPhoto] = useState([]);
   const [countPhoto, setCountPhoto] = useState(0);
-  const [screenName, setScreenName] = useState("");
   const [editedTitle, setEditedTitle] = useState("");
   const [editedContent, setEditedContent] = useState("");
+  const [editedWage, setWage] = useState();
   const navigation = useNavigation();
 
   const updateEditCompanyPost = (cache, result) => {
@@ -33,12 +33,14 @@ export default function ({ route: { params } }) {
           file() {
             return photo[0]?.fileUrl;
           },
+          wage() {
+            return editedWage;
+          },
         },
       });
     }
     navigation.navigate("CompanyPostListDetail", {
       id,
-      fromWhere: screenName,
     });
   };
   const [editCompanyPostMutation, { loading }] = useMutation(
@@ -82,26 +84,29 @@ export default function ({ route: { params } }) {
     }
   }, []);
 
-  useEffect(() => {
-    if (params.screenName) {
-      setScreenName(params.screenName);
-    }
-  }, []);
-
-  const handleEdit = (title, content) => {
+  const handleEdit = (title, content, wage) => {
     setEditedTitle(title);
     setEditedContent(content);
+    setWage(wage);
   };
 
   return (
     <EditCompanyPostFormPresenter
       title={params.title}
       content={params.content}
+      originWorkingDay={params.workingDay}
+      originDayOption={params.dayOption}
+      originStartTime={params.startTime}
+      originFinishTime={params.finishTime}
+      originTimeOption={params.timeOption}
+      originWageType={params.wageType}
+      originWage={params.wage}
+      originContactNumber={params.contactNumber}
+      originEmail={params.email}
       loading={loading}
       companyPostId={params.id}
       photo={photo}
       countPhoto={countPhoto}
-      category={params.category}
       editCompanyPostMutation={editCompanyPostMutation}
       DeleteImg={DeleteImg}
       goToImageSelect={goToImageSelect}

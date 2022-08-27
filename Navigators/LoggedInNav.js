@@ -19,7 +19,6 @@ import AskCompanyName from "../Screens/LoggedIn/Share/CreateCompany/AskCompanyNa
 import AskEmail from "../Screens/LoggedIn/Share/CreateCompany/AskEmail";
 import AskAboutUs from "../Screens/LoggedIn/Share/CreateCompany/AskAboutUs";
 import AskContactNumber from "../Screens/LoggedIn/Share/CreateCompany/AskContactNumber";
-import AskSector from "../Screens/LoggedIn/Share/CreateCompany/AskSector";
 import AskTotalEmployees from "../Screens/LoggedIn/Share/CreateCompany/AskTotalEmployees";
 import AskAddress_1 from "../Screens/LoggedIn/Share/CreateCompany/AskAddress_1";
 import AskAddress_2 from "../Screens/LoggedIn/Share/CreateCompany/AskAddress_2";
@@ -47,7 +46,8 @@ import EditTotalEmployees from "../Screens/LoggedIn/Share/EditTotalEmployees";
 import EditCompanyEmail from "../Screens/LoggedIn/Share/EditCompanyEmail";
 import EditContactNumber from "../Screens/LoggedIn/Share/EditContactNumber";
 import EditAddress from "../Screens/LoggedIn/Share/EditAddress";
-import CompanyPostAll from "../Screens/LoggedIn/Search/CompanyPostAll";
+import Account from "../Screens/LoggedIn/Share/Account";
+import Question from "../Screens/LoggedIn/Share/Question";
 
 const Stack = createStackNavigator();
 
@@ -68,6 +68,20 @@ export default function LoggedInNav() {
           headerBackTitleVisible: false,
         }}
         component={FollowNav}
+      />
+      <Stack.Screen
+        name="Question"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={Question}
+      />
+      <Stack.Screen
+        name="Account"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={Account}
       />
       <Stack.Screen
         name="EditAddress"
@@ -257,13 +271,6 @@ export default function LoggedInNav() {
           headerBackTitleVisible: false,
         }}
         component={AskTotalEmployees}
-      />
-      <Stack.Screen
-        name="AskSector"
-        options={{
-          headerBackTitleVisible: false,
-        }}
-        component={AskSector}
       />
       <Stack.Screen
         name="UserPostListDetail"

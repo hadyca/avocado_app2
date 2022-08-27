@@ -8,7 +8,6 @@ export const COMPANYPOST_QUERY = gql`
         id
         companyName
         aboutUs
-        sector
         user {
           id
           username

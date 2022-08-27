@@ -1,10 +1,10 @@
 import React from "react";
-import { useWindowDimensions, Text } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../Colors";
 import { timeForToday } from "../../Utils";
 import UserAvatar from "../UserAvatar";
+import BaseInfo from "./BaseInfo";
 
 const Container = styled.View``;
 
@@ -18,8 +18,6 @@ const Header = styled.TouchableOpacity`
 `;
 
 const CompanyName = styled.Text`
-  font-weight: bold;
-  font-size: 17px;
   margin-top: 5px;
 `;
 
@@ -27,31 +25,14 @@ const Contents = styled.TouchableOpacity`
   margin-left: 10px;
 `;
 
-const ImgContainer = styled.TouchableOpacity`
-  margin-bottom: 8px;
-`;
-
-const MainImg = styled.Image`
-  width: ${(props) => props.width}px;
-  height: ${(props) => Math.ceil(props.height / 3)}px;
-`;
-
 const Content = styled.View`
-  font-size: 14px;
   margin-top: 5px;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-end;
 `;
 
 const ContentText = styled.Text`
-  font-size: 14px;
   color: ${colors.black};
-`;
-
-const MoreText = styled.Text`
-  margin-left: 5px;
-  font-size: 12px;
-  color: ${colors.greyText};
 `;
 
 const LikeComment = styled.View`
@@ -88,14 +69,20 @@ const Separator = styled.View`
 function FavoriteCompanyPost({
   id,
   company,
-  file,
   title,
+  wage,
+  wageType,
+  workingDay,
+  dayOption,
+  startTime,
+  finishTime,
+  timeOption,
+  contactNumber,
+  email,
   totalCompanyPostLikes,
   totalCompanyPostComments,
   createdAt,
 }) {
-  const { width, height } = useWindowDimensions();
-
   const time = timeForToday(parseInt(createdAt));
 
   const navigation = useNavigation();
@@ -121,21 +108,14 @@ function FavoriteCompanyPost({
             username={company.user.username}
             uri={company.user.avatarUrl}
           />
-          <CompanyName>{company.companyName}</CompanyName>
+          <CompanyName>
+            {company.companyName} · {company.addressStep1} ·{" "}
+            {company.addressStep2}
+          </CompanyName>
         </Header>
       </HeaderContainer>
-      {file?.length > 0 ? (
-        <ImgContainer onPress={goToPostDetail}>
-          <MainImg
-            resizeMode="cover"
-            source={{ uri: file[0].fileUrl }}
-            width={width}
-            height={height}
-          />
-        </ImgContainer>
-      ) : null}
       <Contents onPress={goToPostDetail}>
-        {title.length >= 50 ? (
+        {/* {title.length >= 50 ? (
           <Content>
             <ContentText>{title.substring(0, 50)}</ContentText>
             <MoreText>...more</MoreText>
@@ -144,7 +124,22 @@ function FavoriteCompanyPost({
           <Content>
             <ContentText>{title}</ContentText>
           </Content>
-        )}
+        )} */}
+
+        <Content>
+          <ContentText>{title}</ContentText>
+        </Content>
+        <BaseInfo
+          wageType={wageType}
+          wage={wage}
+          workingDay={workingDay}
+          dayOption={dayOption}
+          startTime={startTime}
+          finishTime={finishTime}
+          timeOption={timeOption}
+          contactNumber={contactNumber}
+          email={email}
+        />
       </Contents>
       <LikeComment>
         <Likes>

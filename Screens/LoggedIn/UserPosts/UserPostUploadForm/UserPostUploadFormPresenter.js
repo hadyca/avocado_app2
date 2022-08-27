@@ -109,7 +109,7 @@ export default function UserPostUploadFormPresenter({
   };
   const NoHeaderRight = () => (
     <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
-      <HeaderRightText ok={false}>완료</HeaderRightText>
+      <HeaderRightText>완료</HeaderRightText>
     </TouchableOpacity>
   );
 

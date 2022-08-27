@@ -1,11 +1,11 @@
 import React from "react";
 import { Alert } from "react-native";
+import styled from "styled-components/native";
+import { useNavigation } from "@react-navigation/native";
 import ScreenLayout from "../../../Components/ScreenLayout";
 import { gql, useMutation } from "@apollo/client";
 import { userPostReportAry } from "../../../Constant";
-import styled from "styled-components/native";
 import { colors } from "../../../Colors";
-import { useNavigation } from "@react-navigation/native";
 
 const REPORT_MUTATION = gql`
   mutation userPostReport($userPostId: Int!, $reason: String!) {
@@ -42,7 +42,7 @@ export default function UserPostReportForm({ route: { params } }) {
     navigation.pop();
   };
   const [reportPostMutation, { loading }] = useMutation(REPORT_MUTATION, {
-    update: goReportUserPost,
+    onCompleted: goReportUserPost,
   });
 
   const goToReport = (item) => {
@@ -67,7 +67,7 @@ export default function UserPostReportForm({ route: { params } }) {
     <ScreenLayout>
       <Container>
         <TitleView>
-          <TitleText>게시글을 신고하는 이유를 선택해주세요.</TitleText>
+          <TitleText>게시글을 신고하는 이유를 선택해 주세요.</TitleText>
         </TitleView>
         {userPostReportAry.map((item, index) => (
           <ReportView key={index} onPress={() => handleReport(item)}>

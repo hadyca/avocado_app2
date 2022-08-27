@@ -3,34 +3,17 @@ import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@apollo/client";
 import * as ImagePicker from "expo-image-picker";
 import ScreenLayout from "../../../../Components/ScreenLayout";
-import {
-  EDIT_AVATAR_MUTATION,
-  EDIT_COMPANY_MUTATION,
-} from "./EditProfileQueries";
+import { EDIT_AVATAR_MUTATION } from "./EditProfileQueries";
 import EditProfilePresenter from "./EditProfilePresenter";
 
 export default function ({ route: { params } }) {
   const navigation = useNavigation();
   const [isEdited, setIsEdited] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState("");
-  const [skipPop, setSkipPop] = useState(false);
 
   const [editAvatarMutation, { loading }] = useMutation(EDIT_AVATAR_MUTATION, {
-    onCompleted: () => {
-      if (!skipPop) {
-        navigation.pop();
-      } else {
-        return;
-      }
-    },
+    onCompleted: () => navigation.pop(),
   });
-
-  const [editSectorMutation, { loading: companyLoading }] = useMutation(
-    EDIT_COMPANY_MUTATION,
-    {
-      onCompleted: () => navigation.pop(),
-    }
-  );
 
   const goToSelectAvatar = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -129,15 +112,10 @@ export default function ({ route: { params } }) {
     }
   }, []);
 
-  const skiphandle = () => {
-    setSkipPop(true);
-  };
-
   return (
     <ScreenLayout>
       <EditProfilePresenter
         editAvatarMutation={editAvatarMutation}
-        editSectorMutation={editSectorMutation}
         goToSelectAvatar={goToSelectAvatar}
         goToEditUsername={goToEditUsername}
         goToEditBio={goToEditBio}
@@ -153,8 +131,6 @@ export default function ({ route: { params } }) {
         bio={params.bio}
         myCompany={params.myCompany}
         loading={loading}
-        companyLoading={companyLoading}
-        skiphandle={skiphandle}
       />
     </ScreenLayout>
   );

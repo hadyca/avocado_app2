@@ -42,7 +42,7 @@ export default function UserReportForm({ route: { params } }) {
     navigation.pop();
   };
   const [reportUserMutation, { loading }] = useMutation(REPORT_MUTATION, {
-    update: goReportUser,
+    onCompleted: goReportUser,
   });
 
   const goToReport = (item) => {
@@ -67,7 +67,7 @@ export default function UserReportForm({ route: { params } }) {
     <ScreenLayout>
       <Container>
         <TitleView>
-          <TitleText>유저를 신고하는 이유를 선택해주세요.</TitleText>
+          <TitleText>유저를 신고하는 이유를 선택해 주세요.</TitleText>
         </TitleView>
         {userReportAry.map((item, index) => (
           <ReportView key={index} onPress={() => handleReport(item)}>

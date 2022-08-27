@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, TouchableOpacity } from "react-native";
+import { ActivityIndicator, TouchableOpacity, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { useForm, Controller } from "react-hook-form";
@@ -10,7 +10,7 @@ import { usernameRule } from "../../../../RegExp";
 import FormError from "../../../../Components/Auth/FormError";
 
 const HeaderRightText = styled.Text`
-  color: ${colors.black};
+  color: ${(props) => (props.ok ? colors.buttonBackground : colors.black)};
   font-size: 16px;
   font-weight: 600;
   margin-right: 7px;
@@ -52,19 +52,30 @@ export default function EditUsernamePresenter({
       navigation.pop();
     } else {
       if (!loading) {
-        editUsernameMutation({
-          variables: {
-            username,
-            usernameEditDate: String(today),
-          },
-        });
+        Alert.alert(
+          "30일 이내 다시 변경 할 수 없습니다.\n그래도 하시겠어요?",
+          "",
+          [
+            { text: "Cancel" },
+            {
+              text: "Ok",
+              onPress: () =>
+                editUsernameMutation({
+                  variables: {
+                    username,
+                    usernameEditDate: String(today),
+                  },
+                }),
+            },
+          ]
+        );
       }
     }
   };
 
   const NoHeaderRight = () => (
     <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
-      <HeaderRightText>Done</HeaderRightText>
+      <HeaderRightText>완료</HeaderRightText>
     </TouchableOpacity>
   );
 
@@ -74,7 +85,7 @@ export default function EditUsernamePresenter({
       onPress={handleSubmit(onValid)}
       style={{ marginRight: 10, opacity: 1 }}
     >
-      <HeaderRightText>Done</HeaderRightText>
+      <HeaderRightText ok={true}>완료</HeaderRightText>
     </TouchableOpacity>
   );
   const HeaderRightLoading = () => (

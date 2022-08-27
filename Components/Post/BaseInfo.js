@@ -38,15 +38,15 @@ export default function BaseInfo({
 
   useEffect(() => {
     let newAry = [];
-    workingDay.monday && newAry.push("월");
-    workingDay.tuesday && newAry.push("화");
-    workingDay.wednesday && newAry.push("수");
-    workingDay.thursday && newAry.push("목");
-    workingDay.friday && newAry.push("금");
-    workingDay.saturday && newAry.push("토");
-    workingDay.sunday && newAry.push("일");
+    workingDay.mon && newAry.push("월");
+    workingDay.tue && newAry.push("화");
+    workingDay.wed && newAry.push("수");
+    workingDay.thu && newAry.push("목");
+    workingDay.fri && newAry.push("금");
+    workingDay.sat && newAry.push("토");
+    workingDay.sun && newAry.push("일");
     setDayArray(newAry);
-  }, []);
+  }, [workingDay]);
 
   useEffect(() => {
     const startTimeTrans = time.filter((item) => item.value === startTime);
@@ -54,12 +54,12 @@ export default function BaseInfo({
 
     const finishTimeTrans = time.filter((item) => item.value === finishTime);
     setFinish(finishTimeTrans[0].label);
-  }, []);
+  }, [startTime, finishTime]);
 
   useEffect(() => {
     const commaTrans = wage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     setCommaWage(commaTrans);
-  }, []);
+  }, [wage]);
 
   return (
     <BaseDataContainer>
@@ -80,26 +80,26 @@ export default function BaseInfo({
           color={colors.greyText}
           style={{ width: 25 }}
         />
-        {workingDay.monday &&
-        workingDay.tuesday &&
-        workingDay.wednesday &&
-        workingDay.thursday &&
-        workingDay.friday &&
-        workingDay.saturday &&
-        workingDay.sunday ? (
+        {workingDay.mon &&
+        workingDay.tue &&
+        workingDay.wed &&
+        workingDay.thu &&
+        workingDay.fri &&
+        workingDay.sat &&
+        workingDay.sun ? (
           <BaseText>월~일</BaseText>
-        ) : workingDay.monday &&
-          workingDay.tuesday &&
-          workingDay.wednesday &&
-          workingDay.thursday &&
-          workingDay.friday &&
-          workingDay.saturday ? (
+        ) : workingDay.mon &&
+          workingDay.tue &&
+          workingDay.wed &&
+          workingDay.thu &&
+          workingDay.fri &&
+          workingDay.sat ? (
           <BaseText>월~토</BaseText>
-        ) : workingDay.monday &&
-          workingDay.tuesday &&
-          workingDay.wednesday &&
-          workingDay.thursday &&
-          workingDay.friday ? (
+        ) : workingDay.mon &&
+          workingDay.tue &&
+          workingDay.wed &&
+          workingDay.thu &&
+          workingDay.fri ? (
           <BaseText>월~금</BaseText>
         ) : (
           dayArray.map((item, index) => {

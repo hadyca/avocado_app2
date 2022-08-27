@@ -31,9 +31,9 @@ export default function AskAboutUs({ route: { params } }) {
     return setCounting(value.length);
   };
 
-  const goToAskSector = () => {
+  const goToAskTotalEmployees = () => {
     const { aboutUs } = getValues();
-    navigation.navigate("AskSector", {
+    navigation.navigate("AskTotalEmployees", {
       companyName: params.companyName,
       aboutUs,
     });
@@ -42,7 +42,7 @@ export default function AskAboutUs({ route: { params } }) {
   return (
     <CreatCompanyLayout>
       <ProgressCreateCompany
-        title={"어떤 회사인지 멋지게 소개해주세요!"}
+        title={"어떤 회사인지 멋지게 소개해 주세요!"}
         step={"2"}
       />
       <Controller
@@ -63,11 +63,11 @@ export default function AskAboutUs({ route: { params } }) {
               }}
               value={value || ""}
               hasError={false}
-              onSubmitEditing={goToAskSector}
+              onSubmitEditing={goToAskTotalEmployees}
               maxLength={150}
             />
             <UnderBar lastOne={false} />
-            <CountingText>글자수 제한 ({counting}/150)</CountingText>
+            <CountingText>글자 수 제한 ({counting}/150)</CountingText>
           </AboutUsView>
         )}
       />
@@ -76,7 +76,7 @@ export default function AskAboutUs({ route: { params } }) {
         text="다음"
         disabled={!formState.isValid}
         loading={false}
-        onPress={goToAskSector}
+        onPress={goToAskTotalEmployees}
       />
     </CreatCompanyLayout>
   );
