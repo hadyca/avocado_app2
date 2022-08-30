@@ -26,6 +26,7 @@ export const UnderBar = styled.View`
   width: 100%;
   height: 1px;
   background-color: ${colors.borderThick};
+  margin-top: 6px;
   margin-bottom: ${(props) => (props.lastOne ? 25 : props.hasError ? 0 : 2)}px;
 `;
 

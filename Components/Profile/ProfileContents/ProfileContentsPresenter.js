@@ -199,7 +199,6 @@ export default function ProfileContentsPresenter({
             </Address>
             <Separator />
             <InfoView>
-              <Separator />
               <Title>Number of employees</Title>
               <Info>{`${data?.seeProfile?.myCompany?.totalEmployees} 명`}</Info>
               <Separator />

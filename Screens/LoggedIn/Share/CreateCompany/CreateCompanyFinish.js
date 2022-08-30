@@ -18,10 +18,12 @@ const BottomContainer = styled.View``;
 const Title = styled.Text`
   margin-bottom: 20px;
   text-align: center;
-  font-size: 16px;
+  font-size: 18px;
 `;
 
-const Content = styled.Text``;
+const Content = styled.Text`
+  font-size: 15px;
+`;
 
 export default function CreateCompanyFinish() {
   const navigation = useNavigation();
@@ -35,11 +37,15 @@ export default function CreateCompanyFinish() {
     <CreatCompanyLayout>
       <Container>
         <TopContainer>
-          <Title>파트너 기업 회원이 되어 주셔서 감사합니다.</Title>
-          <Content>이제 채용 게시판에 구인글을 등록할 수 있어요.</Content>
+          <Title>파트너 회원이 되신 것을 축하드립니다!</Title>
           <Content>
-            그리고 계속해서 파트너 회원분들을 위해 여러 서비스를 제공할
-            예정이오니, 많은 사용 부탁 드릴게요!
+            저희 xx서비스는 파트너 회원분들의 구인 및 홍보 활동을
+          </Content>
+          <Content>더 멀리 더 많이 퍼질 수 있도록 돕겠습니다.</Content>
+          <Content></Content>
+          <Content>
+            계속해서 파트너 회원분들을 위해 여러 서비스를 제공할 예정이오니,
+            많은 사용 부탁 드릴게요!
           </Content>
         </TopContainer>
         <BottomContainer>

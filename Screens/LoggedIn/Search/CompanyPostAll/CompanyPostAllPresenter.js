@@ -143,10 +143,13 @@ const FinalContainer = styled.View`
   margin: 10px 10px 30px 10px;
 `;
 
-const CloseText = styled.Text``;
+const CloseText = styled.Text`
+  padding: 5px;
+`;
 
 const OkText = styled.Text`
   color: ${colors.buttonBackground};
+  padding: 5px;
 `;
 
 const TopView = styled.View`
