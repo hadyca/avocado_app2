@@ -40,7 +40,8 @@
     "react-native-web": "0.17.1",
     "react-number-format": "^4.9.3",
     "styled-components": "^5.3.0",
-    "expo-notifications": "~0.13.3"
+    "expo-notifications": "~0.13.3",
+    "expo-device": "~4.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
