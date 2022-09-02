@@ -72,7 +72,7 @@ const ButtonText = styled.Text`
 export default function Home() {
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
-      shouldShowAlert: true,
+      shouldShowAlert: false,
       shouldPlaySound: false,
       shouldSetBadge: false,
     }),
