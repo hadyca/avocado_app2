@@ -69,21 +69,33 @@ const ButtonText = styled.Text`
   text-align: center;
 `;
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: false,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+
 export default function Home() {
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: false,
-      shouldPlaySound: false,
-      shouldSetBadge: false,
-    }),
-  });
-  useEffect(() => registerForPushNotificationsAsync(), []);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+  useEffect(() => {
+    registerForPushNotificationsAsync().then((token) => console.log(token));
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        console.log(notification);
+      });
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
+  }, []);
   const registerForPushNotificationsAsync = async () => {
     let token;
     if (Device.isDevice) {
       const { status: existingStatus } =
         await Notifications.getPermissionsAsync();
-      console.log(existingStatus);
       let finalStatus = existingStatus;
       if (existingStatus !== "granted") {
         const { status } = await Notifications.requestPermissionsAsync();
@@ -94,7 +106,6 @@ export default function Home() {
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log("token is :", token);
     } else {
       alert("Must use physical device for Push Notifications");
     }

@@ -54,23 +54,31 @@ export default function ({ route: { params } }) {
   );
 
   const goToImageSelect = async () => {
-    if (countPhoto < 5) {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [5, 3],
-        quality: 0.2,
-      });
+    if (Platform.OS !== "web") {
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        alert("Sorry, we need camera roll permissions to make this work!");
+      } else {
+        if (countPhoto < 5) {
+          let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [5, 3],
+            quality: 0.2,
+          });
 
-      if (!result.cancelled) {
-        const photoObj = {
-          uri: result.uri,
-        };
-        setPhoto((photo) => [...photo, photoObj]);
-        setCountPhoto(countPhoto + 1);
+          if (!result.cancelled) {
+            const photoObj = {
+              uri: result.uri,
+            };
+            setPhoto((photo) => [...photo, photoObj]);
+            setCountPhoto(countPhoto + 1);
+          }
+        } else {
+          return null;
+        }
       }
-    } else {
-      return null;
     }
   };
 
@@ -79,18 +87,6 @@ export default function ({ route: { params } }) {
     setPhoto(newPhoto);
     setCountPhoto(countPhoto - 1);
   };
-
-  useEffect(() => {
-    (async () => {
-      if (Platform.OS !== "web") {
-        const { status } =
-          await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== "granted") {
-          alert("Sorry, we need camera roll permissions to make this work!");
-        }
-      }
-    })();
-  }, []);
 
   useEffect(() => {
     if (params.screenName) {
