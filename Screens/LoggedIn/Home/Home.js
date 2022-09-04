@@ -73,7 +73,7 @@ Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: false,
     shouldPlaySound: false,
-    shouldSetBadge: false,
+    shouldSetBadge: true,
   }),
 });
 
@@ -82,14 +82,7 @@ export default function Home() {
   const responseListener = useRef();
   useEffect(() => {
     registerForPushNotificationsAsync().then((token) => console.log(token));
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        console.log(notification);
-      });
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
+    Notifications.getBadgeCountAsync().then((test) => console.log(test));
   }, []);
   const registerForPushNotificationsAsync = async () => {
     let token;
