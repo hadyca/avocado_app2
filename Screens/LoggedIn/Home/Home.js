@@ -1,6 +1,7 @@
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import React, { useState, useEffect, useRef } from "react";
+import { Linking } from "react-native";
 import { useScrollToTop } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 import ScreenLayout from "../../../Components/ScreenLayout";
@@ -71,7 +72,7 @@ const ButtonText = styled.Text`
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
-    shouldShowAlert: false,
+    shouldShowAlert: true,
     shouldPlaySound: false,
     shouldSetBadge: true,
   }),
@@ -80,10 +81,34 @@ Notifications.setNotificationHandler({
 export default function Home() {
   const notificationListener = useRef();
   const responseListener = useRef();
+  const lastNotificationResponse = Notifications.useLastNotificationResponse();
+
   useEffect(() => {
     registerForPushNotificationsAsync().then((token) => console.log(token));
-    Notifications.getBadgeCountAsync().then((test) => console.log(test));
   }, []);
+
+  React.useEffect(() => {
+    if (
+      lastNotificationResponse &&
+      lastNotificationResponse.notification.request.content.data.url &&
+      lastNotificationResponse.actionIdentifier ===
+        Notifications.DEFAULT_ACTION_IDENTIFIER
+    ) {
+      console.log("yap!");
+    }
+  }, [lastNotificationResponse]);
+  // useEffect(() => {
+  //   notificationListener.current =
+  //     Notifications.addNotificationReceivedListener((notification) =>
+  //       console.log("noti!", notification)
+  //     );
+
+  //   responseListener.current =
+  //     Notifications.addNotificationResponseReceivedListener((response) =>
+  //       console.log("res!", response)
+  //     );
+  // }, []);
+
   const registerForPushNotificationsAsync = async () => {
     let token;
     if (Device.isDevice) {
