@@ -72,42 +72,27 @@ const ButtonText = styled.Text`
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
-    shouldShowAlert: true,
+    shouldShowAlert: false,
     shouldPlaySound: false,
-    shouldSetBadge: true,
+    shouldSetBadge: false,
   }),
 });
 
 export default function Home() {
-  const notificationListener = useRef();
-  const responseListener = useRef();
   const lastNotificationResponse = Notifications.useLastNotificationResponse();
 
   useEffect(() => {
     registerForPushNotificationsAsync().then((token) => console.log(token));
   }, []);
 
-  React.useEffect(() => {
-    if (
-      lastNotificationResponse &&
-      lastNotificationResponse.notification.request.content.data.url &&
-      lastNotificationResponse.actionIdentifier ===
-        Notifications.DEFAULT_ACTION_IDENTIFIER
-    ) {
-      console.log("yap!");
+  useEffect(() => {
+    if (lastNotificationResponse) {
+      navigation.navigate("UserPostListDetail", {
+        id: lastNotificationResponse.notification.request.content.data
+          .userPostId,
+      });
     }
   }, [lastNotificationResponse]);
-  // useEffect(() => {
-  //   notificationListener.current =
-  //     Notifications.addNotificationReceivedListener((notification) =>
-  //       console.log("noti!", notification)
-  //     );
-
-  //   responseListener.current =
-  //     Notifications.addNotificationResponseReceivedListener((response) =>
-  //       console.log("res!", response)
-  //     );
-  // }, []);
 
   const registerForPushNotificationsAsync = async () => {
     let token;
