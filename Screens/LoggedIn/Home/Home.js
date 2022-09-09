@@ -1,7 +1,7 @@
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import React, { useState, useEffect, useRef } from "react";
-import { Linking } from "react-native";
+import { gql, useMutation } from "@apollo/client";
 import { useScrollToTop } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 import ScreenLayout from "../../../Components/ScreenLayout";
@@ -78,8 +78,21 @@ Notifications.setNotificationHandler({
   }),
 });
 
+const GET_PUSH_TOKEN = gql`
+  mutation getPushToken($userId: Int!, $pushToken: String!) {
+    getPushToken(userId: $userId, pushToken: $pushToken) {
+      ok
+      error
+      pushToken
+    }
+  }
+`;
 export default function Home() {
+  const { data } = useMe();
+  const [pushToken, setPushToken] = useState("");
   const lastNotificationResponse = Notifications.useLastNotificationResponse();
+
+  const [getPushTokentMutation, { loading }] = useMutation(GET_PUSH_TOKEN);
 
   useEffect(() => {
     registerForPushNotificationsAsync().then((token) => console.log(token));
@@ -104,6 +117,13 @@ export default function Home() {
         const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
+      //어디에 넣어야 할지..?
+      // getPushTokentMutation({
+      //   variables: {
+      //     userId: data?.me?.id,
+      //     pushToken: token,
+      //   },
+      // });
       if (finalStatus !== "granted") {
         alert("Failed to get push token for push notification!");
         return;
@@ -130,7 +150,6 @@ export default function Home() {
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
 
-  const { data } = useMe();
   const goToCreateCompany = () => {
     navigation.navigate("CreateCompanyFinish");
     if (data?.me?.myCompany) {
