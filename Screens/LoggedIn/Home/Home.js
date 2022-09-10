@@ -88,15 +88,18 @@ const GET_PUSH_TOKEN = gql`
   }
 `;
 export default function Home() {
-  const { data } = useMe();
   const [pushToken, setPushToken] = useState("");
   const lastNotificationResponse = Notifications.useLastNotificationResponse();
 
   const [getPushTokentMutation, { loading }] = useMutation(GET_PUSH_TOKEN);
-
+  const { data: userData } = useMe();
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token) => console.log(token));
-  }, []);
+    if (userData) {
+      registerForPushNotificationsAsync(userData);
+    } else {
+      return;
+    }
+  }, [userData]);
 
   useEffect(() => {
     if (lastNotificationResponse) {
@@ -107,7 +110,7 @@ export default function Home() {
     }
   }, [lastNotificationResponse]);
 
-  const registerForPushNotificationsAsync = async () => {
+  const registerForPushNotificationsAsync = async (userData) => {
     let token;
     if (Device.isDevice) {
       const { status: existingStatus } =
@@ -117,18 +120,19 @@ export default function Home() {
         const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
-      //어디에 넣어야 할지..?
-      // getPushTokentMutation({
-      //   variables: {
-      //     userId: data?.me?.id,
-      //     pushToken: token,
-      //   },
-      // });
+
       if (finalStatus !== "granted") {
         alert("Failed to get push token for push notification!");
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
+      // 어디에 넣어야 할지..?
+      await getPushTokentMutation({
+        variables: {
+          userId: parseInt(userData?.me?.id),
+          pushToken: token,
+        },
+      });
     } else {
       alert("Must use physical device for Push Notifications");
     }
@@ -152,7 +156,7 @@ export default function Home() {
 
   const goToCreateCompany = () => {
     navigation.navigate("CreateCompanyFinish");
-    if (data?.me?.myCompany) {
+    if (userData?.me?.myCompany) {
       Alert.alert("이미 가입되어 있습니다.");
     } else {
       navigation.navigate("AskCompanyName");
