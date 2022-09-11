@@ -104,8 +104,7 @@ export default function Home() {
   useEffect(() => {
     if (lastNotificationResponse) {
       navigation.navigate("UserPostListDetail", {
-        id: lastNotificationResponse.notification.request.content.data
-          .userPostId,
+        id: lastNotificationResponse.notification.request.content.data.postId,
       });
     }
   }, [lastNotificationResponse]);
@@ -115,24 +114,27 @@ export default function Home() {
     if (Device.isDevice) {
       const { status: existingStatus } =
         await Notifications.getPermissionsAsync();
+      console.log("exist:", existingStatus);
       let finalStatus = existingStatus;
       if (existingStatus !== "granted") {
         const { status } = await Notifications.requestPermissionsAsync();
+        console.log("nowStatus:", status);
+        if (status === "granted") {
+          await getPushTokentMutation({
+            variables: {
+              userId: parseInt(userData?.me?.id),
+              pushToken: token,
+            },
+          });
+        }
         finalStatus = status;
       }
-
       if (finalStatus !== "granted") {
         alert("Failed to get push token for push notification!");
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
-      // 어디에 넣어야 할지..?
-      await getPushTokentMutation({
-        variables: {
-          userId: parseInt(userData?.me?.id),
-          pushToken: token,
-        },
-      });
+      console.log(token);
     } else {
       alert("Must use physical device for Push Notifications");
     }
