@@ -102,9 +102,21 @@ export default function Home() {
   }, [userData]);
 
   useEffect(() => {
-    if (lastNotificationResponse) {
+    if (
+      lastNotificationResponse?.notification?.request?.content?.data?.userPostId
+    ) {
       navigation.navigate("UserPostListDetail", {
-        id: lastNotificationResponse.notification.request.content.data.postId,
+        id: lastNotificationResponse.notification.request.content.data
+          .userPostId,
+      });
+    }
+    if (
+      lastNotificationResponse?.notification?.request?.content?.data
+        ?.companyPostId
+    ) {
+      navigation.navigate("CompanyPostListDetail", {
+        id: lastNotificationResponse.notification.request.content.data
+          .companyPostId,
       });
     }
   }, [lastNotificationResponse]);
