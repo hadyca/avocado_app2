@@ -133,7 +133,7 @@ export default function ({
     CREATE_RECOMMENT_MUTATION,
     {
       update: updateReComment,
-      onError: () => {
+      onError: (e) => {
         Alert.alert("존재하지 않는 코멘트 입니다.");
         navigation.pop();
       },

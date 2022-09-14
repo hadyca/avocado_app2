@@ -102,9 +102,21 @@ export default function Home() {
   }, [userData]);
 
   useEffect(() => {
-    if (lastNotificationResponse) {
+    if (
+      lastNotificationResponse?.notification?.request?.content?.data?.userPostId
+    ) {
       navigation.navigate("UserPostListDetail", {
-        id: lastNotificationResponse.notification.request.content.data.postId,
+        id: lastNotificationResponse.notification.request.content.data
+          .userPostId,
+      });
+    }
+    if (
+      lastNotificationResponse?.notification?.request?.content?.data
+        ?.companyPostId
+    ) {
+      navigation.navigate("CompanyPostListDetail", {
+        id: lastNotificationResponse.notification.request.content.data
+          .companyPostId,
       });
     }
   }, [lastNotificationResponse]);
@@ -115,9 +127,11 @@ export default function Home() {
       const { status: existingStatus } =
         await Notifications.getPermissionsAsync();
       console.log("exist:", existingStatus);
+
       let finalStatus = existingStatus;
       if (existingStatus !== "granted") {
         const { status } = await Notifications.requestPermissionsAsync();
+        const test = await Notifications.requestPermissionsAsync();
         console.log("nowStatus:", status);
         if (status === "granted") {
           await getPushTokentMutation({
