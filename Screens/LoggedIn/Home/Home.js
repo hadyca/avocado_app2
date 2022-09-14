@@ -127,9 +127,11 @@ export default function Home() {
       const { status: existingStatus } =
         await Notifications.getPermissionsAsync();
       console.log("exist:", existingStatus);
+
       let finalStatus = existingStatus;
       if (existingStatus !== "granted") {
         const { status } = await Notifications.requestPermissionsAsync();
+        const test = await Notifications.requestPermissionsAsync();
         console.log("nowStatus:", status);
         if (status === "granted") {
           await getPushTokentMutation({
