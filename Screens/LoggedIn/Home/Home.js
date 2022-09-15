@@ -149,6 +149,12 @@ export default function Home() {
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
       console.log(token);
+      await getPushTokentMutation({
+        variables: {
+          userId: parseInt(userData?.me?.id),
+          pushToken: token,
+        },
+      });
     } else {
       alert("Must use physical device for Push Notifications");
     }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { useQuery } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
@@ -64,24 +64,14 @@ export default function ({ route: { params } }) {
   };
 
   const HeaderRight = () => (
-    <View>
-      <TouchableOpacity onPress={() => null}>
-        <Ionicons
-          name="notifications"
-          color="grey"
-          size={18}
-          style={{ paddingLeft: 10, paddingRight: 10 }}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={showActionSheet}>
-        <Ionicons
-          name="ellipsis-vertical"
-          color="grey"
-          size={18}
-          style={{ paddingLeft: 10, paddingRight: 10 }}
-        />
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity onPress={showActionSheet}>
+      <Ionicons
+        name="ellipsis-vertical"
+        color="grey"
+        size={18}
+        style={{ paddingLeft: 10, paddingRight: 10 }}
+      />
+    </TouchableOpacity>
   );
 
   useEffect(() => {
