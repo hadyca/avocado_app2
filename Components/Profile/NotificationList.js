@@ -6,52 +6,12 @@ import { colors } from "../../Colors";
 import { timeForToday } from "../../Utils";
 import UserAvatar from "../UserAvatar";
 
-const Container = styled.View``;
-
-const HeaderContainer = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const Header = styled.TouchableOpacity`
-  margin: 10px;
-`;
-
-const CategoryView = styled.View`
-  margin-left: 10px;
-  border-radius: 5px;
+const Container = styled.View`
   justify-content: center;
-  align-items: flex-start;
-`;
-const CategoryTouch = styled.TouchableOpacity``;
-
-const CategoryText = styled.Text`
-  font-size: 11px;
-  padding: 5px 10px;
-  background-color: ${colors.borderThin};
-  font-weight: 600;
-  text-align: center;
 `;
 
-const Contents = styled.TouchableOpacity`
-  margin-left: 10px;
-  margin-top: 8px;
-`;
-
-const ImgContainer = styled.TouchableOpacity`
-  margin-top: 8px;
-`;
-
-const MainImg = styled.Image`
-  margin-top: 5px;
-  width: ${(props) => props.width}px;
-  height: ${(props) => Math.ceil(props.height / 3)}px;
-`;
-
-const Content = styled.View`
-  margin-top: 5px;
+const ContentContainer = styled.View`
   flex-direction: row;
-  align-items: flex-end;
 `;
 
 const ContentText = styled.Text`
@@ -123,7 +83,10 @@ function NotificationList({ id, user, content, createdAt }) {
 
   return (
     <Container>
-      <ContentText>{content}</ContentText>
+      <ContentContainer>
+        <ContentText>{content}</ContentText>
+        <Date>{time}</Date>
+      </ContentContainer>
       <Separator />
     </Container>
   );
