@@ -44,7 +44,7 @@ export const handleDistrict = async (userId, ...test) => {
 // for simulator
 
 const uploadHttpLink = createUploadLink({
-  uri: "https://4cb7-103-231-176-166.in.ngrok.io/graphql",
+  uri: "http://9709-182-160-125-147.ngrok.io/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -89,6 +89,7 @@ const cache = new InMemoryCache({
           "addressStep2_4",
           "addressStep2_5",
         ]),
+        seeAllNotification: offsetLimitPagination(),
       },
     },
   },

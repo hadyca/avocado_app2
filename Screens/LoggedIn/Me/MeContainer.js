@@ -73,7 +73,7 @@ export default function () {
 
   const HeaderRight = () => (
     <View style={{ flexDirection: "row" }}>
-      <TouchableOpacity onPress={() => null}>
+      <TouchableOpacity onPress={() => navigation.navigate("Notification")}>
         <Ionicons
           name="notifications"
           color="grey"
