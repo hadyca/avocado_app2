@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { NOTIFICATION_QUERY } from "./NotificationQueries";
-import { useNavigation } from "@react-navigation/native";
 import NotificationPresenter from "./NotificationPresenter";
 import ScreenLayout from "../../../../Components/ScreenLayout";
 import NotificationList from "../../../../Components/Profile/NotificationList";
 
-export default function ({ route: { params } }) {
-  const navigation = useNavigation();
+export default function () {
   const [refreshing, setRefreshing] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
   const { data, loading, refetch, fetchMore } = useQuery(NOTIFICATION_QUERY, {

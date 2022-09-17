@@ -74,7 +74,7 @@ export default function UserPostListPresenter({
           style={{ width: "100%" }}
           showsVerticalScrollIndicator={false}
           data={data?.seeAllUserPosts}
-          keyExtractor={(item, index) => "" + (item.id + index)}
+          keyExtractor={(item) => "" + item.id}
           renderItem={renderPost}
         />
         {fetchLoading ? (

@@ -1,104 +1,49 @@
 import React from "react";
-import { useWindowDimensions } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../Colors";
 import { timeForToday } from "../../Utils";
-import UserAvatar from "../UserAvatar";
 
 const Container = styled.View``;
 
-const HeaderContainer = styled.View`
+const TopContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 `;
 
-const Header = styled.TouchableOpacity`
-  margin: 10px;
-`;
-
-const CategoryView = styled.View`
-  margin-left: 10px;
-  border-radius: 5px;
-  justify-content: center;
-  align-items: flex-start;
-`;
-const CategoryTouch = styled.TouchableOpacity``;
-
-const CategoryText = styled.Text`
-  font-size: 11px;
-  padding: 5px 10px;
-  background-color: ${colors.borderThin};
-  font-weight: 600;
-  text-align: center;
-`;
-
-const Contents = styled.TouchableOpacity`
-  margin-left: 10px;
-  margin-top: 8px;
-`;
-
-const ImgContainer = styled.TouchableOpacity`
-  margin-top: 8px;
-`;
-
-const MainImg = styled.Image`
-  margin-top: 5px;
-  width: ${(props) => props.width}px;
-  height: ${(props) => Math.ceil(props.height / 3)}px;
-`;
-
-const Content = styled.View`
-  margin-top: 5px;
+const BottomContainer = styled.View`
   flex-direction: row;
-  align-items: flex-end;
+  align-items: center;
 `;
+const Type = styled.Text``;
+const AvatarView = styled.TouchableOpacity``;
 
+const Avatar = styled.Image`
+  width: 43px;
+  height: 43px;
+  border-radius: 30px;
+`;
 const ContentText = styled.Text`
+  flex-shrink: 1;
   font-size: 14px;
   color: ${colors.black};
 `;
 
-const MoreText = styled.Text`
-  margin-left: 5px;
-  font-size: 12px;
-  color: ${colors.greyText};
-`;
-
-const LikeComment = styled.View`
-  margin-left: 10px;
-  flex-direction: row;
-  margin-top: 5px;
-`;
-
-const Likes = styled.Text`
-  margin-right: 5px;
-  color: ${colors.greyText};
-  font-size: 12px;
-`;
-
-const Comments = styled.Text`
-  color: ${colors.greyText};
-  font-size: 12px;
-`;
-
 const Date = styled.Text`
-  margin-top: 3px;
   margin-left: 10px;
+  margin-right: 10px;
   color: ${colors.greyText};
-  font-size: 10px;
+  font-size: 12px;
 `;
 
 const Separator = styled.View`
   width: 100%;
   height: 5px;
   background-color: ${colors.borderThin};
-  margin-top: 10px;
 `;
 
-function NotificationList({ id, user, content, createdAt }) {
-  const { width, height } = useWindowDimensions();
-
+function NotificationList({ id, user, content, createdAt, type }) {
   const time = timeForToday(parseInt(createdAt));
 
   const navigation = useNavigation();
@@ -110,22 +55,29 @@ function NotificationList({ id, user, content, createdAt }) {
     });
   };
 
-  const goToCategoryScreen = (category) => {
-    navigation.navigate("CategoryBoard", {
-      category,
-    });
-  };
-  const goToPostDetail = () => {
-    navigation.navigate("UserPostListDetail", {
-      id,
-    });
-  };
-
   return (
-    <Container>
-      <ContentText>{content}</ContentText>
+    <>
+      <Container>
+        <TopContainer>
+          <Type>{type}</Type>
+          <Date>{time}</Date>
+        </TopContainer>
+        <BottomContainer>
+          <AvatarView onPress={goToProfile}>
+            {user.avatarUrl ? (
+              <Avatar resizeMode="cover" source={{ uri: user.avatarUrl }} />
+            ) : (
+              <Avatar
+                resizeMode="cover"
+                source={require("../../assets/blankProfile.png")}
+              />
+            )}
+          </AvatarView>
+          <ContentText>{content}</ContentText>
+        </BottomContainer>
+      </Container>
       <Separator />
-    </Container>
+    </>
   );
 }
 

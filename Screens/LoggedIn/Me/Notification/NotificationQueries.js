@@ -6,6 +6,8 @@ export const NOTIFICATION_QUERY = gql`
       id
       user {
         id
+        username
+        avatarUrl
       }
       content
       postId
