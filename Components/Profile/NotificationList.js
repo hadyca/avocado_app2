@@ -59,7 +59,13 @@ function NotificationList({ id, user, content, createdAt, type }) {
     <>
       <Container>
         <TopContainer>
-          <Type>{type}</Type>
+          {type === "userPost" ? (
+            <Type>일반</Type>
+          ) : type === "companyPost" ? (
+            <Type>채용</Type>
+          ) : (
+            <Type>공지</Type>
+          )}
           <Date>{time}</Date>
         </TopContainer>
         <BottomContainer>
