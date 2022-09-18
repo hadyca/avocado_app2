@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { View, Switch, StyleSheet } from "react-native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -23,9 +24,21 @@ const ButtonText = styled.Text`
 `;
 
 export default function MyProfileSetting({ route: { params } }) {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const navigation = useNavigation();
+  console.log(isEnabled);
   return (
     <ScreenLayout>
+      <View>
+        <Switch
+          trackColor={{ false: "#767577", true: "#81b0ff" }}
+          thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={isEnabled}
+        />
+      </View>
       <Button
         onPress={() =>
           navigation.navigate("Account", {

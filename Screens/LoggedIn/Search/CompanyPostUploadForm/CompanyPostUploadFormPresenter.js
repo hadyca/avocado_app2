@@ -558,7 +558,8 @@ export default function CompanyPostUploadFormPresenter({
                   <NumberFormat
                     value={value}
                     displayType={"text"}
-                    thousandSeparator={true}
+                    thousandSeparator="."
+                    decimalSeparator="NoUse"
                     onValueChange={(values) => {
                       const { value } = values;
                       setWageNum(value);
