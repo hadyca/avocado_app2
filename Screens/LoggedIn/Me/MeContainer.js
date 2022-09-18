@@ -77,7 +77,7 @@ export default function () {
         <Ionicons
           name="notifications"
           color="grey"
-          size={18}
+          size={20}
           style={{ paddingLeft: 10, paddingRight: 5 }}
         />
       </TouchableOpacity>
@@ -85,7 +85,7 @@ export default function () {
         <Ionicons
           name="ellipsis-vertical"
           color="grey"
-          size={18}
+          size={20}
           style={{ paddingLeft: 5, paddingRight: 10 }}
         />
       </TouchableOpacity>

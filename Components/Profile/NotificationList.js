@@ -4,9 +4,12 @@ import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../Colors";
 import { timeForToday } from "../../Utils";
 
-const Container = styled.View``;
+const Container = styled.TouchableOpacity`
+  margin: 10px;
+`;
 
 const TopContainer = styled.View`
+  margin-bottom: 10px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -16,8 +19,13 @@ const BottomContainer = styled.View`
   flex-direction: row;
   align-items: center;
 `;
-const Type = styled.Text``;
-const AvatarView = styled.TouchableOpacity``;
+const Type = styled.Text`
+  font-size: 13px;
+  color: ${colors.buttonBackground};
+`;
+const AvatarView = styled.TouchableOpacity`
+  margin-right: 10px;
+`;
 
 const Avatar = styled.Image`
   width: 43px;
@@ -26,13 +34,10 @@ const Avatar = styled.Image`
 `;
 const ContentText = styled.Text`
   flex-shrink: 1;
-  font-size: 14px;
   color: ${colors.black};
 `;
 
 const Date = styled.Text`
-  margin-left: 10px;
-  margin-right: 10px;
   color: ${colors.greyText};
   font-size: 12px;
 `;
@@ -43,10 +48,22 @@ const Separator = styled.View`
   background-color: ${colors.borderThin};
 `;
 
-function NotificationList({ id, user, content, createdAt, type }) {
+function NotificationList({ id, user, content, createdAt, type, postId }) {
   const time = timeForToday(parseInt(createdAt));
 
   const navigation = useNavigation();
+
+  const goToPostDetail = (type) => {
+    if (type === "userPost") {
+      navigation.navigate("UserPostListDetail", {
+        id: postId,
+      });
+    } else if (type === "companyPost") {
+      navigation.navigate("CompanyPostListDetail", {
+        id: postId,
+      });
+    }
+  };
 
   const goToProfile = () => {
     navigation.navigate("Profile", {
@@ -57,7 +74,7 @@ function NotificationList({ id, user, content, createdAt, type }) {
 
   return (
     <>
-      <Container>
+      <Container onPress={() => goToPostDetail(type)}>
         <TopContainer>
           {type === "userPost" ? (
             <Type>일반</Type>
@@ -79,7 +96,10 @@ function NotificationList({ id, user, content, createdAt, type }) {
               />
             )}
           </AvatarView>
-          <ContentText>{content}</ContentText>
+          <ContentText>
+            {user.username}
+            {content}
+          </ContentText>
         </BottomContainer>
       </Container>
       <Separator />
