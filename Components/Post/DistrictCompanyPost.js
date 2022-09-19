@@ -102,7 +102,6 @@ function DistrictCompanyPost({
   const goToProfile = () => {
     navigation.navigate("Profile", {
       id: company.user.id,
-      username: company.user.username,
     });
   };
 

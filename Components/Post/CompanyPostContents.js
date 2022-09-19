@@ -57,7 +57,6 @@ export default function CompanyPostContents({
   const goToProfile = () => {
     navigation.navigate("Profile", {
       id: userId,
-      username,
     });
   };
 

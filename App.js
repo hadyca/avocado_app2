@@ -9,6 +9,7 @@ import LoggedInNav from "./Navigators/LoggedInNav";
 import { NavigationContainer } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import client, { isLoggedInVar, tokenVar, logUserOut } from "./apollo";
+import { Text } from "react-native";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -23,6 +24,11 @@ export default function App() {
     const imagePromises = imagesToLoad.map((image) => Asset.loadAsync(image));
     return Promise.all([...fontPromises, ...imagePromises]);
   };
+
+  //텍스트 크기 고정 (시스템 영향 받지 않음)
+  Text.defaultProps = Text.defaultProps || {};
+  Text.defaultProps.allowFontScaling = false;
+
   const preload = async () => {
     // logUserOut();
     const token = await AsyncStorage.getItem("token");

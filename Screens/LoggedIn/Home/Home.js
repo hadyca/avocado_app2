@@ -119,6 +119,14 @@ export default function Home() {
           .companyPostId,
       });
     }
+    if (
+      lastNotificationResponse?.notification?.request?.content?.data?.sendUserId
+    ) {
+      navigation.navigate("Profile", {
+        id: lastNotificationResponse.notification.request.content.data
+          .sendUserId,
+      });
+    }
   }, [lastNotificationResponse]);
 
   const registerForPushNotificationsAsync = async (userData) => {

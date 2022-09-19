@@ -62,13 +62,16 @@ function NotificationList({ id, user, content, createdAt, type, postId }) {
       navigation.navigate("CompanyPostListDetail", {
         id: postId,
       });
+    } else if (type === "following") {
+      navigation.navigate("Profile", {
+        id: user.id,
+      });
     }
   };
 
   const goToProfile = () => {
     navigation.navigate("Profile", {
       id: user.id,
-      username: user.username,
     });
   };
 
@@ -77,9 +80,11 @@ function NotificationList({ id, user, content, createdAt, type, postId }) {
       <Container onPress={() => goToPostDetail(type)}>
         <TopContainer>
           {type === "userPost" ? (
-            <Type>일반</Type>
+            <Type>일반글</Type>
           ) : type === "companyPost" ? (
-            <Type>채용</Type>
+            <Type>채용글</Type>
+          ) : type === "following" ? (
+            <Type>팔로윙</Type>
           ) : (
             <Type>공지</Type>
           )}
@@ -96,10 +101,7 @@ function NotificationList({ id, user, content, createdAt, type, postId }) {
               />
             )}
           </AvatarView>
-          <ContentText>
-            {user.username}
-            {content}
-          </ContentText>
+          <ContentText>{`${user.username} ${content}`}</ContentText>
         </BottomContainer>
       </Container>
       <Separator />

@@ -101,7 +101,6 @@ export default function ({ id, userPostId, user, payload, isMine, createdAt }) {
   const goToProfile = () => {
     navigation.navigate("Profile", {
       id: user.id,
-      username: user.username,
     });
   };
 

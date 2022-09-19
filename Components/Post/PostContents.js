@@ -68,7 +68,6 @@ export default function PostContents({
   const goToProfile = () => {
     navigation.navigate("Profile", {
       id: userId,
-      username,
     });
   };
 

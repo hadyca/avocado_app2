@@ -97,7 +97,6 @@ function CategoryUserPost({
   const goToProfile = () => {
     navigation.navigate("Profile", {
       id: user.id,
-      username: user.username,
     });
   };
 
