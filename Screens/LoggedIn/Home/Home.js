@@ -1,6 +1,4 @@
-import * as Device from "expo-device";
-import * as Notifications from "expo-notifications";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { useScrollToTop } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -70,14 +68,6 @@ const ButtonText = styled.Text`
   text-align: center;
 `;
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: false,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
-
 const GET_PUSH_TOKEN = gql`
   mutation getPushToken($userId: Int!, $pushToken: String!) {
     getPushToken(userId: $userId, pushToken: $pushToken) {
@@ -88,98 +78,14 @@ const GET_PUSH_TOKEN = gql`
   }
 `;
 export default function Home() {
-  const [pushToken, setPushToken] = useState("");
-  const lastNotificationResponse = Notifications.useLastNotificationResponse();
-
-  const [getPushTokentMutation, { loading }] = useMutation(GET_PUSH_TOKEN);
-  const { data: userData } = useMe();
-  useEffect(() => {
-    if (userData) {
-      registerForPushNotificationsAsync(userData);
-    } else {
-      return;
-    }
-  }, [userData]);
-
-  useEffect(() => {
-    if (
-      lastNotificationResponse?.notification?.request?.content?.data?.userPostId
-    ) {
-      navigation.navigate("UserPostListDetail", {
-        id: lastNotificationResponse.notification.request.content.data
-          .userPostId,
-      });
-    }
-    if (
-      lastNotificationResponse?.notification?.request?.content?.data
-        ?.companyPostId
-    ) {
-      navigation.navigate("CompanyPostListDetail", {
-        id: lastNotificationResponse.notification.request.content.data
-          .companyPostId,
-      });
-    }
-    if (
-      lastNotificationResponse?.notification?.request?.content?.data?.sendUserId
-    ) {
-      navigation.navigate("Profile", {
-        id: lastNotificationResponse.notification.request.content.data
-          .sendUserId,
-      });
-    }
-  }, [lastNotificationResponse]);
-
-  const registerForPushNotificationsAsync = async (userData) => {
-    let token;
-    if (Device.isDevice) {
-      const { status: existingStatus } =
-        await Notifications.getPermissionsAsync();
-      console.log("exist:", existingStatus);
-
-      const test1 = await Notifications.getPermissionsAsync();
-      console.log(test1);
-
-      let finalStatus = existingStatus;
-      if (existingStatus !== "granted") {
-        const { status } = await Notifications.requestPermissionsAsync();
-        console.log("nowStatus:", status);
-        if (status === "granted") {
-          await getPushTokentMutation({
-            variables: {
-              userId: parseInt(userData?.me?.id),
-              pushToken: token,
-            },
-          });
-        }
-        finalStatus = status;
-      }
-      if (finalStatus !== "granted") {
-        alert("Failed to get push token for push notification!");
-        return;
-      }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
-      await getPushTokentMutation({
-        variables: {
-          userId: parseInt(userData?.me?.id),
-          pushToken: token,
-        },
-      });
-    } else {
-      alert("Must use physical device for Push Notifications");
-    }
-
-    if (Platform.OS === "android") {
-      Notifications.setNotificationChannelAsync("default", {
-        name: "default",
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: "#FF231F7C",
-      });
-    }
-    return token;
-  };
-
+  // const [getPushTokentMutation, { loading }] = useMutation(GET_PUSH_TOKEN);
+  // const { data: userData } = useMe();
+  // await getPushTokentMutation({
+  //   variables: {
+  //     userId: parseInt(userData?.me?.id),
+  //     pushToken: token,
+  //   },
+  // });
   const ref = useRef(null);
   useScrollToTop(ref);
 
