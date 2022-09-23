@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as Device from "expo-device";
 import { TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
@@ -23,7 +23,9 @@ Notifications.setNotificationHandler({
 });
 
 export default function Welcome({ navigation }) {
+  const [statusNotification, setStatusNotification] = useState();
   const lastNotificationResponse = Notifications.useLastNotificationResponse();
+  console.log(statusNotification);
 
   useEffect(() => {
     registerForPushNotificationsAsync();
@@ -62,10 +64,10 @@ export default function Welcome({ navigation }) {
     if (Device.isDevice) {
       const { status: existingStatus } =
         await Notifications.getPermissionsAsync();
-      console.log("exist:", existingStatus);
+      // console.log("exist:", existingStatus);
 
-      const test1 = await Notifications.getPermissionsAsync();
-      console.log(test1);
+      // const test1 = await Notifications.getPermissionsAsync();
+      // console.log(test1);
 
       let finalStatus = existingStatus;
       if (existingStatus !== "granted") {
@@ -79,7 +81,7 @@ export default function Welcome({ navigation }) {
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
+      setStatusNotification(finalStatus);
     } else {
       alert("Must use physical device for Push Notifications");
     }

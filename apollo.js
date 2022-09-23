@@ -28,9 +28,9 @@ export const handleAllVn = async (userId, boolean) => {
   await AsyncStorage.setItem(userVnAll, JSON.stringify(boolean));
 };
 
-export const handleDistrict = async (userId, ...test) => {
+export const handleDistrict = async (userId, ...list) => {
   const userDistrict = `${userId}District`;
-  await AsyncStorage.setItem(userDistrict, JSON.stringify(test));
+  await AsyncStorage.setItem(userDistrict, JSON.stringify(list));
 };
 
 // const uploadHttpLink = createUploadLink({
@@ -44,7 +44,7 @@ export const handleDistrict = async (userId, ...test) => {
 // for simulator
 
 const uploadHttpLink = createUploadLink({
-  uri: "https://c884-103-231-176-166.in.ngrok.io/graphql",
+  uri: "http://f397-182-160-125-147.ngrok.io/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {

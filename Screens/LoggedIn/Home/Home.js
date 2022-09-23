@@ -77,7 +77,8 @@ const GET_PUSH_TOKEN = gql`
     }
   }
 `;
-export default function Home() {
+export default function Home({ route: { params } }) {
+  console.log("homeparams", params);
   // const [getPushTokentMutation, { loading }] = useMutation(GET_PUSH_TOKEN);
   // const { data: userData } = useMe();
   // await getPushTokentMutation({

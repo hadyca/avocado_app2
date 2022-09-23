@@ -1,6 +1,7 @@
 import { gql, useMutation } from "@apollo/client";
 import React, { useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useNavigation } from "@react-navigation/native";
 import { logUserIn } from "../../apollo";
 import AuthButton from "../../Components/Auth/AuthButton";
 import AuthLayout from "../../Components/Auth/AuthLayout";
@@ -17,7 +18,8 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-export default function Login() {
+export default function Login({ route: { params } }) {
+  const navigation = useNavigation();
   const [focus1, setFocus1] = useState(false);
   const [focus2, setFocus2] = useState(false);
 
@@ -35,6 +37,9 @@ export default function Login() {
         message: error,
       });
     } else {
+      // navigation.navigate("Home", {
+      //   statusNotification: params.statusNotification,
+      // });
       await logUserIn(token);
     }
   };
