@@ -1,0 +1,63 @@
+import React from "react";
+import { Alert, Text } from "react-native";
+import styled from "styled-components/native";
+import { Ionicons } from "@expo/vector-icons";
+import ScreenLayout from "../../../Components/ScreenLayout";
+import { colors } from "../../../Colors";
+import { logUserOut } from "../../../apollo";
+
+const AccountText = styled.Text`
+  background-color: ${colors.backgraound};
+  width: 100%;
+  border-bottom-width: 1px;
+  border-bottom-color: ${colors.borderThin};
+  margin-left: 10px;
+  font-size: 15px;
+  padding: 15px 2px 15px 2px;
+`;
+const Button = styled.TouchableOpacity`
+  background-color: ${colors.backgraound};
+  width: 100%;
+  border-bottom-width: 1px;
+  border-bottom-color: ${colors.borderThin};
+  margin-left: 10px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const ButtonText = styled.Text`
+  color: ${colors.black};
+  font-size: 15px;
+  padding: 15px 2px 15px 2px;
+`;
+
+export default function Account({ route: { params } }) {
+  return (
+    <ScreenLayout>
+      <AccountText>현재 계정 {params.email}</AccountText>
+
+      <Button
+        onPress={() =>
+          Alert.alert("정말 로그아웃 하시겠습니까?", "", [
+            { text: "Cancel" },
+            {
+              text: "Ok",
+              onPress: () => {
+                logUserOut();
+              },
+            },
+          ])
+        }
+      >
+        <ButtonText>로그아웃</ButtonText>
+        <Ionicons
+          name="chevron-forward"
+          color="black"
+          size={17}
+          style={{ marginRight: 20 }}
+        />
+      </Button>
+    </ScreenLayout>
+  );
+}
