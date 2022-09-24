@@ -23,15 +23,9 @@ Notifications.setNotificationHandler({
 });
 
 export default function Welcome({ navigation }) {
-<<<<<<< HEAD
   const [pushToken, setPushToken] = useState();
   const [statusNotification, setStatusNotification] = useState();
   const lastNotificationResponse = Notifications.useLastNotificationResponse();
-=======
-  const [statusNotification, setStatusNotification] = useState();
-  const lastNotificationResponse = Notifications.useLastNotificationResponse();
-  console.log(statusNotification);
->>>>>>> be4b1af1693f3f79718ae06cc6342f3c4fd1549e
 
   useEffect(() => {
     registerForPushNotificationsAsync();
@@ -70,13 +64,6 @@ export default function Welcome({ navigation }) {
     if (Device.isDevice) {
       const { status: existingStatus } =
         await Notifications.getPermissionsAsync();
-<<<<<<< HEAD
-=======
-      // console.log("exist:", existingStatus);
-
-      // const test1 = await Notifications.getPermissionsAsync();
-      // console.log(test1);
->>>>>>> be4b1af1693f3f79718ae06cc6342f3c4fd1549e
 
       let finalStatus = existingStatus;
       if (existingStatus !== "granted") {
@@ -86,19 +73,12 @@ export default function Welcome({ navigation }) {
         finalStatus = status;
       }
       if (finalStatus !== "granted") {
-<<<<<<< HEAD
         // alert("Failed to get push token for push notification!");
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
       console.log("token:", token);
       setPushToken(token);
-=======
-        alert("Failed to get push token for push notification!");
-        return;
-      }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
->>>>>>> be4b1af1693f3f79718ae06cc6342f3c4fd1549e
       setStatusNotification(finalStatus);
     } else {
       alert("Must use physical device for Push Notifications");
@@ -114,7 +94,6 @@ export default function Welcome({ navigation }) {
     }
     return token;
   };
-<<<<<<< HEAD
   const goToCreateAccount = () =>
     navigation.navigate("CreateAccount", {
       pushToken,
@@ -125,10 +104,6 @@ export default function Welcome({ navigation }) {
       pushToken,
       statusNotification,
     });
-=======
-  const goToCreateAccount = () => navigation.navigate("CreateAccount");
-  const goToLogIn = () => navigation.navigate("LogIn");
->>>>>>> be4b1af1693f3f79718ae06cc6342f3c4fd1549e
 
   return (
     <AuthLayout>
