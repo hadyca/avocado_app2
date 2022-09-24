@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
+import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import AuthButton from "../../Components/Auth/AuthButton";
 import AuthLayout from "../../Components/Auth/AuthLayout";
@@ -17,7 +18,8 @@ const CREATE_ACCOUNT_MUTATION = gql`
   }
 `;
 
-export default function CreateAccount({ navigation }) {
+export default function CreateAccount({ route: { params } }) {
+  const navigation = useNavigation();
   const { control, handleSubmit, getValues, formState, setError, clearErrors } =
     useForm({
       mode: "onChange",

@@ -68,21 +68,7 @@ const ButtonText = styled.Text`
   text-align: center;
 `;
 
-<<<<<<< HEAD
 export default function Home() {
-=======
-const GET_PUSH_TOKEN = gql`
-  mutation getPushToken($userId: Int!, $pushToken: String!) {
-    getPushToken(userId: $userId, pushToken: $pushToken) {
-      ok
-      error
-      pushToken
-    }
-  }
-`;
-export default function Home({ route: { params } }) {
-  console.log("homeparams", params);
->>>>>>> be4b1af1693f3f79718ae06cc6342f3c4fd1549e
   // const [getPushTokentMutation, { loading }] = useMutation(GET_PUSH_TOKEN);
   // const { data: userData } = useMe();
   // await getPushTokentMutation({
