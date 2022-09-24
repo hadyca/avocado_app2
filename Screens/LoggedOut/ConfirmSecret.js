@@ -25,29 +25,18 @@ const CONFIRM_SECRET = gql`
     $username: String!
     $password: String!
     $secret: String!
+    $pushToken: String!
   ) {
     confirmSecret(
       email: $email
       username: $username
       password: $password
       secret: $secret
+      pushToken: $pushToken
     ) {
       ok
       error
-      user {
-        id
-      }
       token
-    }
-  }
-`;
-
-const GET_PUSH_TOKEN = gql`
-  mutation getPushToken($userId: Int!, $pushToken: String!) {
-    getPushToken(userId: $userId, pushToken: $pushToken) {
-      ok
-      error
-      pushToken
     }
   }
 `;
@@ -66,7 +55,7 @@ export default function ConfirmSecret({ route: { params } }) {
 
   const onCompleted = async (data) => {
     const {
-      confirmSecret: { ok, error, user, token },
+      confirmSecret: { ok, error, token },
     } = data;
     if (!ok) {
       return setError("result", {
@@ -74,12 +63,6 @@ export default function ConfirmSecret({ route: { params } }) {
       });
     } else {
       await logUserIn(token);
-      await getPushTokentMutation({
-        variables: {
-          userId: parseInt(user.id),
-          pushToken: params.pushToken,
-        },
-      });
     }
   };
 
@@ -94,8 +77,6 @@ export default function ConfirmSecret({ route: { params } }) {
     }
   );
 
-  const [getPushTokentMutation] = useMutation(GET_PUSH_TOKEN);
-
   const onValid = (data) => {
     if (!loading) {
       confirmSecretMutation({
@@ -104,6 +85,7 @@ export default function ConfirmSecret({ route: { params } }) {
           username: params.username,
           password: params.password,
           secret: data.secret,
+          pushToken: params.pushToken,
         },
       });
     }

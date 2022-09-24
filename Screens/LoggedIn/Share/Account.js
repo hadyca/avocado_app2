@@ -1,6 +1,8 @@
 import React from "react";
-import { Alert, Text } from "react-native";
+import { Alert } from "react-native";
 import styled from "styled-components/native";
+import { gql, useMutation } from "@apollo/client";
+
 import { Ionicons } from "@expo/vector-icons";
 import ScreenLayout from "../../../Components/ScreenLayout";
 import { colors } from "../../../Colors";
@@ -32,7 +34,19 @@ const ButtonText = styled.Text`
   padding: 15px 2px 15px 2px;
 `;
 
+const DELETE_PUSHTOKEN_MUTATION = gql`
+  mutation deletePushToken($pushToken: String!) {
+    deletePushToken(pushToken: $pushToken) {
+      ok
+      error
+    }
+  }
+`;
+
 export default function Account({ route: { params } }) {
+  const [deletePushTokenMutation] = useMutation(DELETE_PUSHTOKEN_MUTATION, {
+    onCompleted: () => logUserOut(),
+  });
   return (
     <ScreenLayout>
       <AccountText>현재 계정 {params.email}</AccountText>
@@ -44,7 +58,12 @@ export default function Account({ route: { params } }) {
             {
               text: "Ok",
               onPress: () => {
-                logUserOut();
+                //pushToken 값을 Home화면에서 일단 먼저 스토리지에 저장해야됨
+                // deletePushTokenMutation({
+                //   variables:{
+                //     pushToken:
+                //   }
+                // })
               },
             },
           ])

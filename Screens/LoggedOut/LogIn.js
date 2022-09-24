@@ -8,72 +8,51 @@ import { TextInput } from "../../Components/Auth/AuthShared";
 import FormError from "../../Components/Auth/FormError";
 
 const LOGIN_MUTATION = gql`
-  mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
+  mutation login($email: String!, $password: String!, $pushToken: String!) {
+    login(email: $email, password: $password, pushToken: $pushToken) {
       ok
       token
-      user {
-        id
-      }
       error
-    }
-  }
-`;
-
-const GET_PUSH_TOKEN = gql`
-  mutation getPushToken($userId: Int!, $pushToken: String!) {
-    getPushToken(userId: $userId, pushToken: $pushToken) {
-      ok
-      error
-      pushToken
     }
   }
 `;
 
 export default function Login({ route: { params } }) {
-  console.log(params);
   const [focus1, setFocus1] = useState(false);
   const [focus2, setFocus2] = useState(false);
 
   const { handleSubmit, watch, setError, control, formState, clearErrors } =
-    useForm({});
+    useForm();
 
   const passwordRef = useRef();
 
   const onCompleted = async (data) => {
     const {
-      login: { ok, error, user, token },
+      login: { ok, error, token },
     } = data;
-    console.log(user);
     if (!ok) {
       return setError("result", {
         message: error,
       });
     } else {
       await logUserIn(token);
-      await getPushTokentMutation({
-        variables: {
-          userId: parseInt(user.id),
-          pushToken: params.pushToken,
-        },
-      });
     }
   };
   const [logInMutation, { loading }] = useMutation(LOGIN_MUTATION, {
     onCompleted,
   });
 
-  const [getPushTokentMutation] = useMutation(GET_PUSH_TOKEN);
-
   const onNext = (nextOne) => {
     nextOne?.current?.focus();
   };
 
-  const onValid = (data) => {
+  const onValid = ({ email, password }) => {
     if (!loading) {
       logInMutation({
         variables: {
-          ...data,
+          email,
+          password,
+          pushToken: params.pushToken,
         },
       });
     }

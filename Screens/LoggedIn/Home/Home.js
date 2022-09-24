@@ -69,8 +69,8 @@ const ButtonText = styled.Text`
 `;
 
 export default function Home() {
+  const { data: userData } = useMe();
   // const [getPushTokentMutation, { loading }] = useMutation(GET_PUSH_TOKEN);
-  // const { data: userData } = useMe();
   // await getPushTokentMutation({
   //   variables: {
   //     userId: parseInt(userData?.me?.id),

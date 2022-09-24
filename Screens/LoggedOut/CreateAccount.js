@@ -39,6 +39,7 @@ export default function CreateAccount({ route: { params } }) {
         email,
         username,
         password,
+        pushToken: params.pushToken,
       });
     }
   };

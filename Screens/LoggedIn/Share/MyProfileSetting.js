@@ -27,7 +27,7 @@ export default function MyProfileSetting({ route: { params } }) {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const navigation = useNavigation();
-  console.log(isEnabled);
+
   return (
     <ScreenLayout>
       <View>
