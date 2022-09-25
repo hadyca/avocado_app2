@@ -24,7 +24,6 @@ Notifications.setNotificationHandler({
 
 export default function Welcome({ navigation }) {
   const [pushToken, setPushToken] = useState();
-  const [statusNotification, setStatusNotification] = useState();
   const lastNotificationResponse = Notifications.useLastNotificationResponse();
 
   useEffect(() => {
@@ -64,29 +63,19 @@ export default function Welcome({ navigation }) {
     if (Device.isDevice) {
       const { status: existingStatus } =
         await Notifications.getPermissionsAsync();
-
-      let finalStatus = existingStatus;
       if (existingStatus !== "granted") {
-        const { status } = await Notifications.requestPermissionsAsync();
-        console.log("nowStatus:", status);
-
-        finalStatus = status;
-      }
-      if (finalStatus !== "granted") {
-        // alert("Failed to get push token for push notification!");
-        return;
+        await Notifications.requestPermissionsAsync();
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log("token:", token);
       setPushToken(token);
-      setStatusNotification(finalStatus);
     } else {
       alert("Must use physical device for Push Notifications");
     }
 
+    //name 부분에 서비스명 넣기
     if (Platform.OS === "android") {
       Notifications.setNotificationChannelAsync("default", {
-        name: "default",
+        name: "service name",
         importance: Notifications.AndroidImportance.MAX,
         vibrationPattern: [0, 250, 250, 250],
         lightColor: "#FF231F7C",
@@ -97,12 +86,10 @@ export default function Welcome({ navigation }) {
   const goToCreateAccount = () =>
     navigation.navigate("CreateAccount", {
       pushToken,
-      statusNotification,
     });
   const goToLogIn = () =>
     navigation.navigate("LogIn", {
       pushToken,
-      statusNotification,
     });
 
   return (

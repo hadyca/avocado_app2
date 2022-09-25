@@ -2,7 +2,7 @@ import React from "react";
 import { Alert } from "react-native";
 import styled from "styled-components/native";
 import { gql, useMutation } from "@apollo/client";
-
+import * as Notifications from "expo-notifications";
 import { Ionicons } from "@expo/vector-icons";
 import ScreenLayout from "../../../Components/ScreenLayout";
 import { colors } from "../../../Colors";
@@ -44,11 +44,14 @@ const DELETE_PUSHTOKEN_MUTATION = gql`
 `;
 
 export default function Account({ route: { params } }) {
-  const [deletePushTokenMutation] = useMutation(DELETE_PUSHTOKEN_MUTATION, {
-    onCompleted: () => logUserOut(),
-  });
+  const [deletePushTokenMutation, { loading }] = useMutation(
+    DELETE_PUSHTOKEN_MUTATION,
+    {
+      onCompleted: () => logUserOut(),
+    }
+  );
   return (
-    <ScreenLayout>
+    <ScreenLayout loading={loading}>
       <AccountText>현재 계정 {params.email}</AccountText>
 
       <Button
@@ -57,13 +60,14 @@ export default function Account({ route: { params } }) {
             { text: "Cancel" },
             {
               text: "Ok",
-              onPress: () => {
-                //pushToken 값을 Home화면에서 일단 먼저 스토리지에 저장해야됨
-                // deletePushTokenMutation({
-                //   variables:{
-                //     pushToken:
-                //   }
-                // })
+              onPress: async () => {
+                const pushToken = (await Notifications.getExpoPushTokenAsync())
+                  .data;
+                await deletePushTokenMutation({
+                  variables: {
+                    pushToken,
+                  },
+                });
               },
             },
           ])

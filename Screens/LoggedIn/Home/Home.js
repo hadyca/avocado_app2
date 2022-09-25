@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from "react";
-import { gql, useMutation } from "@apollo/client";
+import React, { useRef } from "react";
 import { useScrollToTop } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 import ScreenLayout from "../../../Components/ScreenLayout";
@@ -70,13 +69,7 @@ const ButtonText = styled.Text`
 
 export default function Home() {
   const { data: userData } = useMe();
-  // const [getPushTokentMutation, { loading }] = useMutation(GET_PUSH_TOKEN);
-  // await getPushTokentMutation({
-  //   variables: {
-  //     userId: parseInt(userData?.me?.id),
-  //     pushToken: token,
-  //   },
-  // });
+
   const ref = useRef(null);
   useScrollToTop(ref);
 

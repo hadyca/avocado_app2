@@ -77,9 +77,9 @@ export default function ConfirmSecret({ route: { params } }) {
     }
   );
 
-  const onValid = (data) => {
+  const onValid = async (data) => {
     if (!loading) {
-      confirmSecretMutation({
+      await confirmSecretMutation({
         variables: {
           email: params.email,
           username: params.username,
