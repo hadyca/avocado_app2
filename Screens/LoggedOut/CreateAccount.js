@@ -19,7 +19,6 @@ const CREATE_ACCOUNT_MUTATION = gql`
 `;
 
 export default function CreateAccount({ route: { params } }) {
-  console.log(params);
   const navigation = useNavigation();
   const { control, handleSubmit, getValues, formState, setError, clearErrors } =
     useForm({
