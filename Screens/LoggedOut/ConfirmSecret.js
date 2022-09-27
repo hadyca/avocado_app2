@@ -42,6 +42,7 @@ const CONFIRM_SECRET = gql`
 `;
 
 export default function ConfirmSecret({ route: { params } }) {
+  // console.log(params);
   const [minutes, setMinutes] = useState(3);
   const [seconds, setSeconds] = useState(0);
   const [finish, setFinish] = useState(false);

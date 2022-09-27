@@ -83,6 +83,7 @@ export default function Welcome({ navigation }) {
     }
     return token;
   };
+
   const goToCreateAccount = () =>
     navigation.navigate("CreateAccount", {
       pushToken,
