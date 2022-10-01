@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { View, Switch, StyleSheet } from "react-native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -24,21 +23,10 @@ const ButtonText = styled.Text`
 `;
 
 export default function MyProfileSetting({ route: { params } }) {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
   const navigation = useNavigation();
 
   return (
     <ScreenLayout>
-      <View>
-        <Switch
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-          value={isEnabled}
-        />
-      </View>
       <Button
         onPress={() =>
           navigation.navigate("Account", {
@@ -54,7 +42,7 @@ export default function MyProfileSetting({ route: { params } }) {
           style={{ marginRight: 20 }}
         />
       </Button>
-      <Button onPress={() => null}>
+      <Button onPress={() => navigation.navigate("NotificationSetting")}>
         <ButtonText>알림</ButtonText>
         <Ionicons
           name="chevron-forward"
@@ -83,15 +71,6 @@ export default function MyProfileSetting({ route: { params } }) {
       </Button>
       <Button onPress={() => null}>
         <ButtonText>개인정보처리방침</ButtonText>
-        <Ionicons
-          name="chevron-forward"
-          color="black"
-          size={17}
-          style={{ marginRight: 20 }}
-        />
-      </Button>
-      <Button onPress={() => null}>
-        <ButtonText>현재 1.0.0 / 최신 1.0.0</ButtonText>
         <Ionicons
           name="chevron-forward"
           color="black"
