@@ -49,6 +49,7 @@ import EditAddress from "../Screens/LoggedIn/Share/EditAddress";
 import Account from "../Screens/LoggedIn/Share/Account";
 import Contact from "../Screens/LoggedIn/Share/Contact";
 import Notification from "../Screens/LoggedIn/Me/Notification";
+import NotificationSetting from "../Screens/LoggedIn/Share/NotificationSetting";
 
 const Stack = createStackNavigator();
 
@@ -76,6 +77,13 @@ export default function LoggedInNav() {
           headerBackTitleVisible: false,
         }}
         component={Contact}
+      />
+      <Stack.Screen
+        name="NotificationSetting"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={NotificationSetting}
       />
       <Stack.Screen
         name="Notification"

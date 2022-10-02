@@ -75,7 +75,7 @@ export default function Welcome({ navigation }) {
     //name 부분에 서비스명 넣기
     if (Platform.OS === "android") {
       Notifications.setNotificationChannelAsync("default", {
-        name: "service name",
+        name: "Jobs Vina",
         importance: Notifications.AndroidImportance.MAX,
         vibrationPattern: [0, 250, 250, 250],
         lightColor: "#FF231F7C",
