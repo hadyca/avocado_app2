@@ -44,7 +44,7 @@ export const handleDistrict = async (userId, ...list) => {
 // for simulator
 
 const uploadHttpLink = createUploadLink({
-  uri: "http://96eb-103-110-59-246.ngrok.io/graphql",
+  uri: "http://ac21-118-67-222-162.ngrok.io/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {

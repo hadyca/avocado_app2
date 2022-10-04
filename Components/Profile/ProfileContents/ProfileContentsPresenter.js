@@ -86,8 +86,6 @@ const Info = styled.Text`
   color: ${colors.greyText};
 `;
 
-const CompanyInfo = styled.View``;
-
 const ProfileBtn = styled.TouchableOpacity`
   background-color: ${(props) =>
     props.backgroundColor ? colors.blue : "white"};
