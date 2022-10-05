@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
-<<<<<<< HEAD
-import { NOTI_USER_POST_LIKE_MUTATION } from "./NotificationSettingQueries";
-=======
 import {
   NOTIFICATION_QUERY,
+  NOTI_NOTICE_MUTATION,
   NOTI_USER_POST_LIKE_MUTATION,
-  NOTI_COMPANY_POST_COMMENT_MUTATION,
-  NOTI_COMPANY_POST_LIKE_MUTATION,
   NOTI_USER_POST_COMMENT_MUTATION,
+  NOTI_COMPANY_POST_LIKE_MUTATION,
+  NOTI_COMPANY_POST_COMMENT_MUTATION,
   NOTI_FOLLOWING_MUTATION,
 } from "./NotificationSettingQueries";
->>>>>>> 8d1b9dfd2ed04e37ae0aa71d15e5ef0f72580baa
 import NotificationSettingPresenter from "./NotificationSettingPresenter";
 import ScreenLayout from "../../../../Components/ScreenLayout";
 
 export default function () {
+  const [screenLoading, setScreenLoading] = useState(true);
+  const [noticeState, setNoticeState] = useState();
   const [userPostLikeState, setUserPostLikeState] = useState();
-  const navigation = useNavigation();
+  const [userPostCommentState, setUserPostCommentState] = useState();
+  const [companyPostLikeState, setCompanyPostLikeState] = useState();
+  const [companyPostCommentState, setCompanyPostCommentState] = useState();
+  const [followingState, setFollowingState] = useState();
+
   const { data } = useQuery(NOTIFICATION_QUERY);
+
+  const [noticeMutation] = useMutation(NOTI_NOTICE_MUTATION);
   const [userPostLikeMutation] = useMutation(NOTI_USER_POST_LIKE_MUTATION);
   const [userPostCommentMutation] = useMutation(
     NOTI_USER_POST_COMMENT_MUTATION
@@ -32,29 +37,83 @@ export default function () {
   );
   const [followingMutation] = useMutation(NOTI_FOLLOWING_MUTATION);
 
-  const toggleSwitch = () => {
-    setUserPostLikeState((prev) => !prev);
-    userPostLikeMutation({
+  const noticeToggle = () => {
+    setNoticeState((prev) => !prev);
+    noticeMutation({
       variables: {
-        state: userPostLikeState,
+        state: !noticeState,
       },
     });
   };
+  const userPostLikeToggle = () => {
+    setUserPostLikeState((prev) => !prev);
+    userPostLikeMutation({
+      variables: {
+        state: !userPostLikeState,
+      },
+    });
+  };
+  const userPostCommentToggle = () => {
+    setUserPostCommentState((prev) => !prev);
+    userPostCommentMutation({
+      variables: {
+        state: !userPostCommentState,
+      },
+    });
+  };
+  const companyPostLikeToggle = () => {
+    setCompanyPostLikeState((prev) => !prev);
+    companyPostLikeMutation({
+      variables: {
+        state: !companyPostLikeState,
+      },
+    });
+  };
+  const companyPostCommentToggle = () => {
+    setCompanyPostCommentState((prev) => !prev);
+    companyPostCommentMutation({
+      variables: {
+        state: !companyPostCommentState,
+      },
+    });
+  };
+
+  const followingToggle = () => {
+    setFollowingState((prev) => !prev);
+    followingMutation({
+      variables: {
+        state: !followingState,
+      },
+    });
+  };
+
   useEffect(() => {
     if (data?.seeNotificationTypeState) {
+      setNoticeState(data?.seeNotificationTypeState?.notice);
       setUserPostLikeState(data?.seeNotificationTypeState?.userPostLike);
+      setUserPostCommentState(data?.seeNotificationTypeState?.userPostComment);
+      setCompanyPostLikeState(data?.seeNotificationTypeState?.CompanyPostLike);
+      setCompanyPostCommentState(
+        data?.seeNotificationTypeState?.CompanyPostComment
+      );
+      setFollowingState(data?.seeNotificationTypeState?.following);
     }
   }, [data]);
   return (
     <ScreenLayout>
       <NotificationSettingPresenter
-        userPostLikeMutation={userPostLikeMutation}
-        userPostCommentMutation={userPostCommentMutation}
-        companyPostLikeMutation={companyPostLikeMutation}
-        companyPostCommentMutation={companyPostCommentMutation}
-        followingMutation={followingMutation}
-        toggleSwitch={toggleSwitch}
+        noticeToggle={noticeToggle}
+        userPostLikeToggle={userPostLikeToggle}
+        userPostCommentToggle={userPostCommentToggle}
+        companyPostLikeToggle={companyPostLikeToggle}
+        companyPostCommentToggle={companyPostCommentToggle}
+        followingToggle={followingToggle}
+        noticeState={noticeState}
         userPostLikeState={userPostLikeState}
+        userPostCommentState={userPostCommentState}
+        companyPostLikeState={companyPostLikeState}
+        companyPostCommentState={companyPostCommentState}
+        followingState={followingState}
       />
     </ScreenLayout>
   );

@@ -10,10 +10,10 @@ const Button = styled.TouchableOpacity`
   width: 100%;
   border-bottom-width: 1px;
   border-bottom-color: ${colors.borderThin};
-  margin-left: 10px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-left: 10px;
 `;
 
 const ButtonText = styled.Text`

@@ -14,6 +14,15 @@ export const NOTIFICATION_QUERY = gql`
   }
 `;
 
+export const NOTI_NOTICE_MUTATION = gql`
+  mutation notificationNotice($state: Boolean!) {
+    notificationNotice(state: $state) {
+      ok
+      error
+    }
+  }
+`;
+
 export const NOTI_USER_POST_LIKE_MUTATION = gql`
   mutation notificationUserPostLike($state: Boolean!) {
     notificationUserPostLike(state: $state) {
