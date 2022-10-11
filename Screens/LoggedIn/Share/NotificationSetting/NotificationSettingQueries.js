@@ -4,6 +4,13 @@ export const NOTIFICATION_QUERY = gql`
   query seeNotificationTypeState {
     seeNotificationTypeState {
       id
+      user {
+        id
+        myCompany {
+          id
+        }
+      }
+      all
       notice
       following
       userPostLike

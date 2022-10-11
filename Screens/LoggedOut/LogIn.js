@@ -18,7 +18,6 @@ const LOGIN_MUTATION = gql`
 `;
 
 export default function Login({ route: { params } }) {
-  console.log("로긴 파람스", params);
   const [focus1, setFocus1] = useState(false);
   const [focus2, setFocus2] = useState(false);
 

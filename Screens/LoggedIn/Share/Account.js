@@ -20,8 +20,6 @@ const AccountText = styled.Text`
 const Button = styled.TouchableOpacity`
   background-color: ${colors.backgraound};
   width: 100%;
-  border-bottom-width: 1px;
-  border-bottom-color: ${colors.borderThin};
   margin-left: 10px;
   flex-direction: row;
   align-items: center;
@@ -32,6 +30,11 @@ const ButtonText = styled.Text`
   color: ${colors.black};
   font-size: 15px;
   padding: 15px 2px 15px 2px;
+`;
+
+const Separator = styled.View`
+  height: 1px;
+  background-color: ${colors.borderThin};
 `;
 
 const DELETE_PUSHTOKEN_MUTATION = gql`
@@ -53,7 +56,7 @@ export default function Account({ route: { params } }) {
   return (
     <ScreenLayout loading={loading}>
       <AccountText>현재 계정 {params.email}</AccountText>
-
+      <Separator />
       <Button
         onPress={() =>
           Alert.alert("정말 로그아웃 하시겠습니까?", "", [
@@ -81,6 +84,7 @@ export default function Account({ route: { params } }) {
           style={{ marginRight: 20 }}
         />
       </Button>
+      <Separator />
     </ScreenLayout>
   );
 }

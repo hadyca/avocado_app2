@@ -3,6 +3,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import {
   NOTIFICATION_QUERY,
+  NOTI_ALL_MUTATION,
   NOTI_NOTICE_MUTATION,
   NOTI_USER_POST_LIKE_MUTATION,
   NOTI_USER_POST_COMMENT_MUTATION,
@@ -14,7 +15,6 @@ import NotificationSettingPresenter from "./NotificationSettingPresenter";
 import ScreenLayout from "../../../../Components/ScreenLayout";
 
 export default function () {
-  const [screenLoading, setScreenLoading] = useState(true);
   const [noticeState, setNoticeState] = useState();
   const [userPostLikeState, setUserPostLikeState] = useState();
   const [userPostCommentState, setUserPostCommentState] = useState();
@@ -22,7 +22,7 @@ export default function () {
   const [companyPostCommentState, setCompanyPostCommentState] = useState();
   const [followingState, setFollowingState] = useState();
 
-  const { data } = useQuery(NOTIFICATION_QUERY);
+  const { data, loading, refetch } = useQuery(NOTIFICATION_QUERY);
 
   const [noticeMutation] = useMutation(NOTI_NOTICE_MUTATION);
   const [userPostLikeMutation] = useMutation(NOTI_USER_POST_LIKE_MUTATION);
@@ -89,18 +89,20 @@ export default function () {
 
   useEffect(() => {
     if (data?.seeNotificationTypeState) {
+      refetch();
       setNoticeState(data?.seeNotificationTypeState?.notice);
       setUserPostLikeState(data?.seeNotificationTypeState?.userPostLike);
       setUserPostCommentState(data?.seeNotificationTypeState?.userPostComment);
-      setCompanyPostLikeState(data?.seeNotificationTypeState?.CompanyPostLike);
+      setCompanyPostLikeState(data?.seeNotificationTypeState?.companyPostLike);
       setCompanyPostCommentState(
-        data?.seeNotificationTypeState?.CompanyPostComment
+        data?.seeNotificationTypeState?.companyPostComment
       );
       setFollowingState(data?.seeNotificationTypeState?.following);
     }
   }, [data]);
+
   return (
-    <ScreenLayout>
+    <ScreenLayout loading={loading}>
       <NotificationSettingPresenter
         noticeToggle={noticeToggle}
         userPostLikeToggle={userPostLikeToggle}
@@ -114,6 +116,7 @@ export default function () {
         companyPostLikeState={companyPostLikeState}
         companyPostCommentState={companyPostCommentState}
         followingState={followingState}
+        isCompany={data?.seeNotificationTypeState?.user?.myCompany?.id}
       />
     </ScreenLayout>
   );

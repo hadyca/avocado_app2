@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import ScreenLayout from "../../../Components/ScreenLayout";
 import { colors } from "../../../Colors";
 
 const Button = styled.TouchableOpacity`
   background-color: ${colors.backgraound};
   width: 100%;
-  border-bottom-width: 1px;
-  border-bottom-color: ${colors.borderThin};
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -22,6 +20,10 @@ const ButtonText = styled.Text`
   padding: 15px 2px 15px 2px;
 `;
 
+const Separator = styled.View`
+  height: 1px;
+  background-color: ${colors.borderThin};
+`;
 export default function MyProfileSetting({ route: { params } }) {
   const navigation = useNavigation();
 
@@ -42,6 +44,7 @@ export default function MyProfileSetting({ route: { params } }) {
           style={{ marginRight: 20 }}
         />
       </Button>
+      <Separator />
       <Button onPress={() => navigation.navigate("NotificationSetting")}>
         <ButtonText>알림</ButtonText>
         <Ionicons
@@ -51,6 +54,7 @@ export default function MyProfileSetting({ route: { params } }) {
           style={{ marginRight: 20 }}
         />
       </Button>
+      <Separator />
       <Button onPress={() => navigation.navigate("Contact")}>
         <ButtonText>문의하기</ButtonText>
         <Ionicons
@@ -60,6 +64,7 @@ export default function MyProfileSetting({ route: { params } }) {
           style={{ marginRight: 20 }}
         />
       </Button>
+      <Separator />
       <Button onPress={() => null}>
         <ButtonText>이용약관</ButtonText>
         <Ionicons
@@ -69,6 +74,7 @@ export default function MyProfileSetting({ route: { params } }) {
           style={{ marginRight: 20 }}
         />
       </Button>
+      <Separator />
       <Button onPress={() => null}>
         <ButtonText>개인정보처리방침</ButtonText>
         <Ionicons
@@ -78,6 +84,7 @@ export default function MyProfileSetting({ route: { params } }) {
           style={{ marginRight: 20 }}
         />
       </Button>
+      <Separator />
     </ScreenLayout>
   );
 }
