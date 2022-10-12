@@ -10,7 +10,6 @@ export const NOTIFICATION_QUERY = gql`
           id
         }
       }
-      all
       notice
       following
       userPostLike

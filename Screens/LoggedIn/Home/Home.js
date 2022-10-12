@@ -1,6 +1,7 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useScrollToTop } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
+import * as Notifications from "expo-notifications";
 import ScreenLayout from "../../../Components/ScreenLayout";
 import styled from "styled-components/native";
 import {
@@ -68,6 +69,7 @@ const ButtonText = styled.Text`
 `;
 
 export default function Home() {
+  const lastNotificationResponse = Notifications.useLastNotificationResponse();
   const { data: userData } = useMe();
 
   const ref = useRef(null);
@@ -84,7 +86,33 @@ export default function Home() {
       navigation.navigate("AskCompanyName");
     }
   };
-
+  useEffect(() => {
+    if (
+      lastNotificationResponse?.notification?.request?.content?.data?.userPostId
+    ) {
+      navigation.navigate("UserPostListDetail", {
+        id: lastNotificationResponse.notification.request.content.data
+          .userPostId,
+      });
+    }
+    if (
+      lastNotificationResponse?.notification?.request?.content?.data
+        ?.companyPostId
+    ) {
+      navigation.navigate("CompanyPostListDetail", {
+        id: lastNotificationResponse.notification.request.content.data
+          .companyPostId,
+      });
+    }
+    if (
+      lastNotificationResponse?.notification?.request?.content?.data?.sendUserId
+    ) {
+      navigation.navigate("Profile", {
+        id: lastNotificationResponse.notification.request.content.data
+          .sendUserId,
+      });
+    }
+  }, [lastNotificationResponse]);
   return (
     <ScreenLayout>
       <ScrollView

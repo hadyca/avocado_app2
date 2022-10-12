@@ -4,10 +4,10 @@ import { useQuery } from "@apollo/client";
 import { useNavigation, useScrollToTop } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
-import ScreenLayout from "../../../Components/ScreenLayout";
+import ScreenLayout from "../../../../Components/ScreenLayout";
 import { PROFILE_QUERY } from "./MeQueries";
 import MePresenter from "./MePresenter";
-import useMe from "../../../Hooks/useMe";
+import useMe from "../../../../Hooks/useMe";
 
 export default function () {
   const ref = useRef(null);

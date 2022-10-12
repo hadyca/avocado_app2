@@ -1,7 +1,7 @@
 import React from "react";
 import { RefreshControl } from "react-native";
 import styled from "styled-components/native";
-import ProfileContents from "../../../Components/Profile/ProfileContents";
+import ProfileContents from "../../../../Components/Profile/ProfileContents";
 
 const Container = styled.ScrollView``;
 

@@ -5,7 +5,7 @@ import Home from "../Screens/LoggedIn/Home/Home";
 import UserPostList from "../Screens/LoggedIn/UserPosts/UserPostList";
 import CompanyPostAll from "../Screens/LoggedIn/Search/CompanyPostAll";
 import FavoritesNav from "./FavoritesNav";
-import Me from "../Screens/LoggedIn/Me";
+import Me from "../Screens/LoggedIn/Me/Me";
 import { colors } from "../Colors";
 
 const Stack = createStackNavigator();

@@ -13,7 +13,6 @@ import { Text } from "react-native";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
-
   const onFinish = () => setLoading(false);
   const isLoggedIn = useReactiveVar(isLoggedInVar);
 
@@ -38,6 +37,7 @@ export default function App() {
     }
     return preloadAssets();
   };
+
   if (loading) {
     return (
       <AppLoading

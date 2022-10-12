@@ -33,23 +33,24 @@ import EditCompanyPostReCommentForm from "../Screens/LoggedIn/Search/EditCompany
 import CompanyPostReportForm from "../Screens/LoggedIn/Search/CompanyPostReportForm";
 import CompanyPostCommentReportForm from "../Screens/LoggedIn/Search/CompanyPostCommentReportForm";
 import CompanyPostReCommentReportForm from "../Screens/LoggedIn/Search/CompanyPostReCommentReportForm";
-import EditProfile from "../Screens/LoggedIn/Share/EditProfile";
-import EditUsername from "../Screens/LoggedIn/Share/EditUsername";
-import EditBio from "../Screens/LoggedIn/Share/EditBio";
-import MyProfileSetting from "../Screens/LoggedIn/Share/MyProfileSetting";
+import EditProfile from "../Screens/LoggedIn/Me/EditProfile";
+import EditUsername from "../Screens/LoggedIn/Me/EditUsername";
+import EditBio from "../Screens/LoggedIn/Me/EditBio";
+import MyProfileSetting from "../Screens/LoggedIn/Me/MyProfileSetting";
 import UserReportForm from "../Screens/LoggedIn/Share/UserReportForm";
 import UserAllUserPost from "../Screens/LoggedIn/Share/UserAllUserPost";
 import UserAllCompanyPost from "../Screens/LoggedIn/Share/UserAllCompanyPost";
-import EditCompanyName from "../Screens/LoggedIn/Share/EditCompanyName";
-import EditAboutUs from "../Screens/LoggedIn/Share/EditAboutUs";
-import EditTotalEmployees from "../Screens/LoggedIn/Share/EditTotalEmployees";
-import EditCompanyEmail from "../Screens/LoggedIn/Share/EditCompanyEmail";
-import EditContactNumber from "../Screens/LoggedIn/Share/EditContactNumber";
-import EditAddress from "../Screens/LoggedIn/Share/EditAddress";
-import Account from "../Screens/LoggedIn/Share/Account";
-import Contact from "../Screens/LoggedIn/Share/Contact";
+import EditCompanyName from "../Screens/LoggedIn/Me/EditCompanyName";
+import EditAboutUs from "../Screens/LoggedIn/Me/EditAboutUs";
+import EditTotalEmployees from "../Screens/LoggedIn/Me/EditTotalEmployees";
+import EditCompanyEmail from "../Screens/LoggedIn/Me/EditCompanyEmail";
+import EditContactNumber from "../Screens/LoggedIn/Me/EditContactNumber";
+import EditAddress from "../Screens/LoggedIn/Me/EditAddress";
+import Account from "../Screens/LoggedIn/Me/Account";
+import Contact from "../Screens/LoggedIn/Me/Contact";
 import Notification from "../Screens/LoggedIn/Me/Notification";
-import NotificationSetting from "../Screens/LoggedIn/Share/NotificationSetting";
+import NotificationSetting from "../Screens/LoggedIn/Me/NotificationSetting";
+import TermsOfService from "../Screens/LoggedIn/Me/TermsOfService";
 
 const Stack = createStackNavigator();
 
@@ -70,6 +71,13 @@ export default function LoggedInNav() {
           headerBackTitleVisible: false,
         }}
         component={FollowNav}
+      />
+      <Stack.Screen
+        name="TermsOfService"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={TermsOfService}
       />
       <Stack.Screen
         name="Contact"

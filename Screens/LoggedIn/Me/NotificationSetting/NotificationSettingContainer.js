@@ -3,7 +3,6 @@ import { useQuery, useMutation } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import {
   NOTIFICATION_QUERY,
-  NOTI_ALL_MUTATION,
   NOTI_NOTICE_MUTATION,
   NOTI_USER_POST_LIKE_MUTATION,
   NOTI_USER_POST_COMMENT_MUTATION,

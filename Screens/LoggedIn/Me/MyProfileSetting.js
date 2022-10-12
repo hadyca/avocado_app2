@@ -65,7 +65,7 @@ export default function MyProfileSetting({ route: { params } }) {
         />
       </Button>
       <Separator />
-      <Button onPress={() => null}>
+      <Button onPress={() => navigation.navigate("TermsOfService")}>
         <ButtonText>이용약관</ButtonText>
         <Ionicons
           name="chevron-forward"

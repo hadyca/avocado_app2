@@ -24,39 +24,10 @@ Notifications.setNotificationHandler({
 
 export default function Welcome({ navigation }) {
   const [pushToken, setPushToken] = useState();
-  const lastNotificationResponse = Notifications.useLastNotificationResponse();
 
   useEffect(() => {
     registerForPushNotificationsAsync();
-  }, []);
-
-  useEffect(() => {
-    if (
-      lastNotificationResponse?.notification?.request?.content?.data?.userPostId
-    ) {
-      navigation.navigate("UserPostListDetail", {
-        id: lastNotificationResponse.notification.request.content.data
-          .userPostId,
-      });
-    }
-    if (
-      lastNotificationResponse?.notification?.request?.content?.data
-        ?.companyPostId
-    ) {
-      navigation.navigate("CompanyPostListDetail", {
-        id: lastNotificationResponse.notification.request.content.data
-          .companyPostId,
-      });
-    }
-    if (
-      lastNotificationResponse?.notification?.request?.content?.data?.sendUserId
-    ) {
-      navigation.navigate("Profile", {
-        id: lastNotificationResponse.notification.request.content.data
-          .sendUserId,
-      });
-    }
-  }, [lastNotificationResponse]);
+  }, [navigation]);
 
   const registerForPushNotificationsAsync = async () => {
     let token;
@@ -72,10 +43,9 @@ export default function Welcome({ navigation }) {
       alert("Must use physical device for Push Notifications");
     }
 
-    //name 부분에 서비스명 넣기
     if (Platform.OS === "android") {
       Notifications.setNotificationChannelAsync("default", {
-        name: "Jobs Vina",
+        name: "Vina Arba",
         importance: Notifications.AndroidImportance.MAX,
         vibrationPattern: [0, 250, 250, 250],
         lightColor: "#FF231F7C",
