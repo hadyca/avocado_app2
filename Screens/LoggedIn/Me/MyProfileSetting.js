@@ -75,7 +75,7 @@ export default function MyProfileSetting({ route: { params } }) {
         />
       </Button>
       <Separator />
-      <Button onPress={() => null}>
+      <Button onPress={() => navigation.navigate("PrivacyPolicy")}>
         <ButtonText>개인정보처리방침</ButtonText>
         <Ionicons
           name="chevron-forward"
