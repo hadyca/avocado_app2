@@ -32,7 +32,7 @@ export default function EditPostCategory({ route: { params } }) {
         {categories_KR.map((item, index) => (
           <CategoryView key={index}>
             <CategoryView2 onPress={() => selectCategory(item)}>
-              <CategoryText>{item}</CategoryText>
+              <CategoryText>{item.categoryName}</CategoryText>
             </CategoryView2>
           </CategoryView>
         ))}

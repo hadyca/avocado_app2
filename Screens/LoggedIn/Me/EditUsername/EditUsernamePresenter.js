@@ -118,6 +118,7 @@ export default function EditUsernamePresenter({
           render={({ field: { onChange, value } }) => (
             <TextInput
               placeholder="Username"
+              placeholderTextColor="#cccccc"
               textAlignVertical={"top"}
               maxLength={20}
               autoCapitalize="none"

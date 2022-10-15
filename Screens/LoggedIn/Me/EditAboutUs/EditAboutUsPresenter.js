@@ -90,6 +90,7 @@ export default function EditAboutUsPresenter({
           render={({ field: { onChange, value } }) => (
             <TextInput
               placeholder="ex)직원 복지가 좋은, 동나이 최고의 garment회사!"
+              placeholderTextColor="#cccccc"
               textAlignVertical={"top"}
               maxLength={150}
               autoCapitalize="none"

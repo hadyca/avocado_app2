@@ -58,9 +58,9 @@ export default function UserPostListPresenter({
               <CategoryTouch
                 first={index === 0}
                 key={index}
-                onPress={() => goToCategoryScreen(item)}
+                onPress={() => goToCategoryScreen(item.categoryName)}
               >
-                <CategoryText>{item}</CategoryText>
+                <CategoryText>{item.categoryName}</CategoryText>
               </CategoryTouch>
             ))}
           </TopScroll>

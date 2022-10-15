@@ -97,6 +97,7 @@ export default function EditCompanyEmailPresenter({
           render={({ field: { onChange, value } }) => (
             <TextInput
               placeholder="Your@Eamil.com"
+              placeholderTextColor="#cccccc"
               textAlignVertical={"top"}
               maxLength={50}
               autoCapitalize="none"

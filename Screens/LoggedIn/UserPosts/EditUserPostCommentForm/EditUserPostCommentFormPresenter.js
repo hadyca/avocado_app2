@@ -91,6 +91,7 @@ export default function EditUserPostCommentFormPresenter({
           render={({ field: { onChange, value } }) => (
             <TextInput
               placeholder="Please Write Comment"
+              placeholderTextColor="#cccccc"
               multiline={true}
               textAlignVertical={"top"}
               maxLength={500}

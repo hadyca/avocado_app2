@@ -61,7 +61,6 @@ export default function ({ route: { params } }) {
       });
     }
   };
-
   const [uploadUserPostMutation, { loading }] = useMutation(
     UPLOAD_USER_POST_MUTATION,
     {

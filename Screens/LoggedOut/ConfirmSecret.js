@@ -147,6 +147,7 @@ export default function ConfirmSecret({ route: { params } }) {
         render={({ field: { onChange, value } }) => (
           <TextInput
             placeholder="인증번호"
+            placeholderTextColor="#cccccc"
             keyboardType="number-pad"
             autoCapitalize="none"
             returnKeyType="done"

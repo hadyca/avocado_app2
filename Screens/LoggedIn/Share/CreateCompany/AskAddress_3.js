@@ -99,6 +99,7 @@ export default function AskAddress_3({ route: { params } }) {
         render={({ field: { onChange, value } }) => (
           <TextInput_Company
             placeholder="01 Công xã Paris, Bến Nghé"
+            placeholderTextColor="#cccccc"
             autoCapitalize="none"
             returnKeyType="done"
             maxLength={100}

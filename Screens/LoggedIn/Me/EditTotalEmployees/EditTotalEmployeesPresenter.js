@@ -91,6 +91,7 @@ export default function EditTotalEmployeesPresenter({
           render={({ field: { onChange, value } }) => (
             <TextInput
               placeholder="Your company total Employees"
+              placeholderTextColor="#cccccc"
               textAlignVertical={"top"}
               autoCapitalize="none"
               returnKeyType="done"

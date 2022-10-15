@@ -81,6 +81,7 @@ export default function EditBioPresenter({
           render={({ field: { onChange, value } }) => (
             <TextInput
               placeholder="Bio"
+              placeholderTextColor="#cccccc"
               textAlignVertical={"top"}
               maxLength={150}
               autoCapitalize="none"

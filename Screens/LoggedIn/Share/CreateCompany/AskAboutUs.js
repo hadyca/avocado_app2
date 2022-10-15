@@ -55,6 +55,7 @@ export default function AskAboutUs({ route: { params } }) {
           <AboutUsView>
             <TextInput_Company
               placeholder={"ex)직원 복지가 좋은, 동나이 최고의 garment회사!"}
+              placeholderTextColor="#cccccc"
               autoCapitalize="none"
               returnKeyType="done"
               onChangeText={(text) => {

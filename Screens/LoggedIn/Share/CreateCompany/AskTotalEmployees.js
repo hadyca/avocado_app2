@@ -40,6 +40,7 @@ export default function AskTotalEmployees({ route: { params } }) {
         render={({ field: { onChange, value } }) => (
           <TextInput_Company
             placeholder="Your company total Employees"
+            placeholderTextColor="#cccccc"
             autoCapitalize="none"
             returnKeyType="done"
             keyboardType="number-pad"

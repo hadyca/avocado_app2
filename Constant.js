@@ -23,15 +23,52 @@
 // };
 
 export const categories_KR = [
-  "일·직업",
-  "질문",
-  "피부 미용",
-  "출산·육아",
-  "동네 정보",
-  "연애·결혼",
-  "요리·음식",
-  "일상",
-  "일반·기타",
+  {
+    id: 1,
+    categoryName: "일·직업",
+    content: "여러 사람들과 일과 관련된 이야기를 해보세요.",
+  },
+  {
+    id: 2,
+    categoryName: "질문",
+    content: "궁금한 것을 물어보세요! 누군가가 친절하게 답변 해줄 거에요.",
+  },
+  {
+    id: 3,
+    categoryName: "피부 미용",
+    content: "피부 미용 관련해서 정보를 나누어 주세요.",
+  },
+  {
+    id: 4,
+    categoryName: "출산·육아",
+    content: "아이 키우는데 필요한 정보나 노하우를 공유해 주세요.",
+  },
+  {
+    id: 5,
+    categoryName: "동네 정보",
+    content: "동네 여러 이슈들을 공유해 주세요.",
+  },
+  {
+    id: 6,
+    categoryName: "연애·결혼",
+    content:
+      "연애나 결혼에 대해 가지고 있는 고민거리나 좋은 정보들을 알려주세요.",
+  },
+  {
+    id: 7,
+    categoryName: "요리·음식",
+    content: "요리 방법, 맛집 등 음식 관련 정보들을 공유해 주세요.",
+  },
+  {
+    id: 8,
+    categoryName: "일상",
+    content: "오늘 하루 어땠는지 다른사람들과 이야기 해보세요.",
+  },
+  {
+    id: 9,
+    categoryName: "일반·기타",
+    content: "여러 사람들과 정보를 공유하고 대화해보세요.",
+  },
 ];
 
 export const categories_EN = [
@@ -98,18 +135,6 @@ export const ScreenNames = {
   SEARCH_SECTOR: "SearchConditionSector",
   COMPANY_POST_ALL: "CompanyPostAll",
 };
-
-export const CategoryExplain_KR = [
-  "여러 사람들과 일과 관련된 이야기를 해보세요.",
-  "궁금한 것을 물어보세요! 누군가가 친절하게 답변 해줄 거에요.",
-  "피부 미용 관련해서 정보를 나누어 주세요.",
-  "아이 키우는데 필요한 정보나 노하우를 공유해 주세요.",
-  "동네 여러 이슈들을 공유해 주세요.",
-  "연애나 결혼에 대해 가지고 있는 고민거리나 좋은 정보들을 알려주세요.",
-  "요리 방법, 맛집 등 음식 관련 정보들을 공유해 주세요.",
-  "오늘 하루 어땠는지 다른사람들과 이야기 해보세요.",
-  "여러 사람들과 정보를 공유하고 대화해보세요.",
-];
 
 export const time = [
   { id: 1, label: "00:00", value: 0 },

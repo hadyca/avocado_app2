@@ -102,6 +102,7 @@ export default function ContactPresenter({ contactMutation, loading }) {
             <TextView>
               <TypeInput
                 placeholder={"문의 유형을 선택하세요."}
+                placeholderTextColor="#cccccc"
                 value={type.value}
               />
               <Ionicons
@@ -135,6 +136,7 @@ export default function ContactPresenter({ contactMutation, loading }) {
             render={({ field: { onChange, value } }) => (
               <TitleInput
                 placeholder="답변 받을 이메일을 입력하세요."
+                placeholderTextColor="#cccccc"
                 autoCapitalize="none"
                 maxLength={100}
                 multiline={false}

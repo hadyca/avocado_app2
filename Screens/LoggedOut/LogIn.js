@@ -74,6 +74,7 @@ export default function Login({ route: { params } }) {
         render={({ field: { onChange, value } }) => (
           <TextInput
             placeholder="Email"
+            placeholderTextColor="#cccccc"
             autoCapitalize="none"
             keyboardType="email-address"
             returnKeyType="next"
@@ -94,6 +95,7 @@ export default function Login({ route: { params } }) {
       />
       <Controller
         name="password"
+        placeholderTextColor="#cccccc"
         rules={{
           required: "비밀번호를 입력 해주세요.",
         }}

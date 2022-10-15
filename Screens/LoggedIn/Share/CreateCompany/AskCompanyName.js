@@ -35,6 +35,7 @@ export default function AskCompanyName() {
         render={({ field: { onChange, value } }) => (
           <TextInput_Company
             placeholder="Your Company Name"
+            placeholderTextColor="#cccccc"
             autoCapitalize="none"
             returnKeyType="done"
             onChangeText={(text) => onChange(text)}

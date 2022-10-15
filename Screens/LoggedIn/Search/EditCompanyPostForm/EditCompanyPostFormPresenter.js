@@ -378,6 +378,7 @@ export default function EditCompanyPostFormPresenter({
               render={({ field: { onChange, value } }) => (
                 <TitleInput
                   placeholder="공고 내용을 요약해서 적어주세요."
+                  placeholderTextColor="#cccccc"
                   autoCapitalize="none"
                   maxLength={100}
                   multiline={false}
@@ -394,6 +395,7 @@ export default function EditCompanyPostFormPresenter({
               render={({ field: { onChange, value } }) => (
                 <TitleInput
                   placeholder={"0941112222"}
+                  placeholderTextColor="#cccccc"
                   autoCapitalize="none"
                   returnKeyType="done"
                   onChangeText={onChange}
@@ -410,6 +412,7 @@ export default function EditCompanyPostFormPresenter({
               render={({ field: { onChange, value } }) => (
                 <TitleInput
                   placeholder="abc@gamil.com"
+                  placeholderTextColor="#cccccc"
                   autoCapitalize="none"
                   maxLength={100}
                   multiline={false}
@@ -625,6 +628,7 @@ export default function EditCompanyPostFormPresenter({
                   placeholder={
                     "예) 업무 예시, 사내 복지, 근무 여건, 지원자가 갖추어야 할 능력, 우대 사항 등"
                   }
+                  placeholderTextColor="#cccccc"
                 />
               )}
             />

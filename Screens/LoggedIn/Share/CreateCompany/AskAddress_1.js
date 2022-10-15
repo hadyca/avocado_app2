@@ -52,6 +52,7 @@ export default function AskAddress_1({ route: { params } }) {
         <TextView>
           <TextInput_Company
             placeholder={"Select your first city!"}
+            placeholderTextColor="#cccccc"
             value={add_1.value}
           />
           <Ionicons

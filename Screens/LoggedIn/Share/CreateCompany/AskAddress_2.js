@@ -53,6 +53,7 @@ export default function AskAddress_2({ route: { params } }) {
         <TextView>
           <TextInput_Company
             placeholder={"Select your second city!"}
+            placeholderTextColor="#cccccc"
             value={add_2}
           />
           <Ionicons

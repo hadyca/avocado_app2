@@ -187,6 +187,7 @@ export default function UserPostUploadFormPresenter({
               maxLength={1000}
               textAlignVertical={"top"}
               autoCapitalize="none"
+              placeholderTextColor="#cccccc"
               onChangeText={(text) => onChange(text)}
               value={value || ""}
               categoryName={category}

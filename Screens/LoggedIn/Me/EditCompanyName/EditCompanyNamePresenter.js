@@ -92,6 +92,7 @@ export default function EditCompanyNamePresenter({
           render={({ field: { onChange, value } }) => (
             <TextInput
               placeholder="Your Company Name"
+              placeholderTextColor="#cccccc"
               textAlignVertical={"top"}
               maxLength={100}
               returnKeyType="done"

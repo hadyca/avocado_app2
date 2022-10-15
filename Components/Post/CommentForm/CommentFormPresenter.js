@@ -68,6 +68,7 @@ export default function CommentFormPresenter({
           render={({ field: { onChange, value } }) => (
             <TextInput
               placeholder="Please Write Comment"
+              placeholderTextColor="#cccccc"
               multiline={true}
               maxLength={500}
               maxHeight={120}

@@ -27,8 +27,11 @@ export default function PostCategory() {
     <ScreenLayout>
       <Container>
         {categories_KR.map((item, index) => (
-          <CategoryView key={index} onPress={() => selectCategory(item)}>
-            <CategoryText>{item}</CategoryText>
+          <CategoryView
+            key={index}
+            onPress={() => selectCategory(item.categoryName)}
+          >
+            <CategoryText>{item.categoryName}</CategoryText>
           </CategoryView>
         ))}
       </Container>

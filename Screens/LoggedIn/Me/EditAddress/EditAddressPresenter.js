@@ -133,7 +133,11 @@ export default function EditAddressPresenter({
           optionContainerStyle={{ height: 500 }}
         >
           <TextView>
-            <TextInput placeholder={"Select your second city!"} value={add_2} />
+            <TextInput
+              placeholder={"Select your second city!"}
+              placeholderTextColor="#cccccc"
+              value={add_2}
+            />
             <Ionicons
               name="chevron-forward"
               color="black"
@@ -149,6 +153,7 @@ export default function EditAddressPresenter({
           render={({ field: { onChange, value } }) => (
             <TextInput
               placeholder="01 Công xã Paris, Bến Nghé"
+              placeholderTextColor="#cccccc"
               maxLength={100}
               autoCapitalize="none"
               returnKeyType="done"

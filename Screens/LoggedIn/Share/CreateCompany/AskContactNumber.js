@@ -44,6 +44,7 @@ export default function AskContactNumber({ route: { params } }) {
         render={({ field: { onChange, value } }) => (
           <TextInput_Company
             placeholder="Your Contact Number"
+            placeholderTextColor="#cccccc"
             returnKeyType="done"
             keyboardType="number-pad"
             onChangeText={(text) => onChange(text)}

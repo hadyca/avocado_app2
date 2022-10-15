@@ -96,6 +96,7 @@ export default function CreateAccount({ route: { params } }) {
         render={({ field: { onChange, value } }) => (
           <TextInput
             placeholder="Email"
+            placeholderTextColor="#cccccc"
             autoCapitalize="none"
             keyboardType="email-address"
             returnKeyType="next"
@@ -130,6 +131,7 @@ export default function CreateAccount({ route: { params } }) {
           <TextInput
             ref={usernameRef}
             placeholder="Username"
+            placeholderTextColor="#cccccc"
             autoCapitalize="none"
             returnKeyType="next"
             onSubmitEditing={() => onNext(passwordRef)}
@@ -165,6 +167,7 @@ export default function CreateAccount({ route: { params } }) {
           <TextInput
             ref={passwordRef}
             placeholder="Password"
+            placeholderTextColor="#cccccc"
             secureTextEntry
             returnKeyType="next"
             autoCapitalize="none"
@@ -201,6 +204,7 @@ export default function CreateAccount({ route: { params } }) {
           <TextInput
             ref={password2Ref}
             placeholder="Password 재 입력"
+            placeholderTextColor="#cccccc"
             secureTextEntry
             returnKeyType="done"
             autoCapitalize="none"

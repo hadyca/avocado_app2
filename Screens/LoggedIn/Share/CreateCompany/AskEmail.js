@@ -48,6 +48,7 @@ export default function AskEmail({ route: { params } }) {
         render={({ field: { onChange, value } }) => (
           <TextInput_Company
             placeholder="Your@Eamil.com"
+            placeholderTextColor="#cccccc"
             autoCapitalize="none"
             returnKeyType="done"
             keyboardType="email-address"
