@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import { Modal, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
+import ImageViewer from "react-native-image-zoom-viewer";
+import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../../../Colors";
 
 const Container = styled.View`
@@ -17,8 +20,8 @@ const Header = styled.View`
   justify-content: space-around;
   align-items: center;
 `;
-
-const AvatarView = styled.View`
+const ImageContainer = styled.View``;
+const AvatarView = styled.TouchableOpacity`
   margin-right: 10px;
   border-radius: 50px;
   border: 0.5px solid ${colors.avatarBorder};
@@ -111,6 +114,20 @@ export default function ProfileContentsPresenter({
   toggleFollowingMutation,
   goToEditProfile,
 }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const images = [
+    {
+      // Simplest usage.
+      url: data?.seeProfile?.avatarUrl,
+      // width: 200,
+      // height: 200,
+      // Optional, if you know the image size, you can set the optimization performance
+
+      // You can pass props to <Image />.
+      props: {},
+    },
+  ];
+
   const getButton = (seeProfile) => {
     const { isMe, isFollowing } = seeProfile;
     if (isMe) {
@@ -139,12 +156,33 @@ export default function ProfileContentsPresenter({
     <Container>
       <Header>
         {data?.seeProfile?.avatarUrl ? (
-          <AvatarView>
-            <Avatar
-              resizeMode="cover"
-              source={{ uri: data?.seeProfile?.avatarUrl }}
-            />
-          </AvatarView>
+          <>
+            <AvatarView onPress={() => setIsModalOpen(true)}>
+              <Avatar
+                resizeMode="cover"
+                source={{ uri: data?.seeProfile?.avatarUrl }}
+              />
+            </AvatarView>
+            <Modal visible={isModalOpen} transparent={true}>
+              <ImageViewer
+                imageUrls={images}
+                saveToLocalByLongPress={false}
+                renderHeader={() => (
+                  <TouchableOpacity
+                    style={{
+                      zIndex: 3,
+                      position: "absolute",
+                      top: 50,
+                      left: 10,
+                    }}
+                    onPress={() => setIsModalOpen(false)}
+                  >
+                    <Ionicons name="close-outline" size={35} color="white" />
+                  </TouchableOpacity>
+                )}
+              />
+            </Modal>
+          </>
         ) : (
           <AvatarView>
             <Avatar

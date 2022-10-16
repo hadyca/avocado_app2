@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import styled from "styled-components/native";
 import { ActivityIndicator, Image, Text, TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
-import { AntDesign } from "@expo/vector-icons";
 import { colors } from "../../../../Colors";
 import ContentInput from "../../../../Components/Post/ContentInput";
 import { useNavigation } from "@react-navigation/native";

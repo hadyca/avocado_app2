@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator } from "react-native";
 import styled from "styled-components/native";
 import UserAvatar from "../UserAvatar";
 import Separator from "../Separator";
@@ -72,7 +72,7 @@ export default function PostContents({
   };
 
   return (
-    <View>
+    <>
       {file?.length !== 0 ? <ImageSlider file={file} /> : null}
       <Container>
         <CategoryView>
@@ -102,6 +102,6 @@ export default function PostContents({
         </Actions>
         <Separator />
       </Container>
-    </View>
+    </>
   );
 }
