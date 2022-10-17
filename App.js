@@ -10,6 +10,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import client, { isLoggedInVar, tokenVar, logUserOut } from "./apollo";
 import { Text } from "react-native";
+import * as SplashScreen from "expo-splash-screen";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
