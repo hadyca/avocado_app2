@@ -18,7 +18,8 @@ export default function ({ route: { params } }) {
   const goToSelectAvatar = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
+      allowsMultipleSelection: true,
+      allowsEditing: false,
       aspect: [5, 3],
       quality: 0.2,
     });

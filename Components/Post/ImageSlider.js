@@ -33,7 +33,12 @@ const Dot = styled.Text`
 export default function ImageSlider({ file }) {
   const [active, setActive] = useState(0);
   const [images, setImages] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState({
+    isModalOpened: false,
+    currentImageIndex: 0,
+  });
+  const [loading, setLoading] = useState(false);
+
   const { width } = useWindowDimensions();
 
   const height = Math.ceil(width * 0.6);
@@ -60,8 +65,16 @@ export default function ImageSlider({ file }) {
   //     props: {},
   //   },
   // ];
-
-  console.log(file[0].fileUrl);
+  const openModal = (index) => {
+    setIsModalOpen({ isModalOpened: true, currentImageIndex: index });
+  };
+  useEffect(() => {
+    if (file) {
+      file.map((item) =>
+        setImages((images) => [...images, { url: item.fileUrl }])
+      );
+    }
+  }, []);
 
   return (
     <Container width={width} height={height}>
@@ -77,7 +90,7 @@ export default function ImageSlider({ file }) {
           file.map((item, index) => (
             <TouchableWithoutFeedback
               key={index}
-              onPress={() => setIsModalOpen(true)}
+              onPress={() => openModal(index)}
             >
               <Img
                 key={index}
@@ -95,9 +108,10 @@ export default function ImageSlider({ file }) {
             </Dot>
           ))}
       </DotView>
-      <Modal visible={isModalOpen} transparent={true}>
+      <Modal visible={isModalOpen.isModalOpened} transparent={true}>
         <ImageViewer
           imageUrls={images}
+          index={isModalOpen.currentImageIndex}
           saveToLocalByLongPress={false}
           renderHeader={() => (
             <TouchableOpacity
@@ -107,7 +121,9 @@ export default function ImageSlider({ file }) {
                 top: 50,
                 left: 10,
               }}
-              onPress={() => setIsModalOpen(false)}
+              onPress={() =>
+                setIsModalOpen({ isModalOpened: false, currentImageIndex: 0 })
+              }
             >
               <Ionicons name="close-outline" size={35} color="white" />
             </TouchableOpacity>
