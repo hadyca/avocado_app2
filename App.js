@@ -1,9 +1,10 @@
 import AppLoading from "expo-app-loading";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { ApolloProvider, useReactiveVar } from "@apollo/client";
 import * as Font from "expo-font";
 import { Asset } from "expo-asset";
+import Entypo from "@expo/vector-icons/Entypo";
 import LoggedOutNav from "./Navigators/LoggedOutNav";
 import LoggedInNav from "./Navigators/LoggedInNav";
 import { NavigationContainer } from "@react-navigation/native";
@@ -13,8 +14,7 @@ import { Text } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
-  const onFinish = () => setLoading(false);
+  const [appIsReady, setAppIsReady] = useState(false);
   const isLoggedIn = useReactiveVar(isLoggedInVar);
 
   const preloadAssets = () => {
@@ -39,19 +39,43 @@ export default function App() {
     return preloadAssets();
   };
 
-  if (loading) {
-    return (
-      <AppLoading
-        startAsync={preload}
-        onError={console.warn}
-        onFinish={onFinish}
-      />
-    );
-  }
+  useEffect(() => {
+    async function prepare() {
+      try {
+        // Pre-load fonts, make any API calls you need to do here
+        await preload();
+        await new Promise((resolve) => setTimeout(resolve, 2000));
 
+        // Artificially delay for two seconds to simulate a slow loading
+        // experience. Please remove this if you copy and paste the code!
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        // Tell the application to render
+        setAppIsReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      // This tells the splash screen to hide immediately! If we call this after
+      // `setAppIsReady`, then we may see a blank screen while the app is
+      // loading its initial state and rendering its first pixels. So instead,
+      // we hide the splash screen once we know the root view has already
+      // performed layout.
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
   return (
     <ApolloProvider client={client}>
-      <NavigationContainer>
+      <NavigationContainer onReady={onLayoutRootView}>
         {isLoggedIn ? <LoggedInNav /> : <LoggedOutNav />}
       </NavigationContainer>
     </ApolloProvider>

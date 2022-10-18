@@ -94,7 +94,6 @@ export default function Login({ route: { params } }) {
       />
       <Controller
         name="password"
-        placeholderTextColor="#cccccc"
         rules={{
           required: "비밀번호를 입력 해주세요.",
         }}
@@ -104,6 +103,7 @@ export default function Login({ route: { params } }) {
             value={value || ""}
             ref={passwordRef}
             placeholder="Password"
+            placeholderTextColor="#cccccc"
             secureTextEntry
             returnKeyType="done"
             hasError={Boolean(formState?.errors?.password?.message)}

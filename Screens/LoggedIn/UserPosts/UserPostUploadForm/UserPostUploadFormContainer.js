@@ -78,17 +78,20 @@ export default function ({ route: { params } }) {
         if (countPhoto < 5) {
           let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [5, 3],
-            quality: 0.2,
+            allowsMultipleSelection: true,
+            allowsEditing: false,
+            aspect: [4, 3],
           });
 
           if (!result.cancelled) {
-            const photoObj = {
-              uri: result.uri,
-            };
-            setPhoto((photo) => [...photo, photoObj]);
-            setCountPhoto(countPhoto + 1);
+            if (countPhoto < 5) {
+              result.selected.map((item) =>
+                setPhoto((photo) => [...photo, { uri: item.uri }])
+              );
+              setCountPhoto(countPhoto + result.selected.length);
+            } else {
+              setAutoServerRegistrationEnabledAsync();
+            }
           }
         } else {
           return null;
@@ -96,7 +99,6 @@ export default function ({ route: { params } }) {
       }
     }
   };
-
   const DeleteImg = (index) => {
     const newPhoto = photo.filter((_, i) => i !== index);
     setPhoto(newPhoto);

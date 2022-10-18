@@ -143,7 +143,7 @@ export default function UserPostUploadFormPresenter({
             <Ionicons name={"camera"} color={"#868B94"} size={30} />
             <CameraText>{`${countPhoto} / 5`}</CameraText>
           </ImagePick>
-          {photo.length > 0
+          {photo?.length > 0
             ? photo.map((item, index) => {
                 return (
                   <ImageContainer key={index}>
