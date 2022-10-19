@@ -159,41 +159,44 @@ export default function ({ route: { params } }) {
 
   const userId = userData?.me?.id;
 
-  useEffect(async () => {
-    if (userData) {
-      setCheck(false);
-      const userDistrict = `${userId}District`;
-      const userVnAll = `${userId}VnAll`;
-      const resultVnAll = await AsyncStorage.getItem(userVnAll);
-      const getVnAll = JSON.parse(resultVnAll);
-      const resultDistrict = await AsyncStorage.getItem(userDistrict);
-      const getDistrict = JSON.parse(resultDistrict);
+  useEffect(() => {
+    const loadData = async () => {
+      if (userData) {
+        setCheck(false);
+        const userDistrict = `${userId}District`;
+        const userVnAll = `${userId}VnAll`;
+        const resultVnAll = await AsyncStorage.getItem(userVnAll);
+        const getVnAll = JSON.parse(resultVnAll);
+        const resultDistrict = await AsyncStorage.getItem(userDistrict);
+        const getDistrict = JSON.parse(resultDistrict);
 
-      if (getVnAll) {
-        setRealVnAll(true);
-        setVnAll(true);
-      } else if (getDistrict?.length > 0) {
-        setRealList(getDistrict);
-        setList(getDistrict);
-        //화면 뿌려주기용
-        const bigList = getDistrict.filter((el) => el.id > 100);
-        const smallList = getDistrict.filter((el) => el.id < 100);
-        getData({
-          variables: {
-            addressStep1_1: bigList[0]?.value,
-            addressStep1_2: bigList[1]?.value,
-            addressStep1_3: bigList[2]?.value,
-            addressStep1_4: bigList[3]?.value,
-            addressStep1_5: bigList[4]?.value,
-            addressStep2_1: smallList[0]?.value,
-            addressStep2_2: smallList[1]?.value,
-            addressStep2_3: smallList[2]?.value,
-            addressStep2_4: smallList[3]?.value,
-            addressStep2_5: smallList[4]?.value,
-          },
-        });
+        if (getVnAll) {
+          setRealVnAll(true);
+          setVnAll(true);
+        } else if (getDistrict?.length > 0) {
+          setRealList(getDistrict);
+          setList(getDistrict);
+          //화면 뿌려주기용
+          const bigList = getDistrict.filter((el) => el.id > 100);
+          const smallList = getDistrict.filter((el) => el.id < 100);
+          getData({
+            variables: {
+              addressStep1_1: bigList[0]?.value,
+              addressStep1_2: bigList[1]?.value,
+              addressStep1_3: bigList[2]?.value,
+              addressStep1_4: bigList[3]?.value,
+              addressStep1_5: bigList[4]?.value,
+              addressStep2_1: smallList[0]?.value,
+              addressStep2_2: smallList[1]?.value,
+              addressStep2_3: smallList[2]?.value,
+              addressStep2_4: smallList[3]?.value,
+              addressStep2_5: smallList[4]?.value,
+            },
+          });
+        }
       }
-    }
+    };
+    loadData();
   }, [check]);
 
   return (

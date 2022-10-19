@@ -47,7 +47,6 @@ const Action = styled.TouchableOpacity`
 
 export default function PostContents({
   file,
-  data,
   userId,
   username,
   avatarUrl,

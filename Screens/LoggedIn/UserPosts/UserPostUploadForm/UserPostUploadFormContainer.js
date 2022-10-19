@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
-import * as ImagePicker from "expo-image-picker";
 import UserPostUploadFormPresenter from "./UserPostUploadFormPresenter";
 import { UPLOAD_USER_POST_MUTATION } from "./UserPostUploadFormQueries";
 import { ScreenNames } from "../../../../Constant";
 import useMe from "../../../../Hooks/useMe";
 
 export default function ({ route: { params } }) {
-  const [photo, setPhoto] = useState([]);
-  const [countPhoto, setCountPhoto] = useState(0);
   const [screenName, setScreenName] = useState("");
 
   const navigation = useNavigation();
@@ -68,43 +65,6 @@ export default function ({ route: { params } }) {
     }
   );
 
-  const goToImageSelect = async () => {
-    if (Platform.OS !== "web") {
-      const { status } =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== "granted") {
-        alert("Sorry, we need camera roll permissions to make this work!");
-      } else {
-        if (countPhoto < 5) {
-          let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsMultipleSelection: true,
-            allowsEditing: false,
-            aspect: [4, 3],
-          });
-
-          if (!result.cancelled) {
-            if (countPhoto < 5) {
-              result.selected.map((item) =>
-                setPhoto((photo) => [...photo, { uri: item.uri }])
-              );
-              setCountPhoto(countPhoto + result.selected.length);
-            } else {
-              setAutoServerRegistrationEnabledAsync();
-            }
-          }
-        } else {
-          return null;
-        }
-      }
-    }
-  };
-  const DeleteImg = (index) => {
-    const newPhoto = photo.filter((_, i) => i !== index);
-    setPhoto(newPhoto);
-    setCountPhoto(countPhoto - 1);
-  };
-
   const goToCategory = () => navigation.navigate("PostCategory");
 
   useEffect(() => {
@@ -115,11 +75,7 @@ export default function ({ route: { params } }) {
 
   return (
     <UserPostUploadFormPresenter
-      goToImageSelect={goToImageSelect}
-      DeleteImg={DeleteImg}
       goToCategory={goToCategory}
-      countPhoto={countPhoto}
-      photo={photo}
       category={params.category}
       loading={loading}
       uploadUserPostMutation={uploadUserPostMutation}

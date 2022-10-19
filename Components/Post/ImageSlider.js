@@ -37,7 +37,6 @@ export default function ImageSlider({ file }) {
     isModalOpened: false,
     currentImageIndex: 0,
   });
-  const [loading, setLoading] = useState(false);
 
   const { width } = useWindowDimensions();
 
@@ -53,18 +52,6 @@ export default function ImageSlider({ file }) {
     }
   };
 
-  // const images = [
-  //   {
-  //     // Simplest usage.
-  //     url: data?.seeProfile?.avatarUrl,
-  //     // width: 200,
-  //     // height: 200,
-  //     // Optional, if you know the image size, you can set the optimization performance
-
-  //     // You can pass props to <Image />.
-  //     props: {},
-  //   },
-  // ];
   const openModal = (index) => {
     setIsModalOpen({ isModalOpened: true, currentImageIndex: index });
   };

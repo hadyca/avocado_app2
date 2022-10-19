@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
 import { ActivityIndicator, Image, Text, TouchableOpacity } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
 import { colors } from "../../../../Colors";
 import ContentInput from "../../../../Components/Post/ContentInput";
 import { useNavigation } from "@react-navigation/native";
 import { ReactNativeFile } from "apollo-upload-client";
+import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator";
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -73,15 +75,14 @@ const DeleteBtn = styled.TouchableOpacity`
 `;
 
 export default function UserPostUploadFormPresenter({
-  goToImageSelect,
-  DeleteImg,
   goToCategory,
-  countPhoto,
-  photo,
   category,
   loading,
   uploadUserPostMutation,
 }) {
+  const [photo, setPhoto] = useState([]);
+  const [countPhoto, setCountPhoto] = useState(0);
+  const [isOver, setIsOver] = useState(false);
   const navigation = useNavigation();
 
   const { control, handleSubmit, formState } = useForm({
@@ -106,6 +107,53 @@ export default function UserPostUploadFormPresenter({
       });
     }
   };
+
+  const goToImageSelect = async () => {
+    if (Platform.OS !== "web") {
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        alert("Sorry, we need camera roll permissions to make this work!");
+      } else {
+        if (countPhoto < 5) {
+          let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsMultipleSelection: true,
+            allowsEditing: false,
+          });
+          if (!result.cancelled) {
+            if (countPhoto + result.selected.length <= 5) {
+              result.selected.map(async (item) => {
+                const manipResult = await manipulateAsync(
+                  item.uri,
+                  [
+                    {
+                      resize: {
+                        width: 1080,
+                      },
+                    },
+                  ],
+                  { compress: 0.5 }
+                );
+                setPhoto((photo) => [...photo, { uri: manipResult.uri }]);
+              });
+              setCountPhoto(countPhoto + result.selected.length);
+              setIsOver(false);
+            } else {
+              setIsOver(true);
+            }
+          }
+        }
+      }
+    }
+  };
+  const DeleteImg = (index) => {
+    const newPhoto = photo.filter((_, i) => i !== index);
+    setPhoto(newPhoto);
+    setCountPhoto(countPhoto - 1);
+    setIsOver(false);
+  };
+
   const NoHeaderRight = () => (
     <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
       <HeaderRightText>완료</HeaderRightText>
@@ -159,6 +207,7 @@ export default function UserPostUploadFormPresenter({
               })
             : null}
         </ImageScroll>
+        {isOver ? <Text>photo is over</Text> : null}
       </ImageTop>
       <InputBottom>
         <CategoryView onPress={goToCategory}>
