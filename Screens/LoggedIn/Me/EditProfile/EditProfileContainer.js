@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@apollo/client";
 import * as ImagePicker from "expo-image-picker";
+import { manipulateAsync } from "expo-image-manipulator";
 import ScreenLayout from "../../../../Components/ScreenLayout";
 import { EDIT_AVATAR_MUTATION } from "./EditProfileQueries";
 import EditProfilePresenter from "./EditProfilePresenter";
@@ -18,13 +19,22 @@ export default function ({ route: { params } }) {
   const goToSelectAvatar = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsMultipleSelection: true,
+      allowsMultipleSelection: false,
       allowsEditing: false,
-      aspect: [5, 3],
-      quality: 0.2,
     });
     if (!result.cancelled) {
-      setAvatarUrl(result.uri);
+      const manipResult = await manipulateAsync(
+        result.uri,
+        [
+          {
+            resize: {
+              width: 1080,
+            },
+          },
+        ],
+        { compress: 0.5 }
+      );
+      setAvatarUrl(manipResult.uri);
       setIsEdited(true);
     }
   };

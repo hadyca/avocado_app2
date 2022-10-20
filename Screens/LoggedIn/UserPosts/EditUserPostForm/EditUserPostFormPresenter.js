@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
+import { manipulateAsync } from "expo-image-manipulator";
 import { colors } from "../../../../Colors";
 import { Image, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import { ReactNativeFile } from "apollo-upload-client";
@@ -17,10 +19,22 @@ const ImageTop = styled.View`
   margin: 10px 10px 0px 10px;
 `;
 
-const ImageScroll = styled.ScrollView`
-  border-bottom-width: 1px;
-  border-bottom-color: ${colors.borderThin};
+const ImageScroll = styled.ScrollView``;
+const Separator = styled.View`
+  width: 100%;
+  height: 1px;
+  background-color: ${colors.borderThin};
 `;
+const ErrorContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-left: 10px;
+`;
+const ErrorText = styled.Text`
+  margin-left: 3px;
+  color: ${colors.error};
+`;
+
 const InputBottom = styled.View`
   margin: 0px 10px 10px 10px;
 `;
@@ -77,15 +91,17 @@ export default function EditUserPostFormPresenter({
   content,
   loading,
   userPostId,
-  photo,
-  countPhoto,
   category,
   editUserPostMutation,
   goToCategory,
-  goToImageSelect,
-  DeleteImg,
   handleEdit,
+  file,
+  fileLength,
 }) {
+  const [photo, setPhoto] = useState([{ uri: file.fileUrl }]);
+  const [countPhoto, setCountPhoto] = useState(!fileLength ? 0 : fileLength);
+  const [isOver, setIsOver] = useState(false);
+  console.log(photo);
   const navigation = useNavigation();
   const { control, handleSubmit, formState } = useForm({
     defaultValues: {
@@ -115,6 +131,54 @@ export default function EditUserPostFormPresenter({
       });
     }
   };
+
+  const goToImageSelect = async () => {
+    if (Platform.OS !== "web") {
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        alert("Sorry, we need camera roll permissions to make this work!");
+      } else {
+        if (countPhoto < 5) {
+          let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsMultipleSelection: true,
+            allowsEditing: false,
+          });
+          if (!result.cancelled) {
+            if (countPhoto + result.selected.length <= 5) {
+              result.selected.map(async (item) => {
+                const manipResult = await manipulateAsync(
+                  item.uri,
+                  [
+                    {
+                      resize: {
+                        width: 1080,
+                      },
+                    },
+                  ],
+                  { compress: 0.5 }
+                );
+                setPhoto((photo) => [...photo, { uri: manipResult.uri }]);
+              });
+              setCountPhoto(countPhoto + result.selected.length);
+              setIsOver(false);
+            } else {
+              setIsOver(true);
+            }
+          }
+        }
+      }
+    }
+  };
+
+  const DeleteImg = (index) => {
+    const newPhoto = photo.filter((_, i) => i !== index);
+    setPhoto(newPhoto);
+    setCountPhoto(countPhoto - 1);
+    setIsOver(false);
+  };
+
   const NoHeaderRight = () => (
     <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
       <HeaderRightText>완료</HeaderRightText>
@@ -143,6 +207,13 @@ export default function EditUserPostFormPresenter({
     });
   }, [photo, loading, category, formState.isValid]);
 
+  // useEffect(() => {
+  //   if (params?.file?.length > 0) {
+  //     setPhoto(file);
+  //     setCountPhoto(length);
+  //   }
+  // }, []);
+
   return (
     <Container>
       <ImageTop>
@@ -156,7 +227,7 @@ export default function EditUserPostFormPresenter({
                 return (
                   <ImageContainer key={index}>
                     <Image
-                      source={{ uri: item.fileUrl }}
+                      source={{ uri: item.uri }}
                       style={{ height: 60, width: 60 }}
                     />
                     <DeleteBtn onPress={() => DeleteImg(index)}>
@@ -167,6 +238,17 @@ export default function EditUserPostFormPresenter({
               })
             : null}
         </ImageScroll>
+        {isOver && (
+          <ErrorContainer>
+            <Ionicons
+              name="information-circle-outline"
+              size={21}
+              color={colors.error}
+            />
+            <ErrorText>사진은 5장까지만 가능합니다.</ErrorText>
+          </ErrorContainer>
+        )}
+        <Separator />
       </ImageTop>
       <InputBottom>
         <CategoryView onPress={goToCategory}>

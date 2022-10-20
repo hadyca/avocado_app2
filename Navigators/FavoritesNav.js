@@ -2,6 +2,7 @@ import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import FavoriteUserPost from "../Screens/LoggedIn/Favorites/FavoriteUserPost";
 import FavoriteCompanyPost from "../Screens/LoggedIn/Favorites/FavoriteCompanyPost";
+import { colors } from "../Colors";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -9,7 +10,7 @@ export default function FavoritesNav() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarIndicatorStyle: { backgroundColor: "black" },
+        tabBarIndicatorStyle: { backgroundColor: colors.buttonBackground },
       }}
     >
       <Tab.Screen

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, NativeModules, Platform, Alert } from "react-native";
+import { Image, Platform, Alert, Text } from "react-native";
 import styled from "styled-components/native";
 import Checkbox from "expo-checkbox";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
@@ -7,6 +7,8 @@ import { useForm, Controller } from "react-hook-form";
 import ModalSelector from "react-native-modal-selector";
 import NumberFormat from "react-number-format";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import * as ImagePicker from "expo-image-picker";
+import { manipulateAsync } from "expo-image-manipulator";
 import { colors } from "../../../../Colors";
 import { ReactNativeFile } from "apollo-upload-client";
 import { time } from "../../../../Constant";
@@ -54,11 +56,21 @@ const ImageTop = styled.View`
 `;
 
 const ImageScroll = styled.ScrollView``;
+
+const ErrorContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+const ErrorText = styled.Text`
+  margin-left: 3px;
+  color: ${colors.error};
+`;
+
 const InputBottom = styled.View`
   margin: 0px 10px 10px 10px;
 `;
 const ImagePick = styled.TouchableOpacity`
-  margin: 10px 20px 0px 0px;
+  margin: 10px 20px 10px 0px;
   width: 60px;
   height: 60px;
   justify-content: center;
@@ -201,10 +213,6 @@ const SubmitContainer = styled.View`
 `;
 
 export default function CompanyPostUploadFormPresenter({
-  goToImageSelect,
-  DeleteImg,
-  countPhoto,
-  photo,
   loading,
   uploadCompanyPostMutation,
   userData,
@@ -222,8 +230,9 @@ export default function CompanyPostUploadFormPresenter({
   const [timeOption, setTimeOption] = useState(false);
   const [wageType, setWageType] = useState("월급");
   const [wageNum, setWageNum] = useState();
-  // const [statusBarHeight, setStatusBarHeight] = useState(0);
-  // const { StatusBarManager } = NativeModules;
+  const [photo, setPhoto] = useState([]);
+  const [countPhoto, setCountPhoto] = useState(0);
+  const [isOver, setIsOver] = useState(false);
 
   const {
     control,
@@ -286,13 +295,51 @@ export default function CompanyPostUploadFormPresenter({
     }
   };
 
-  // useEffect(() => {
-  //   Platform.OS == "ios"
-  //     ? StatusBarManager.getHeight((statusBarFrameData) => {
-  //         setStatusBarHeight(statusBarFrameData.height);
-  //       })
-  //     : null;
-  // }, []);
+  const goToImageSelect = async () => {
+    if (Platform.OS !== "web") {
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        alert("Sorry, we need camera roll permissions to make this work!");
+      } else {
+        if (countPhoto < 5) {
+          let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsMultipleSelection: true,
+            allowsEditing: false,
+          });
+          if (!result.cancelled) {
+            if (countPhoto + result.selected.length <= 5) {
+              result.selected.map(async (item) => {
+                const manipResult = await manipulateAsync(
+                  item.uri,
+                  [
+                    {
+                      resize: {
+                        width: 1080,
+                      },
+                    },
+                  ],
+                  { compress: 0.5 }
+                );
+                setPhoto((photo) => [...photo, { uri: manipResult.uri }]);
+              });
+              setCountPhoto(countPhoto + result.selected.length);
+              setIsOver(false);
+            } else {
+              setIsOver(true);
+            }
+          }
+        }
+      }
+    }
+  };
+  const DeleteImg = (index) => {
+    const newPhoto = photo.filter((_, i) => i !== index);
+    setPhoto(newPhoto);
+    setCountPhoto(countPhoto - 1);
+    setIsOver(false);
+  };
 
   useEffect(() => {
     if (!mon && !tue && !wed && !thu && !fri && !sat && !sun) {
@@ -320,7 +367,7 @@ export default function CompanyPostUploadFormPresenter({
                 <Ionicons name={"camera"} color={"#868B94"} size={30} />
                 <CameraText>{`${countPhoto} / 5`}</CameraText>
               </ImagePick>
-              {photo.length > 0
+              {photo?.length > 0
                 ? photo.map((item, index) => {
                     return (
                       <ImageContainer key={index}>
@@ -340,6 +387,16 @@ export default function CompanyPostUploadFormPresenter({
                   })
                 : null}
             </ImageScroll>
+            {isOver && (
+              <ErrorContainer>
+                <Ionicons
+                  name="information-circle-outline"
+                  size={21}
+                  color={colors.error}
+                />
+                <ErrorText>사진은 5장까지만 가능합니다.</ErrorText>
+              </ErrorContainer>
+            )}
           </ImageTop>
           <InputBottom>
             <Title>제목</Title>

@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, ActivityIndicator } from "react-native";
+import { FlatList, ActivityIndicator, View } from "react-native";
 import styled from "styled-components/native";
 
 const FetchView = styled.View`

@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
 import { ActivityIndicator, Image, Text, TouchableOpacity } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { manipulateAsync } from "expo-image-manipulator";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
 import { colors } from "../../../../Colors";
 import ContentInput from "../../../../Components/Post/ContentInput";
 import { useNavigation } from "@react-navigation/native";
 import { ReactNativeFile } from "apollo-upload-client";
-import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator";
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -26,10 +26,23 @@ const ImageTop = styled.View`
   margin: 10px 10px 0px 10px;
 `;
 
-const ImageScroll = styled.ScrollView`
-  border-bottom-width: 1px;
-  border-bottom-color: ${colors.borderThin};
+const ImageScroll = styled.ScrollView``;
+
+const Separator = styled.View`
+  width: 100%;
+  height: 1px;
+  background-color: ${colors.borderThin};
 `;
+const ErrorContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-left: 10px;
+`;
+const ErrorText = styled.Text`
+  margin-left: 3px;
+  color: ${colors.error};
+`;
+
 const InputBottom = styled.View`
   margin: 0px 10px 10px 10px;
 `;
@@ -207,7 +220,17 @@ export default function UserPostUploadFormPresenter({
               })
             : null}
         </ImageScroll>
-        {isOver ? <Text>photo is over</Text> : null}
+        {isOver && (
+          <ErrorContainer>
+            <Ionicons
+              name="information-circle-outline"
+              size={21}
+              color={colors.error}
+            />
+            <ErrorText>사진은 5장까지만 가능합니다.</ErrorText>
+          </ErrorContainer>
+        )}
+        <Separator />
       </ImageTop>
       <InputBottom>
         <CategoryView onPress={goToCategory}>
