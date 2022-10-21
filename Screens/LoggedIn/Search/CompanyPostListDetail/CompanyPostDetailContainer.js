@@ -291,6 +291,12 @@ export default function ({ route: { params } }) {
     });
   }, [data]);
 
+  useEffect(() => {
+    if (params.refresh === "refresh") {
+      refetch();
+    }
+  }, [params]);
+
   return (
     <ScreenLayout loading={loading}>
       <CompanyPostDetailPresenter

@@ -102,10 +102,10 @@ export default function UserPostUploadFormPresenter({
     mode: "onChange",
   });
 
-  const onValid = async ({ content }) => {
-    const fileUrl = await photo.map((_, index) => {
+  const onValid = ({ content }) => {
+    const fileUrl = photo.map((item, index) => {
       return new ReactNativeFile({
-        uri: photo[index].uri,
+        uri: item.uri,
         name: `${index}.jpg`,
         type: "image/jpeg",
       });
@@ -134,8 +134,9 @@ export default function UserPostUploadFormPresenter({
             allowsMultipleSelection: true,
             allowsEditing: false,
           });
+          console.log(result);
           if (!result.cancelled) {
-            if (countPhoto + result.selected.length <= 5) {
+            if (countPhoto + result?.selected?.length <= 5) {
               result.selected.map(async (item) => {
                 const manipResult = await manipulateAsync(
                   item.uri,

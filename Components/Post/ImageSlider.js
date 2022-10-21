@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   Modal,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import ImageViewer from "react-native-image-zoom-viewer";
@@ -67,8 +68,8 @@ export default function ImageSlider({ file }) {
     <Container width={width} height={height}>
       <ScrollView
         horizontal
-        scrollEventThrottle="16"
         pagingEnabled
+        scrollEventThrottle={Platform.OS === "ios" ? 16 : null}
         onScroll={handleScroll}
         showsHorizontalScrollIndicator={false}
         style={{ width, height }}

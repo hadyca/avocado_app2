@@ -98,10 +98,9 @@ export default function EditUserPostFormPresenter({
   file,
   fileLength,
 }) {
-  const [photo, setPhoto] = useState([{ uri: file.fileUrl }]);
-  const [countPhoto, setCountPhoto] = useState(!fileLength ? 0 : fileLength);
+  const [photo, setPhoto] = useState([]);
+  const [countPhoto, setCountPhoto] = useState(0);
   const [isOver, setIsOver] = useState(false);
-  console.log(photo);
   const navigation = useNavigation();
   const { control, handleSubmit, formState } = useForm({
     defaultValues: {
@@ -110,17 +109,16 @@ export default function EditUserPostFormPresenter({
     mode: "onChange",
   });
 
-  const onValid = async ({ content }) => {
-    const editedFileUrl = await photo.map((_, index) => {
+  const onValid = ({ content }) => {
+    const editedFileUrl = photo.map((item, index) => {
       return new ReactNativeFile({
-        uri: photo[index].fileUrl,
+        uri: item.uri,
         name: `${index}.jpg`,
         type: "image/jpeg",
       });
     });
 
     if (!loading) {
-      handleEdit(content);
       editUserPostMutation({
         variables: {
           userPostId: parseInt(userPostId),
@@ -206,13 +204,14 @@ export default function EditUserPostFormPresenter({
         : OkHeaderRight,
     });
   }, [photo, loading, category, formState.isValid]);
-
-  // useEffect(() => {
-  //   if (params?.file?.length > 0) {
-  //     setPhoto(file);
-  //     setCountPhoto(length);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (file.length > 0) {
+      file.map((item) =>
+        setPhoto((photo) => [...photo, { uri: item.fileUrl }])
+      );
+      setCountPhoto(fileLength);
+    }
+  }, []);
 
   return (
     <Container>

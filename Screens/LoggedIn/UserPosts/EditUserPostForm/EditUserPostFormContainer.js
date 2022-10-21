@@ -9,39 +9,25 @@ export default function ({ route: { params } }) {
   const [editedContent, setEditedContent] = useState("");
   const navigation = useNavigation();
 
-  const updateEditUserPost = (cache, result) => {
+  const update = (cache, result) => {
     const {
       data: {
         editUserPost: { ok, id },
       },
     } = result;
     if (ok) {
-      const UserPostId = `UserPost:${params.id}`;
-
-      cache.modify({
-        id: UserPostId,
-        fields: {
-          content() {
-            return editedContent;
-          },
-          category() {
-            return params.category;
-          },
-          file() {
-            return photo[0]?.fileUrl;
-          },
-        },
+      navigation.navigate("UserPostListDetail", {
+        id,
+        fromWhere: screenName,
+        refresh: "refresh",
       });
     }
-    navigation.navigate("UserPostListDetail", {
-      id,
-      fromWhere: screenName,
-    });
   };
+
   const [editUserPostMutation, { loading }] = useMutation(
     EDIT_USERPOST_MUTATION,
     {
-      update: updateEditUserPost,
+      update,
     }
   );
 
@@ -57,7 +43,6 @@ export default function ({ route: { params } }) {
   const handleEdit = (content) => {
     setEditedContent(content);
   };
-  console.log(params);
   return (
     <EditUserPostFormPresenter
       content={params.content}
@@ -68,7 +53,7 @@ export default function ({ route: { params } }) {
       goToCategory={goToCategory}
       handleEdit={handleEdit}
       file={params.file}
-      fileLength={params.file.length}
+      fileLength={params.file?.length}
     />
   );
 }

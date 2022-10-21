@@ -7,13 +7,11 @@ import { categories_KR } from "../../../Constant";
 
 const Container = styled.View``;
 
-const CategoryView = styled.View`
+const CategoryView = styled.TouchableOpacity`
+  padding: 25px 15px;
+  color: black;
   border-bottom-width: 1px;
   border-bottom-color: ${colors.borderThin};
-`;
-const CategoryView2 = styled.TouchableOpacity`
-  padding: 25px 7px;
-  color: black;
 `;
 
 const CategoryText = styled.Text``;
@@ -30,10 +28,11 @@ export default function EditPostCategory({ route: { params } }) {
     <ScreenLayout>
       <Container>
         {categories_KR.map((item, index) => (
-          <CategoryView key={index}>
-            <CategoryView2 onPress={() => selectCategory(item)}>
-              <CategoryText>{item.categoryName}</CategoryText>
-            </CategoryView2>
+          <CategoryView
+            key={index}
+            onPress={() => selectCategory(item.categoryName)}
+          >
+            <CategoryText>{item.categoryName}</CategoryText>
           </CategoryView>
         ))}
       </Container>

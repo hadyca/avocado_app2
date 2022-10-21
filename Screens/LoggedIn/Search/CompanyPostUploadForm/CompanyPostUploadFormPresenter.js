@@ -261,7 +261,7 @@ export default function CompanyPostUploadFormPresenter({
     } else if (!content) {
       Alert.alert("세부 내용을 입력해주세요.");
     } else {
-      const fileUrl = await photo.map((_, index) => {
+      const fileUrl = await photo.map((item, index) => {
         return new ReactNativeFile({
           uri: photo[index].uri,
           name: `${index}.jpg`,
