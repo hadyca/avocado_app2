@@ -10,6 +10,7 @@ export default function ({ route: { params } }) {
   const navigation = useNavigation();
 
   const updateEditUserPostComment = (cache, result) => {
+    console.table(cache);
     const {
       data: {
         editUserPostComment: { ok },

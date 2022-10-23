@@ -7,13 +7,18 @@ import { categories_KR } from "../../../Constant";
 
 const Container = styled.View``;
 
+const CategoryContainer = styled.View``;
+
 const CategoryView = styled.TouchableOpacity`
   padding: 25px 15px;
   color: black;
-  border-bottom-width: 1px;
-  border-bottom-color: ${colors.borderThin};
 `;
 
+const Separator = styled.View`
+  width: 100%;
+  height: 1px;
+  background-color: ${colors.borderThin};
+`;
 const CategoryText = styled.Text``;
 
 export default function PostCategory() {
@@ -27,12 +32,12 @@ export default function PostCategory() {
     <ScreenLayout>
       <Container>
         {categories_KR.map((item, index) => (
-          <CategoryView
-            key={index}
-            onPress={() => selectCategory(item.categoryName)}
-          >
-            <CategoryText>{item.categoryName}</CategoryText>
-          </CategoryView>
+          <CategoryContainer key={index}>
+            <CategoryView onPress={() => selectCategory(item.categoryName)}>
+              <CategoryText>{item.categoryName}</CategoryText>
+            </CategoryView>
+            <Separator />
+          </CategoryContainer>
         ))}
       </Container>
     </ScreenLayout>

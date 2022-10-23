@@ -20,7 +20,7 @@ const Header = styled.View`
   justify-content: space-around;
   align-items: center;
 `;
-const ImageContainer = styled.View``;
+
 const AvatarView = styled.TouchableOpacity`
   margin-right: 10px;
   border-radius: 50px;
@@ -91,12 +91,13 @@ const Info = styled.Text`
 
 const ProfileBtn = styled.TouchableOpacity`
   background-color: ${(props) =>
-    props.backgroundColor ? colors.blue : "white"};
+    props.backgroundColor ? colors.buttonBackground : "white"};
   padding: 15px 7px;
   border-radius: 3px;
   width: 100%;
   border: 1px solid
-    ${(props) => (props.backgroundColor ? colors.blue : colors.borderThick)};
+    ${(props) =>
+      props.backgroundColor ? colors.buttonBackground : colors.borderThick};
 `;
 
 const ProfileText = styled.Text`

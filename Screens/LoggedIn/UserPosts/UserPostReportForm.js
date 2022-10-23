@@ -26,11 +26,17 @@ const TitleText = styled.Text`
   font-weight: bold;
 `;
 
+const ReportContainer = styled.View``;
+
 const ReportView = styled.TouchableOpacity`
   padding: 18px 15px;
   color: black;
-  border-bottom-width: 1px;
-  border-bottom-color: ${colors.borderThin};
+`;
+
+const Separator = styled.View`
+  width: 100%;
+  height: 1px;
+  background-color: ${colors.borderThin};
 `;
 
 const ReportText = styled.Text``;
@@ -70,9 +76,12 @@ export default function UserPostReportForm({ route: { params } }) {
           <TitleText>게시글을 신고하는 이유를 선택해 주세요.</TitleText>
         </TitleView>
         {userPostReportAry.map((item, index) => (
-          <ReportView key={index} onPress={() => handleReport(item)}>
-            <ReportText>{item}</ReportText>
-          </ReportView>
+          <ReportContainer key={index}>
+            <ReportView onPress={() => handleReport(item)}>
+              <ReportText>{item}</ReportText>
+            </ReportView>
+            <Separator />
+          </ReportContainer>
         ))}
       </Container>
     </ScreenLayout>

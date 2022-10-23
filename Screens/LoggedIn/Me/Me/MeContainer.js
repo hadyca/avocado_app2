@@ -9,11 +9,10 @@ import { PROFILE_QUERY } from "./MeQueries";
 import MePresenter from "./MePresenter";
 import useMe from "../../../../Hooks/useMe";
 
-export default function () {
+export default function ({ route: { params } }) {
   const ref = useRef(null);
   useScrollToTop(ref);
   const { data: userData, loading: userLoading } = useMe();
-
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const { data, loading, refetch } = useQuery(PROFILE_QUERY, {
@@ -32,6 +31,7 @@ export default function () {
   const goToSetting = () => {
     navigation.navigate("MyProfileSetting", {
       email: userData.me.email,
+      userId: userData.me.id,
     });
   };
 
@@ -95,9 +95,16 @@ export default function () {
   useEffect(() => {
     navigation.setOptions({
       title: loading ? "Loading..." : data?.seeProfile?.username,
-      headerRight: loading ? null : HeaderRight,
+      headerRight: !loading && HeaderRight,
     });
   }, [data]);
+
+  useEffect(() => {
+    console.log(params);
+    if (params?.refresh === "refresh") {
+      refetch();
+    }
+  }, [params]);
 
   return (
     <ScreenLayout loading={loading || userLoading}>

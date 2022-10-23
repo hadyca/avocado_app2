@@ -59,10 +59,7 @@ const CameraText = styled.Text`
   color: #868b94;
 `;
 
-const CategoryView = styled.TouchableOpacity`
-  border-bottom-width: 1px;
-  border-bottom-color: ${colors.borderThin};
-`;
+const CategoryView = styled.TouchableOpacity``;
 
 const CategoryContainer = styled.View`
   padding: 15px 7px;
@@ -134,7 +131,6 @@ export default function UserPostUploadFormPresenter({
             allowsMultipleSelection: true,
             allowsEditing: false,
           });
-          console.log(result);
           if (!result.cancelled) {
             if (countPhoto + result?.selected?.length <= 5) {
               result.selected.map(async (item) => {
@@ -247,6 +243,7 @@ export default function UserPostUploadFormPresenter({
             </CategoryContainer>
           )}
         </CategoryView>
+        <Separator />
         <Controller
           name="content"
           rules={{

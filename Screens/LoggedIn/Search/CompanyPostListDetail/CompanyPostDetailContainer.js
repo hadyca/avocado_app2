@@ -287,7 +287,7 @@ export default function ({ route: { params } }) {
   );
   useEffect(() => {
     navigation.setOptions({
-      headerRight: HeaderRight,
+      headerRight: !loading && HeaderRight,
     });
   }, [data]);
 

@@ -4,6 +4,7 @@ import { setContext } from "@apollo/client/link/context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { offsetLimitPagination } from "@apollo/client/utilities";
 import { createUploadLink } from "apollo-upload-client";
+import { NativeModules } from "react-native";
 
 export const isLoggedInVar = makeVar(false);
 
@@ -21,6 +22,7 @@ export const logUserOut = async () => {
   await AsyncStorage.removeItem(TOKEN);
   isLoggedInVar(false);
   tokenVar(null);
+  NativeModules.DevSettings.reload();
 };
 
 export const handleAllVn = async (userId, boolean) => {
@@ -44,7 +46,7 @@ export const handleDistrict = async (userId, ...list) => {
 // for simulator
 
 const uploadHttpLink = createUploadLink({
-  uri: "http://44e2-182-160-125-147.ngrok.io/graphql",
+  uri: "http://268e-182-160-125-147.ngrok.io/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {

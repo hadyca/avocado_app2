@@ -46,6 +46,15 @@ const DELETE_PUSHTOKEN_MUTATION = gql`
   }
 `;
 
+const DELETE_USER_MUTATION = gql`
+  mutation deleteUser($userId: Int!) {
+    deleteUser(userId: $userId) {
+      ok
+      error
+    }
+  }
+`;
+
 export default function Account({ route: { params } }) {
   const [deletePushTokenMutation, { loading }] = useMutation(
     DELETE_PUSHTOKEN_MUTATION,
@@ -53,6 +62,10 @@ export default function Account({ route: { params } }) {
       onCompleted: () => logUserOut(),
     }
   );
+
+  const [deleteUserMutation] = useMutation(DELETE_USER_MUTATION, {
+    onCompleted: () => logUserOut(),
+  });
   return (
     <ScreenLayout loading={loading}>
       <AccountText>현재 계정 {params.email}</AccountText>
@@ -77,6 +90,32 @@ export default function Account({ route: { params } }) {
         }
       >
         <ButtonText>로그아웃</ButtonText>
+        <Ionicons
+          name="chevron-forward"
+          color="black"
+          size={17}
+          style={{ marginRight: 20 }}
+        />
+      </Button>
+      <Separator />
+      <Button
+        onPress={() =>
+          Alert.alert("정말 탈퇴 하시겠습니까?", "", [
+            { text: "Cancel" },
+            {
+              text: "Ok",
+              onPress: async () => {
+                await deleteUserMutation({
+                  variables: {
+                    userId: params.userId,
+                  },
+                });
+              },
+            },
+          ])
+        }
+      >
+        <ButtonText>탈퇴하기</ButtonText>
         <Ionicons
           name="chevron-forward"
           color="black"

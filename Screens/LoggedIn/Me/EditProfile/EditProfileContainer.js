@@ -4,8 +4,12 @@ import { useMutation } from "@apollo/client";
 import * as ImagePicker from "expo-image-picker";
 import { manipulateAsync } from "expo-image-manipulator";
 import ScreenLayout from "../../../../Components/ScreenLayout";
-import { EDIT_AVATAR_MUTATION } from "./EditProfileQueries";
+import {
+  EDIT_AVATAR_MUTATION,
+  DELETE_COMPANY_MUTATION,
+} from "./EditProfileQueries";
 import EditProfilePresenter from "./EditProfilePresenter";
+import { Alert } from "react-native";
 
 export default function ({ route: { params } }) {
   const navigation = useNavigation();
@@ -15,6 +19,25 @@ export default function ({ route: { params } }) {
   const [editAvatarMutation, { loading }] = useMutation(EDIT_AVATAR_MUTATION, {
     onCompleted: () => navigation.pop(),
   });
+
+  const updateDeleteComapny = (cache, result) => {
+    const {
+      data: {
+        deleteCompany: { ok, id },
+      },
+    } = result;
+    if (ok) {
+      navigation.navigate("TabsNav", { screen: "me" }, { refresh: "refresh" });
+      Alert.alert("삭제 되었습니다.");
+    }
+  };
+
+  const [deleteCompanyMutation, { deleteLoading }] = useMutation(
+    DELETE_COMPANY_MUTATION,
+    {
+      update: updateDeleteComapny,
+    }
+  );
 
   const goToSelectAvatar = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -122,11 +145,11 @@ export default function ({ route: { params } }) {
       return;
     }
   }, []);
-
   return (
     <ScreenLayout>
       <EditProfilePresenter
         editAvatarMutation={editAvatarMutation}
+        deleteCompanyMutation={deleteCompanyMutation}
         goToSelectAvatar={goToSelectAvatar}
         goToEditUsername={goToEditUsername}
         goToEditBio={goToEditBio}
@@ -142,6 +165,7 @@ export default function ({ route: { params } }) {
         bio={params.bio}
         myCompany={params.myCompany}
         loading={loading}
+        deleteLoading={deleteLoading}
       />
     </ScreenLayout>
   );

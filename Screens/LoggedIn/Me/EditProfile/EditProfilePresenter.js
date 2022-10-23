@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import { TouchableOpacity, ActivityIndicator } from "react-native";
+import { TouchableOpacity, ActivityIndicator, Alert, Text } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { ReactNativeFile } from "apollo-upload-client";
 import { colors } from "../../../../Colors";
+import AuthButton from "../../../../Components/Auth/AuthButton";
 
 const HeaderRightText = styled.Text`
   color: ${(props) => (props.ok ? colors.buttonBackground : colors.black)};
@@ -91,6 +92,7 @@ const Separator = styled.View`
 
 export default function EditProfilePresenter({
   editAvatarMutation,
+  deleteCompanyMutation,
   goToSelectAvatar,
   goToEditUsername,
   goToEditBio,
@@ -106,6 +108,7 @@ export default function EditProfilePresenter({
   bio,
   myCompany,
   loading,
+  deleteLoading,
 }) {
   const address = `${myCompany?.addressStep3}, ${myCompany?.addressStep2}, ${myCompany?.addressStep1}`;
 
@@ -146,7 +149,6 @@ export default function EditProfilePresenter({
       headerRight: loading ? HeaderRightLoading : OkHeaderRight,
     });
   }, [loading, avatarUrl, isEdited]);
-
   return (
     <Container>
       <Top onPress={goToSelectAvatar}>
@@ -195,7 +197,7 @@ export default function EditProfilePresenter({
           </ButtonTextView>
         </Button>
         <Separator />
-        {myCompany ? (
+        {myCompany && (
           <>
             <CompanyTitle>Company Info</CompanyTitle>
             <Button onPress={goToEditCompanyName}>
@@ -271,8 +273,27 @@ export default function EditProfilePresenter({
                 <Ionicons name="chevron-forward" color="black" size={17} />
               </ButtonTextView>
             </Button>
+            <AuthButton
+              onPress={() =>
+                Alert.alert("정말 삭제 하시겠습니까?", "", [
+                  { text: "Cancel" },
+                  {
+                    text: "Ok",
+                    onPress: async () => {
+                      await deleteCompanyMutation({
+                        variables: {
+                          companyId: myCompany?.id,
+                        },
+                      });
+                    },
+                  },
+                ])
+              }
+              loading={deleteLoading}
+              text={"기업 삭제 하기"}
+            />
           </>
-        ) : null}
+        )}
       </Bottom>
     </Container>
   );

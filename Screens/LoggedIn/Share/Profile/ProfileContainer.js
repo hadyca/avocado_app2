@@ -77,7 +77,7 @@ export default function ({ route: { params } }) {
   useEffect(() => {
     navigation.setOptions({
       title: loading ? "Loading..." : data?.seeProfile?.username,
-      headerRight: loading ? null : HeaderRight,
+      headerRight: !loading && HeaderRight,
     });
   }, [data]);
 

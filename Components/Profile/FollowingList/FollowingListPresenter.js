@@ -48,12 +48,13 @@ const FollowView = styled.View``;
 
 const FollowBtn = styled.TouchableOpacity`
   background-color: ${(props) =>
-    props.backgroundColor ? colors.blue : "white"};
+    props.backgroundColor ? colors.buttonBackground : "white"};
   width: 90px;
   padding: 5px 7px;
   border-radius: 3px;
   border: 1px solid
-    ${(props) => (props.backgroundColor ? colors.blue : colors.borderThick)};
+    ${(props) =>
+      props.backgroundColor ? colors.buttonBackground : colors.borderThick};
 `;
 
 const FollowText = styled.Text`

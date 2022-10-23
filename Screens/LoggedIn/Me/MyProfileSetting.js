@@ -33,6 +33,7 @@ export default function MyProfileSetting({ route: { params } }) {
         onPress={() =>
           navigation.navigate("Account", {
             email: params.email,
+            userId: params.userId,
           })
         }
       >
