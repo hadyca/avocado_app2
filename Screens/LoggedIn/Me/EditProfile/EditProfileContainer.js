@@ -21,7 +21,6 @@ export default function ({ route: { params } }) {
   });
 
   const updateDeleteCompany = (cache, result) => {
-    console.log(cache);
     const {
       data: {
         deleteCompany: { ok },

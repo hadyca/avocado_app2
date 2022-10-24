@@ -19,7 +19,7 @@ const CategoryText = styled.Text`
 `;
 
 const ExplainView = styled.View`
-  margin: 0px 0px 10px 10px;
+  margin: 10px 0px 10px 10px;
 `;
 
 const WriteTextLink = styled.TouchableOpacity`
@@ -61,7 +61,7 @@ export default function CategoryBoardPresenter({
       <FlatList
         ListHeaderComponent={
           <>
-            <ImgContainer>
+            {/* <ImgContainer>
               <MainImg
                 resizeMode="cover"
                 source={{
@@ -70,8 +70,8 @@ export default function CategoryBoardPresenter({
                 width={width}
                 height={height}
               />
-            </ImgContainer>
-            <CategoryText>{category}</CategoryText>
+            </ImgContainer> */}
+            {/* <CategoryText>{category}</CategoryText> */}
             <ExplainView>
               <ExplainCategory categoryName={category} />
             </ExplainView>

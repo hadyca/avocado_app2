@@ -258,6 +258,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="CompanyPostListDetail"
         options={{
+          title: false,
           headerBackTitleVisible: false,
         }}
         component={CompanyPostListDetail}
@@ -272,6 +273,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="CreateCompanyFinish"
         options={{
+          title: false,
           headerBackTitleVisible: false,
         }}
         component={CreateCompanyFinish}
@@ -279,6 +281,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="AskAddress_1"
         options={{
+          title: false,
           headerBackTitleVisible: false,
         }}
         component={AskAddress_1}
@@ -286,6 +289,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="AskAddress_2"
         options={{
+          title: false,
           headerBackTitleVisible: false,
         }}
         component={AskAddress_2}
@@ -293,6 +297,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="AskAddress_3"
         options={{
+          title: false,
           headerBackTitleVisible: false,
         }}
         component={AskAddress_3}
@@ -300,6 +305,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="AskTotalEmployees"
         options={{
+          title: false,
           headerBackTitleVisible: false,
         }}
         component={AskTotalEmployees}
@@ -307,6 +313,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="UserPostListDetail"
         options={{
+          title: false,
           headerBackTitleVisible: false,
         }}
         component={UserPostListDetail}
@@ -362,9 +369,11 @@ export default function LoggedInNav() {
       />
       <Stack.Screen
         name="CategoryBoard"
-        options={{
+        options={({ route: { params } }) => ({
+          title: params.category,
           headerBackTitleVisible: false,
-        }}
+          headerTitleAlign: "center",
+        })}
         component={CategoryBoard}
       />
       <Stack.Screen
@@ -398,6 +407,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="AskCompanyName"
         options={{
+          title: false,
           headerBackTitleVisible: false,
         }}
         component={AskCompanyName}
@@ -405,6 +415,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="AskEmail"
         options={{
+          title: false,
           headerBackTitleVisible: false,
         }}
         component={AskEmail}
@@ -412,6 +423,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="AskContactNumber"
         options={{
+          title: false,
           headerBackTitleVisible: false,
         }}
         component={AskContactNumber}
@@ -419,6 +431,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="AskAboutUs"
         options={{
+          title: false,
           headerBackTitleVisible: false,
         }}
         component={AskAboutUs}

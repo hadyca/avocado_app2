@@ -82,7 +82,6 @@ export default function ({ route: { params } }) {
   };
 
   const updateDeleteUserPost = (cache, result) => {
-    console.log(cache);
     const {
       data: {
         deleteUserPost: { ok },

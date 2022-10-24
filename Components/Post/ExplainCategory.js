@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components/native";
 import { categories_KR } from "../../Constant";
 const Text = styled.Text`
-  font-size: 13px;
+  font-size: 15px;
 `;
 
 export default function ExplainCategory({ categoryName }) {

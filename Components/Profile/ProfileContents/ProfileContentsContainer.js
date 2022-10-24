@@ -55,12 +55,14 @@ export default function ({ data }) {
   const goToUserPost = () => {
     navigation.push("UserAllUserPost", {
       id: data?.seeProfile?.id,
+      username: data?.seeProfile?.username,
     });
   };
 
   const goToCompanyPost = () => {
     navigation.push("UserAllCompanyPost", {
       id: data?.seeProfile?.myCompany?.id,
+      companyName: data?.seeProfile?.myCompany?.companyName,
     });
   };
 

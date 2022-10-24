@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
+import { useNavigation } from "@react-navigation/native";
 import ScreenLayout from "../../../../Components/ScreenLayout";
 import { USERPOST_QUERY } from "./UserAllUserPostQueries";
 import UserAllUserPostPresenter from "./UserAllUserPostPresenter";
@@ -8,6 +9,7 @@ import UserPost from "../../../../Components/Post/UserPost";
 export default function ({ route: { params } }) {
   const [refreshing, setRefreshing] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
+  const navigation = useNavigation();
   const { data, loading, refetch, fetchMore } = useQuery(USERPOST_QUERY, {
     variables: {
       userId: parseInt(params.id),
@@ -38,6 +40,13 @@ export default function ({ route: { params } }) {
       setFetchLoading(false);
     }
   };
+
+  useEffect(() => {
+    navigation.setOptions({
+      // title: loading ? "Loading..." : params.username,
+      title: params.username,
+    });
+  }, [params]);
 
   return (
     <ScreenLayout loading={loading}>

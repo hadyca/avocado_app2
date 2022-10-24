@@ -1,6 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Image } from "react-native";
+import { Image, Text, View } from "react-native";
 import Home from "../Screens/LoggedIn/Home/Home";
 import UserPostList from "../Screens/LoggedIn/UserPosts/UserPostList";
 import CompanyPostAll from "../Screens/LoggedIn/Search/CompanyPostAll";
@@ -22,7 +22,7 @@ export default function SharedStackNav({ screenName }) {
           shadowColor: "rgba(255, 255, 255, 0.3)", //IOS용 인듯? 나중에 확인
           backgroundColor: "white",
         },
-        headerTitleAlign: "center",
+        headerTitleAlign: "left",
       }}
     >
       {screenName === "Home" ? (
