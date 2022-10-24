@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { TouchableOpacity, ActivityIndicator, Alert, Text } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
@@ -110,10 +110,11 @@ export default function EditProfilePresenter({
   loading,
   deleteLoading,
 }) {
+  const [deletedCompany, setDeletedCompany] = useState(false);
   const address = `${myCompany?.addressStep3}, ${myCompany?.addressStep2}, ${myCompany?.addressStep1}`;
 
   const navigation = useNavigation();
-  const goToEditAvatar = async () => {
+  const goToEditAvatar = () => {
     if (!isEdited) {
       navigation.pop();
     }
@@ -148,7 +149,8 @@ export default function EditProfilePresenter({
     navigation.setOptions({
       headerRight: loading ? HeaderRightLoading : OkHeaderRight,
     });
-  }, [loading, avatarUrl, isEdited]);
+  }, [loading, avatarUrl, isEdited, deleteLoading]);
+
   return (
     <Container>
       <Top onPress={goToSelectAvatar}>
@@ -197,7 +199,7 @@ export default function EditProfilePresenter({
           </ButtonTextView>
         </Button>
         <Separator />
-        {myCompany && (
+        {myCompany && !deletedCompany && (
           <>
             <CompanyTitle>Company Info</CompanyTitle>
             <Button onPress={goToEditCompanyName}>
@@ -280,6 +282,7 @@ export default function EditProfilePresenter({
                   {
                     text: "Ok",
                     onPress: async () => {
+                      setDeletedCompany(true);
                       await deleteCompanyMutation({
                         variables: {
                           companyId: myCompany?.id,

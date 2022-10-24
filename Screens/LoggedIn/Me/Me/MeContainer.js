@@ -9,7 +9,7 @@ import { PROFILE_QUERY } from "./MeQueries";
 import MePresenter from "./MePresenter";
 import useMe from "../../../../Hooks/useMe";
 
-export default function ({ route: { params } }) {
+export default function () {
   const ref = useRef(null);
   useScrollToTop(ref);
   const { data: userData, loading: userLoading } = useMe();
@@ -35,37 +35,18 @@ export default function ({ route: { params } }) {
     });
   };
 
-  const goToReportForm = () => {
-    navigation.navigate("UserReportForm", {
-      id: params.id,
-    });
-  };
-
   let myActionsheet = useRef();
   let myOptionArray = ["설정", "취소"];
-
-  let notMeActionsheet = useRef();
-  let notMineOptionArray = ["신고", "취소"];
 
   const showActionSheet = () => {
     if (data?.seeProfile?.isMe) {
       return myActionsheet.current.show();
-    } else {
-      return notMeActionsheet.current.show();
     }
   };
 
   const myHandleIndex = (index) => {
     if (index === 0) {
       goToSetting();
-    } else {
-      return;
-    }
-  };
-
-  const notMineHandleIndex = (index) => {
-    if (index === 0) {
-      goToReportForm();
     } else {
       return;
     }
@@ -99,13 +80,6 @@ export default function ({ route: { params } }) {
     });
   }, [data]);
 
-  useEffect(() => {
-    console.log(params);
-    if (params?.refresh === "refresh") {
-      refetch();
-    }
-  }, [params]);
-
   return (
     <ScreenLayout loading={loading || userLoading}>
       <MePresenter refreshing={refreshing} refresh={refresh} data={data} />
@@ -115,13 +89,6 @@ export default function ({ route: { params } }) {
         cancelButtonIndex={1}
         destructiveButtonIndex={0}
         onPress={(index) => myHandleIndex(index)}
-      />
-      <ActionSheet
-        ref={notMeActionsheet}
-        options={notMineOptionArray}
-        cancelButtonIndex={1}
-        destructiveButtonIndex={0}
-        onPress={(index) => notMineHandleIndex(index)}
       />
     </ScreenLayout>
   );

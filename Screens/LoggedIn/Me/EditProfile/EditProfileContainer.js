@@ -20,22 +20,34 @@ export default function ({ route: { params } }) {
     onCompleted: () => navigation.pop(),
   });
 
-  const updateDeleteComapny = (cache, result) => {
+  const updateDeleteCompany = (cache, result) => {
+    console.log(cache);
     const {
       data: {
-        deleteCompany: { ok, id },
+        deleteCompany: { ok },
       },
     } = result;
     if (ok) {
-      navigation.navigate("TabsNav", { screen: "me" }, { refresh: "refresh" });
-      Alert.alert("삭제 되었습니다.");
+      cache.evict({
+        id: "ROOT_QUERY",
+        fieldName: "me",
+      });
+      cache.evict({
+        id: "ROOT_QUERY",
+        fieldName: "seeAllCompanyPosts",
+      });
+      cache.evict({
+        id: "ROOT_QUERY",
+        fieldName: "seeCompanyPostByDistrict",
+      });
     }
+    Alert.alert("삭제 되었습니다.");
   };
 
-  const [deleteCompanyMutation, { deleteLoading }] = useMutation(
+  const [deleteCompanyMutation, { loading: deleteLoading }] = useMutation(
     DELETE_COMPANY_MUTATION,
     {
-      update: updateDeleteComapny,
+      update: updateDeleteCompany,
     }
   );
 
@@ -145,6 +157,7 @@ export default function ({ route: { params } }) {
       return;
     }
   }, []);
+
   return (
     <ScreenLayout>
       <EditProfilePresenter
