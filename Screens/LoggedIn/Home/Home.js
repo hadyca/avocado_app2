@@ -215,14 +215,15 @@ export default function Home() {
             <ImageHome
               resizeMode="contain"
               source={{
-                url: "https://avocadotalkbucket.s3.ap-northeast-2.amazonaws.com/asset/home_2.png",
+                url: "https://avocadotalkbucket.s3.ap-northeast-2.amazonaws.com/asset/home_3.png",
               }}
               width={width}
               height={width}
             />
-            <SubTitle>한 눈에 보는 채용 정보</SubTitle>
-            <SubContent firstOne={true}>소셜 미디어를 이용한 소통</SubContent>
-            <SubContent>내가 좋아하는 기업을 Follow 해보세요</SubContent>
+            <SubTitle>소셜 미디어를 이용한 소통</SubTitle>
+            <SubContent firstOne={true}>
+              내가 좋아하는 기업을 Follow 해보세요
+            </SubContent>
             <SubContent>방금 전에 올린 채용글을 확인할 수 있어요!</SubContent>
           </Contents>
           <FooterView>
