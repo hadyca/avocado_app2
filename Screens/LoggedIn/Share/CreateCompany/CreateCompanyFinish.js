@@ -38,9 +38,7 @@ export default function CreateCompanyFinish() {
       <Container>
         <TopContainer>
           <Title>파트너 회원이 되신 것을 축하드립니다!</Title>
-          <Content>
-            저희 xx서비스는 파트너 회원분들의 구인 및 홍보 활동을
-          </Content>
+          <Content>비나 알바는 파트너 회원분들의 구인 및 홍보 활동을</Content>
           <Content>더 멀리 더 많이 퍼질 수 있도록 돕겠습니다.</Content>
           <Content></Content>
           <Content>
