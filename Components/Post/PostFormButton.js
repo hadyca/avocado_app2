@@ -8,7 +8,7 @@ const ButtonView = styled.View`
   right: ${(props) => props.right / 15}px;
 `;
 const SPostFormButton = styled.TouchableOpacity`
-  box-shadow: 2px 4px 3px grey;
+  box-shadow: 2px 4px 5px grey;
 `;
 const ButtonImage = styled.Image`
   width: 50px;

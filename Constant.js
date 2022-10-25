@@ -27,47 +27,56 @@ export const categories_KR = [
     id: 1,
     categoryName: "일·직업",
     content: "여러 사람들과 일과 관련된 이야기를 해보세요.",
+    url: "https://avocadotalkbucket.s3.ap-northeast-2.amazonaws.com/asset/work.jpg",
   },
   {
     id: 2,
     categoryName: "질문",
     content: "궁금한 것을 물어보세요! 누군가가 친절하게 답변 해줄 거에요.",
+    url: "https://images.unsplash.com/photo-1633613286848-e6f43bbafb8d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
   },
   {
     id: 3,
     categoryName: "피부 미용",
     content: "피부 미용 관련해서 정보를 나누어 주세요.",
+    url: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fHNraW4lMjBjYXJlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 4,
     categoryName: "출산·육아",
     content: "아이 키우는데 필요한 정보나 노하우를 공유해 주세요.",
+    url: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fHRvZGRsZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 5,
     categoryName: "동네 정보",
     content: "동네 여러 이슈들을 공유해 주세요.",
+    url: "https://images.unsplash.com/photo-1658563687825-399873504a76?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8ODV8fHZpZXRuYW0lMjB0b3dufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 6,
     categoryName: "연애·결혼",
     content:
       "연애나 결혼에 대해 가지고 있는 고민거리나 좋은 정보들을 알려주세요.",
+    url: "https://images.unsplash.com/photo-1498979237786-9c35706bd45e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8dmlldG5hbSUyMGNvdXBsZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 7,
     categoryName: "요리·음식",
     content: "요리 방법, 맛집 등 음식 관련 정보들을 공유해 주세요.",
+    url: "https://images.unsplash.com/photo-1590420882553-4f9150b71f92?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGhvfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 8,
     categoryName: "일상",
     content: "오늘 하루 어땠는지 다른사람들과 이야기 해보세요.",
+    url: "https://images.unsplash.com/photo-1580536927681-facd62841a58?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjkyfHx2aWV0bmFtJTIwZGFpbHl8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
   },
   {
     id: 9,
     categoryName: "일반·기타",
     content: "여러 사람들과 정보를 공유하고 대화해보세요.",
+    url: "https://images.unsplash.com/photo-1512314889357-e157c22f938d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW5mb3JtYXRpb258ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
   },
 ];
 

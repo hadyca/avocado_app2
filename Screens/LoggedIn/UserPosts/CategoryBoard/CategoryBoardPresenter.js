@@ -1,25 +1,21 @@
 import React from "react";
 import { FlatList, ActivityIndicator, Text } from "react-native";
 import styled from "styled-components/native";
+import { categories_KR } from "../../../../Constant";
 import ExplainCategory from "../../../../Components/Post/ExplainCategory";
 import { colors } from "../../../../Colors";
 
 const ImgContainer = styled.View``;
 
 const MainImg = styled.Image`
-  margin-top: 5px;
-  width: ${(props) => props.width}px;
-  height: ${(props) => Math.ceil(props.height / 3)}px;
+  width: 100%;
+  height: ${(props) => Math.floor(props.height * 0.3)}px;
 `;
 
+const TopContainer = styled.View``;
 const CategoryText = styled.Text`
   margin: 10px;
-  font-size: 18px;
   font-weight: bold;
-`;
-
-const ExplainView = styled.View`
-  margin: 10px 0px 10px 10px;
 `;
 
 const WriteTextLink = styled.TouchableOpacity`
@@ -61,20 +57,23 @@ export default function CategoryBoardPresenter({
       <FlatList
         ListHeaderComponent={
           <>
-            {/* <ImgContainer>
-              <MainImg
-                resizeMode="cover"
-                source={{
-                  uri: "https://images.unsplash.com/photo-1641729297455-bf88ac511bc3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzOXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60",
-                }}
-                width={width}
-                height={height}
-              />
-            </ImgContainer> */}
-            {/* <CategoryText>{category}</CategoryText> */}
-            <ExplainView>
-              <ExplainCategory categoryName={category} />
-            </ExplainView>
+            {categories_KR.map((item, index) =>
+              item.categoryName === category ? (
+                <TopContainer key={index}>
+                  <ImgContainer>
+                    <MainImg
+                      resizeMode="cover"
+                      source={{
+                        uri: item.url,
+                      }}
+                      width={width}
+                      height={height}
+                    />
+                  </ImgContainer>
+                  <CategoryText>{item.content}</CategoryText>
+                </TopContainer>
+              ) : null
+            )}
             <WriteTextLink onPress={goToUserPostForm}>
               <WriteText>이 주제로 글쓰기</WriteText>
             </WriteTextLink>

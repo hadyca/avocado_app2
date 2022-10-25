@@ -24,7 +24,7 @@ const TextInput = styled.TextInput`
 `;
 
 const CountingText = styled.Text`
-  color: ${colors.buttonBackground};
+  color: ${colors.error};
   font-size: 11px;
 `;
 

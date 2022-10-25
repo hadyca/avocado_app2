@@ -16,7 +16,7 @@ const AboutUsView = styled.View`
 `;
 
 const CountingText = styled.Text`
-  color: ${colors.buttonBackground};
+  color: ${colors.error};
   align-self: flex-end;
   font-size: 11px;
 `;
