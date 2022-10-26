@@ -163,10 +163,10 @@ export default function Home() {
             />
             <TopText>구인, 구직자들을 위한</TopText>
             <TopText>맞춤형 소통 공간</TopText>
-            <TopText lastOne={true}>Vina Arba</TopText>
+            <TopText lastOne={true}>VinaArba</TopText>
           </TitleImg>
           <CompanyView>
-            <HelloText>안녕하세요. 기업 회원이세요?</HelloText>
+            <HelloText>기업 회원이세요?</HelloText>
             <Button onPress={goToCreateCompany}>
               <ButtonText>기업 회원 가입</ButtonText>
               <Ionicons

@@ -26,7 +26,7 @@ export default function PrivacyPolicy() {
       <Container showsVerticalScrollIndicator={false}>
         <SubTitle>1. 개인정보의 처리 목적</SubTitle>
         <Text>
-          별보는캐리어(이하 ‘Vina Arba’)는 다음의 목적을 위하여 개인정보를
+          별보는캐리어(이하 ‘VinaArba’)는 다음의 목적을 위하여 개인정보를
           처리하고 있으며, 다음의 목적 이외의 용도로는 이용하지 않습니다.
         </Text>
         <Text>
@@ -36,11 +36,11 @@ export default function PrivacyPolicy() {
         </Text>
         <SubTitle>2. 개인정보처리 위탁</SubTitle>
         <Text>
-          1. 별보는캐리어('Vina Arba')는 원활한 개인정보 업무처리를 위하여
-          다음과 같이 개인정보 처리업무를 위탁하고 있습니다.
+          1. 별보는캐리어('VinaArba')는 원활한 개인정보 업무처리를 위하여 다음과
+          같이 개인정보 처리업무를 위탁하고 있습니다.
         </Text>
         <Text>
-          2. 별보는캐리어('Vina Arba')는 위탁계약 체결 시 개인정보 보호법
+          2. 별보는캐리어('VinaArba')는 위탁계약 체결 시 개인정보 보호법
           제26조에 따라 위탁업무 수행목적 외 개인정보 처리금지, 기술적·관리적
           보호조치, 재위탁 제한, 수탁자에 대한 관리·감독, 손해배상 등 책임에
           관한 사항을 계약서 등 문서에 명시하고, 수탁자가 개인정보를 안전하게
@@ -55,7 +55,7 @@ export default function PrivacyPolicy() {
           이용자는 개인정보주체로서 다음과 같은 권리를 행사할 수 있습니다.
         </Text>
         <Text>
-          1. 정보주체는 별보는캐리어('Vina Arba')에 대해 언제든지 다음 각호의
+          1. 정보주체는 별보는캐리어('VinaArba')에 대해 언제든지 다음 각호의
           개인정보 보호 관련 권리를 행사할 수 있습니다.
         </Text>
         <Text>a. 개인정보 열람요구</Text>
@@ -64,7 +64,7 @@ export default function PrivacyPolicy() {
         <Text>d. 처리정지 요구</Text>
         <SubTitle>4. 개인정보 수집 및 이용</SubTitle>
         <Text>
-          1. 별보는캐리어('Vina Arba')는 다음의 개인정보 항목을 처리하고
+          1. 별보는캐리어('VinaArba')는 다음의 개인정보 항목을 처리하고
           있습니다.
         </Text>
         <Separator />
@@ -84,7 +84,7 @@ export default function PrivacyPolicy() {
         <Text>보유 및 이용기간 : 회원 탈퇴 시 즉시 파기</Text>
         <SubTitle>5. 개인정보의 파기</SubTitle>
         <Text>
-          별보는캐리어(‘Vina Arba’)는 원칙적으로 개인정보 처리목적이 달성된
+          별보는캐리어(‘VinaArba’)는 원칙적으로 개인정보 처리목적이 달성된
           경우에는 지체없이 해당 개인정보를 파기합니다. 파기의 절차, 기한 및
           방법은 다음과 같습니다.
         </Text>
@@ -102,7 +102,7 @@ export default function PrivacyPolicy() {
         </Text>
         <SubTitle>6. 개인정보의 안전성 확보 조치</SubTitle>
         <Text>
-          별보는캐리어(‘Vina Arba’)는 개인정보보호법 제29조에 따라 다음과 같이
+          별보는캐리어(‘VinaArba’)는 개인정보보호법 제29조에 따라 다음과 같이
           안전성 확보에 필요한 기술적/관리적 및 물리적 조치를 하고 있습니다.
         </Text>
         <Text>1. 개인정보 처리 직원의 최소화 및 교육</Text>
@@ -129,8 +129,8 @@ export default function PrivacyPolicy() {
         </Text>
         <Text>5. 해킹 등에 대비한 기술적 대책</Text>
         <Text>
-          별보는캐리어(‘Vina Arba’)는 해킹이나 컴퓨터 바이러스 등에 의한
-          개인정보 유출 및 훼손을 막기 위하여 보안프로그램을 설치하고 주기적인
+          별보는캐리어(‘VinaArba’)는 해킹이나 컴퓨터 바이러스 등에 의한 개인정보
+          유출 및 훼손을 막기 위하여 보안프로그램을 설치하고 주기적인
           갱신·점검을 하며 외부로부터 접근이 통제된 구역에 시스템을 설치하고
           기술적/물리적으로 감시 및 차단하고 있습니다.
         </Text>
@@ -153,16 +153,16 @@ export default function PrivacyPolicy() {
         </Text>
         <SubTitle>7. 개인정보 보호책임자 작성</SubTitle>
         <Text>
-          1. 별보는캐리어(‘Vina Arba’)는 개인정보 처리에 관한 업무를 총괄해서
+          1. 별보는캐리어(‘VinaArba’)는 개인정보 처리에 관한 업무를 총괄해서
           책임지고, 개인정보 처리와 관련한 정보주체의 불만처리 및 피해구제 등을
           위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.
         </Text>
         <Text>담당자: 김제형 대표 / vinaarba@gmail.com</Text>
         <Text>
-          2. 정보주체는 별보는캐리어(‘Vina Arba’)의 서비스(또는 사업)을
+          2. 정보주체는 별보는캐리어(‘VinaArba’)의 서비스(또는 사업)을
           이용하면서 발생한 모든 개인정보 보호 관련 문의, 불만처리, 피해구제
           등에 관한 사항을 개인정보 보호책임자 및 담당 부서로 문의하실 수
-          있습니다. 별보는캐리어(‘Vina Arba’)는 정보주체의 문의에 대해 지체 없이
+          있습니다. 별보는캐리어(‘VinaArba’)는 정보주체의 문의에 대해 지체 없이
           답변 및 처리할 것입니다.
         </Text>
         <SubTitle>8. 개인정보 처리방침 변경</SubTitle>

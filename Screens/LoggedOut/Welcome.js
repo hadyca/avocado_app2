@@ -45,7 +45,7 @@ export default function Welcome({ navigation }) {
 
     if (Platform.OS === "android") {
       Notifications.setNotificationChannelAsync("default", {
-        name: "Vina Arba",
+        name: "VinaArba",
         importance: Notifications.AndroidImportance.MAX,
         vibrationPattern: [0, 250, 250, 250],
         lightColor: "#FF231F7C",

@@ -152,7 +152,7 @@ export default function EditProfilePresenter({
   }, [loading, avatarUrl, isEdited, deleteLoading]);
 
   return (
-    <Container>
+    <Container showsVerticalScrollIndicator={false}>
       <Top onPress={goToSelectAvatar}>
         {avatarUrl ? (
           <AvatarView>
