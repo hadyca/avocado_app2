@@ -44,18 +44,16 @@ export default function PostFormButton({ onPress }) {
   const { width, height } = useWindowDimensions();
   console.log(Platform.OS);
   return (
-    <Shadow>
-      <SPostFormButton
-        platform={Platform.OS}
-        onPress={onPress}
-        bottom={height}
-        right={width}
-      >
-        <ButtonImage
-          source={require("../../assets/pen.png")}
-          styles={styles.shadow}
-        />
-      </SPostFormButton>
-    </Shadow>
+    <SPostFormButton
+      platform={Platform.OS}
+      onPress={onPress}
+      bottom={height}
+      right={width}
+    >
+      <ButtonImage
+        source={require("../../assets/pen.png")}
+        styles={styles.shadow}
+      />
+    </SPostFormButton>
   );
 }
