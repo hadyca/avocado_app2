@@ -34,7 +34,7 @@ export default function AskEmail({ route: { params } }) {
 
   return (
     <CreatCompanyLayout>
-      <ProgressCreateCompany title={"이메일 주소를 알려주세요!"} step={"4"} />
+      <ProgressCreateCompany title={"이메일 주소를 알려주세요."} step={"4"} />
       <Controller
         name="email"
         rules={{

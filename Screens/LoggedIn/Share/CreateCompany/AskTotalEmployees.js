@@ -27,7 +27,7 @@ export default function AskTotalEmployees({ route: { params } }) {
 
   return (
     <CreatCompanyLayout>
-      <ProgressCreateCompany title={"총 임직원 수를 알려주세요!"} step={"3"} />
+      <ProgressCreateCompany title={"총 임직원 수를 알려주세요."} step={"3"} />
       <Controller
         name="totalEmployees"
         rules={{

@@ -37,13 +37,13 @@ export default function CreateCompanyFinish() {
     <CreatCompanyLayout>
       <Container>
         <TopContainer>
-          <Title>파트너 회원이 되신 것을 축하드립니다!</Title>
-          <Content>비나 알바는 파트너 회원분들의 구인 및 홍보 활동을</Content>
+          <Title>파트너 회원이 되신 것을 축하드립니다! 🎉</Title>
+          <Content>VinaArba는 파트너 회원분들의 구인 및 홍보 활동을</Content>
           <Content>더 멀리 더 많이 퍼질 수 있도록 돕겠습니다.</Content>
           <Content></Content>
           <Content>
-            계속해서 파트너 회원분들을 위해 여러 서비스를 제공할 예정이오니,
-            많은 사용 부탁 드릴게요!
+            파트너 회원분들을 위해 여러 서비스를 제공할 예정이오니, 많은 사용
+            부탁 드릴게요!
           </Content>
         </TopContainer>
         <BottomContainer>

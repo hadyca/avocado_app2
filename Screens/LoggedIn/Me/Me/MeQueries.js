@@ -9,6 +9,7 @@ export const PROFILE_QUERY = gql`
       avatarUrl
       bio
       isMe
+      alertStatus
       isFollowing
       following {
         id

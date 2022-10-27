@@ -181,7 +181,7 @@ export default function Home() {
             <ImageHome
               resizeMode="contain"
               source={{
-                url: "https://avocadotalkbucket.s3.ap-northeast-2.amazonaws.com/asset/home_1.png",
+                uri: "https://avocadotalkbucket.s3.ap-northeast-2.amazonaws.com/asset/home_1.png",
               }}
               width={width}
               height={width}
@@ -199,7 +199,7 @@ export default function Home() {
             <ImageHome
               resizeMode="contain"
               source={{
-                url: "https://avocadotalkbucket.s3.ap-northeast-2.amazonaws.com/asset/home_2.png",
+                uri: "https://avocadotalkbucket.s3.ap-northeast-2.amazonaws.com/asset/home_2.png",
               }}
               width={width}
               height={width}
@@ -215,7 +215,7 @@ export default function Home() {
             <ImageHome
               resizeMode="contain"
               source={{
-                url: "https://avocadotalkbucket.s3.ap-northeast-2.amazonaws.com/asset/home_3.png",
+                uri: "https://avocadotalkbucket.s3.ap-northeast-2.amazonaws.com/asset/home_3.png",
               }}
               width={width}
               height={width}

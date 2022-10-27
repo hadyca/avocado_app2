@@ -9,12 +9,14 @@ import { PROFILE_QUERY } from "./MeQueries";
 import MePresenter from "./MePresenter";
 import useMe from "../../../../Hooks/useMe";
 
-export default function () {
+export default function ({ route }) {
   const ref = useRef(null);
   useScrollToTop(ref);
   const { data: userData, loading: userLoading } = useMe();
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
+  const [isAlert, setIsAlert] = useState(false);
+
   const { data, loading, refetch } = useQuery(PROFILE_QUERY, {
     skip: userLoading,
     variables: {
@@ -54,19 +56,33 @@ export default function () {
 
   const HeaderRight = () => (
     <View style={{ flexDirection: "row" }}>
-      <TouchableOpacity onPress={() => navigation.navigate("Notification")}>
-        <Ionicons
-          name="notifications"
-          color="grey"
-          size={20}
-          style={{ paddingLeft: 10, paddingRight: 5 }}
-        />
+      <TouchableOpacity
+        onPress={() => {
+          setIsAlert(false);
+          navigation.navigate("Notification");
+        }}
+      >
+        {isAlert ? (
+          <Ionicons
+            name="notifications"
+            color="red"
+            size={23}
+            style={{ paddingLeft: 10, paddingRight: 5 }}
+          />
+        ) : (
+          <Ionicons
+            name="notifications"
+            color="grey"
+            size={23}
+            style={{ paddingLeft: 10, paddingRight: 5 }}
+          />
+        )}
       </TouchableOpacity>
       <TouchableOpacity onPress={showActionSheet}>
         <Ionicons
           name="ellipsis-vertical"
           color="grey"
-          size={20}
+          size={23}
           style={{ paddingLeft: 5, paddingRight: 10 }}
         />
       </TouchableOpacity>
@@ -74,6 +90,11 @@ export default function () {
   );
 
   useEffect(() => {
+    console.log("반응??");
+    console.log(isAlert);
+    if (data?.seeProfile?.alertStatus) {
+      setIsAlert(true);
+    }
     navigation.setOptions({
       title: loading ? "Loading..." : data?.seeProfile?.username,
       headerRight: !loading && HeaderRight,

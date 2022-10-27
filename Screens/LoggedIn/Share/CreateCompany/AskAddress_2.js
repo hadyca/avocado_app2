@@ -36,7 +36,7 @@ export default function AskAddress_2({ route: { params } }) {
   return (
     <CreatCompanyLayout>
       <ProgressCreateCompany
-        title={"두번째 도시를 선택해 주세요."}
+        title={"두 번째 도시를 선택해 주세요."}
         step={"7"}
       />
       <ModalSelector

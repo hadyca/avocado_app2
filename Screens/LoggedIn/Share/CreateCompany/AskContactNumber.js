@@ -30,7 +30,7 @@ export default function AskContactNumber({ route: { params } }) {
 
   return (
     <CreatCompanyLayout>
-      <ProgressCreateCompany title={"연락처를 알려주세요"} step={"5"} />
+      <ProgressCreateCompany title={"연락처를 알려주세요."} step={"5"} />
 
       <Controller
         name="contactNumber"

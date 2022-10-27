@@ -25,7 +25,7 @@ export default function AskCompanyName() {
 
   return (
     <CreatCompanyLayout>
-      <ProgressCreateCompany title={"회사 이름을 알려주세요"} step={"1"} />
+      <ProgressCreateCompany title={"회사 이름을 알려주세요."} step={"1"} />
       <Controller
         name="companyName"
         rules={{
