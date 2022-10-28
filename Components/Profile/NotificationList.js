@@ -84,7 +84,7 @@ function NotificationList({ id, user, content, createdAt, type, postId }) {
           ) : type === "companyPost" ? (
             <Type>채용글</Type>
           ) : type === "following" ? (
-            <Type>팔로윙</Type>
+            <Type>팔로잉</Type>
           ) : (
             <Type>공지</Type>
           )}

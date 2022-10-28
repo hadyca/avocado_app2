@@ -117,7 +117,7 @@ export default function NotificationSettingPresenter({
         </>
       )}
       <StateView>
-        <StateText>팔로윙</StateText>
+        <StateText>팔로잉</StateText>
         <Switch
           trackColor={{
             false: colors.greyBackround,
