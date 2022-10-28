@@ -58,7 +58,7 @@ export default function ({ route }) {
     <View style={{ flexDirection: "row" }}>
       <TouchableOpacity
         onPress={() => {
-          setIsAlert(false);
+          setIsAlert(!isAlert);
           navigation.navigate("Notification");
         }}
       >
@@ -90,8 +90,7 @@ export default function ({ route }) {
   );
 
   useEffect(() => {
-    console.log("반응??");
-    console.log(isAlert);
+    console.log("반응스?");
     if (data?.seeProfile?.alertStatus) {
       setIsAlert(true);
     }
@@ -99,7 +98,7 @@ export default function ({ route }) {
       title: loading ? "Loading..." : data?.seeProfile?.username,
       headerRight: !loading && HeaderRight,
     });
-  }, [data]);
+  }, [data, isAlert, refresh]);
 
   return (
     <ScreenLayout loading={loading || userLoading}>
