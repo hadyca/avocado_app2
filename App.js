@@ -4,13 +4,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { ApolloProvider, useReactiveVar } from "@apollo/client";
 import * as Font from "expo-font";
 import { Asset } from "expo-asset";
-import Entypo from "@expo/vector-icons/Entypo";
 import LoggedOutNav from "./Navigators/LoggedOutNav";
 import LoggedInNav from "./Navigators/LoggedInNav";
 import { NavigationContainer } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import client, { isLoggedInVar, tokenVar, logUserOut } from "./apollo";
 import { Text } from "react-native";
+import { StatusBar } from "expo-status-bar";
+
 import * as SplashScreen from "expo-splash-screen";
 
 export default function App() {
@@ -79,6 +80,7 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       <NavigationContainer onReady={onLayoutRootView}>
+        <StatusBar style="dark" />
         {isLoggedIn ? <LoggedInNav /> : <LoggedOutNav />}
       </NavigationContainer>
     </ApolloProvider>

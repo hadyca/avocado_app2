@@ -6,16 +6,35 @@ const ME_QUERY = gql`
   query me {
     me {
       id
-      email
       username
+      email
       avatarUrl
+      bio
+      isMe
+      alertStatus
+      isFollowing
+      following {
+        id
+        username
+      }
+      followers {
+        id
+        username
+      }
+      totalUserPosts
+      totalCompanyPosts
+      totalFollowers
+      totalFollowing
       myCompany {
         id
         companyName
-        email
-        contactNumber
         addressStep1
         addressStep2
+        addressStep3
+        email
+        aboutUs
+        contactNumber
+        totalEmployees
       }
     }
   }

@@ -80,7 +80,7 @@ export default function CreateAccount({ route: { params } }) {
 
   return (
     <AuthLayout>
-      <Subtitle>Welcome to Avocado Talk! 🙌</Subtitle>
+      <Subtitle>Welcome to VinaArba! 🙌</Subtitle>
 
       {/* email form */}
       <Controller

@@ -13,7 +13,7 @@ export default function ({ data }) {
       data: { toggleFollowing },
     } = result;
     if (toggleFollowing.id) {
-      const UserId = `User:${data?.seeProfile?.id}`;
+      const UserId = `User:${data.id}`;
       cache.modify({
         id: UserId,
         fields: {
@@ -21,7 +21,7 @@ export default function ({ data }) {
             return !prev;
           },
           totalFollowers(prev) {
-            if (data?.seeProfile?.isFollowing) {
+            if (data?.isFollowing) {
               return prev - 1;
             } else {
               return prev + 1;
@@ -34,7 +34,7 @@ export default function ({ data }) {
         id: `User:${me.id}`,
         fields: {
           totalFollowing(prev) {
-            if (data?.seeProfile?.isFollowing) {
+            if (data?.isFollowing) {
               return prev - 1;
             } else {
               return prev + 1;
@@ -44,50 +44,49 @@ export default function ({ data }) {
       });
     }
   };
-
   const [toggleFollowingMutation] = useMutation(TOGGLE_FOLLOWING_MUTATION, {
     variables: {
-      userId: parseInt(data?.seeProfile?.id),
+      userId: parseInt(data?.id),
     },
     update: updateToggleFollowing,
   });
 
   const goToUserPost = () => {
     navigation.push("UserAllUserPost", {
-      id: data?.seeProfile?.id,
-      username: data?.seeProfile?.username,
+      id: data?.id,
+      username: data?.username,
     });
   };
 
   const goToCompanyPost = () => {
     navigation.push("UserAllCompanyPost", {
-      id: data?.seeProfile?.myCompany?.id,
-      companyName: data?.seeProfile?.myCompany?.companyName,
+      id: data?.myCompany?.id,
+      companyName: data?.myCompany?.companyName,
     });
   };
 
   const goToFollowing = () => {
     navigation.push("FollowNav", {
-      id: data?.seeProfile?.id,
-      username: data?.seeProfile?.username,
+      id: data?.id,
+      username: data?.username,
       screenName: "Following",
     });
   };
 
   const goToFollowers = () => {
     navigation.push("FollowNav", {
-      id: data?.seeProfile?.id,
-      username: data?.seeProfile?.username,
+      id: data?.id,
+      username: data?.username,
       screenName: "Followers",
     });
   };
 
   const goToEditProfile = () => {
     navigation.push("EditProfile", {
-      username: data?.seeProfile?.username,
-      bio: data?.seeProfile?.bio,
-      avatarUrl: data?.seeProfile?.avatarUrl,
-      myCompany: data?.seeProfile?.myCompany,
+      username: data?.username,
+      bio: data?.bio,
+      avatarUrl: data?.avatarUrl,
+      myCompany: data?.myCompany,
     });
   };
 

@@ -119,7 +119,7 @@ export default function ProfileContentsPresenter({
   const images = [
     {
       // Simplest usage.
-      url: data?.seeProfile?.avatarUrl,
+      url: data?.avatarUrl,
       // width: 200,
       // height: 200,
       // Optional, if you know the image size, you can set the optimization performance
@@ -129,8 +129,8 @@ export default function ProfileContentsPresenter({
     },
   ];
 
-  const getButton = (seeProfile) => {
-    const { isMe, isFollowing } = seeProfile;
+  const getButton = (data) => {
+    const { isMe, isFollowing } = data;
     if (isMe) {
       return (
         <ProfileBtn backgroundColor={true} onPress={goToEditProfile}>
@@ -156,13 +156,10 @@ export default function ProfileContentsPresenter({
   return (
     <Container>
       <Header>
-        {data?.seeProfile?.avatarUrl ? (
+        {data?.avatarUrl ? (
           <>
             <AvatarView onPress={() => setIsModalOpen(true)}>
-              <Avatar
-                resizeMode="cover"
-                source={{ uri: data?.seeProfile?.avatarUrl }}
-              />
+              <Avatar resizeMode="cover" source={{ uri: data?.avatarUrl }} />
             </AvatarView>
             <Modal visible={isModalOpen} transparent={true}>
               <ImageViewer
@@ -195,57 +192,51 @@ export default function ProfileContentsPresenter({
           </AvatarView>
         )}
         <Column onPress={goToUserPost}>
-          <Number>{data?.seeProfile?.totalUserPosts}</Number>
-          <Section>
-            {data?.seeProfile?.totalUserPosts > 1 ? "Posts" : "Post"}
-          </Section>
+          <Number>{data?.totalUserPosts}</Number>
+          <Section>{data?.totalUserPosts > 1 ? "Posts" : "Post"}</Section>
         </Column>
-        {data?.seeProfile?.myCompany ? (
+        {data?.myCompany ? (
           <Column onPress={goToCompanyPost}>
-            <Number>{data?.seeProfile?.totalCompanyPosts}</Number>
+            <Number>{data?.totalCompanyPosts}</Number>
             <Section>
-              {data?.seeProfile?.totalCompanyPosts > 1
-                ? "Job Posts"
-                : "Job Post"}
+              {data?.totalCompanyPosts > 1 ? "Job Posts" : "Job Post"}
             </Section>
           </Column>
         ) : null}
         <Column onPress={goToFollowing}>
-          <Number>{data?.seeProfile?.totalFollowing}</Number>
+          <Number>{data?.totalFollowing}</Number>
           <Section>Following</Section>
         </Column>
         <Column onPress={goToFollowers}>
-          <Number>{data?.seeProfile?.totalFollowers}</Number>
+          <Number>{data?.totalFollowers}</Number>
           <Section>
-            {data?.seeProfile?.totalFollowers > 1 ? "Followers" : "Follower"}
+            {data?.totalFollowers > 1 ? "Followers" : "Follower"}
           </Section>
         </Column>
       </Header>
       <SubHeader>
-        <Bio>{data?.seeProfile?.bio}</Bio>
+        <Bio>{data?.bio}</Bio>
       </SubHeader>
-      {data?.seeProfile ? getButton(data?.seeProfile) : null}
+      {data ? getButton(data) : null}
       <Bottom>
-        {data?.seeProfile?.myCompany ? (
+        {data?.myCompany ? (
           <>
             <CompanyTitle>Company Info</CompanyTitle>
-            <CompanyName>
-              {data?.seeProfile?.myCompany?.companyName}
-            </CompanyName>
-            <AboutUs>{data?.seeProfile?.myCompany?.aboutUs}</AboutUs>
+            <CompanyName>{data?.myCompany?.companyName}</CompanyName>
+            <AboutUs>{data?.myCompany?.aboutUs}</AboutUs>
             <Address>
-              {`${data?.seeProfile?.myCompany?.addressStep3}, ${data?.seeProfile?.myCompany?.addressStep2}, ${data?.seeProfile?.myCompany?.addressStep1}`}
+              {`${data?.myCompany?.addressStep3}, ${data?.myCompany?.addressStep2}, ${data?.myCompany?.addressStep1}`}
             </Address>
             <Separator />
             <InfoView>
               <Title>Number of employees</Title>
-              <Info>{`${data?.seeProfile?.myCompany?.totalEmployees} 명`}</Info>
+              <Info>{`${data?.myCompany?.totalEmployees} 명`}</Info>
               <Separator />
               <Title>E-Mail</Title>
-              <Info>{data?.seeProfile?.myCompany?.email}</Info>
+              <Info>{data?.myCompany?.email}</Info>
               <Separator />
               <Title>Contact Number</Title>
-              <Info>{data?.seeProfile?.myCompany?.contactNumber}</Info>
+              <Info>{data?.myCompany?.contactNumber}</Info>
               <Separator />
             </InfoView>
           </>

@@ -154,6 +154,7 @@ const OkText = styled.Text`
 
 const TopView = styled.View`
   background-color: ${colors.borderThin};
+  /* align-items: flex-start; */ //글씨 크기만큼 박스 크기 길이 조정
 `;
 
 const SearchTouch = styled.TouchableOpacity`
@@ -161,9 +162,8 @@ const SearchTouch = styled.TouchableOpacity`
   border: 1px ${colors.borderThick} solid;
   border-radius: 5px;
   justify-content: center;
-  margin: 10px;
+  margin: 10px 50px;
   height: 35px;
-  width: 50%;
 `;
 
 const SearchContainer = styled.View`

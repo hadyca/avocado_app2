@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { NOTIFICATION_QUERY } from "./NotificationQueries";
 import NotificationPresenter from "./NotificationPresenter";
 import ScreenLayout from "../../../../Components/ScreenLayout";
 import NotificationList from "../../../../Components/Profile/NotificationList";
 
-export default function () {
+export default function ({ route: { params } }) {
   const [refreshing, setRefreshing] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
   const { data, loading, refetch, fetchMore } = useQuery(NOTIFICATION_QUERY, {
@@ -37,6 +37,14 @@ export default function () {
   const renderNotification = ({ item }) => {
     return <NotificationList {...item} />;
   };
+
+  useEffect(() => {
+    if (params?.isAlert) {
+      refetch();
+    } else {
+      return;
+    }
+  }, [params]);
 
   return (
     <ScreenLayout loading={loading}>

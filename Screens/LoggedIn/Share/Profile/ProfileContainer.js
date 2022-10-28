@@ -23,39 +23,20 @@ export default function ({ route: { params } }) {
     setRefreshing(false);
   };
 
-  const goToSetting = () => {
-    navigation.navigate("MyProfileSetting");
-  };
-
   const goToReportForm = () => {
     navigation.navigate("UserReportForm", {
       id: params.id,
     });
   };
 
-  let myActionsheet = useRef();
-  let myOptionArray = ["설정", "취소"];
-
-  let notMeActionsheet = useRef();
-  let notMineOptionArray = ["신고", "취소"];
+  let actionSheet = useRef();
+  let optionArray = ["신고", "취소"];
 
   const showActionSheet = () => {
-    if (data?.seeProfile?.isMe) {
-      return myActionsheet.current.show();
-    } else {
-      return notMeActionsheet.current.show();
-    }
+    return actionSheet.current.show();
   };
 
-  const myHandleIndex = (index) => {
-    if (index === 0) {
-      goToSetting();
-    } else {
-      return;
-    }
-  };
-
-  const notMineHandleIndex = (index) => {
+  const handleIndex = (index) => {
     if (index === 0) {
       goToReportForm();
     } else {
@@ -68,7 +49,7 @@ export default function ({ route: { params } }) {
       <Ionicons
         name="ellipsis-vertical"
         color="grey"
-        size={18}
+        size={20}
         style={{ paddingLeft: 10, paddingRight: 10 }}
       />
     </TouchableOpacity>
@@ -76,27 +57,24 @@ export default function ({ route: { params } }) {
 
   useEffect(() => {
     navigation.setOptions({
-      title: loading ? "Loading..." : data?.seeProfile?.username,
-      headerRight: !loading && HeaderRight,
+      title: loading ? "Loading..." : data?.seeProfile.username,
+      headerRight: !loading && !data?.seeProfile?.isMe && HeaderRight,
     });
   }, [data]);
 
   return (
     <ScreenLayout loading={loading}>
-      <ProfilePresenter refreshing={refreshing} refresh={refresh} data={data} />
-      <ActionSheet
-        ref={myActionsheet}
-        options={myOptionArray}
-        cancelButtonIndex={1}
-        destructiveButtonIndex={0}
-        onPress={(index) => myHandleIndex(index)}
+      <ProfilePresenter
+        refreshing={refreshing}
+        refresh={refresh}
+        data={data?.seeProfile}
       />
       <ActionSheet
-        ref={notMeActionsheet}
-        options={notMineOptionArray}
+        ref={actionSheet}
+        options={optionArray}
         cancelButtonIndex={1}
         destructiveButtonIndex={0}
-        onPress={(index) => notMineHandleIndex(index)}
+        onPress={(index) => handleIndex(index)}
       />
     </ScreenLayout>
   );

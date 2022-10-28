@@ -95,7 +95,7 @@ export default function ConfirmSecret({ route: { params } }) {
     if (waitingMail === true) {
       setTimeout(() => {
         setWaitingMail(true);
-      }, 20000);
+      }, 30000);
       setSendNum(sendNum + 1);
       setFinish(false);
       if (!loading) {
@@ -104,11 +104,11 @@ export default function ConfirmSecret({ route: { params } }) {
             email: params.email,
           },
         });
-        Alert.alert("이메일이 발송 되었습니다.");
+        Alert.alert("인증번호가 발송 되었습니다.");
         setWaitingMail(false);
       }
     } else {
-      Alert.alert("20초가 지난 후에 재발송이 가능합니다.");
+      Alert.alert("30초가 지난 후에 재발송이 가능합니다.");
     }
   };
 
@@ -150,7 +150,6 @@ export default function ConfirmSecret({ route: { params } }) {
             placeholderTextColor="#cccccc"
             keyboardType="number-pad"
             autoCapitalize="none"
-            returnKeyType="done"
             onChange={clearSecretError}
             onSubmitEditing={handleSubmit(onValid)}
             onChangeText={(text) => onChange(text)}
@@ -170,7 +169,7 @@ export default function ConfirmSecret({ route: { params } }) {
         message={
           sendNum === 0
             ? finish === true
-              ? "시간이 만료 되었습니다. 인증메일 다시 받기 버튼을 눌러주세요. (5회 제한)"
+              ? "시간이 만료 되었습니다. 인증번호 다시 받기 버튼을 눌러주세요. (5회 제한)"
               : minutes === 0 && seconds <= 59
               ? `남은 시간 ${seconds}초`
               : minutes > 0
@@ -181,35 +180,21 @@ export default function ConfirmSecret({ route: { params } }) {
       />
 
       <FormError
-        message={
-          sendNum === 1
-            ? "메일을 확인해 보세요! 메일 재발송 4회 남았습니다."
-            : null
-        }
+        message={sendNum === 1 ? "인증번호 재발송 4회 남았습니다." : null}
+      />
+      <FormError
+        message={sendNum === 2 ? "인증번호 재발송 3회 남았습니다." : null}
+      />
+      <FormError
+        message={sendNum === 3 ? "인증번호 재발송 2회 남았습니다." : null}
+      />
+      <FormError
+        message={sendNum === 4 ? "인증번호 재발송 1회 남았습니다." : null}
       />
       <FormError
         message={
-          sendNum === 2
-            ? "메일을 확인해 보세요! 메일 재발송 3회 남았습니다."
-            : null
+          sendNum === 5 ? "인증번호 재발송 5회를 넘길 수 없습니다." : null
         }
-      />
-      <FormError
-        message={
-          sendNum === 3
-            ? "메일을 확인해 보세요! 메일 재발송 2회 남았습니다."
-            : null
-        }
-      />
-      <FormError
-        message={
-          sendNum === 4
-            ? "메일을 확인해 보세요! 메일 재발송 1회 남았습니다."
-            : null
-        }
-      />
-      <FormError
-        message={sendNum === 5 ? "메일 재발송 5회를 넘길 수 없습니다." : null}
       />
       <AuthButton
         text="인증번호 확인"
@@ -218,7 +203,7 @@ export default function ConfirmSecret({ route: { params } }) {
         loading={confirmLoading}
       />
       <AuthButton
-        text="인증메일 다시 받기"
+        text="인증번호 다시 받기"
         disabled={sendNum === 5}
         onPress={reSend}
         loading={false}
