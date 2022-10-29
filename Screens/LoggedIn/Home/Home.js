@@ -11,6 +11,7 @@ import {
   Alert,
   View,
   TouchableOpacity,
+  Text,
 } from "react-native";
 import { colors } from "../../../Colors";
 import { useNavigation } from "@react-navigation/native";
@@ -164,14 +165,6 @@ export default function Home() {
                 height: Math.floor(height * 0.3),
               }}
             />
-            <TopText>{i18n.language}</TopText>
-            <TopText>{t("welcome")}</TopText>
-            <TouchableOpacity onPress={changelanguageToKo}>
-              korean
-            </TouchableOpacity>
-            <TouchableOpacity onPress={changelanguageToEn}>
-              english
-            </TouchableOpacity>
             <TopText>구인, 구직자들을 위한</TopText>
             <TopText>맞춤형 소통 공간</TopText>
             <TopText lastOne={true}>VinaArba</TopText>
@@ -197,6 +190,14 @@ export default function Home() {
               width={width}
               height={width}
             />
+            <SubTitle>{i18n.language}</SubTitle>
+            <SubTitle>{t("welcome")}</SubTitle>
+            <TouchableOpacity onPress={changelanguageToKo}>
+              <Text>korean</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={changelanguageToEn}>
+              <Text>english</Text>
+            </TouchableOpacity>
             <SubTitle>다채로운 정보 공유</SubTitle>
             <SubContent firstOne={true}>
               일자리 정보부터, 인생 꿀팁 정보 까지
