@@ -40,7 +40,6 @@ export default function ({ route: { params } }) {
         fieldName: "seeCompanyPostByDistrict",
       });
     }
-    Alert.alert("삭제 되었습니다.");
   };
 
   const [deleteCompanyMutation, { loading: deleteLoading }] = useMutation(
