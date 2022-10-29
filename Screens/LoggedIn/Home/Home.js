@@ -5,13 +5,12 @@ import * as Notifications from "expo-notifications";
 import { Ionicons } from "@expo/vector-icons";
 import ScreenLayout from "../../../Components/ScreenLayout";
 import styled from "styled-components/native";
+import { useTranslation } from "react-i18next";
 import {
   useWindowDimensions,
-  Text,
   Alert,
   View,
-  ImageBackground,
-  Image,
+  TouchableOpacity,
 } from "react-native";
 import { colors } from "../../../Colors";
 import { useNavigation } from "@react-navigation/native";
@@ -96,6 +95,10 @@ export default function Home() {
   const lastNotificationResponse = Notifications.useLastNotificationResponse();
   const { data: userData } = useMe();
 
+  const { t, i18n } = useTranslation();
+  const changelanguageToKo = () => i18n.changeLanguage("ko");
+  const changelanguageToEn = () => i18n.changeLanguage("en");
+
   const ref = useRef(null);
   useScrollToTop(ref);
 
@@ -161,6 +164,14 @@ export default function Home() {
                 height: Math.floor(height * 0.3),
               }}
             />
+            <TopText>{i18n.language}</TopText>
+            <TopText>{t("welcome")}</TopText>
+            <TouchableOpacity onPress={changelanguageToKo}>
+              korean
+            </TouchableOpacity>
+            <TouchableOpacity onPress={changelanguageToEn}>
+              english
+            </TouchableOpacity>
             <TopText>구인, 구직자들을 위한</TopText>
             <TopText>맞춤형 소통 공간</TopText>
             <TopText lastOne={true}>VinaArba</TopText>
