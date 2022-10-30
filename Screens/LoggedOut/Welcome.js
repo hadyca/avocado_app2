@@ -14,6 +14,18 @@ const LoginLink = styled.Text`
   text-align: center;
 `;
 
+const LngContainer = styled.View`
+  margin-top: 50px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
+const LngText = styled.Text`
+  color: ${colors.blue};
+  margin-right: 10px;
+`;
+
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: false,
@@ -73,6 +85,19 @@ export default function Welcome({ navigation }) {
       <TouchableOpacity onPress={goToLogIn}>
         <LoginLink>Log In</LoginLink>
       </TouchableOpacity>
+      <LngContainer>
+        <TouchableOpacity>
+          <LngText>Tiếng Việt</LngText>
+        </TouchableOpacity>
+        <LngText>|</LngText>
+        <TouchableOpacity>
+          <LngText>English</LngText>
+        </TouchableOpacity>
+        <LngText>|</LngText>
+        <TouchableOpacity>
+          <LngText>한국어</LngText>
+        </TouchableOpacity>
+      </LngContainer>
     </AuthLayout>
   );
 }

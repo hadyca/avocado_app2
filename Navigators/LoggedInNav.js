@@ -52,6 +52,7 @@ import Notification from "../Screens/LoggedIn/Me/Notification";
 import NotificationSetting from "../Screens/LoggedIn/Me/NotificationSetting";
 import TermsOfService from "../Screens/LoggedIn/Me/TermsOfService";
 import PrivacyPolicy from "../Screens/LoggedIn/Me/PrivacyPolicy";
+import Language from "../Screens/LoggedIn/Me/Language";
 
 const Stack = createStackNavigator();
 
@@ -93,6 +94,13 @@ export default function LoggedInNav() {
           headerBackTitleVisible: false,
         }}
         component={Contact}
+      />
+      <Stack.Screen
+        name="Language"
+        options={{
+          headerBackTitleVisible: false,
+        }}
+        component={Language}
       />
       <Stack.Screen
         name="NotificationSetting"

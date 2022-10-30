@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components/native";
 import { colors } from "../../../Colors";
 import ScreenLayout from "../../../Components/ScreenLayout";
+
 const Container = styled.ScrollView`
   margin: 10px;
 `;

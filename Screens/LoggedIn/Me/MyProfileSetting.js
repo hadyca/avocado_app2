@@ -56,6 +56,16 @@ export default function MyProfileSetting({ route: { params } }) {
         />
       </Button>
       <Separator />
+      <Button onPress={() => navigation.navigate("Language")}>
+        <ButtonText>언어</ButtonText>
+        <Ionicons
+          name="chevron-forward"
+          color="black"
+          size={17}
+          style={{ marginRight: 20 }}
+        />
+      </Button>
+      <Separator />
       <Button onPress={() => navigation.navigate("Contact")}>
         <ButtonText>문의하기</ButtonText>
         <Ionicons

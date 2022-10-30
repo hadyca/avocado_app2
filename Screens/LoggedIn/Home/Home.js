@@ -191,7 +191,7 @@ export default function Home() {
               height={width}
             />
             <SubTitle>{i18n.language}</SubTitle>
-            <SubTitle>{t("welcome")}</SubTitle>
+            <SubTitle>{t("home.top_1")}</SubTitle>
             <TouchableOpacity onPress={changelanguageToKo}>
               <Text>korean</Text>
             </TouchableOpacity>
