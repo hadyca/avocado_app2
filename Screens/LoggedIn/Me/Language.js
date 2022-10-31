@@ -35,6 +35,7 @@ export default function Language() {
     await AsyncStorage.setItem("lng", "vn");
     setLng("vn");
   };
+
   const changelanguageToEn = async () => {
     i18n.changeLanguage("en");
     await AsyncStorage.setItem("lng", "en");

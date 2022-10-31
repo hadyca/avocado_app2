@@ -3,6 +3,8 @@ import * as Device from "expo-device";
 import { TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import * as Notifications from "expo-notifications";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../Colors";
 import AuthButton from "../../Components/Auth/AuthButton";
 import AuthLayout from "../../Components/Auth/AuthLayout";
@@ -22,7 +24,7 @@ const LngContainer = styled.View`
 `;
 
 const LngText = styled.Text`
-  color: ${colors.blue};
+  color: ${(props) => (props.selected ? colors.blue : colors.borderThick)}
   margin-right: 10px;
 `;
 
@@ -36,6 +38,25 @@ Notifications.setNotificationHandler({
 
 export default function Welcome({ navigation }) {
   const [pushToken, setPushToken] = useState();
+  const [lng, setLng] = useState({});
+
+  const { i18n } = useTranslation();
+  const changelanguageToVn = async () => {
+    i18n.changeLanguage("vn");
+    await AsyncStorage.setItem("lng", "vn");
+    setLng("vn");
+  };
+
+  const changelanguageToEn = async () => {
+    i18n.changeLanguage("en");
+    await AsyncStorage.setItem("lng", "en");
+    setLng("en");
+  };
+  const changelanguageToKo = async () => {
+    i18n.changeLanguage("ko");
+    await AsyncStorage.setItem("lng", "ko");
+    setLng("ko");
+  };
 
   useEffect(() => {
     registerForPushNotificationsAsync();
@@ -75,6 +96,10 @@ export default function Welcome({ navigation }) {
       pushToken,
     });
 
+  useEffect(() => {
+    setLng(i18n.language);
+  }, []);
+
   return (
     <AuthLayout>
       <AuthButton
@@ -86,16 +111,16 @@ export default function Welcome({ navigation }) {
         <LoginLink>Log In</LoginLink>
       </TouchableOpacity>
       <LngContainer>
-        <TouchableOpacity>
-          <LngText>Tiếng Việt</LngText>
+        <TouchableOpacity onPress={changelanguageToVn}>
+          <LngText selected={lng === "vn"}>Tiếng Việt</LngText>
         </TouchableOpacity>
         <LngText>|</LngText>
-        <TouchableOpacity>
-          <LngText>English</LngText>
+        <TouchableOpacity onPress={changelanguageToEn}>
+          <LngText selected={lng === "en"}>English</LngText>
         </TouchableOpacity>
         <LngText>|</LngText>
-        <TouchableOpacity>
-          <LngText>한국어</LngText>
+        <TouchableOpacity onPress={changelanguageToKo}>
+          <LngText selected={lng === "ko"}>한국어</LngText>
         </TouchableOpacity>
       </LngContainer>
     </AuthLayout>

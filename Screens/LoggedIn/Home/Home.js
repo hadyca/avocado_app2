@@ -34,8 +34,6 @@ const TopText = styled.Text`
 
 const CompanyView = styled.View`
   background-color: ${colors.buttonBackground};
-  height: 60px;
-  flex-direction: row;
   justify-content: space-around;
   align-items: center;
 `;
@@ -43,6 +41,7 @@ const CompanyView = styled.View`
 const HelloText = styled.Text`
   color: white;
   font-size: 17px;
+  margin: 10px 0px;
 `;
 
 const Button = styled.TouchableOpacity`
@@ -52,6 +51,7 @@ const Button = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 10px;
 `;
 
 const ButtonText = styled.Text`
@@ -99,6 +99,7 @@ export default function Home() {
   const { t, i18n } = useTranslation();
   const changelanguageToKo = () => i18n.changeLanguage("ko");
   const changelanguageToEn = () => i18n.changeLanguage("en");
+  const changelanguageToVn = () => i18n.changeLanguage("vn");
 
   const ref = useRef(null);
   useScrollToTop(ref);
@@ -165,14 +166,14 @@ export default function Home() {
                 height: Math.floor(height * 0.3),
               }}
             />
-            <TopText>구인, 구직자들을 위한</TopText>
-            <TopText>맞춤형 소통 공간</TopText>
-            <TopText lastOne={true}>VinaArba</TopText>
+            <TopText>{t("home.1_1")}</TopText>
+            <TopText>{t("home.1_2")}</TopText>
+            {/* <TopText lastOne={true}>VinaArba</TopText> */}
           </TitleImg>
           <CompanyView>
-            <HelloText>기업 회원이세요?</HelloText>
+            <HelloText>{t("home.2")}</HelloText>
             <Button onPress={goToCreateCompany}>
-              <ButtonText>기업 회원 가입</ButtonText>
+              <ButtonText>{t("home.3")}</ButtonText>
               <Ionicons
                 name="chevron-forward"
                 color="black"
@@ -182,6 +183,15 @@ export default function Home() {
             </Button>
           </CompanyView>
           <Contents>
+            <TouchableOpacity onPress={changelanguageToKo}>
+              <Text>한국어</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={changelanguageToEn}>
+              <Text>영어</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={changelanguageToVn}>
+              <Text>베트남어</Text>
+            </TouchableOpacity>
             <ImageHome
               resizeMode="contain"
               source={{
@@ -190,18 +200,8 @@ export default function Home() {
               width={width}
               height={width}
             />
-            <SubTitle>{i18n.language}</SubTitle>
-            <SubTitle>{t("home.top_1")}</SubTitle>
-            <TouchableOpacity onPress={changelanguageToKo}>
-              <Text>korean</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={changelanguageToEn}>
-              <Text>english</Text>
-            </TouchableOpacity>
-            <SubTitle>다채로운 정보 공유</SubTitle>
-            <SubContent firstOne={true}>
-              일자리 정보부터, 인생 꿀팁 정보 까지
-            </SubContent>
+            <SubTitle>{t("home.4")}</SubTitle>
+            <SubContent firstOne={true}>{t("home.5")}</SubContent>
             <SubContent>
               옆 공장의 월급은 얼마일까? 동네 맛집은 어디지?
             </SubContent>
