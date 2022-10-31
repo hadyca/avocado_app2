@@ -50,13 +50,21 @@ const resources = {
   },
 };
 
-export const loadLng = (lng) => {
-  i18n.use(initReactI18next).init({
-    compatibilityJSON: "v3",
-    resources,
-    lng,
-    fallbackLng: "vn",
-  });
-};
+// export const loadLng = (lng) => {
+//   console.log(lng);
+//   i18n.use(initReactI18next).init({
+//     compatibilityJSON: "v3",
+//     resources,
+//     lng,
+//     fallbackLng: "vn",
+//   });
+// };
+
+i18n.use(initReactI18next).init({
+  compatibilityJSON: "v3",
+  resources,
+  lng: "vn",
+  fallbackLng: "vn",
+});
 
 export default i18n;
