@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
-import { categories_KR } from "../../Constant";
+import { categories } from "../../Constant";
 
 const SContentInput = styled.TextInput`
   padding: 15px 7px;
@@ -14,10 +14,10 @@ export default function ContentInput({
   onChangeText,
   maxLength,
   value,
-  categoryName,
+  categoryId,
 }) {
-  return categories_KR.map((item, index) =>
-    categoryName === item.categoryName ? (
+  return categories.map((item, index) =>
+    categoryId === item.id ? (
       <SContentInput
         key={index}
         multiline={multiline}

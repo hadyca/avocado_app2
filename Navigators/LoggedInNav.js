@@ -58,7 +58,7 @@ const Stack = createStackNavigator();
 
 export default function LoggedInNav() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="TabsNav">
       <Stack.Screen
         name="TabsNav"
         options={{

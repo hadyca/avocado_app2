@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
 import {
   TextInput_Company,
@@ -12,6 +13,7 @@ import FormError from "../../../../Components/Auth/FormError";
 import ProgressCreateCompany from "../../../../Components/Auth/ProgressCreateCompany";
 
 export default function AskEmail({ route: { params } }) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const { control, handleSubmit, getValues, formState, setError, clearErrors } =
     useForm({
@@ -33,8 +35,8 @@ export default function AskEmail({ route: { params } }) {
   };
 
   return (
-    <CreatCompanyLayout>
-      <ProgressCreateCompany title={"이메일 주소를 알려주세요."} step={"4"} />
+    <CreatCompanyLayout step={"4"}>
+      <ProgressCreateCompany title={t("askEmail.1")} />
       <Controller
         name="email"
         rules={{
@@ -47,7 +49,7 @@ export default function AskEmail({ route: { params } }) {
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextInput_Company
-            placeholder="Your@Eamil.com"
+            placeholder="vinaarba@gmail.com"
             placeholderTextColor="#cccccc"
             autoCapitalize="none"
             returnKeyType="done"
@@ -67,7 +69,7 @@ export default function AskEmail({ route: { params } }) {
       />
       <FormError message={formState?.errors?.result?.message} />
       <AuthButton
-        text="다음"
+        text={t("askEmail.2")}
         disabled={!formState.isValid}
         onPress={goToContactNumber}
       />

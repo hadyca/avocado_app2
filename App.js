@@ -41,10 +41,12 @@ export default function App() {
       isLoggedInVar(true);
       tokenVar(token);
     }
-    // const lng = await AsyncStorage.getItem("lng");
-    // if (lng) {
-    //   loadLng(lng);
-    // }
+    const lng = await AsyncStorage.getItem("lng");
+    if (lng) {
+      loadLng(lng);
+    } else {
+      loadLng("vn");
+    }
     return preloadAssets();
   };
 

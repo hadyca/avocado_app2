@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
+import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
 import { bigDistrict } from "../../../../DistrictList";
 import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
@@ -19,6 +20,7 @@ const TextView = styled.View`
 `;
 
 export default function AskAddress_1({ route: { params } }) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const [add_1, setAdd_1] = useState({});
 
@@ -34,11 +36,8 @@ export default function AskAddress_1({ route: { params } }) {
   };
 
   return (
-    <CreatCompanyLayout>
-      <ProgressCreateCompany
-        title={"첫 번째 도시를 선택해 주세요."}
-        step={"6"}
-      />
+    <CreatCompanyLayout step={"6"}>
+      <ProgressCreateCompany title={t("askAddressOne.1")} />
       <ModalSelector
         data={bigDistrict}
         keyExtractor={(item) => item.id}
@@ -47,11 +46,12 @@ export default function AskAddress_1({ route: { params } }) {
         onChange={(item) => {
           setAdd_1({ id: item.id, value: item.value });
         }}
+        cancelText={t("askAddressOne.2")}
         optionContainerStyle={{ height: 500 }}
       >
         <TextView>
           <TextInput_Company
-            placeholder={"Select your first city!"}
+            placeholder="Hồ Chí Minh"
             placeholderTextColor="#cccccc"
             value={add_1.value}
           />
@@ -65,7 +65,7 @@ export default function AskAddress_1({ route: { params } }) {
       </ModalSelector>
       <UnderBar lastOne={true} />
       <AuthButton
-        text="다음"
+        text={t("askAddressOne.3")}
         disabled={!add_1.value}
         loading={false}
         onPress={goToAddress_2}

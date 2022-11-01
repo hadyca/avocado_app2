@@ -86,7 +86,7 @@ const DeleteBtn = styled.TouchableOpacity`
 
 export default function UserPostUploadFormPresenter({
   goToCategory,
-  category,
+  categoryId,
   loading,
   uploadUserPostMutation,
 }) {
@@ -112,7 +112,7 @@ export default function UserPostUploadFormPresenter({
         variables: {
           fileUrl,
           content,
-          category,
+          categoryId,
         },
       });
     }
@@ -231,9 +231,9 @@ export default function UserPostUploadFormPresenter({
       </ImageTop>
       <InputBottom>
         <CategoryView onPress={goToCategory}>
-          {category ? (
+          {categoryId ? (
             <CategoryContainer>
-              <Text>{category}</Text>
+              <Text>{categoryId}</Text>
               <Ionicons name="chevron-forward" color="black" size={17} />
             </CategoryContainer>
           ) : (
@@ -259,7 +259,7 @@ export default function UserPostUploadFormPresenter({
               placeholderTextColor="#cccccc"
               onChangeText={(text) => onChange(text)}
               value={value || ""}
-              categoryName={category}
+              categoryId={categoryId}
             />
           )}
         />

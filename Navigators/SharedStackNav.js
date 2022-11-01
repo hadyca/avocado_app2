@@ -13,6 +13,7 @@ const Stack = createStackNavigator();
 export default function SharedStackNav({ screenName }) {
   return (
     <Stack.Navigator
+      initialRouteName="Home"
       screenOptions={{
         headerMode: "screen",
         headerBackTitleVisible: false,

@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
-import styled from "styled-components/native";
+import { useTranslation } from "react-i18next";
 import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
 import {
   TextInput_Company,
@@ -11,6 +11,7 @@ import AuthButton from "../../../../Components/Auth/AuthButton";
 import ProgressCreateCompany from "../../../../Components/Auth/ProgressCreateCompany";
 
 export default function AskCompanyName() {
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const { control, formState, getValues } = useForm({
     mode: "onChange",
@@ -24,8 +25,8 @@ export default function AskCompanyName() {
   };
 
   return (
-    <CreatCompanyLayout>
-      <ProgressCreateCompany title={"회사 이름을 알려주세요."} step={"1"} />
+    <CreatCompanyLayout step={"1"}>
+      <ProgressCreateCompany title={t("askCompanyName.1")} />
       <Controller
         name="companyName"
         rules={{
@@ -34,7 +35,7 @@ export default function AskCompanyName() {
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextInput_Company
-            placeholder="Your Company Name"
+            placeholder="VinaArba"
             placeholderTextColor="#cccccc"
             autoCapitalize="none"
             returnKeyType="done"
@@ -48,7 +49,7 @@ export default function AskCompanyName() {
       />
       <UnderBar lastOne={true} />
       <AuthButton
-        text="다음"
+        text={t("askCompanyName.2")}
         disabled={!formState.isValid}
         loading={false}
         onPress={goToAboutUs}

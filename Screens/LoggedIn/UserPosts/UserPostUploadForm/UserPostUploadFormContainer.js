@@ -53,7 +53,7 @@ export default function ({ route: { params } }) {
     if (screenName === ScreenNames.CATEGORY_BOARD) {
       navigation.navigate("CategoryBoard", {
         id: uploadUserPost.id,
-        category: params.category,
+        categoryId: params.categoryId,
         fromWhere: screenName,
       });
     }
@@ -76,7 +76,7 @@ export default function ({ route: { params } }) {
   return (
     <UserPostUploadFormPresenter
       goToCategory={goToCategory}
-      category={params.category}
+      categoryId={params.categoryId}
       loading={loading}
       uploadUserPostMutation={uploadUserPostMutation}
     />

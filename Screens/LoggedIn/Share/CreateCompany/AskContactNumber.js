@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
 import {
   TextInput_Company,
@@ -11,8 +12,8 @@ import { onlyNumber } from "../../../../RegExp";
 import ProgressCreateCompany from "../../../../Components/Auth/ProgressCreateCompany";
 
 export default function AskContactNumber({ route: { params } }) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
-  const [focus1, setFocus1] = useState(false);
   const { control, formState, getValues } = useForm({
     mode: "onChange",
   });
@@ -29,8 +30,8 @@ export default function AskContactNumber({ route: { params } }) {
   };
 
   return (
-    <CreatCompanyLayout>
-      <ProgressCreateCompany title={"연락처를 알려주세요."} step={"5"} />
+    <CreatCompanyLayout step={"5"}>
+      <ProgressCreateCompany title={t("askContactNumber.1")} />
 
       <Controller
         name="contactNumber"
@@ -43,7 +44,7 @@ export default function AskContactNumber({ route: { params } }) {
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextInput_Company
-            placeholder="Your Contact Number"
+            placeholder="03411112222"
             placeholderTextColor="#cccccc"
             returnKeyType="done"
             keyboardType="number-pad"
@@ -58,7 +59,7 @@ export default function AskContactNumber({ route: { params } }) {
       <UnderBar lastOne={true} />
 
       <AuthButton
-        text="다음"
+        text={t("askContactNumber.2")}
         disabled={!formState.isValid}
         loading={false}
         onPress={goToAskAddress}

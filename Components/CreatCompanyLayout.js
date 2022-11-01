@@ -1,6 +1,12 @@
 import React from "react";
-import { Keyboard, Platform, TouchableWithoutFeedback } from "react-native";
+import {
+  Keyboard,
+  Platform,
+  Text,
+  TouchableWithoutFeedback,
+} from "react-native";
 import styled from "styled-components/native";
+import { colors } from "../Colors";
 
 const Container = styled.View`
   flex: 1;
@@ -9,18 +15,29 @@ const Container = styled.View`
 `;
 
 const TopContainer = styled.View`
-  flex: 0.4;
   justify-content: center;
+  flex: 0.4;
 `;
 
 const Logo = styled.Image`
   max-width: 50%;
-  width: 100%;
-  height: 100px;
   margin: 0 auto;
 `;
+const ProgressContainer = styled.View`
+  flex-direction: row;
+  justify-content: center;
+`;
+const Progress = styled.Text`
+  font-size: 18px;
+  color: ${colors.buttonBackground};
+`;
 
-export default function CreatCompanyLayout({ children }) {
+const Count = styled.Text`
+  font-size: 18px;
+  color: ${colors.borderThick};
+`;
+
+export default function CreatCompanyLayout({ step, children }) {
   const dismissKeyboard = () => {
     Keyboard.dismiss();
   };
@@ -34,6 +51,12 @@ export default function CreatCompanyLayout({ children }) {
       <Container>
         <TopContainer>
           <Logo resizeMode="contain" source={require("../assets/logo.png")} />
+          {step ? (
+            <ProgressContainer>
+              <Progress>{step}</Progress>
+              <Count>/8</Count>
+            </ProgressContainer>
+          ) : null}
         </TopContainer>
         {children}
       </Container>

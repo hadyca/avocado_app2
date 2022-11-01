@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
 import {
   TextInput_Company,
@@ -11,6 +12,7 @@ import { onlyNumber } from "../../../../RegExp";
 import ProgressCreateCompany from "../../../../Components/Auth/ProgressCreateCompany";
 
 export default function AskTotalEmployees({ route: { params } }) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const { control, formState, getValues } = useForm({
     mode: "onChange",
@@ -26,8 +28,8 @@ export default function AskTotalEmployees({ route: { params } }) {
   };
 
   return (
-    <CreatCompanyLayout>
-      <ProgressCreateCompany title={"총 임직원 수를 알려주세요."} step={"3"} />
+    <CreatCompanyLayout step={"3"}>
+      <ProgressCreateCompany title={t("askTotalEmployees.1")} />
       <Controller
         name="totalEmployees"
         rules={{
@@ -39,7 +41,7 @@ export default function AskTotalEmployees({ route: { params } }) {
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextInput_Company
-            placeholder="Your company total Employees"
+            placeholder={"100"}
             placeholderTextColor="#cccccc"
             autoCapitalize="none"
             returnKeyType="done"
@@ -54,7 +56,7 @@ export default function AskTotalEmployees({ route: { params } }) {
       />
       <UnderBar lastOne={true} />
       <AuthButton
-        text="다음"
+        text={t("askTotalEmployees.2")}
         disabled={!formState.isValid}
         loading={false}
         onPress={goToAskEmail}

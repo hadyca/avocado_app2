@@ -1,9 +1,10 @@
 import React from "react";
-import ScreenLayout from "../../../Components/ScreenLayout";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
+import { useTranslation } from "react-i18next";
+import ScreenLayout from "../../../Components/ScreenLayout";
 import { colors } from "../../../Colors";
-import { categories_KR } from "../../../Constant";
+import { categories } from "../../../Constant";
 
 const Container = styled.View``;
 
@@ -22,19 +23,26 @@ const Separator = styled.View`
 const CategoryText = styled.Text``;
 
 export default function PostCategory() {
+  const { i18n } = useTranslation();
   const navigation = useNavigation();
-  const selectCategory = (item) => {
+  const selectCategory = (categoryId) => {
     navigation.navigate("UserPostUploadForm", {
-      category: item,
+      categoryId,
     });
   };
   return (
     <ScreenLayout>
       <Container>
-        {categories_KR.map((item, index) => (
+        {categories.map((item, index) => (
           <CategoryContainer key={index}>
-            <CategoryView onPress={() => selectCategory(item.categoryName)}>
-              <CategoryText>{item.categoryName}</CategoryText>
+            <CategoryView onPress={() => selectCategory(item.id)}>
+              <CategoryText>
+                {i18n.language === "vn"
+                  ? item.categoryVn
+                  : i18n.language === "en"
+                  ? item.categoryEn
+                  : item.categoryKo}
+              </CategoryText>
             </CategoryView>
             <Separator />
           </CategoryContainer>

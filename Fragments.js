@@ -9,7 +9,7 @@ export const USER_POST_FRAGMENT = gql`
       avatarUrl
     }
     content
-    category
+    categoryId
     createdAt
     file {
       id

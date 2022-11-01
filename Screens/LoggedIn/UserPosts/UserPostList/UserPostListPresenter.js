@@ -2,9 +2,10 @@ import React, { useRef } from "react";
 import { useScrollToTop } from "@react-navigation/native";
 import { FlatList, ActivityIndicator } from "react-native";
 import styled from "styled-components/native";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../../../Colors";
 import PostFormButton from "../../../../Components/Post/PostFormButton";
-import { categories_KR } from "../../../../Constant";
+import { categories } from "../../../../Constant";
 
 const Container = styled.View`
   flex: 1;
@@ -47,6 +48,7 @@ export default function UserPostListPresenter({
   fetchLoading,
   renderPost,
 }) {
+  const { i18n } = useTranslation();
   const ref = useRef(null);
   useScrollToTop(ref);
   return (
@@ -54,13 +56,27 @@ export default function UserPostListPresenter({
       <Container>
         <TopView>
           <TopScroll horizontal={true} showsHorizontalScrollIndicator={false}>
-            {categories_KR.map((item, index) => (
+            {categories.map((item, index) => (
               <CategoryTouch
                 first={index === 0}
                 key={index}
-                onPress={() => goToCategoryScreen(item.categoryName)}
+                onPress={() => {
+                  if (i18n.language === "vn") {
+                    goToCategoryScreen(item.categoryVn);
+                  } else if (i18n.language === "en") {
+                    goToCategoryScreen(item.categoryEn);
+                  } else {
+                    goToCategoryScreen(item.categoryKo);
+                  }
+                }}
               >
-                <CategoryText>{item.categoryName}</CategoryText>
+                <CategoryText>
+                  {i18n.language === "vn"
+                    ? item.categoryVn
+                    : i18n.language === "en"
+                    ? item.categoryEn
+                    : item.categoryKo}
+                </CategoryText>
               </CategoryTouch>
             ))}
           </TopScroll>

@@ -78,7 +78,17 @@ const SubTitle = styled.Text`
 
 const SubContent = styled.Text`
   font-size: 20px;
-  margin-top: ${(props) => (props.firstOne ? 10 : 5)}px;
+  margin-top: ${(props) => (props.firstOne ? 15 : 10)}px;
+  margin-left: 40px;
+  margin-right: 40px;
+  text-align: center;
+`;
+
+const SubContent2 = styled.Text`
+  font-size: 20px;
+  margin-left: 40px;
+  margin-right: 40px;
+  text-align: center;
 `;
 
 const FooterView = styled.View`
@@ -108,9 +118,8 @@ export default function Home() {
   const navigation = useNavigation();
 
   const goToCreateCompany = () => {
-    navigation.navigate("CreateCompanyFinish");
     if (userData?.me?.myCompany) {
-      Alert.alert("이미 가입되어 있습니다.");
+      Alert.alert(t("home.12"));
     } else {
       navigation.navigate("AskCompanyName");
     }
@@ -202,10 +211,9 @@ export default function Home() {
             />
             <SubTitle>{t("home.4")}</SubTitle>
             <SubContent firstOne={true}>{t("home.5")}</SubContent>
-            <SubContent>
-              옆 공장의 월급은 얼마일까? 동네 맛집은 어디지?
-            </SubContent>
-            <SubContent>당신의 정보를 공유해주세요</SubContent>
+            <SubContent>{t("home.6")}</SubContent>
+            <SubContent2>{t("home.7")}</SubContent2>
+            <SubContent>{t("home.8")}</SubContent>
           </Contents>
           <Contents>
             <ImageHome
@@ -216,22 +224,38 @@ export default function Home() {
               width={width}
               height={width}
             />
-            <SubTitle>한 눈에 보는 채용 정보</SubTitle>
-            <SubContent firstOne={true}>
-              한 눈에 쏙! 공장 알바 채용 게시판
-            </SubContent>
-            <SubContent>봉제 작업자, 카페 알바 등 친숙한 우리의 일</SubContent>
-            <SubContent>지역별로 채용 글을 확인해 보세요</SubContent>
+            <SubTitle>{t("home.9")}</SubTitle>
+            <SubContent firstOne={true}>{t("home.10")}</SubContent>
+            <SubContent>{t("home.11")}</SubContent>
           </Contents>
           <Contents>
-            <ImageHome
+            {i18n.language === "ko" ? (
+              <ImageHome
+                resizeMode="contain"
+                source={{
+                  uri: "https://avocadotalkbucket.s3.ap-northeast-2.amazonaws.com/asset/home_3.png",
+                }}
+                width={width}
+                height={width}
+              />
+            ) : (
+              <ImageHome
+                resizeMode="contain"
+                source={{
+                  uri: "https://avocadotalkbucket.s3.ap-northeast-2.amazonaws.com/asset/home_2.png",
+                }}
+                width={width}
+                height={width}
+              />
+            )}
+            {/* <ImageHome
               resizeMode="contain"
               source={{
                 uri: "https://avocadotalkbucket.s3.ap-northeast-2.amazonaws.com/asset/home_3.png",
               }}
               width={width}
               height={width}
-            />
+            /> */}
             <SubTitle>소셜 미디어를 이용한 소통</SubTitle>
             <SubContent firstOne={true}>
               내가 좋아하는 기업을 Follow 해보세요

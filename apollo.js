@@ -46,7 +46,7 @@ export const handleDistrict = async (userId, ...list) => {
 // for simulator
 
 const uploadHttpLink = createUploadLink({
-  uri: "https://8af7-103-231-176-166.in.ngrok.io/graphql",
+  uri: "https://5015-103-231-176-166.in.ngrok.io/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -72,7 +72,7 @@ const cache = new InMemoryCache({
     Query: {
       fields: {
         seeAllUserPosts: offsetLimitPagination(),
-        seeUserCategoryPost: offsetLimitPagination(["category"]),
+        seeUserCategoryPost: offsetLimitPagination(["categoryId"]),
         seeAllCompanyPosts: offsetLimitPagination(),
         seeFavoritePosts: offsetLimitPagination(),
         seeUserAllPosts: offsetLimitPagination(["userId"]),

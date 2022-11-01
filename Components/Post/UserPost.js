@@ -2,6 +2,7 @@ import React from "react";
 import { useWindowDimensions } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../Colors";
 import { timeForToday } from "../../Utils";
 import UserAvatar from "../UserAvatar";
@@ -106,6 +107,8 @@ function UserPost({
   totalUserPostComments,
   createdAt,
 }) {
+  const { t } = useTranslation();
+
   const { width, height } = useWindowDimensions();
 
   const time = timeForToday(parseInt(createdAt));

@@ -1,8 +1,7 @@
 import React from "react";
 import { FlatList, ActivityIndicator, Text } from "react-native";
 import styled from "styled-components/native";
-import { categories_KR } from "../../../../Constant";
-import ExplainCategory from "../../../../Components/Post/ExplainCategory";
+import { categories } from "../../../../Constant";
 import { colors } from "../../../../Colors";
 
 const ImgContainer = styled.View``;
@@ -57,8 +56,8 @@ export default function CategoryBoardPresenter({
       <FlatList
         ListHeaderComponent={
           <>
-            {categories_KR.map((item, index) =>
-              item.categoryName === category ? (
+            {categories.map((item, index) =>
+              item.id === category ? (
                 <TopContainer key={index}>
                   <ImgContainer>
                     <MainImg

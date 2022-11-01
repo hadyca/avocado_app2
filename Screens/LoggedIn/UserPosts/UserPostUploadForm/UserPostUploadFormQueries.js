@@ -14,7 +14,7 @@ export const UPLOAD_USER_POST_MUTATION = gql`
         avatarUrl
       }
       content
-      category
+      categoryId
       totalUserPostLikes
       createdAt
       isMine

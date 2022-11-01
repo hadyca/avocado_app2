@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import styled from "styled-components/native";
+import { useTranslation } from "react-i18next";
 import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
 import {
   TextInput_Company,
@@ -22,6 +23,7 @@ const CountingText = styled.Text`
 `;
 
 export default function AskAboutUs({ route: { params } }) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const [counting, setCounting] = useState(0);
   const { control, formState, getValues } = useForm({
@@ -40,11 +42,8 @@ export default function AskAboutUs({ route: { params } }) {
   };
 
   return (
-    <CreatCompanyLayout>
-      <ProgressCreateCompany
-        title={"어떤 회사인지 멋지게 소개해 주세요!"}
-        step={"2"}
-      />
+    <CreatCompanyLayout step={"2"}>
+      <ProgressCreateCompany title={t("askAboutUs.1")} />
       <Controller
         name="aboutUs"
         rules={{
@@ -54,7 +53,7 @@ export default function AskAboutUs({ route: { params } }) {
         render={({ field: { onChange, value } }) => (
           <AboutUsView>
             <TextInput_Company
-              placeholder={"ex)직원 복지가 좋은, 동나이 최고의 garment회사!"}
+              placeholder={t("askAboutUs.2")}
               placeholderTextColor="#cccccc"
               autoCapitalize="none"
               returnKeyType="done"
@@ -68,13 +67,15 @@ export default function AskAboutUs({ route: { params } }) {
               maxLength={150}
             />
             <UnderBar lastOne={false} />
-            <CountingText>글자 수 제한 ({counting}/150)</CountingText>
+            <CountingText>
+              {t("askAboutUs.3")} ({counting}/150)
+            </CountingText>
           </AboutUsView>
         )}
       />
 
       <AuthButton
-        text="다음"
+        text={t("askAboutUs.4")}
         disabled={!formState.isValid}
         loading={false}
         onPress={goToAskTotalEmployees}

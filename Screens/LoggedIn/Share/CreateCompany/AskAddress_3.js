@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { gql, useMutation } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 import { useForm, Controller } from "react-hook-form";
-import styled from "styled-components/native";
 import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
 import {
   TextInput_Company,
@@ -40,56 +40,30 @@ const CREATE_COMPANY_MUTATION = gql`
 `;
 
 export default function AskAddress_3({ route: { params } }) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
-  const [focus1, setFocus1] = useState(false);
 
-  const { control, formState, handleSubmit, setError } = useForm({
+  const { control, formState, getValues } = useForm({
     mode: "onChange",
   });
 
-  const onCompleted = async (data) => {
-    const {
-      createCompany: { ok, error },
-    } = data;
-    if (!ok) {
-      return setError("result", {
-        message: error,
-      });
-    } else {
-      navigation.navigate("CreateCompanyFinish");
-    }
-  };
-
-  const [createCompanytMutation, { loading }] = useMutation(
-    CREATE_COMPANY_MUTATION,
-    {
-      onCompleted,
-    }
-  );
-
-  const onValid = (data) => {
-    if (!loading) {
-      createCompanytMutation({
-        variables: {
-          companyName: params.companyName,
-          aboutUs: params.aboutUs,
-          totalEmployees: parseInt(params.totalEmployees),
-          email: params.email,
-          contactNumber: params.contactNumber,
-          addressStep1: params.addressStep1,
-          addressStep2: params.addressStep2,
-          addressStep3: data.addressStep3,
-        },
-      });
-    }
+  const goToFinish = () => {
+    const { addressStep3 } = getValues();
+    navigation.navigate("CreateCompanyFinish", {
+      companyName: params.companyName,
+      aboutUs: params.aboutUs,
+      totalEmployees: params.totalEmployees,
+      email: params.email,
+      contactNumber: params.contactNumber,
+      addressStep1: params.addressStep1,
+      addressStep2: params.addressStep2,
+      addressStep3: addressStep3,
+    });
   };
 
   return (
-    <CreatCompanyLayout>
-      <ProgressCreateCompany
-        title={"마지막 세부 주소를 입력해 주세요."}
-        step={"8"}
-      />
+    <CreatCompanyLayout step={"8"}>
+      <ProgressCreateCompany title={t("askAddressThree.1")} />
       <Controller
         name="addressStep3"
         rules={{
@@ -98,7 +72,7 @@ export default function AskAddress_3({ route: { params } }) {
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextInput_Company
-            placeholder="01 Công xã Paris, Bến Nghé"
+            placeholder="Shop S2-1, Lô R16-2, Khu Hưng Vượng 3, Đường số 6"
             placeholderTextColor="#cccccc"
             autoCapitalize="none"
             returnKeyType="done"
@@ -106,24 +80,17 @@ export default function AskAddress_3({ route: { params } }) {
             onChangeText={(text) => onChange(text)}
             value={value || ""}
             hasError={false}
-            onSubmitEditing={handleSubmit(onValid)}
-            onFocus={() => {
-              setFocus1(true);
-            }}
-            onBlur={() => {
-              setFocus1(false);
-            }}
-            focus={focus1}
+            onSubmitEditing={goToFinish}
           />
         )}
       />
       <UnderBar lastOne={true} />
       <FormError message={formState?.errors?.result?.message} />
       <AuthButton
-        text="완료"
+        text={t("askAddressThree.2")}
         disabled={!formState.isValid}
-        loading={loading}
-        onPress={handleSubmit(onValid)}
+        loading={false}
+        onPress={goToFinish}
       />
     </CreatCompanyLayout>
   );

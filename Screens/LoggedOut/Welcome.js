@@ -38,25 +38,25 @@ Notifications.setNotificationHandler({
 
 export default function Welcome({ navigation }) {
   const [pushToken, setPushToken] = useState();
-  // const [lng, setLng] = useState({});
+  const [lng, setLng] = useState({});
 
-  // const { i18n } = useTranslation();
-  // const changelanguageToVn = async () => {
-  //   i18n.changeLanguage("vn");
-  //   await AsyncStorage.setItem("lng", "vn");
-  //   setLng("vn");
-  // };
+  const { i18n } = useTranslation();
+  const changelanguageToVn = async () => {
+    i18n.changeLanguage("vn");
+    await AsyncStorage.setItem("lng", "vn");
+    setLng("vn");
+  };
 
-  // const changelanguageToEn = async () => {
-  //   i18n.changeLanguage("en");
-  //   await AsyncStorage.setItem("lng", "en");
-  //   setLng("en");
-  // };
-  // const changelanguageToKo = async () => {
-  //   i18n.changeLanguage("ko");
-  //   await AsyncStorage.setItem("lng", "ko");
-  //   setLng("ko");
-  // };
+  const changelanguageToEn = async () => {
+    i18n.changeLanguage("en");
+    await AsyncStorage.setItem("lng", "en");
+    setLng("en");
+  };
+  const changelanguageToKo = async () => {
+    i18n.changeLanguage("ko");
+    await AsyncStorage.setItem("lng", "ko");
+    setLng("ko");
+  };
 
   useEffect(() => {
     registerForPushNotificationsAsync();
@@ -96,9 +96,9 @@ export default function Welcome({ navigation }) {
       pushToken,
     });
 
-  // useEffect(() => {
-  //   setLng(i18n.language);
-  // }, []);
+  useEffect(() => {
+    setLng(i18n.language);
+  }, []);
 
   return (
     <AuthLayout>
@@ -111,7 +111,7 @@ export default function Welcome({ navigation }) {
         <LoginLink>Log In</LoginLink>
       </TouchableOpacity>
       <LngContainer>
-        {/* <TouchableOpacity onPress={changelanguageToVn}>
+        <TouchableOpacity onPress={changelanguageToVn}>
           <LngText selected={lng === "vn"}>Tiếng Việt</LngText>
         </TouchableOpacity>
         <LngText>|</LngText>
@@ -121,7 +121,7 @@ export default function Welcome({ navigation }) {
         <LngText>|</LngText>
         <TouchableOpacity onPress={changelanguageToKo}>
           <LngText selected={lng === "ko"}>한국어</LngText>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
       </LngContainer>
     </AuthLayout>
   );
