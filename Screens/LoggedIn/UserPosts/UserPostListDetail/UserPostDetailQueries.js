@@ -10,7 +10,7 @@ export const POST_DETAIL_QUERY = gql`
         avatarUrl
       }
       content
-      category
+      categoryId
       createdAt
       file {
         id
@@ -74,7 +74,7 @@ export const TOGGLE_USERPOST_FAVORITE_MUTATION = gql`
         avatarUrl
       }
       content
-      category
+      categoryId
       totalUserPostLikes
       createdAt
       isMine

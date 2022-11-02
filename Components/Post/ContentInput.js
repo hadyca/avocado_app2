@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
+import { useTranslation } from "react-i18next";
 import { categories } from "../../Constant";
 
 const SContentInput = styled.TextInput`
@@ -16,12 +17,20 @@ export default function ContentInput({
   value,
   categoryId,
 }) {
+  const { i18n } = useTranslation();
+
   return categories.map((item, index) =>
     categoryId === item.id ? (
       <SContentInput
         key={index}
         multiline={multiline}
-        placeholder={item.content}
+        placeholder={
+          i18n.language === "vn"
+            ? item.contentVn
+            : i18n.language === "en"
+            ? item.contentEn
+            : item.contentKo
+        }
         autoCapitalize={autoCapitalize}
         maxLength={maxLength}
         textAlignVertical={"top"}

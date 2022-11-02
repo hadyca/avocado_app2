@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { Image, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import { manipulateAsync } from "expo-image-manipulator";
-import { colors } from "../../../../Colors";
-import { Image, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import { ReactNativeFile } from "apollo-upload-client";
+import { manipulateAsync } from "expo-image-manipulator";
+import { useTranslation } from "react-i18next";
+import { colors } from "../../../../Colors";
 import ContentInput from "../../../../Components/Post/ContentInput";
+import { categories } from "../../../../Constant";
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -20,6 +22,7 @@ const ImageTop = styled.View`
 `;
 
 const ImageScroll = styled.ScrollView``;
+
 const Separator = styled.View`
   width: 100%;
   height: 1px;
@@ -59,10 +62,7 @@ const HeaderRightText = styled.Text`
   margin-right: 7px;
 `;
 
-const CategoryView = styled.TouchableOpacity`
-  border-bottom-width: 1px;
-  border-bottom-color: ${colors.borderThin};
-`;
+const CategoryView = styled.TouchableOpacity``;
 
 const CategoryContainer = styled.View`
   padding: 15px 7px;
@@ -91,13 +91,13 @@ export default function EditUserPostFormPresenter({
   content,
   loading,
   userPostId,
-  category,
+  categoryId,
   editUserPostMutation,
   goToCategory,
-  handleEdit,
   file,
   fileLength,
 }) {
+  const { t, i18n } = useTranslation();
   const [photo, setPhoto] = useState([]);
   const [countPhoto, setCountPhoto] = useState(0);
   const [isOver, setIsOver] = useState(false);
@@ -124,7 +124,7 @@ export default function EditUserPostFormPresenter({
           userPostId: parseInt(userPostId),
           fileUrl: editedFileUrl,
           content,
-          category,
+          categoryId,
         },
       });
     }
@@ -179,7 +179,7 @@ export default function EditUserPostFormPresenter({
 
   const NoHeaderRight = () => (
     <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
-      <HeaderRightText>완료</HeaderRightText>
+      <HeaderRightText>{t("editUserPostForm.1")}</HeaderRightText>
     </TouchableOpacity>
   );
 
@@ -189,7 +189,7 @@ export default function EditUserPostFormPresenter({
       onPress={handleSubmit(onValid)}
       style={{ marginRight: 10, opacity: 1 }}
     >
-      <HeaderRightText ok={true}>완료</HeaderRightText>
+      <HeaderRightText ok={true}>{t("editUserPostForm.1")}</HeaderRightText>
     </TouchableOpacity>
   );
   const HeaderRightLoading = () => (
@@ -199,11 +199,11 @@ export default function EditUserPostFormPresenter({
     navigation.setOptions({
       headerRight: loading
         ? HeaderRightLoading
-        : !formState.isValid || !category
+        : !formState.isValid || !categoryId
         ? NoHeaderRight
         : OkHeaderRight,
     });
-  }, [photo, loading, category, formState.isValid]);
+  }, [photo, loading, categoryId, formState.isValid]);
   useEffect(() => {
     if (file.length > 0) {
       file.map((item) =>
@@ -244,18 +244,31 @@ export default function EditUserPostFormPresenter({
               size={21}
               color={colors.error}
             />
-            <ErrorText>사진은 5장까지만 가능합니다.</ErrorText>
+            <ErrorText>{t("editUserPostForm.2")}</ErrorText>
           </ErrorContainer>
         )}
         <Separator />
       </ImageTop>
       <InputBottom>
         <CategoryView onPress={goToCategory}>
-          <CategoryContainer>
-            <Text>{category}</Text>
-            <Ionicons name="chevron-forward" color="black" size={17} />
-          </CategoryContainer>
+          {categories.map((item, index) => {
+            if (categoryId === item.id) {
+              return (
+                <CategoryContainer key={index}>
+                  <Text>
+                    {i18n.language === "vn"
+                      ? item.categoryVn
+                      : i18n.language === "en"
+                      ? item.categoryEn
+                      : item.categoryKo}
+                  </Text>
+                  <Ionicons name="chevron-forward" color="black" size={17} />
+                </CategoryContainer>
+              );
+            }
+          })}
         </CategoryView>
+        <Separator />
         <Controller
           name="content"
           rules={{
@@ -270,7 +283,7 @@ export default function EditUserPostFormPresenter({
               autoCapitalize="none"
               onChangeText={(text) => onChange(text)}
               value={value || ""}
-              categoryName={category}
+              categoryId={categoryId}
             />
           )}
         />

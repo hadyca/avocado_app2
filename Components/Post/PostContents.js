@@ -1,12 +1,14 @@
 import React from "react";
 import { ActivityIndicator } from "react-native";
 import styled from "styled-components/native";
+import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import UserAvatar from "../UserAvatar";
 import Separator from "../Separator";
-import { Ionicons } from "@expo/vector-icons";
 import ImageSlider from "./ImageSlider";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../Colors";
+import { categories } from "../../Constant";
 
 const Container = styled.View`
   margin: 10px;
@@ -51,16 +53,17 @@ export default function PostContents({
   username,
   avatarUrl,
   content,
-  category,
+  categoryId,
   toggleLikeMutation,
   likeLoading,
   isLiked,
 }) {
+  const { t, i18n } = useTranslation();
   const navigation = useNavigation();
 
-  const goToCategoryScreen = (category) => {
+  const goToCategoryScreen = (categoryId) => {
     navigation.navigate("CategoryBoard", {
-      category,
+      categoryId,
     });
   };
 
@@ -75,8 +78,20 @@ export default function PostContents({
       {file?.length !== 0 ? <ImageSlider file={file} /> : null}
       <Container>
         <CategoryView>
-          <CategoryTouch onPress={() => goToCategoryScreen(category)}>
-            <CategoryText>{category}</CategoryText>
+          <CategoryTouch onPress={() => goToCategoryScreen(categoryId)}>
+            {categories.map((item, index) => {
+              if (categoryId === item.id) {
+                return (
+                  <CategoryText key={index}>
+                    {i18n.language === "vn"
+                      ? item.categoryVn
+                      : i18n.language === "en"
+                      ? item.categoryEn
+                      : item.categoryKo}
+                  </CategoryText>
+                );
+              }
+            })}
           </CategoryTouch>
         </CategoryView>
         <Header onPress={goToProfile}>

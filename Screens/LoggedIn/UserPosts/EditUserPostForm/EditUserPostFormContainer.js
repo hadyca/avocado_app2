@@ -6,7 +6,6 @@ import { EDIT_USERPOST_MUTATION } from "./EditUserPostFormQueries";
 
 export default function ({ route: { params } }) {
   const [screenName, setScreenName] = useState("");
-  const [editedContent, setEditedContent] = useState("");
   const navigation = useNavigation();
 
   const update = (cache, result) => {
@@ -40,18 +39,14 @@ export default function ({ route: { params } }) {
     }
   }, []);
 
-  const handleEdit = (content) => {
-    setEditedContent(content);
-  };
   return (
     <EditUserPostFormPresenter
       content={params.content}
       loading={loading}
       userPostId={params.id}
-      category={params.category}
+      categoryId={params.categoryId}
       editUserPostMutation={editUserPostMutation}
       goToCategory={goToCategory}
-      handleEdit={handleEdit}
       file={params.file}
       fileLength={params.file?.length}
     />

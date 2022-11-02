@@ -166,7 +166,7 @@ export default function ({ route: { params } }) {
     navigation.navigate("EditUserPostForm", {
       id: params.id,
       content: data?.seeUserPost?.content,
-      category: data?.seeUserPost?.category,
+      categoryId: data?.seeUserPost?.categoryId,
       file: data?.seeUserPost?.file,
       screenName: params.fromWhere,
     });

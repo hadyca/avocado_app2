@@ -5,10 +5,12 @@ import * as ImagePicker from "expo-image-picker";
 import { manipulateAsync } from "expo-image-manipulator";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { useForm, Controller } from "react-hook-form";
-import { colors } from "../../../../Colors";
-import ContentInput from "../../../../Components/Post/ContentInput";
 import { useNavigation } from "@react-navigation/native";
 import { ReactNativeFile } from "apollo-upload-client";
+import { useTranslation } from "react-i18next";
+import { colors } from "../../../../Colors";
+import ContentInput from "../../../../Components/Post/ContentInput";
+import { categories } from "../../../../Constant";
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -90,6 +92,7 @@ export default function UserPostUploadFormPresenter({
   loading,
   uploadUserPostMutation,
 }) {
+  const { t, i18n } = useTranslation();
   const [photo, setPhoto] = useState([]);
   const [countPhoto, setCountPhoto] = useState(0);
   const [isOver, setIsOver] = useState(false);
@@ -155,6 +158,7 @@ export default function UserPostUploadFormPresenter({
           }
         }
       }
+      ``;
     }
   };
   const DeleteImg = (index) => {
@@ -166,7 +170,7 @@ export default function UserPostUploadFormPresenter({
 
   const NoHeaderRight = () => (
     <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
-      <HeaderRightText>완료</HeaderRightText>
+      <HeaderRightText>{t("userPostUploadForm.2")}</HeaderRightText>
     </TouchableOpacity>
   );
 
@@ -176,7 +180,7 @@ export default function UserPostUploadFormPresenter({
       onPress={handleSubmit(onValid)}
       style={{ marginRight: 10, opacity: 1 }}
     >
-      <HeaderRightText ok={true}>완료</HeaderRightText>
+      <HeaderRightText ok={true}>{t("userPostUploadForm.2")}</HeaderRightText>
     </TouchableOpacity>
   );
   const HeaderRightLoading = () => (
@@ -187,11 +191,11 @@ export default function UserPostUploadFormPresenter({
     navigation.setOptions({
       headerRight: loading
         ? HeaderRightLoading
-        : !formState.isValid || !category
+        : !formState.isValid || !categoryId
         ? NoHeaderRight
         : OkHeaderRight,
     });
-  }, [photo, loading, category, formState.isValid]);
+  }, [photo, loading, categoryId, formState.isValid]);
 
   return (
     <Container>
@@ -224,7 +228,7 @@ export default function UserPostUploadFormPresenter({
               size={21}
               color={colors.error}
             />
-            <ErrorText>사진은 5장까지만 가능합니다.</ErrorText>
+            <ErrorText>{t("userPostUploadForm.3")}</ErrorText>
           </ErrorContainer>
         )}
         <Separator />
@@ -232,13 +236,25 @@ export default function UserPostUploadFormPresenter({
       <InputBottom>
         <CategoryView onPress={goToCategory}>
           {categoryId ? (
-            <CategoryContainer>
-              <Text>{categoryId}</Text>
-              <Ionicons name="chevron-forward" color="black" size={17} />
-            </CategoryContainer>
+            categories.map((item, index) => {
+              if (categoryId === item.id) {
+                return (
+                  <CategoryContainer key={index}>
+                    <Text>
+                      {i18n.language === "vn"
+                        ? item.categoryVn
+                        : i18n.language === "en"
+                        ? item.categoryEn
+                        : item.categoryKo}
+                    </Text>
+                    <Ionicons name="chevron-forward" color="black" size={17} />
+                  </CategoryContainer>
+                );
+              }
+            })
           ) : (
             <CategoryContainer>
-              <Text>게시글의 주제를 정해주세요.</Text>
+              <Text>{t("userPostUploadForm.1")}</Text>
               <Ionicons name="chevron-forward" color="black" size={17} />
             </CategoryContainer>
           )}

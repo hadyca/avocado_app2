@@ -10,7 +10,7 @@ export const POST_QUERY = gql`
         avatarUrl
       }
       content
-      category
+      categoryId
       createdAt
       file {
         id

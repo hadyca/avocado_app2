@@ -61,7 +61,7 @@ export default function UserPostDetailPresenter({
                   username={data?.seeUserPost?.user?.username}
                   avatarUrl={data?.seeUserPost?.user?.avatarUrl}
                   content={data?.seeUserPost?.content}
-                  category={data?.seeUserPost?.category}
+                  categoryId={data?.seeUserPost?.categoryId}
                   likeLoading={likeLoading}
                   toggleLikeMutation={toggleUserPostLikeMutation}
                   isLiked={data?.seeUserPost?.isLiked}
@@ -98,7 +98,7 @@ export default function UserPostDetailPresenter({
                   username={data?.seeUserPost?.user?.username}
                   avatarUrl={data?.seeUserPost?.user?.avatarUrl}
                   content={data?.seeUserPost?.content}
-                  category={data?.seeUserPost?.category}
+                  categoryId={data?.seeUserPost?.categoryId}
                   likeLoading={likeLoading}
                   toggleLikeMutation={toggleUserPostLikeMutation}
                   isLiked={data?.seeUserPost?.isLiked}

@@ -4,9 +4,13 @@ export const UPLOAD_USER_POST_MUTATION = gql`
   mutation uploadUserPost(
     $fileUrl: [Upload]
     $content: String!
-    $category: String!
+    $categoryId: Int!
   ) {
-    uploadUserPost(fileUrl: $fileUrl, content: $content, category: $category) {
+    uploadUserPost(
+      fileUrl: $fileUrl
+      content: $content
+      categoryId: $categoryId
+    ) {
       id
       user {
         id

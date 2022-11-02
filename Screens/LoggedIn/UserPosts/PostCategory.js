@@ -25,9 +25,9 @@ const CategoryText = styled.Text``;
 export default function PostCategory() {
   const { i18n } = useTranslation();
   const navigation = useNavigation();
-  const selectCategory = (categoryId) => {
+  const selectCategory = (item) => {
     navigation.navigate("UserPostUploadForm", {
-      categoryId,
+      categoryId: item.id,
     });
   };
   return (
@@ -35,7 +35,7 @@ export default function PostCategory() {
       <Container>
         {categories.map((item, index) => (
           <CategoryContainer key={index}>
-            <CategoryView onPress={() => selectCategory(item.id)}>
+            <CategoryView onPress={() => selectCategory(item)}>
               <CategoryText>
                 {i18n.language === "vn"
                   ? item.categoryVn

@@ -5,13 +5,13 @@ export const EDIT_USERPOST_MUTATION = gql`
     $userPostId: Int!
     $fileUrl: [Upload]
     $content: String!
-    $category: String!
+    $categoryId: Int!
   ) {
     editUserPost(
       userPostId: $userPostId
       fileUrl: $fileUrl
       content: $content
-      category: $category
+      categoryId: $categoryId
     ) {
       ok
       error

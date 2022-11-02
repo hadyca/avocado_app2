@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { colors } from "../../Colors";
 import { timeForToday } from "../../Utils";
 import UserAvatar from "../UserAvatar";
+import { categories } from "../../Constant";
 
 const Container = styled.View``;
 
@@ -102,12 +103,12 @@ function UserPost({
   user,
   file,
   content,
-  category,
+  categoryId,
   totalUserPostLikes,
   totalUserPostComments,
   createdAt,
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const { width, height } = useWindowDimensions();
 
@@ -140,8 +141,20 @@ function UserPost({
         </Header>
       </HeaderContainer>
       <CategoryView>
-        <CategoryTouch onPress={() => goToCategoryScreen(category)}>
-          <CategoryText>{category}</CategoryText>
+        <CategoryTouch onPress={() => goToCategoryScreen(categoryId)}>
+          {categories.map((item, index) => {
+            if (categoryId === item.id) {
+              return (
+                <CategoryText key={index}>
+                  {i18n.language === "vn"
+                    ? item.categoryVn
+                    : i18n.language === "en"
+                    ? item.categoryEn
+                    : item.categoryKo}
+                </CategoryText>
+              );
+            }
+          })}
         </CategoryTouch>
       </CategoryView>
       {file?.length > 0 ? (

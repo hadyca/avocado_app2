@@ -2,38 +2,51 @@ import React from "react";
 import ScreenLayout from "../../../Components/ScreenLayout";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../../Colors";
-import { categories_KR } from "../../../Constant";
+import { categories } from "../../../Constant";
 
 const Container = styled.View``;
+
+const CategoryContainer = styled.View``;
 
 const CategoryView = styled.TouchableOpacity`
   padding: 25px 15px;
   color: black;
-  border-bottom-width: 1px;
-  border-bottom-color: ${colors.borderThin};
 `;
 
+const Separator = styled.View`
+  width: 100%;
+  height: 1px;
+  background-color: ${colors.borderThin};
+`;
 const CategoryText = styled.Text``;
 
 export default function EditPostCategory({ route: { params } }) {
+  const { i18n } = useTranslation();
   const navigation = useNavigation();
   const selectCategory = (item) => {
     navigation.navigate("EditUserPostForm", {
-      category: item,
+      categoryId: item.id,
       id: params.id,
     });
   };
   return (
     <ScreenLayout>
       <Container>
-        {categories_KR.map((item, index) => (
-          <CategoryView
-            key={index}
-            onPress={() => selectCategory(item.categoryName)}
-          >
-            <CategoryText>{item.categoryName}</CategoryText>
-          </CategoryView>
+        {categories.map((item, index) => (
+          <CategoryContainer key={index}>
+            <CategoryView onPress={() => selectCategory(item)}>
+              <CategoryText>
+                {i18n.language === "vn"
+                  ? item.categoryVn
+                  : i18n.language === "en"
+                  ? item.categoryEn
+                  : item.categoryKo}
+              </CategoryText>
+            </CategoryView>
+            <Separator />
+          </CategoryContainer>
         ))}
       </Container>
     </ScreenLayout>

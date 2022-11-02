@@ -75,6 +75,18 @@ const resources = {
         13: "일 전",
         14: "년 전",
       },
+      categoryBoard: {
+        1: "이 주제로 글쓰기",
+      },
+      userPostUploadForm: {
+        1: "게시글의 주제를 정해주세요",
+        2: "완료",
+        3: "사진은 5장까지만 가능합니다",
+      },
+      editUserPostForm: {
+        1: "완료",
+        2: "사진은 5장까지만 가능합니다",
+      },
     },
   },
   en: {
@@ -153,6 +165,18 @@ const resources = {
         "14_1": "year ago",
         "14_2": "years ago",
       },
+      categoryBoard: {
+        1: "Writing on this topic",
+      },
+      userPostUploadForm: {
+        1: "Please select a topic for the post",
+        2: "Done",
+        3: "Up to 5 photos are possible",
+      },
+      editUserPostForm: {
+        1: "Done",
+        2: "Up to 5 photos are possible",
+      },
     },
   },
   vn: {
@@ -226,6 +250,18 @@ const resources = {
         12: "tiếng trước",
         13: "ngày trước",
         14: "năm trước",
+      },
+      categoryBoard: {
+        1: "Viết về chủ đề này",
+      },
+      userPostUploadForm: {
+        1: "Hãy chọn chủ đề cho bài đăng của bạn",
+        2: "Xong",
+        3: "추가번역필요",
+      },
+      editUserPostForm: {
+        1: "Xong",
+        2: "추가번역필요",
       },
     },
   },

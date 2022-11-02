@@ -1,6 +1,7 @@
 import React from "react";
 import { FlatList, ActivityIndicator, Text } from "react-native";
 import styled from "styled-components/native";
+import { useTranslation } from "react-i18next";
 import { categories } from "../../../../Constant";
 import { colors } from "../../../../Colors";
 
@@ -42,7 +43,7 @@ const FetchView = styled.View`
 export default function CategoryBoardPresenter({
   width,
   height,
-  category,
+  categoryId,
   goToUserPostForm,
   handleFetch,
   refreshing,
@@ -51,13 +52,15 @@ export default function CategoryBoardPresenter({
   renderPost,
   fetchLoading,
 }) {
+  const { t } = useTranslation();
+
   return (
     <>
       <FlatList
         ListHeaderComponent={
           <>
             {categories.map((item, index) =>
-              item.id === category ? (
+              item.id === categoryId ? (
                 <TopContainer key={index}>
                   <ImgContainer>
                     <MainImg
@@ -74,7 +77,7 @@ export default function CategoryBoardPresenter({
               ) : null
             )}
             <WriteTextLink onPress={goToUserPostForm}>
-              <WriteText>이 주제로 글쓰기</WriteText>
+              <WriteText>{t("categoryBoard.1")}</WriteText>
             </WriteTextLink>
             <Separator />
           </>
