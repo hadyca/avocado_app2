@@ -2,19 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { useWindowDimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 import ScreenLayout from "../../../../Components/ScreenLayout";
 import CategoryUserPost from "../../../../Components/Post/CategoryUserPost";
-import { ScreenNames } from "../../../../Constant";
+import { categories, ScreenNames } from "../../../../Constant";
 import { CATEGORY_BOARD_QUERY } from "./CategoryBoardQueries";
 import CategoryBoardPresenter from "./CategoryBoardPresenter";
 
 export default function ({ route: { params } }) {
+  const { i18n } = useTranslation();
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(false);
   const { data, loading, refetch, fetchMore } = useQuery(CATEGORY_BOARD_QUERY, {
     variables: {
-      category: params.category,
+      categoryId: params.categoryId,
       offset: 0,
     },
   });
@@ -52,6 +54,18 @@ export default function ({ route: { params } }) {
   };
 
   useEffect(() => {
+    navigation.setOptions({
+      title: categories.map((item) => {
+        if (params.categoryId === item.id) {
+          return i18n.language === "vn"
+            ? item.categoryVn
+            : i18n.language === "en"
+            ? item.categoryEn
+            : item.categoryKo;
+        }
+      }),
+    });
+
     if (params?.fromWhere === ScreenNames.CATEGORY_BOARD) {
       navigation.navigate("UserPostListDetail", {
         id: params?.id,
@@ -64,7 +78,7 @@ export default function ({ route: { params } }) {
       <CategoryBoardPresenter
         width={width}
         height={height}
-        category={params.category}
+        categoryId={params.categoryId}
         goToUserPostForm={goToUserPostForm}
         handleFetch={handleFetch}
         refreshing={refreshing}

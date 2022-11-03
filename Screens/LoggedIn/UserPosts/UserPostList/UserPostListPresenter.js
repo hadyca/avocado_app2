@@ -60,15 +60,7 @@ export default function UserPostListPresenter({
               <CategoryTouch
                 first={index === 0}
                 key={index}
-                onPress={() => {
-                  if (i18n.language === "vn") {
-                    goToCategoryScreen(item.categoryVn);
-                  } else if (i18n.language === "en") {
-                    goToCategoryScreen(item.categoryEn);
-                  } else {
-                    goToCategoryScreen(item.categoryKo);
-                  }
-                }}
+                onPress={() => goToCategoryScreen(item.id)}
               >
                 <CategoryText>
                   {i18n.language === "vn"

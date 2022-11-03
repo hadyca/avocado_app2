@@ -56,6 +56,8 @@ const Button = styled.TouchableOpacity`
 
 const ButtonText = styled.Text`
   color: ${colors.buttonBackground};
+  align-items: center;
+  margin-right: 10px;
 `;
 
 const Contents = styled.View`
@@ -177,7 +179,6 @@ export default function Home() {
             />
             <TopText>{t("home.1_1")}</TopText>
             <TopText>{t("home.1_2")}</TopText>
-            {/* <TopText lastOne={true}>VinaArba</TopText> */}
           </TitleImg>
           <CompanyView>
             <HelloText>{t("home.2")}</HelloText>
@@ -242,7 +243,7 @@ export default function Home() {
               <ImageHome
                 resizeMode="contain"
                 source={{
-                  uri: "https://avocadotalkbucket.s3.ap-northeast-2.amazonaws.com/asset/home_2.png",
+                  uri: "https://avocadotalkbucket.s3.ap-northeast-2.amazonaws.com/asset/home_2_R.png",
                 }}
                 width={width}
                 height={width}
@@ -256,7 +257,7 @@ export default function Home() {
               width={width}
               height={width}
             /> */}
-            <SubTitle>소셜 미디어를 이용한 소통</SubTitle>
+            <SubTitle>커뮤니케이션</SubTitle>
             <SubContent firstOne={true}>
               내가 좋아하는 기업을 Follow 해보세요
             </SubContent>

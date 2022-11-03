@@ -122,9 +122,9 @@ function UserPost({
     });
   };
 
-  const goToCategoryScreen = (category) => {
+  const goToCategoryScreen = (categoryId) => {
     navigation.navigate("CategoryBoard", {
-      category,
+      categoryId,
     });
   };
   const goToPostDetail = () => {

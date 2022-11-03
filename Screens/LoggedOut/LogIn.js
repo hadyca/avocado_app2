@@ -1,6 +1,8 @@
 import { gql, useMutation } from "@apollo/client";
 import React, { useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { Alert } from "react-native";
+import { useTranslation } from "react-i18next";
 import { logUserIn } from "../../apollo";
 import AuthButton from "../../Components/Auth/AuthButton";
 import AuthLayout from "../../Components/Auth/AuthLayout";
@@ -18,21 +20,23 @@ const LOGIN_MUTATION = gql`
 `;
 
 export default function Login({ route: { params } }) {
+  const { t } = useTranslation();
+
   const [focus1, setFocus1] = useState(false);
   const [focus2, setFocus2] = useState(false);
 
-  const { handleSubmit, watch, setError, control, formState, clearErrors } =
+  const { handleSubmit, watch, control, setError, clearErrors, formState } =
     useForm();
 
   const passwordRef = useRef();
 
   const onCompleted = async (data) => {
     const {
-      login: { ok, error, token },
+      login: { ok, token },
     } = data;
     if (!ok) {
       return setError("result", {
-        message: error,
+        message: t("logIn.3"),
       });
     } else {
       await logUserIn(token);
@@ -72,7 +76,7 @@ export default function Login({ route: { params } }) {
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextInput
-            placeholder="Email"
+            placeholder={t("logIn.1")}
             placeholderTextColor="#cccccc"
             autoCapitalize="none"
             keyboardType="email-address"
@@ -102,7 +106,7 @@ export default function Login({ route: { params } }) {
           <TextInput
             value={value || ""}
             ref={passwordRef}
-            placeholder="Password"
+            placeholder={t("logIn.2")}
             placeholderTextColor="#cccccc"
             secureTextEntry
             returnKeyType="done"
@@ -122,7 +126,7 @@ export default function Login({ route: { params } }) {
       />
       <FormError message={formState?.errors?.result?.message} />
       <AuthButton
-        text="Log In"
+        text={t("logIn.4")}
         loading={loading}
         disabled={!watch("email") || !watch("password")}
         onPress={handleSubmit(onValid)}

@@ -1,5 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import { useTranslation } from "react-i18next";
 import TabsNav from "./TabsNav";
 import FollowNav from "./FollowNav";
 import UserPostUploadForm from "../Screens/LoggedIn/UserPosts/UserPostUploadForm";
@@ -57,6 +58,8 @@ import Language from "../Screens/LoggedIn/Me/Language";
 const Stack = createStackNavigator();
 
 export default function LoggedInNav() {
+  const { t } = useTranslation();
+
   return (
     <Stack.Navigator initialRouteName="TabsNav">
       <Stack.Screen
@@ -77,6 +80,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="TermsOfService"
         options={{
+          title: t("header.termsOfService"),
           headerBackTitleVisible: false,
         }}
         component={TermsOfService}
@@ -84,6 +88,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="PrivacyPolicy"
         options={{
+          title: t("header.privacyPolicy"),
           headerBackTitleVisible: false,
         }}
         component={PrivacyPolicy}
@@ -91,6 +96,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="Contact"
         options={{
+          title: t("header.contact"),
           headerBackTitleVisible: false,
         }}
         component={Contact}
@@ -98,6 +104,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="Language"
         options={{
+          title: t("header.language"),
           headerBackTitleVisible: false,
         }}
         component={Language}
@@ -105,6 +112,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="NotificationSetting"
         options={{
+          title: t("header.notificationSetting"),
           headerBackTitleVisible: false,
         }}
         component={NotificationSetting}
@@ -112,6 +120,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="Notification"
         options={{
+          title: t("header.notification"),
           headerBackTitleVisible: false,
         }}
         component={Notification}
@@ -119,6 +128,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="Account"
         options={{
+          title: t("header.account"),
           headerBackTitleVisible: false,
         }}
         component={Account}
@@ -126,6 +136,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="EditAddress"
         options={{
+          title: t("header.editAddress"),
           headerBackTitleVisible: false,
         }}
         component={EditAddress}
@@ -133,6 +144,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="EditContactNumber"
         options={{
+          title: t("header.editContactNumber"),
           headerBackTitleVisible: false,
         }}
         component={EditContactNumber}
@@ -140,6 +152,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="EditCompanyEmail"
         options={{
+          title: t("header.editCompanyEmail"),
           headerBackTitleVisible: false,
         }}
         component={EditCompanyEmail}
@@ -147,6 +160,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="EditTotalEmployees"
         options={{
+          title: t("header.editTotalEmployees"),
           headerBackTitleVisible: false,
         }}
         component={EditTotalEmployees}
@@ -154,6 +168,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="EditCompanyName"
         options={{
+          title: t("header.editCompanyName"),
           headerBackTitleVisible: false,
         }}
         component={EditCompanyName}
@@ -161,6 +176,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="EditAboutUs"
         options={{
+          title: t("header.editAboutUs"),
           headerBackTitleVisible: false,
         }}
         component={EditAboutUs}
@@ -182,6 +198,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="EditProfile"
         options={{
+          title: t("header.editProfile"),
           headerBackTitleVisible: false,
         }}
         component={EditProfile}
@@ -196,6 +213,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="MyProfileSetting"
         options={{
+          title: t("header.myProfileSetting"),
           headerBackTitleVisible: false,
         }}
         component={MyProfileSetting}
@@ -203,6 +221,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="EditUsername"
         options={{
+          title: t("header.editUsername"),
           headerBackTitleVisible: false,
         }}
         component={EditUsername}
@@ -210,6 +229,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="EditBio"
         options={{
+          title: t("header.editBio"),
           headerBackTitleVisible: false,
         }}
         component={EditBio}
@@ -252,6 +272,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="CompanyReComment"
         options={{
+          title: t("header.companyReComment"),
           headerBackTitleVisible: false,
         }}
         component={CompanyReComment}
@@ -274,6 +295,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="CompanyPostUploadForm"
         options={{
+          title: t("header.companyPostUploadForm"),
           headerBackTitleVisible: false,
         }}
         component={CompanyPostUploadForm}
@@ -336,6 +358,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="UserPostUploadForm"
         options={{
+          title: t("header.userPostUploadForm"),
           headerBackTitleVisible: false,
         }}
         component={UserPostUploadForm}
@@ -343,6 +366,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="PostCategory"
         options={{
+          title: t("header.postCategory"),
           headerBackTitleVisible: false,
         }}
         component={PostCategory}
@@ -375,18 +399,25 @@ export default function LoggedInNav() {
         }}
         component={EditUserPostReCommentForm}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="CategoryBoard"
         options={({ route: { params } }) => ({
-          title: params.category,
+          title: params.categoryId,
           headerBackTitleVisible: false,
-          headerTitleAlign: "center",
         })}
+        component={CategoryBoard}
+      /> */}
+      <Stack.Screen
+        name="CategoryBoard"
+        options={{
+          headerBackTitleVisible: false,
+        }}
         component={CategoryBoard}
       />
       <Stack.Screen
         name="ReComment"
         options={{
+          title: t("header.reComment"),
           headerBackTitleVisible: false,
         }}
         component={ReComment}

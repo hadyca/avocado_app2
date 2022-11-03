@@ -10,7 +10,7 @@ export const USERPOST_QUERY = gql`
         avatarUrl
       }
       content
-      category
+      categoryId
       createdAt
       file {
         id

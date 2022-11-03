@@ -52,7 +52,7 @@ export default function CategoryBoardPresenter({
   renderPost,
   fetchLoading,
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <>
@@ -60,7 +60,7 @@ export default function CategoryBoardPresenter({
         ListHeaderComponent={
           <>
             {categories.map((item, index) =>
-              item.id === categoryId ? (
+              categoryId === item.id ? (
                 <TopContainer key={index}>
                   <ImgContainer>
                     <MainImg
@@ -72,7 +72,13 @@ export default function CategoryBoardPresenter({
                       height={height}
                     />
                   </ImgContainer>
-                  <CategoryText>{item.content}</CategoryText>
+                  <CategoryText>
+                    {i18n.language === "vn"
+                      ? item.contentVn
+                      : i18n.language === "en"
+                      ? item.contentEn
+                      : item.contentKo}
+                  </CategoryText>
                 </TopContainer>
               ) : null
             )}

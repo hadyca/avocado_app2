@@ -24,7 +24,7 @@ const LngContainer = styled.View`
 `;
 
 const LngText = styled.Text`
-  color: ${(props) => (props.selected ? colors.blue : colors.borderThick)}
+  color: ${(props) => (props.selected ? colors.blue : colors.borderThick)};
   margin-right: 10px;
 `;
 
@@ -37,10 +37,10 @@ Notifications.setNotificationHandler({
 });
 
 export default function Welcome({ navigation }) {
+  const { t, i18n } = useTranslation();
   const [pushToken, setPushToken] = useState();
   const [lng, setLng] = useState({});
 
-  const { i18n } = useTranslation();
   const changelanguageToVn = async () => {
     i18n.changeLanguage("vn");
     await AsyncStorage.setItem("lng", "vn");
@@ -103,12 +103,12 @@ export default function Welcome({ navigation }) {
   return (
     <AuthLayout>
       <AuthButton
-        text="Creat New Account"
+        text={t("welcome.1")}
         disabled={false}
         onPress={goToCreateAccount}
       />
       <TouchableOpacity onPress={goToLogIn}>
-        <LoginLink>Log In</LoginLink>
+        <LoginLink>{t("welcome.2")}</LoginLink>
       </TouchableOpacity>
       <LngContainer>
         <TouchableOpacity onPress={changelanguageToVn}>

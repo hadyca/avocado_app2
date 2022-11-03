@@ -43,9 +43,9 @@ export default function ({ route: { params } }) {
     }
   };
 
-  const goToCategoryScreen = (item) => {
+  const goToCategoryScreen = (categoryId) => {
     navigation.navigate("CategoryBoard", {
-      category: item,
+      categoryId,
     });
   };
 
