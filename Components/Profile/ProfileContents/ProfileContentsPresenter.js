@@ -163,7 +163,6 @@ export default function ProfileContentsPresenter({
             </AvatarView>
             <Modal visible={isModalOpen} transparent={true}>
               <ImageViewer
-                enableSwipeDown={true}
                 imageUrls={images}
                 saveToLocalByLongPress={false}
                 enableImageZoom={true}

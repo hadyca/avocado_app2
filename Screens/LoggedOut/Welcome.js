@@ -40,7 +40,6 @@ export default function Welcome({ navigation }) {
   const { t, i18n } = useTranslation();
   const [pushToken, setPushToken] = useState();
   const [lng, setLng] = useState({});
-
   const changelanguageToVn = async () => {
     i18n.changeLanguage("vn");
     await AsyncStorage.setItem("lng", "vn");

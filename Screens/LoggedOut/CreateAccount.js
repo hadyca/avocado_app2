@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import AuthButton from "../../Components/Auth/AuthButton";
 import AuthLayout from "../../Components/Auth/AuthLayout";
 import FormError from "../../Components/Auth/FormError";
@@ -19,6 +20,7 @@ const CREATE_ACCOUNT_MUTATION = gql`
 `;
 
 export default function CreateAccount({ route: { params } }) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const { control, handleSubmit, getValues, formState, setError, clearErrors } =
     useForm({
@@ -32,7 +34,7 @@ export default function CreateAccount({ route: { params } }) {
     const { email, username, password } = getValues();
     if (!ok) {
       return setError("result", {
-        message: error,
+        message: error === "100" ? t("createAccount.9") : t("createAccount.10"),
       });
     } else {
       return navigation.navigate("ConfirmSecret", {
@@ -80,22 +82,19 @@ export default function CreateAccount({ route: { params } }) {
 
   return (
     <AuthLayout>
-      <Subtitle>Welcome to VinaArba! 🙌</Subtitle>
-
-      {/* email form */}
+      <Subtitle>{t("createAccount.12")}</Subtitle>
       <Controller
         name="email"
         rules={{
-          required: "이메일은 필수 항목 입니다.",
+          required: t("createAccount.11"),
           pattern: {
             value: emailRule,
-            message: "이메일 주소가 올바르지 않습니다.",
           },
         }}
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextInput
-            placeholder="Email"
+            placeholder={t("createAccount.1")}
             placeholderTextColor="#cccccc"
             autoCapitalize="none"
             keyboardType="email-address"
@@ -115,22 +114,22 @@ export default function CreateAccount({ route: { params } }) {
           />
         )}
       />
+      <FormError message={formState?.errors?.email?.message} />
 
-      {/* {username form} */}
       <Controller
         name="username"
         rules={{
-          required: "사용자 이름은 필수 항목 입니다.",
+          required: t("createAccount.11"),
           pattern: {
             value: usernameRule,
-            message: "특수문자는 사용할 수 없으며, 20자를 넘을 수 없습니다.",
+            message: t("createAccount.6"),
           },
         }}
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextInput
             ref={usernameRef}
-            placeholder="Username"
+            placeholder={t("createAccount.2")}
             placeholderTextColor="#cccccc"
             autoCapitalize="none"
             returnKeyType="next"
@@ -151,22 +150,20 @@ export default function CreateAccount({ route: { params } }) {
       />
       <FormError message={formState?.errors?.username?.message} />
 
-      {/* password form */}
       <Controller
         name="password"
         rules={{
-          required: "비밀번호는 필수 항목 입니다.",
+          required: t("createAccount.11"),
           pattern: {
             value: passwordRule,
-            message:
-              "숫자, 영문, 특수문자 각 1자리 이상이면서 최소 8자리를 넣어주세요.",
+            message: t("createAccount.7"),
           },
         }}
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextInput
             ref={passwordRef}
-            placeholder="Password"
+            placeholder={t("createAccount.3")}
             placeholderTextColor="#cccccc"
             secureTextEntry
             returnKeyType="next"
@@ -187,15 +184,14 @@ export default function CreateAccount({ route: { params } }) {
       />
       <FormError message={formState?.errors?.password?.message} />
 
-      {/* password2 form */}
       <Controller
         name="password2"
         rules={{
-          required: "비밀번호는 필수 항목 입니다.",
+          required: t("createAccount.11"),
           validate: {
             checkAgain: () => {
               const { password, password2 } = getValues();
-              return password === password2 || "비밀번호 불일치";
+              return password === password2 || t("createAccount.8");
             },
           },
         }}
@@ -203,7 +199,7 @@ export default function CreateAccount({ route: { params } }) {
         render={({ field: { onChange, value } }) => (
           <TextInput
             ref={password2Ref}
-            placeholder="Password 재 입력"
+            placeholder={t("createAccount.4")}
             placeholderTextColor="#cccccc"
             secureTextEntry
             returnKeyType="done"
@@ -225,7 +221,7 @@ export default function CreateAccount({ route: { params } }) {
       <FormError message={formState?.errors?.password2?.message} />
 
       <AuthButton
-        text="다음"
+        text={t("createAccount.5")}
         disabled={!formState.isValid}
         loading={loading}
         onPress={handleSubmit(onValid)}

@@ -1,7 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
 import React, { useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Alert } from "react-native";
 import { useTranslation } from "react-i18next";
 import { logUserIn } from "../../apollo";
 import AuthButton from "../../Components/Auth/AuthButton";
