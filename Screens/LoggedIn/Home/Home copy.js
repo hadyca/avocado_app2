@@ -12,13 +12,26 @@ import {
   View,
   TouchableOpacity,
   Text,
+  Image,
 } from "react-native";
-import AutoHeightImage from "react-native-auto-height-image";
 import { colors } from "../../../Colors";
 import { useNavigation } from "@react-navigation/native";
 import useMe from "../../../Hooks/useMe";
 
 const Container = styled.View``;
+
+const TitleImg = styled.ImageBackground`
+  width: 100%;
+  height: ${(props) => Math.floor(props.height * 0.3)}px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const TopText = styled.Text`
+  color: white;
+  font-size: 30px;
+  margin-bottom: ${(props) => (props.lastOne ? 0 : 5)}px;
+`;
 
 const CompanyView = styled.View`
   background-color: ${colors.buttonBackground};
@@ -53,10 +66,43 @@ const Contents = styled.View`
   align-items: center;
 `;
 
+const BtmImg = styled.Image`
+  width: ${(props) => props.width}px;
+  height: 100%;
+`;
+
+const ImageHome = styled.Image`
+  width: ${(props) => props.width * 0.5}px;
+  height: ${(props) => props.width * 0.5}px;
+  margin-top: 50px;
+`;
+
+const SubTitle = styled.Text`
+  color: ${colors.black};
+  font-weight: bold;
+  margin-top: 20px;
+  font-size: 25px;
+`;
+
+const SubContent = styled.Text`
+  font-size: 20px;
+  margin-top: ${(props) => (props.firstOne ? 15 : 10)}px;
+  margin-left: 40px;
+  margin-right: 40px;
+  text-align: center;
+`;
+
+const SubContent2 = styled.Text`
+  font-size: 20px;
+  margin-left: 40px;
+  margin-right: 40px;
+  text-align: center;
+`;
+
 const FooterView = styled.View`
   justify-content: flex-end;
   align-items: center;
-  margin-top: 100px;
+  height: 100px;
   margin-bottom: 10px;
 `;
 
@@ -115,24 +161,31 @@ export default function Home() {
   }, [lastNotificationResponse]);
   return (
     <ScreenLayout>
-      <ScrollView ref={ref} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        ref={ref}
+        style={{
+          width: "100%",
+        }}
+        showsVerticalScrollIndicator={false}
+      >
         <Container>
-          <AutoHeightImage
-            width={width}
-            source={require("../../../assets/top_main.png")}
-            style={{ justifyContent: "center", alignItems: "center" }}
+          <TitleImg
+            resizeMode="cover"
+            source={require("../../../assets/main_pic.jpg")}
+            height={height}
           >
-            <AutoHeightImage
-              width={width * 0.8}
-              source={
-                i18n.language === "vn"
-                  ? require("../../../assets/top_vn_text.png")
-                  : i18n.language === "en"
-                  ? require("../../../assets/top_en_text.png")
-                  : require("../../../assets/top_ko_text.png")
-              }
+            <View
+              style={{
+                position: "absolute",
+                backgroundColor: "black",
+                opacity: 0.5,
+                width: "100%",
+                height: Math.floor(height * 0.3),
+              }}
             />
-          </AutoHeightImage>
+            <TopText>{t("home.1_1")}</TopText>
+            <TopText>{t("home.1_2")}</TopText>
+          </TitleImg>
           <CompanyView>
             <HelloText>{t("home.2")}</HelloText>
             <Button onPress={goToCreateCompany}>
@@ -155,16 +208,65 @@ export default function Home() {
             <TouchableOpacity onPress={changelanguageToVn}>
               <Text>베트남어</Text>
             </TouchableOpacity>
-            <AutoHeightImage
+            {i18n.language === "vn" ? (
+              <BtmImg
+                width={width}
+                source={require("../../../assets/vn_btm.png")}
+              />
+            ) : null}
+
+            {/* <ImageHome
+              resizeMode="contain"
+              source={{
+                uri: "https://avocadotalkbucket.s3.ap-northeast-2.amazonaws.com/asset/home_1.png",
+              }}
               width={width}
-              source={
-                i18n.language === "vn"
-                  ? require("../../../assets/vn_btm.png")
-                  : i18n.language === "en"
-                  ? require("../../../assets/en_btm.png")
-                  : require("../../../assets/ko_btm.png")
-              }
+              height={width}
             />
+            <SubTitle>{t("home.4")}</SubTitle>
+            <SubContent firstOne={true}>{t("home.5")}</SubContent>
+            <SubContent>{t("home.6")}</SubContent>
+            <SubContent2>{t("home.7")}</SubContent2>
+            <SubContent>{t("home.8")}</SubContent>
+          </Contents>
+          <Contents>
+            <ImageHome
+              resizeMode="contain"
+              source={{
+                uri: "https://avocadotalkbucket.s3.ap-northeast-2.amazonaws.com/asset/home_2.png",
+              }}
+              width={width}
+              height={width}
+            />
+            <SubTitle>{t("home.9")}</SubTitle>
+            <SubContent firstOne={true}>{t("home.10")}</SubContent>
+            <SubContent>{t("home.11")}</SubContent>
+          </Contents>
+          <Contents>
+            {i18n.language === "ko" ? (
+              <ImageHome
+                resizeMode="contain"
+                source={{
+                  uri: "https://avocadotalkbucket.s3.ap-northeast-2.amazonaws.com/asset/home_3.png",
+                }}
+                width={width}
+                height={width}
+              />
+            ) : (
+              <ImageHome
+                resizeMode="contain"
+                source={{
+                  uri: "https://avocadotalkbucket.s3.ap-northeast-2.amazonaws.com/asset/home_2_R.png",
+                }}
+                width={width}
+                height={width}
+              />
+            )}
+            <SubTitle>커뮤니케이션</SubTitle>
+            <SubContent firstOne={true}>
+              내가 좋아하는 기업을 Follow 해보세요
+            </SubContent>
+            <SubContent>방금 전에 올린 채용글을 확인할 수 있어요!</SubContent> */}
           </Contents>
           <FooterView>
             <FooterText>©별보는 캐리어. All rights reserved</FooterText>

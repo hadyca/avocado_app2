@@ -26,6 +26,7 @@ const CONFIRM_SECRET = gql`
     $password: String!
     $secret: String!
     $pushToken: String!
+    $language: String!
   ) {
     confirmSecret(
       email: $email
@@ -33,6 +34,7 @@ const CONFIRM_SECRET = gql`
       password: $password
       secret: $secret
       pushToken: $pushToken
+      language: $language
     ) {
       ok
       error
@@ -85,6 +87,7 @@ export default function ConfirmSecret({ route: { params } }) {
           password: params.password,
           secret: data.secret,
           pushToken: params.pushToken,
+          language: params.language,
         },
       });
     }

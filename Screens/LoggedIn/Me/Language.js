@@ -5,6 +5,16 @@ import { useTranslation } from "react-i18next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ScreenLayout from "../../../Components/ScreenLayout";
 import { colors } from "../../../Colors";
+import { gql, useMutation } from "@apollo/client";
+
+const UPDATE_LANGUAGE_MUTATION = gql`
+  mutation updateLanguage($language: String!) {
+    updateLanguage(language: $language) {
+      ok
+      error
+    }
+  }
+`;
 
 const Button = styled.TouchableOpacity`
   background-color: ${colors.backgraound};
@@ -27,24 +37,21 @@ const Separator = styled.View`
 `;
 
 export default function Language() {
-  const [lng, setLng] = useState({});
-
   const { i18n } = useTranslation();
-  const changelanguageToVn = async () => {
-    i18n.changeLanguage("vn");
-    await AsyncStorage.setItem("lng", "vn");
-    setLng("vn");
-  };
 
-  const changelanguageToEn = async () => {
-    i18n.changeLanguage("en");
-    await AsyncStorage.setItem("lng", "en");
-    setLng("en");
-  };
-  const changelanguageToKo = async () => {
-    i18n.changeLanguage("ko");
-    await AsyncStorage.setItem("lng", "ko");
-    setLng("ko");
+  const [lng, setLng] = useState();
+
+  const [languageMutation] = useMutation(UPDATE_LANGUAGE_MUTATION);
+
+  const handleLng = async (language) => {
+    i18n.changeLanguage(language);
+    setLng(language);
+    await AsyncStorage.setItem("lng", language);
+    await languageMutation({
+      variables: {
+        language,
+      },
+    });
   };
 
   useEffect(() => {
@@ -52,7 +59,7 @@ export default function Language() {
   }, []);
   return (
     <ScreenLayout>
-      <Button onPress={changelanguageToVn}>
+      <Button onPress={() => handleLng("vn")}>
         <ButtonText>Tiếng Việt</ButtonText>
         {lng === "vn" ? (
           <Ionicons
@@ -64,7 +71,7 @@ export default function Language() {
         ) : null}
       </Button>
       <Separator />
-      <Button onPress={changelanguageToEn}>
+      <Button onPress={() => handleLng("en")}>
         <ButtonText>English</ButtonText>
         {lng === "en" ? (
           <Ionicons
@@ -76,7 +83,7 @@ export default function Language() {
         ) : null}
       </Button>
       <Separator />
-      <Button onPress={changelanguageToKo}>
+      <Button onPress={() => handleLng("ko")}>
         <ButtonText>한국어</ButtonText>
         {lng === "ko" ? (
           <Ionicons

@@ -9,7 +9,6 @@ import {
   DELETE_COMPANY_MUTATION,
 } from "./EditProfileQueries";
 import EditProfilePresenter from "./EditProfilePresenter";
-import { Alert } from "react-native";
 
 export default function ({ route: { params } }) {
   const navigation = useNavigation();

@@ -42,6 +42,7 @@ export default function CreateAccount({ route: { params } }) {
         username,
         password,
         pushToken: params.pushToken,
+        language: params.language,
       });
     }
   };

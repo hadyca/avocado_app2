@@ -39,7 +39,7 @@ Notifications.setNotificationHandler({
 export default function Welcome({ navigation }) {
   const { t, i18n } = useTranslation();
   const [pushToken, setPushToken] = useState();
-  const [lng, setLng] = useState({});
+  const [lng, setLng] = useState();
   const changelanguageToVn = async () => {
     i18n.changeLanguage("vn");
     await AsyncStorage.setItem("lng", "vn");
@@ -89,10 +89,12 @@ export default function Welcome({ navigation }) {
   const goToCreateAccount = () =>
     navigation.navigate("CreateAccount", {
       pushToken,
+      language: lng,
     });
   const goToLogIn = () =>
     navigation.navigate("LogIn", {
       pushToken,
+      language: lng,
     });
 
   useEffect(() => {

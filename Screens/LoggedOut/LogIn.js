@@ -9,8 +9,18 @@ import { TextInput } from "../../Components/Auth/AuthShared";
 import FormError from "../../Components/Auth/FormError";
 
 const LOGIN_MUTATION = gql`
-  mutation login($email: String!, $password: String!, $pushToken: String!) {
-    login(email: $email, password: $password, pushToken: $pushToken) {
+  mutation login(
+    $email: String!
+    $password: String!
+    $pushToken: String!
+    $language: String!
+  ) {
+    login(
+      email: $email
+      password: $password
+      pushToken: $pushToken
+      language: $language
+    ) {
       ok
       token
       error
@@ -56,6 +66,7 @@ export default function Login({ route: { params } }) {
           email,
           password,
           pushToken: params.pushToken,
+          language: params.language,
         },
       });
     }

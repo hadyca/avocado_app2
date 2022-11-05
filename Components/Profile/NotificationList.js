@@ -48,7 +48,7 @@ const Separator = styled.View`
   background-color: ${colors.borderThin};
 `;
 
-function NotificationList({ id, user, content, createdAt, type, postId }) {
+function NotificationList({ user, content, createdAt, type, postId }) {
   const time = timeForToday(parseInt(createdAt));
 
   const navigation = useNavigation();
