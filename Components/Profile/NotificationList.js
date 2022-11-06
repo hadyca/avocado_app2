@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../Colors";
 import { timeForToday } from "../../Utils";
 
@@ -48,7 +49,9 @@ const Separator = styled.View`
   background-color: ${colors.borderThin};
 `;
 
-function NotificationList({ user, content, createdAt, type, postId }) {
+function NotificationList({ user, contentId, createdAt, type, postId }) {
+  const { t } = useTranslation();
+
   const time = timeForToday(parseInt(createdAt));
 
   const navigation = useNavigation();
@@ -80,13 +83,13 @@ function NotificationList({ user, content, createdAt, type, postId }) {
       <Container onPress={() => goToPostDetail(type)}>
         <TopContainer>
           {type === "userPost" ? (
-            <Type>일반글</Type>
+            <Type>{t("notification.4")}</Type>
           ) : type === "companyPost" ? (
-            <Type>채용글</Type>
+            <Type>{t("notification.5")}</Type>
           ) : type === "following" ? (
-            <Type>팔로잉</Type>
+            <Type>{t("notification.6")}</Type>
           ) : (
-            <Type>공지</Type>
+            <Type>{t("notification.7")}</Type>
           )}
           <Date>{time}</Date>
         </TopContainer>
@@ -101,7 +104,15 @@ function NotificationList({ user, content, createdAt, type, postId }) {
               />
             )}
           </AvatarView>
-          <ContentText>{`${user.username} ${content}`}</ContentText>
+          <ContentText>{`${user.username}${
+            contentId === 1
+              ? t("notification.1")
+              : contentId === 2
+              ? t("notification.2")
+              : contentId === 3
+              ? t("notification.3")
+              : null
+          }`}</ContentText>
         </BottomContainer>
       </Container>
       <Separator />

@@ -76,12 +76,12 @@ export default function Home() {
   const ref = useRef(null);
   useScrollToTop(ref);
 
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const navigation = useNavigation();
 
   const goToCreateCompany = () => {
     if (userData?.me?.myCompany) {
-      Alert.alert(t("home.12"));
+      Alert.alert(t("home.3"));
     } else {
       navigation.navigate("AskCompanyName");
     }
@@ -134,9 +134,9 @@ export default function Home() {
             />
           </AutoHeightImage>
           <CompanyView>
-            <HelloText>{t("home.2")}</HelloText>
+            <HelloText>{t("home.1")}</HelloText>
             <Button onPress={goToCreateCompany}>
-              <ButtonText>{t("home.3")}</ButtonText>
+              <ButtonText>{t("home.2")}</ButtonText>
               <Ionicons
                 name="chevron-forward"
                 color="black"

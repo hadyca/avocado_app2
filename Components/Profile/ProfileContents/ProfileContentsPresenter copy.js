@@ -19,13 +19,16 @@ const Separator = styled.View`
 const Header = styled.View`
   flex-direction: row;
   justify-content: center;
-  border: 1px red solid;
+  align-items: center;
   flex-wrap: wrap;
+  width: 100%;
+  border: 1px red solid;
 `;
 
 const AvatarView = styled.TouchableOpacity`
-  margin-right: 10px;
-  flex: 1;
+  /* margin-right: 10px;
+  border-radius: 50px;
+  border: 0.5px solid ${colors.avatarBorder}; */
 `;
 
 const Avatar = styled.Image`
@@ -33,14 +36,17 @@ const Avatar = styled.Image`
   height: 80px;
   border-radius: 50px;
 `;
+
 const ColumnContainer = styled.View`
+  margin-top: 10px;
+  margin-bottom: 10px;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   border: 1px blue solid;
-  flex: 3;
 `;
 const Column = styled.TouchableOpacity`
-  margin-right: 15px;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 `;
 
@@ -54,7 +60,7 @@ const SubHeader = styled.View``;
 
 const Bio = styled.Text`
   margin-top: 10px;
-  margin-bottom: 10px;
+  align-self: flex-start;
 `;
 
 const Bottom = styled.View`
