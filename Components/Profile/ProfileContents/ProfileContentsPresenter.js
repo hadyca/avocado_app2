@@ -22,7 +22,9 @@ const Header = styled.View`
   flex-wrap: wrap;
 `;
 
-const AvatarView = styled.TouchableOpacity``;
+const AvatarView = styled.TouchableOpacity`
+  margin: 10px auto;
+`;
 
 const Avatar = styled.Image`
   width: 80px;
@@ -35,6 +37,7 @@ const ColumnContainer = styled.View`
   justify-content: space-around;
   margin: 10px auto;
 `;
+
 const Column = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
@@ -46,11 +49,8 @@ const Number = styled.Text`
 
 const Section = styled.Text``;
 
-const SubHeader = styled.View``;
-
 const Bio = styled.Text`
   margin-top: 10px;
-  margin-bottom: 10px;
 `;
 
 const Bottom = styled.View`
@@ -92,6 +92,7 @@ const Info = styled.Text`
 `;
 
 const ProfileBtn = styled.TouchableOpacity`
+  margin-top: 20px;
   background-color: ${(props) =>
     props.backgroundColor ? colors.buttonBackground : "white"};
   padding: 15px 7px;
@@ -137,20 +138,20 @@ export default function ProfileContentsPresenter({
     if (isMe) {
       return (
         <ProfileBtn backgroundColor={true} onPress={goToEditProfile}>
-          <ProfileText backgroundColor={true}>Edit Profile</ProfileText>
+          <ProfileText backgroundColor={true}>{t("profile.6")}</ProfileText>
         </ProfileBtn>
       );
     }
     if (isFollowing) {
       return (
         <ProfileBtn backgroundColor={false} onPress={toggleFollowingMutation}>
-          <ProfileText backgroundColor={false}>Following</ProfileText>
+          <ProfileText backgroundColor={false}>{t("profile.3")}</ProfileText>
         </ProfileBtn>
       );
     } else {
       return (
         <ProfileBtn backgroundColor={true} onPress={toggleFollowingMutation}>
-          <ProfileText backgroundColor={true}>Follow</ProfileText>
+          <ProfileText backgroundColor={true}>{t("profile.5")}</ProfileText>
         </ProfileBtn>
       );
     }
@@ -227,7 +228,6 @@ export default function ProfileContentsPresenter({
         </ColumnContainer>
       </Header>
       {data?.bio ? <Bio>{data?.bio}</Bio> : null}
-      <SubHeader></SubHeader>
       {data ? getButton(data) : null}
       <Bottom>
         {data?.myCompany ? (

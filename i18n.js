@@ -496,7 +496,7 @@ const resources = {
         3: "Đang theo dõi",
         4: "Người theo dõi",
         5: "Theo dõi",
-        6: "Chỉnh sửa hồ sơ",
+        6: "Chỉnh sửa trang cá nhân",
         7: "Thông tin doanh nghiệp",
         8: "Số lượng nhân viên",
         9: "Email",
