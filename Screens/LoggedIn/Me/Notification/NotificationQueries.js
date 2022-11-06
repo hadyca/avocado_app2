@@ -9,7 +9,7 @@ export const NOTIFICATION_QUERY = gql`
         username
         avatarUrl
       }
-      content
+      contentId
       postId
       type
       createdAt

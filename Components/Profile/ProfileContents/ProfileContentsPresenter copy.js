@@ -19,24 +19,33 @@ const Separator = styled.View`
 const Header = styled.View`
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
+  border: 1px red solid;
 `;
 
-const AvatarView = styled.TouchableOpacity``;
+const AvatarView = styled.TouchableOpacity`
+  /* margin-right: 10px;
+  border-radius: 50px;
+  border: 0.5px solid ${colors.avatarBorder}; */
+`;
 
 const Avatar = styled.Image`
   width: 80px;
   height: 80px;
   border-radius: 50px;
 `;
+
 const ColumnContainer = styled.View`
-  flex-grow: 1;
+  margin-top: 10px;
+  margin-bottom: 10px;
   flex-direction: row;
-  justify-content: space-around;
-  margin: 10px auto;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px blue solid;
 `;
 const Column = styled.TouchableOpacity`
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 `;
 
@@ -50,7 +59,7 @@ const SubHeader = styled.View``;
 
 const Bio = styled.Text`
   margin-top: 10px;
-  margin-bottom: 10px;
+  align-self: flex-start;
 `;
 
 const Bottom = styled.View`

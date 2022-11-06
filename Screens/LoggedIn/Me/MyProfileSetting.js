@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 import ScreenLayout from "../../../Components/ScreenLayout";
 import { colors } from "../../../Colors";
 
@@ -25,6 +26,7 @@ const Separator = styled.View`
   background-color: ${colors.borderThin};
 `;
 export default function MyProfileSetting({ route: { params } }) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
 
   return (
@@ -37,7 +39,7 @@ export default function MyProfileSetting({ route: { params } }) {
           })
         }
       >
-        <ButtonText>계정안내</ButtonText>
+        <ButtonText>{t("myProfileSetting.1")}</ButtonText>
         <Ionicons
           name="chevron-forward"
           color="black"
@@ -47,7 +49,7 @@ export default function MyProfileSetting({ route: { params } }) {
       </Button>
       <Separator />
       <Button onPress={() => navigation.navigate("NotificationSetting")}>
-        <ButtonText>알림</ButtonText>
+        <ButtonText>{t("myProfileSetting.2")}</ButtonText>
         <Ionicons
           name="chevron-forward"
           color="black"
@@ -57,7 +59,7 @@ export default function MyProfileSetting({ route: { params } }) {
       </Button>
       <Separator />
       <Button onPress={() => navigation.navigate("Language")}>
-        <ButtonText>언어</ButtonText>
+        <ButtonText>{t("myProfileSetting.3")}</ButtonText>
         <Ionicons
           name="chevron-forward"
           color="black"
@@ -67,7 +69,7 @@ export default function MyProfileSetting({ route: { params } }) {
       </Button>
       <Separator />
       <Button onPress={() => navigation.navigate("Contact")}>
-        <ButtonText>문의하기</ButtonText>
+        <ButtonText>{t("myProfileSetting.4")}</ButtonText>
         <Ionicons
           name="chevron-forward"
           color="black"
@@ -77,7 +79,7 @@ export default function MyProfileSetting({ route: { params } }) {
       </Button>
       <Separator />
       <Button onPress={() => navigation.navigate("TermsOfService")}>
-        <ButtonText>이용약관</ButtonText>
+        <ButtonText>{t("myProfileSetting.5")}</ButtonText>
         <Ionicons
           name="chevron-forward"
           color="black"
@@ -87,7 +89,7 @@ export default function MyProfileSetting({ route: { params } }) {
       </Button>
       <Separator />
       <Button onPress={() => navigation.navigate("PrivacyPolicy")}>
-        <ButtonText>개인정보처리방침</ButtonText>
+        <ButtonText>{t("myProfileSetting.6")}</ButtonText>
         <Ionicons
           name="chevron-forward"
           color="black"

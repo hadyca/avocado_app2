@@ -171,7 +171,7 @@ function UserPost({
         {content.length >= 20 ? (
           <Content>
             <ContentText>{content.substring(0, 20)}</ContentText>
-            <MoreText>...more</MoreText>
+            <MoreText>{`...${t("userPostList.1")}`}</MoreText>
           </Content>
         ) : (
           <Content>
@@ -181,14 +181,14 @@ function UserPost({
       </Contents>
       <LikeComment>
         <Likes>
-          {totalUserPostLikes > 1
-            ? `${totalUserPostLikes} likes`
-            : `${totalUserPostLikes} like`}
+          {i18n.language === "en" && totalUserPostLikes > 1
+            ? `${totalUserPostLikes} ${t("userPostList.2")}s`
+            : `${totalUserPostLikes} ${t("userPostList.2")}`}
         </Likes>
         <Comments>
-          {totalUserPostComments > 1
-            ? `${totalUserPostComments} comments`
-            : `${totalUserPostComments} comment`}
+          {i18n.language === "en" && totalUserPostComments > 1
+            ? `${totalUserPostComments} ${t("userPostList.3")}s`
+            : `${totalUserPostComments} ${t("userPostList.3")}`}
         </Comments>
       </LikeComment>
       <Date>{time}</Date>
