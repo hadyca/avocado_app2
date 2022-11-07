@@ -65,10 +65,10 @@ const FooterText = styled.Text`
 `;
 
 export default function Home() {
+  const { t, i18n } = useTranslation();
   const lastNotificationResponse = Notifications.useLastNotificationResponse();
   const { data: userData } = useMe();
 
-  const { t, i18n } = useTranslation();
   const changelanguageToKo = () => i18n.changeLanguage("ko");
   const changelanguageToEn = () => i18n.changeLanguage("en");
   const changelanguageToVn = () => i18n.changeLanguage("vn");

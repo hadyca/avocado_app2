@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ActivityIndicator, TouchableOpacity, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { useForm, Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../../../Colors";
 import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import { UnderBar } from "../../../../Components/Auth/AuthShared";
@@ -38,6 +39,7 @@ export default function EditUsernamePresenter({
   today,
   errorMessage,
 }) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
 
   const { control, handleSubmit, formState } = useForm({
@@ -52,30 +54,26 @@ export default function EditUsernamePresenter({
       navigation.pop();
     } else {
       if (!loading) {
-        Alert.alert(
-          "30일 이내 다시 변경\n 할 수 없습니다.\n그래도 하시겠어요?",
-          "",
-          [
-            { text: "Cancel" },
-            {
-              text: "Ok",
-              onPress: () =>
-                editUsernameMutation({
-                  variables: {
-                    username,
-                    usernameEditDate: String(today),
-                  },
-                }),
-            },
-          ]
-        );
+        Alert.alert(t("editUsername.1"), "", [
+          { text: "Cancel" },
+          {
+            text: "Ok",
+            onPress: () =>
+              editUsernameMutation({
+                variables: {
+                  username,
+                  usernameEditDate: String(today),
+                },
+              }),
+          },
+        ]);
       }
     }
   };
 
   const NoHeaderRight = () => (
     <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
-      <HeaderRightText>완료</HeaderRightText>
+      <HeaderRightText>{t("editUsername.4")}</HeaderRightText>
     </TouchableOpacity>
   );
 
@@ -85,7 +83,7 @@ export default function EditUsernamePresenter({
       onPress={handleSubmit(onValid)}
       style={{ marginRight: 10, opacity: 1 }}
     >
-      <HeaderRightText ok={true}>완료</HeaderRightText>
+      <HeaderRightText ok={true}>{t("editUsername.4")}</HeaderRightText>
     </TouchableOpacity>
   );
   const HeaderRightLoading = () => (
@@ -112,12 +110,12 @@ export default function EditUsernamePresenter({
             required: true,
             pattern: {
               value: usernameRule,
-              message: "특수문자는 사용할 수 없으며, 20자를 넘을 수 없습니다.",
+              message: t("editUsername.5"),
             },
           }}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              placeholder="Username"
+              placeholder={t("editUsername.3")}
               placeholderTextColor="#cccccc"
               textAlignVertical={"top"}
               maxLength={20}
@@ -132,7 +130,11 @@ export default function EditUsernamePresenter({
         />
         <UnderBar />
         <FormError message={formState?.errors?.username?.message} />
-        {errorMessage ? <FormError message={errorMessage} /> : null}
+        {errorMessage === "100" ? (
+          <FormError message={t("editUsername.2")} />
+        ) : errorMessage === "200" ? (
+          <FormError message={t("editUsername.6")} />
+        ) : null}
         <CountingText>({counting}/20)</CountingText>
       </Container>
     </DismissKeyboard>

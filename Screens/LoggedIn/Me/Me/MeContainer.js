@@ -1,29 +1,22 @@
 import React, { useEffect, useState, useRef } from "react";
 import { TouchableOpacity, View } from "react-native";
-import { useQuery } from "@apollo/client";
 import { useNavigation, useScrollToTop } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
+import { useTranslation } from "react-i18next";
 import ScreenLayout from "../../../../Components/ScreenLayout";
-import { PROFILE_QUERY } from "./MeQueries";
 import MePresenter from "./MePresenter";
 import useMe from "../../../../Hooks/useMe";
 import { colors } from "../../../../Colors";
 
-export default function ({ route }) {
+export default function () {
+  const { t } = useTranslation();
   const ref = useRef(null);
   useScrollToTop(ref);
   const { data, loading, refetch } = useMe();
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const [isAlert, setIsAlert] = useState(false);
-
-  // const { data, loading, refetch } = useQuery(PROFILE_QUERY, {
-  //   skip: userLoading,
-  //   variables: {
-  //     userId: parseInt(userData?.me?.id),
-  //   },
-  // });
 
   const refresh = async () => {
     setRefreshing(true);
@@ -39,7 +32,7 @@ export default function ({ route }) {
   };
 
   let myActionsheet = useRef();
-  let myOptionArray = ["설정", "취소"];
+  let myOptionArray = [t("profile.11"), t("profile.12")];
 
   const showActionSheet = () => {
     if (data?.me) {

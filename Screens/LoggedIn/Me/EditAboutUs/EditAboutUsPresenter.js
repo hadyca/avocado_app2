@@ -3,6 +3,7 @@ import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { useForm, Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../../../Colors";
 import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import { UnderBar } from "../../../../Components/Auth/AuthShared";
@@ -34,6 +35,7 @@ export default function EditAboutUsPresenter({
   loading,
   originAboutUs,
 }) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
 
   const { control, handleSubmit, formState } = useForm({
@@ -54,7 +56,7 @@ export default function EditAboutUsPresenter({
   };
   const NoHeaderRight = () => (
     <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
-      <HeaderRightText>완료</HeaderRightText>
+      <HeaderRightText>{t("editAboutUs.1")}</HeaderRightText>
     </TouchableOpacity>
   );
 
@@ -64,7 +66,7 @@ export default function EditAboutUsPresenter({
       onPress={handleSubmit(onValid)}
       style={{ marginRight: 10, opacity: 1 }}
     >
-      <HeaderRightText ok={true}>완료</HeaderRightText>
+      <HeaderRightText ok={true}>{t("editAboutUs.1")}</HeaderRightText>
     </TouchableOpacity>
   );
   const HeaderRightLoading = () => (
@@ -89,7 +91,7 @@ export default function EditAboutUsPresenter({
           rules={{ required: true }}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              placeholder="ex)직원 복지가 좋은, 동나이 최고의 garment회사!"
+              placeholder={t("editAboutUs.2")}
               placeholderTextColor="#cccccc"
               textAlignVertical={"top"}
               maxLength={150}

@@ -5,6 +5,7 @@ import styled from "styled-components/native";
 import { useForm, Controller } from "react-hook-form";
 import ModalSelector from "react-native-modal-selector";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../../../Colors";
 import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import { UnderBar } from "../../../../Components/Auth/AuthShared";
@@ -48,8 +49,7 @@ export default function EditAddressPresenter({
   handleAdd1,
   handleAdd2,
 }) {
-  // const [add_1, setAdd_1] = useState({});
-  // const [add_2, setAdd_2] = useState(addressStep2);
+  const { t } = useTranslation();
 
   const navigation = useNavigation();
   const { control, handleSubmit, formState } = useForm({
@@ -72,7 +72,7 @@ export default function EditAddressPresenter({
   };
   const NoHeaderRight = () => (
     <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
-      <HeaderRightText>완료</HeaderRightText>
+      <HeaderRightText>{t("editAddress.1")}</HeaderRightText>
     </TouchableOpacity>
   );
 
@@ -82,7 +82,7 @@ export default function EditAddressPresenter({
       onPress={handleSubmit(onValid)}
       style={{ marginRight: 10, opacity: 1 }}
     >
-      <HeaderRightText ok={true}>완료</HeaderRightText>
+      <HeaderRightText ok={true}>{t("editAddress.1")}</HeaderRightText>
     </TouchableOpacity>
   );
   const HeaderRightLoading = () => (

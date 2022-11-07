@@ -3,6 +3,7 @@ import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { useForm, Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../../../Colors";
 import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import { UnderBar } from "../../../../Components/Auth/AuthShared";
@@ -34,6 +35,7 @@ export default function EditBioPresenter({
   loading,
   originBio,
 }) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
 
   const { control, handleSubmit } = useForm({
@@ -58,7 +60,7 @@ export default function EditBioPresenter({
       onPress={handleSubmit(onValid)}
       style={{ marginRight: 10, opacity: 1 }}
     >
-      <HeaderRightText ok={true}>완료</HeaderRightText>
+      <HeaderRightText ok={true}>{t("editBio.1")}</HeaderRightText>
     </TouchableOpacity>
   );
 
@@ -80,7 +82,7 @@ export default function EditBioPresenter({
           control={control}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              placeholder="Bio"
+              placeholder={t("editBio.2")}
               placeholderTextColor="#cccccc"
               textAlignVertical={"top"}
               maxLength={150}

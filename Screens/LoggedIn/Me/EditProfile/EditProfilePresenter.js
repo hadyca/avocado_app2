@@ -4,6 +4,7 @@ import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { ReactNativeFile } from "apollo-upload-client";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../../../Colors";
 import AuthButton from "../../../../Components/Auth/AuthButton";
 
@@ -110,6 +111,7 @@ export default function EditProfilePresenter({
   loading,
   deleteLoading,
 }) {
+  const { t, i18n } = useTranslation();
   const [deletedCompany, setDeletedCompany] = useState(false);
   const address = `${myCompany?.addressStep3}, ${myCompany?.addressStep2}, ${myCompany?.addressStep1}`;
 
@@ -138,7 +140,7 @@ export default function EditProfilePresenter({
       onPress={goToEditAvatar}
       style={{ marginRight: 10, opacity: 1 }}
     >
-      <HeaderRightText ok={true}>완료</HeaderRightText>
+      <HeaderRightText ok={true}>{t("editProfile.14")}</HeaderRightText>
     </TouchableOpacity>
   );
   const HeaderRightLoading = () => (
@@ -175,21 +177,21 @@ export default function EditProfilePresenter({
         />
       </Top>
       <TouchableOpacity onPress={goToSelectAvatar}>
-        <ChangePhoto>Edit Avatar</ChangePhoto>
+        <ChangePhoto>{t("editProfile.13")}</ChangePhoto>
       </TouchableOpacity>
       <Bottom>
         <Button onPress={goToEditUsername}>
-          <ButtonName>Username</ButtonName>
+          <ButtonName>{t("editProfile.1")}</ButtonName>
           <ButtonTextView>
             <ButtonText>{username}</ButtonText>
             <Ionicons name="chevron-forward" color="black" size={17} />
           </ButtonTextView>
         </Button>
         <Button onPress={goToEditBio}>
-          <ButtonName>Bio</ButtonName>
+          <ButtonName>{t("editProfile.2")}</ButtonName>
           <ButtonTextView>
             {!bio ? (
-              <AddBio>Add bio to profile</AddBio>
+              <AddBio>{t("editProfile.17")}</AddBio>
             ) : bio.length >= 20 ? (
               <ButtonText>{`${bio.substring(0, 20)}...`}</ButtonText>
             ) : (
@@ -201,9 +203,9 @@ export default function EditProfilePresenter({
         <Separator />
         {myCompany && !deletedCompany && (
           <>
-            <CompanyTitle>Company Info</CompanyTitle>
+            <CompanyTitle>{t("editProfile.3")}</CompanyTitle>
             <Button onPress={goToEditCompanyName}>
-              <ButtonName>Company</ButtonName>
+              <ButtonName>{t("editProfile.4")}</ButtonName>
               <ButtonTextView>
                 <ButtonText>
                   {myCompany?.companyName.length >= 20 ? (
@@ -219,7 +221,7 @@ export default function EditProfilePresenter({
               </ButtonTextView>
             </Button>
             <Button onPress={goToEditAboutUs}>
-              <ButtonName>About Us</ButtonName>
+              <ButtonName>{t("editProfile.5")}</ButtonName>
               <ButtonTextView>
                 <ButtonText>
                   {myCompany?.aboutUs.length >= 20 ? (
@@ -235,7 +237,7 @@ export default function EditProfilePresenter({
               </ButtonTextView>
             </Button>
             <Button onPress={goToEditAddress}>
-              <ButtonName>Address</ButtonName>
+              <ButtonName>{t("editProfile.6")}</ButtonName>
               <ButtonTextView>
                 {address.length >= 25 ? (
                   <ButtonText>{`${address.substring(0, 25)}...`}</ButtonText>
@@ -246,14 +248,18 @@ export default function EditProfilePresenter({
               </ButtonTextView>
             </Button>
             <Button onPress={goToEditTotalEmployees}>
-              <ButtonName>Total Employees</ButtonName>
+              <ButtonName>{t("editProfile.7")}</ButtonName>
               <ButtonTextView>
-                <ButtonText>{`${myCompany?.totalEmployees} 명`}</ButtonText>
+                <ButtonText>{`${myCompany?.totalEmployees} ${
+                  i18n.language === "en" && myCompany?.totalEmployees > 1
+                    ? `${t("editProfile.12")}s`
+                    : t("editProfile.12")
+                }`}</ButtonText>
                 <Ionicons name="chevron-forward" color="black" size={17} />
               </ButtonTextView>
             </Button>
             <Button onPress={goToEditCompanyEmail}>
-              <ButtonName>Email</ButtonName>
+              <ButtonName>{t("editProfile.8")}</ButtonName>
               <ButtonTextView>
                 <ButtonText>
                   {myCompany?.email.length >= 20 ? (
@@ -269,7 +275,7 @@ export default function EditProfilePresenter({
               </ButtonTextView>
             </Button>
             <Button onPress={goToEditContactNumber}>
-              <ButtonName>Contact Number</ButtonName>
+              <ButtonName>{t("editProfile.9")}</ButtonName>
               <ButtonTextView>
                 <ButtonText>{myCompany?.contactNumber}</ButtonText>
                 <Ionicons name="chevron-forward" color="black" size={17} />
@@ -277,10 +283,10 @@ export default function EditProfilePresenter({
             </Button>
             <AuthButton
               onPress={() =>
-                Alert.alert("정말 삭제 하시겠습니까?", "", [
-                  { text: "Cancel" },
+                Alert.alert(t("editProfile.11"), "", [
+                  { text: t("editProfile.16") },
                   {
-                    text: "Ok",
+                    text: t("editProfile.15"),
                     onPress: async () => {
                       setDeletedCompany(true);
                       await deleteCompanyMutation({
@@ -293,7 +299,7 @@ export default function EditProfilePresenter({
                 ])
               }
               loading={deleteLoading}
-              text={"기업 삭제 하기"}
+              text={t("editProfile.10")}
             />
           </>
         )}

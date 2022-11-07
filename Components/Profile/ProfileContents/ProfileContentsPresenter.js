@@ -232,7 +232,7 @@ export default function ProfileContentsPresenter({
       <Bottom>
         {data?.myCompany ? (
           <>
-            <CompanyTitle>Company Info</CompanyTitle>
+            <CompanyTitle>{t("profile.7")}</CompanyTitle>
             <CompanyName>{data?.myCompany?.companyName}</CompanyName>
             <AboutUs>{data?.myCompany?.aboutUs}</AboutUs>
             <Address>
@@ -240,13 +240,17 @@ export default function ProfileContentsPresenter({
             </Address>
             <Separator />
             <InfoView>
-              <Title>Number of employees</Title>
-              <Info>{`${data?.myCompany?.totalEmployees} 명`}</Info>
+              <Title>{t("profile.8")}</Title>
+              <Info>{`${data?.myCompany?.totalEmployees} ${
+                i18n.language === "en" && data?.myCompany?.totalEmployees > 1
+                  ? `${t("profile.13")}s`
+                  : t("profile.13")
+              }`}</Info>
               <Separator />
-              <Title>E-Mail</Title>
+              <Title>{t("profile.9")}</Title>
               <Info>{data?.myCompany?.email}</Info>
               <Separator />
-              <Title>Contact Number</Title>
+              <Title>{t("profile.10")}</Title>
               <Info>{data?.myCompany?.contactNumber}</Info>
               <Separator />
             </InfoView>

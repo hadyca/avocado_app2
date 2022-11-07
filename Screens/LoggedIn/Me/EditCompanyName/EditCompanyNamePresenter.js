@@ -3,6 +3,7 @@ import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { useForm, Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../../../Colors";
 import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import { UnderBar } from "../../../../Components/Auth/AuthShared";
@@ -34,6 +35,7 @@ export default function EditCompanyNamePresenter({
   loading,
   originCompanyName,
 }) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
 
   const { control, handleSubmit, formState } = useForm({
@@ -55,7 +57,7 @@ export default function EditCompanyNamePresenter({
 
   const NoHeaderRight = () => (
     <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
-      <HeaderRightText>완료</HeaderRightText>
+      <HeaderRightText>{t("editCompanyName.1")}</HeaderRightText>
     </TouchableOpacity>
   );
 
@@ -65,7 +67,7 @@ export default function EditCompanyNamePresenter({
       onPress={handleSubmit(onValid)}
       style={{ marginRight: 10, opacity: 1 }}
     >
-      <HeaderRightText ok={true}>완료</HeaderRightText>
+      <HeaderRightText ok={true}>{t("editCompanyName.1")}</HeaderRightText>
     </TouchableOpacity>
   );
   const HeaderRightLoading = () => (
@@ -91,7 +93,7 @@ export default function EditCompanyNamePresenter({
           rules={{ required: true }}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              placeholder="Your Company Name"
+              placeholder="VinaArba"
               placeholderTextColor="#cccccc"
               textAlignVertical={"top"}
               maxLength={100}
