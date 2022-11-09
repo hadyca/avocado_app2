@@ -107,27 +107,117 @@ export const userReportAry = [
 ];
 
 export const userPostReportAry = [
-  "광고·홍보 글이에요",
-  "누군가를 비방하는 글이에요",
-  "중복·도배 글이에요",
-  "정치·종교 관련 글이에요",
-  "금전을 요구하는 글이에요",
-  "불쾌감을 줄 수 있는 글이에요",
-  "불법·음란성 글이 포함 되어 있어요",
-  "다른 채팅 앱이나 사이트로 유도 해요",
-  "기타",
+  {
+    id: 1,
+    valueKo: "광고·홍보 글이에요",
+    valueEn: "It's an ad·a promotional post",
+    valueVn: "Bài viết quảng cáo",
+  },
+  {
+    id: 2,
+    valueKo: "누군가를 비방하는 글이에요",
+    valueEn: "It's a slanderous post",
+    valueVn: "Bài viết này phỉ báng ai đó",
+  },
+  {
+    id: 3,
+    valueKo: "중복·도배 글이에요",
+    valueEn: "It's a repetitive post",
+    valueVn: "Bài viết che mất màn hình",
+  },
+  {
+    id: 4,
+    valueKo: "정치·종교 관련 글이에요",
+    valueEn: "It's about politics·religion post",
+    valueVn: "Bài viết liên qua đến tôn giáo-chính trị",
+  },
+  {
+    id: 5,
+    valueKo: "금전을 요구하는 글이에요",
+    valueEn: "It's a phishing post",
+    valueVn: "Bài viết đòi tiền",
+  },
+  {
+    id: 6,
+    valueKo: "불쾌감을 줄 수 있는 글이에요",
+    valueEn: "It can make you feel uncomfortable",
+    valueVn: "Bài viết có nội dung không lành mạnh",
+  },
+  {
+    id: 7,
+    valueKo: "불법·음란성 내용이 포함 되어 있어요",
+    valueEn: "Illegal·obscene contents are included",
+    valueVn: "Bài viết có phi pháp, khiêu dâm",
+  },
+  {
+    id: 8,
+    valueKo: "다른 채팅 앱이나 사이트로 유도 해요",
+    valueEn: "lure to another chat app or site",
+    valueVn: "Bài viết dẫn đến trang web hay ứng dụng khác",
+  },
+  {
+    id: 9,
+    valueKo: "기타",
+    valueEn: "Etc",
+    valueVn: "Khác",
+  },
 ];
 
 export const userPostCommentReportAry = [
-  "광고·홍보 댓글이에요",
-  "누군가를 비방하는 댓글이에요",
-  "중복·도배 댓글이에요",
-  "정치·종교 관련 댓글이에요",
-  "금전을 요구하는 댓글이에요",
-  "불쾌감을 줄 수 있는 댓글이에요",
-  "불법·음란성 댓글이 포함 되어 있어요",
-  "다른 채팅 앱이나 사이트로 유도 해요",
-  "기타",
+  {
+    id: 1,
+    valueKo: "광고·홍보 댓글이에요",
+    valueEn: "It's an ad·a promotional comment",
+    valueVn: "Bình luận quảng cáo",
+  },
+  {
+    id: 2,
+    valueKo: "누군가를 비방하는 댓글이에요",
+    valueEn: "It's a slanderous comment",
+    valueVn: "Bình luận này phỉ báng ai đó",
+  },
+  {
+    id: 3,
+    valueKo: "중복·도배 댓글이에요",
+    valueEn: "It's a repetitive comment",
+    valueVn: "Bình luận che mất màn hình",
+  },
+  {
+    id: 4,
+    valueKo: "정치·종교 관련 댓글이에요",
+    valueEn: "It's about politics·religion comment",
+    valueVn: "Bình luận liên qua đến tôn giáo-chính trị",
+  },
+  {
+    id: 5,
+    valueKo: "금전을 요구하는 댓글이에요",
+    valueEn: "It's a phishing comment",
+    valueVn: "Bình luận đòi tiền",
+  },
+  {
+    id: 6,
+    valueKo: "불쾌감을 줄 수 있는 댓글이에요",
+    valueEn: "It can make you feel uncomfortable",
+    valueVn: "Bình luận có nội dung không lành mạnh",
+  },
+  {
+    id: 7,
+    valueKo: "불법·음란성 내용이 포함 되어 있어요",
+    valueEn: "Illegal·obscene contents are included",
+    valueVn: "Bình luận có phi pháp, khiêu dâm",
+  },
+  {
+    id: 8,
+    valueKo: "다른 채팅 앱이나 사이트로 유도 해요",
+    valueEn: "lure to another chat app or site",
+    valueVn: "Bình luận dẫn đến trang web hay ứng dụng khác",
+  },
+  {
+    id: 9,
+    valueKo: "기타",
+    valueEn: "Etc",
+    valueVn: "Khác",
+  },
 ];
 
 export const companyPostReportAry = [
@@ -210,9 +300,34 @@ export const typeOfWage = [
 ];
 
 export const questionType = [
-  { id: 1, value: "일반 문의" },
-  { id: 2, value: "서비스 오류 제보" },
-  { id: 3, value: "계정 분실" },
-  { id: 4, value: "서비스 개선 의견" },
-  { id: 5, value: "비즈니스 문의" },
+  {
+    id: 1,
+    valueKo: "일반 문의",
+    valueEn: "General",
+    valueVn: "Câu hỏi thông thường",
+  },
+  {
+    id: 2,
+    valueKo: "서비스 오류 제보",
+    valueEn: "Service Error",
+    valueVn: "Thông báo lỗi dịch vụ",
+  },
+  {
+    id: 3,
+    valueKo: "계정 분실",
+    valueEn: "Lost account",
+    valueVn: "Mất tài khoản",
+  },
+  {
+    id: 4,
+    valueKo: "서비스 개선 의견",
+    valueEn: "Service Improvement",
+    valueVn: "Ý kiến cải thiện dịch vụ",
+  },
+  {
+    id: 5,
+    valueKo: "비즈니스 문의",
+    valueEn: "Business",
+    valueVn: "Câu hỏi mang tính kinh doanh",
+  },
 ];

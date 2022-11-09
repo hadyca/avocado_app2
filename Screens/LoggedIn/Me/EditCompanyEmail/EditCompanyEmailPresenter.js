@@ -3,6 +3,7 @@ import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { useForm, Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../../../Colors";
 import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import { UnderBar } from "../../../../Components/Auth/AuthShared";
@@ -35,6 +36,7 @@ export default function EditCompanyEmailPresenter({
   loading,
   originEmail,
 }) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
 
   const { control, handleSubmit, formState } = useForm({
@@ -55,7 +57,7 @@ export default function EditCompanyEmailPresenter({
   };
   const NoHeaderRight = () => (
     <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
-      <HeaderRightText>완료</HeaderRightText>
+      <HeaderRightText>{t("editCompanyEmail.1")}</HeaderRightText>
     </TouchableOpacity>
   );
 
@@ -65,7 +67,7 @@ export default function EditCompanyEmailPresenter({
       onPress={handleSubmit(onValid)}
       style={{ marginRight: 10, opacity: 1 }}
     >
-      <HeaderRightText ok={true}>완료</HeaderRightText>
+      <HeaderRightText ok={true}>{t("editCompanyEmail.1")}</HeaderRightText>
     </TouchableOpacity>
   );
   const HeaderRightLoading = () => (
@@ -91,12 +93,11 @@ export default function EditCompanyEmailPresenter({
             required: true,
             pattern: {
               value: emailRule,
-              message: "이메일 주소가 올바르지 않습니다.",
             },
           }}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              placeholder="Your@Eamil.com"
+              placeholder="vinaarba@gmail.com"
               placeholderTextColor="#cccccc"
               textAlignVertical={"top"}
               maxLength={50}

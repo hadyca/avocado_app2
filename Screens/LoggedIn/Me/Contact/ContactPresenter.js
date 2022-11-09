@@ -5,6 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import ModalSelector from "react-native-modal-selector";
 import { Ionicons } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../../../Colors";
 import AuthButton from "../../../../Components/Auth/AuthButton";
 import { emailRule } from "../../../../RegExp";
@@ -56,18 +57,18 @@ const TitleInput = styled.TextInput`
 `;
 
 export default function ContactPresenter({ contactMutation, loading }) {
+  const { t, i18n } = useTranslation();
   const [type, setType] = useState({});
   const { control, handleSubmit } = useForm();
-
   const onValid = async ({ content, email }) => {
     if (!type.value) {
-      Alert.alert("유형을 입력해주세요.");
+      Alert.alert(t("contact.6"));
     } else if (!content) {
-      Alert.alert("내용을 입력해주세요.");
+      Alert.alert(t("contact.7"));
     } else if (!email) {
-      Alert.alert("이메일을 입력해주세요.");
+      Alert.alert(t("contact.8"));
     } else if (!emailRule.test(email)) {
-      Alert.alert("이메일 형식이 잘못 되었습니다.");
+      Alert.alert(t("contact.9"));
     } else {
       if (!loading) {
         contactMutation({
@@ -89,19 +90,33 @@ export default function ContactPresenter({ contactMutation, loading }) {
     >
       <Container>
         <TopContainer>
-          <Title>유형</Title>
+          <Title>{t("contact.1")}</Title>
           <ModalSelector
             data={questionType}
             keyExtractor={(item) => item.id}
-            labelExtractor={(item) => item.value}
+            labelExtractor={(item) =>
+              i18n.language === "vn"
+                ? item.valueVn
+                : i18n === "en"
+                ? item.valueEn
+                : item.valueKo
+            }
             accessible={true}
             onChange={(item) => {
-              setType({ id: item.id, value: item.value });
+              setType({
+                id: item.id,
+                value:
+                  i18n.language === "vn"
+                    ? item.valueVn
+                    : i18n === "en"
+                    ? item.valueEn
+                    : item.valueKo,
+              });
             }}
           >
             <TextView>
               <TypeInput
-                placeholder={"문의 유형을 선택하세요."}
+                placeholder={t("contact.2")}
                 placeholderTextColor="#cccccc"
                 value={type.value}
               />
@@ -113,7 +128,7 @@ export default function ContactPresenter({ contactMutation, loading }) {
               />
             </TextView>
           </ModalSelector>
-          <Title>내용</Title>
+          <Title>{t("contact.4")}</Title>
           <Controller
             name="content"
             control={control}
@@ -129,13 +144,13 @@ export default function ContactPresenter({ contactMutation, loading }) {
               />
             )}
           />
-          <Title>Email</Title>
+          <Title>{t("contact.10")}</Title>
           <Controller
             name="email"
             control={control}
             render={({ field: { onChange, value } }) => (
               <TitleInput
-                placeholder="답변 받을 이메일을 입력하세요."
+                placeholder={t("contact.3")}
                 placeholderTextColor="#cccccc"
                 autoCapitalize="none"
                 maxLength={100}
@@ -149,7 +164,7 @@ export default function ContactPresenter({ contactMutation, loading }) {
         </TopContainer>
         <SubmitContainer>
           <AuthButton
-            text={"작성 완료"}
+            text={t("contact.5")}
             onPress={handleSubmit(onValid)}
             loading={loading}
           />

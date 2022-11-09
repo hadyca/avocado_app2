@@ -6,6 +6,7 @@ import {
   Keyboard,
 } from "react-native";
 import styled from "styled-components/native";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../../../Colors";
 import CommentForm from "../../../../Components/Post/CommentForm";
 import PostContents from "../../../../Components/Post/PostContents";
@@ -19,7 +20,7 @@ const NoCommentView = styled.View`
 const NoComment = styled.Text`
   margin: auto;
   font-size: 14px;
-  color: ${colors.greyText};
+  color: ${colors.borderThick};
 `;
 
 export default function UserPostDetailPresenter({
@@ -32,6 +33,7 @@ export default function UserPostDetailPresenter({
   statusBarHeight,
   userPostId,
 }) {
+  const { t } = useTranslation();
   const [commentUploading, setCommentUploading] = useState(false);
 
   let detailRef = useRef();
@@ -106,9 +108,7 @@ export default function UserPostDetailPresenter({
               }
               ListFooterComponent={
                 <NoCommentView>
-                  <NoComment>
-                    There is no comment. Please write a comment.
-                  </NoComment>
+                  <NoComment>{t("userPostListDetail.1")}</NoComment>
                 </NoCommentView>
               }
               refreshing={refreshing}

@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 import {
   useWindowDimensions,
   Alert,
-  View,
   TouchableOpacity,
   Text,
 } from "react-native";

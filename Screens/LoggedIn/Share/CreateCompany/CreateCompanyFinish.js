@@ -45,7 +45,7 @@ const BottomContainer = styled.View``;
 const Title = styled.Text`
   margin-bottom: 20px;
   text-align: center;
-  font-size: 18px;
+  font-size: 20px;
 `;
 
 const Content = styled.Text`
@@ -97,18 +97,14 @@ export default function CreateCompanyFinish({ route: { params } }) {
     <CreatCompanyLayout>
       <Container>
         <TopContainer>
-          <Title>파트너 회원이 되신 것을 축하드립니다! 🎉</Title>
-          <Content>VinaArba는 파트너 회원분들의 구인 및 홍보 활동을</Content>
-          <Content>더 멀리 퍼질 수 있도록 도와드리겠습니다.</Content>
+          <Title>{t("createCompanyFinish.1")}</Title>
+          <Content>{t("createCompanyFinish.2")}</Content>
           <Content></Content>
-          <Content>
-            파트너 회원분들을 위해 여러 서비스들을 제공할 예정이오니, 앞으로
-            많은 사용 부탁드립니다!
-          </Content>
+          <Content>{t("createCompanyFinish.3")}</Content>
         </TopContainer>
         <BottomContainer>
           <AuthButton
-            text={t("createCompanyFinish.1")}
+            text={t("createCompanyFinish.4")}
             disabled={false}
             loading={loading}
             onPress={handleSubmit(onValid)}

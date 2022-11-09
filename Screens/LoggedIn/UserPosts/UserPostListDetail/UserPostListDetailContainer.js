@@ -1,21 +1,23 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Platform, NativeModules, Alert, TouchableOpacity } from "react-native";
 import { useMutation, useQuery } from "@apollo/client";
-import UserPostDetailPresenter from "./UserPostDetailPresenter";
+import UserPostDetailPresenter from "./UserPostListDetailPresenter";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import {
   POST_DETAIL_QUERY,
   DELETE_USERPOST_MUTATION,
   TOGGLE_USERPOST_LIKE_MUTATION,
   TOGGLE_USERPOST_FAVORITE_MUTATION,
-} from "./UserPostDetailQueries";
+} from "./UserPostListDetailQueries";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
 import UserPostComment from "../../../../Components/Post/UserPostComment";
 import ScreenLayout from "../../../../Components/ScreenLayout";
 import useMe from "../../../../Hooks/useMe";
 
 export default function ({ route: { params } }) {
+  const { t } = useTranslation();
   const [refreshing, setRefreshing] = useState(false);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
   const navigation = useNavigation();
@@ -196,10 +198,18 @@ export default function ({ route: { params } }) {
 
   //Action Sheet
   let myActionsheet = useRef();
-  let myOptionArray = ["수정", "삭제", "취소"];
+  let myOptionArray = [
+    t("userPostListDetail.2"),
+    t("userPostListDetail.3"),
+    t("userPostListDetail.4"),
+  ];
 
   let notMeActionsheet1 = useRef();
-  let notMineOptionArray1 = ["관심목록에 추가", "신고", "취소"];
+  let notMineOptionArray1 = [
+    t("userPostListDetail.7"),
+    t("userPostListDetail.8"),
+    t("userPostListDetail.4"),
+  ];
 
   let notMeActionsheet2 = useRef();
   let notMineOptionArray2 = ["관심목록에서 삭제", "신고", "취소"];
@@ -218,7 +228,7 @@ export default function ({ route: { params } }) {
     if (index === 0) {
       goToEditForm();
     } else if (index === 1) {
-      Alert.alert("게시글을 삭제하시겠어요?", "", [
+      Alert.alert(t("userPost"), "", [
         { text: "Cancel" },
         {
           text: "Ok",

@@ -3,6 +3,7 @@ import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { useForm, Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../../../Colors";
 import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import { UnderBar } from "../../../../Components/Auth/AuthShared";
@@ -28,6 +29,7 @@ export default function EditTotalEmployeesPresenter({
   loading,
   originTotalEmployees,
 }) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
 
   const { control, handleSubmit, formState } = useForm({
@@ -49,7 +51,7 @@ export default function EditTotalEmployeesPresenter({
 
   const NoHeaderRight = () => (
     <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
-      <HeaderRightText>완료</HeaderRightText>
+      <HeaderRightText>{t("editTotalEmployees.1")}</HeaderRightText>
     </TouchableOpacity>
   );
 
@@ -59,7 +61,7 @@ export default function EditTotalEmployeesPresenter({
       onPress={handleSubmit(onValid)}
       style={{ marginRight: 10, opacity: 1 }}
     >
-      <HeaderRightText ok={true}>완료</HeaderRightText>
+      <HeaderRightText ok={true}>{t("editTotalEmployees.1")}</HeaderRightText>
     </TouchableOpacity>
   );
   const HeaderRightLoading = () => (
@@ -90,7 +92,7 @@ export default function EditTotalEmployeesPresenter({
           }}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              placeholder="Your company total Employees"
+              placeholder="100"
               placeholderTextColor="#cccccc"
               textAlignVertical={"top"}
               autoCapitalize="none"

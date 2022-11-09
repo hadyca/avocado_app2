@@ -3,6 +3,7 @@ import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { useForm, Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../../../Colors";
 import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import { UnderBar } from "../../../../Components/Auth/AuthShared";
@@ -28,6 +29,7 @@ export default function EditContactNumberPresenter({
   loading,
   originContactNumber,
 }) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
 
   const { control, handleSubmit, formState } = useForm({
@@ -48,7 +50,7 @@ export default function EditContactNumberPresenter({
   };
   const NoHeaderRight = () => (
     <TouchableOpacity disabled={true} style={{ marginRight: 10, opacity: 0.5 }}>
-      <HeaderRightText>완료</HeaderRightText>
+      <HeaderRightText>{t("editContactNumber.1")}</HeaderRightText>
     </TouchableOpacity>
   );
 
@@ -58,7 +60,7 @@ export default function EditContactNumberPresenter({
       onPress={handleSubmit(onValid)}
       style={{ marginRight: 10, opacity: 1 }}
     >
-      <HeaderRightText ok={true}>완료</HeaderRightText>
+      <HeaderRightText ok={true}>{t("editContactNumber.1")}</HeaderRightText>
     </TouchableOpacity>
   );
   const HeaderRightLoading = () => (
@@ -88,7 +90,7 @@ export default function EditContactNumberPresenter({
           }}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              placeholder="Your Contact Number"
+              placeholder="03411112222"
               placeholderTextColor="#cccccc"
               textAlignVertical={"top"}
               maxLength={20}

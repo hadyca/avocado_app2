@@ -4,11 +4,13 @@ import { useQuery } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
+import { useTranslation } from "react-i18next";
 import ScreenLayout from "../../../../Components/ScreenLayout";
 import { PROFILE_QUERY } from "./ProfileQueries";
 import ProfilePresenter from "./ProfilePresenter";
 
 export default function ({ route: { params } }) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
   const { data, loading, refetch } = useQuery(PROFILE_QUERY, {
@@ -30,7 +32,7 @@ export default function ({ route: { params } }) {
   };
 
   let actionSheet = useRef();
-  let optionArray = ["신고", "취소"];
+  let optionArray = [t("profile.14"), t("profile.12")];
 
   const showActionSheet = () => {
     return actionSheet.current.show();

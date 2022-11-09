@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
@@ -134,7 +134,7 @@ export default function EditAddressPresenter({
         >
           <TextView>
             <TextInput
-              placeholder={"Select your second city!"}
+              placeholder={t("editAddress.2")}
               placeholderTextColor="#cccccc"
               value={add_2}
             />
@@ -152,7 +152,7 @@ export default function EditAddressPresenter({
           rules={{ required: true }}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              placeholder="01 Công xã Paris, Bến Nghé"
+              placeholder="Shop S2-1, Lô R16-2, Khu Hưng Vượng 3, Đường số 6"
               placeholderTextColor="#cccccc"
               maxLength={100}
               autoCapitalize="none"

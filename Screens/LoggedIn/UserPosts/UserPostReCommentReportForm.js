@@ -1,11 +1,12 @@
 import React from "react";
 import { Alert } from "react-native";
-import ScreenLayout from "../../../Components/ScreenLayout";
 import { gql, useMutation } from "@apollo/client";
-import { userPostCommentReportAry } from "../../../Constant";
 import styled from "styled-components/native";
-import { colors } from "../../../Colors";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
+import { userPostCommentReportAry } from "../../../Constant";
+import ScreenLayout from "../../../Components/ScreenLayout";
+import { colors } from "../../../Colors";
 
 const REPORT_MUTATION = gql`
   mutation userPostReCommentReport(
@@ -42,9 +43,10 @@ const ReportView = styled.TouchableOpacity`
 const ReportText = styled.Text``;
 
 export default function UserPostReCommentReportForm({ route: { params } }) {
+  const { t, i18n } = useTranslation();
   const navigation = useNavigation();
   const goReportUserPostComment = () => {
-    Alert.alert("신고해주셔서 감사합니다.");
+    Alert.alert(t("userPostCommentReportForm.3"));
     navigation.pop();
   };
   const [reportReCommentMutation, { loading }] = useMutation(REPORT_MUTATION, {
@@ -60,10 +62,10 @@ export default function UserPostReCommentReportForm({ route: { params } }) {
     });
   };
   const handleReport = (item) => {
-    Alert.alert("신고하시겠습니까?", "", [
-      { text: "Cancel" },
+    Alert.alert(t("userPostCommentReportForm.2"), "", [
+      { text: t("userPostCommentReportForm.5") },
       {
-        text: "Ok",
+        text: t("userPostCommentReportForm.4"),
         onPress: () => goToReport(item),
       },
     ]);
@@ -73,11 +75,17 @@ export default function UserPostReCommentReportForm({ route: { params } }) {
     <ScreenLayout>
       <Container>
         <TitleView>
-          <TitleText>댓글을 신고하는 이유를 선택해 주세요.</TitleText>
+          <TitleText>{t("userPostCommentReportForm.1")}</TitleText>
         </TitleView>
         {userPostCommentReportAry.map((item, index) => (
-          <ReportView key={index} onPress={() => handleReport(item)}>
-            <ReportText>{item}</ReportText>
+          <ReportView key={index} onPress={() => handleReport(item.valueEn)}>
+            <ReportText>
+              {i18n.language === "vn"
+                ? item.valueVn
+                : i18n.language === "en"
+                ? item.valueEn
+                : item.valueKo}
+            </ReportText>
           </ReportView>
         ))}
       </Container>

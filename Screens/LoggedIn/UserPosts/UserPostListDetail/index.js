@@ -1,2 +1,2 @@
-import UserPostDetailContainer from "./UserPostDetailContainer";
-export default UserPostDetailContainer;
+import UserPostListDetailContainer from "./UserPostListDetailContainer";
+export default UserPostListDetailContainer;

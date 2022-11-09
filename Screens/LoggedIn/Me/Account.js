@@ -4,6 +4,7 @@ import styled from "styled-components/native";
 import { gql, useMutation } from "@apollo/client";
 import * as Notifications from "expo-notifications";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import ScreenLayout from "../../../Components/ScreenLayout";
 import { colors } from "../../../Colors";
 import { logUserOut } from "../../../apollo";
@@ -56,6 +57,7 @@ const DELETE_USER_MUTATION = gql`
 `;
 
 export default function Account({ route: { params } }) {
+  const { t } = useTranslation();
   const [deletePushTokenMutation, { loading }] = useMutation(
     DELETE_PUSHTOKEN_MUTATION,
     {
@@ -68,11 +70,13 @@ export default function Account({ route: { params } }) {
   });
   return (
     <ScreenLayout loading={loading}>
-      <AccountText>현재 계정 {params.email}</AccountText>
+      <AccountText>
+        {t("account.1")} {params.email}
+      </AccountText>
       <Separator />
       <Button
         onPress={() =>
-          Alert.alert("정말 로그아웃 하시겠습니까?", "", [
+          Alert.alert(t("account.3"), "", [
             { text: "Cancel" },
             {
               text: "Ok",
@@ -89,7 +93,7 @@ export default function Account({ route: { params } }) {
           ])
         }
       >
-        <ButtonText>로그아웃</ButtonText>
+        <ButtonText>{t("account.2")}</ButtonText>
         <Ionicons
           name="chevron-forward"
           color="black"
@@ -100,7 +104,7 @@ export default function Account({ route: { params } }) {
       <Separator />
       <Button
         onPress={() =>
-          Alert.alert("정말 탈퇴 하시겠습니까?", "", [
+          Alert.alert(t("account.5"), "", [
             { text: "Cancel" },
             {
               text: "Ok",
@@ -115,7 +119,7 @@ export default function Account({ route: { params } }) {
           ])
         }
       >
-        <ButtonText>탈퇴하기</ButtonText>
+        <ButtonText>{t("account.4")}</ButtonText>
         <Ionicons
           name="chevron-forward"
           color="black"
