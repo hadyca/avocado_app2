@@ -68,7 +68,7 @@ export default function ({ route: { params } }) {
           id: "ROOT_QUERY",
           fieldName: "seeFavoriteUserPosts",
         });
-        Alert.alert("관심목록에서 삭제 되었습니다.");
+        Alert.alert(t("userPostListDetail.10"));
       } else {
         cache.modify({
           id: "ROOT_QUERY",
@@ -78,7 +78,7 @@ export default function ({ route: { params } }) {
             },
           },
         });
-        Alert.alert("관심목록에 추가 되었습니다.");
+        Alert.alert(t("userPostListDetail.11"));
       }
     }
   };
@@ -112,7 +112,7 @@ export default function ({ route: { params } }) {
           },
         },
       });
-      Alert.alert("게시글이 삭제 되었습니다.");
+      Alert.alert(t("userPostListDetail.10"));
       navigation.pop();
     }
   };
@@ -212,7 +212,11 @@ export default function ({ route: { params } }) {
   ];
 
   let notMeActionsheet2 = useRef();
-  let notMineOptionArray2 = ["관심목록에서 삭제", "신고", "취소"];
+  let notMineOptionArray2 = [
+    t("userPostListDetail.9"),
+    t("userPostListDetail.8"),
+    t("userPostListDetail.4"),
+  ];
 
   const showActionSheet = () => {
     if (data?.seeUserPost?.isMine) {
@@ -228,10 +232,10 @@ export default function ({ route: { params } }) {
     if (index === 0) {
       goToEditForm();
     } else if (index === 1) {
-      Alert.alert(t("userPost"), "", [
-        { text: "Cancel" },
+      Alert.alert(t("userPostListDetail.5"), "", [
+        { text: t("userPostListDetail.4") },
         {
-          text: "Ok",
+          text: t("userPostListDetail.14"),
           onPress: () => goToDeletePost(),
         },
       ]);
@@ -242,10 +246,10 @@ export default function ({ route: { params } }) {
 
   const notMineHandleIndex1 = (index) => {
     if (index === 0) {
-      Alert.alert("관심목록에 추가하시겠어요?", "", [
-        { text: "Cancel" },
+      Alert.alert(t("userPostListDetail.12"), "", [
+        { text: t("userPostListDetail.4") },
         {
-          text: "Ok",
+          text: t("userPostListDetail.14"),
           onPress: () => goToToggleFavorite(),
         },
       ]);
@@ -258,10 +262,10 @@ export default function ({ route: { params } }) {
 
   const notMineHandleIndex2 = (index) => {
     if (index === 0) {
-      Alert.alert("관심목록에서 삭제 하시겠어요?", "", [
-        { text: "Cancel" },
+      Alert.alert(t("userPostListDetail.13"), "", [
+        { text: t("userPostListDetail.4") },
         {
-          text: "Ok",
+          text: t("userPostListDetail.14"),
           onPress: () => goToToggleFavorite(),
         },
       ]);

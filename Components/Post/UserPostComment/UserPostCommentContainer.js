@@ -98,10 +98,10 @@ export default function ({
     if (index === 0) {
       goToEditCommentForm();
     } else if (index === 1) {
-      Alert.alert("댓글을 삭제하시겠어요?", "", [
-        { text: "Cancel" },
+      Alert.alert(t("userPostListDetail.15"), "", [
+        { text: t("userPostListDetail.4") },
         {
-          text: "Ok",
+          text: t("userPostListDetail.14"),
           onPress: () => goToDeleteComment(),
         },
       ]);

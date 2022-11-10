@@ -44,7 +44,7 @@ export default function AskContactNumber({ route: { params } }) {
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextInput_Company
-            placeholder="03411112222"
+            placeholder="0341112222"
             placeholderTextColor="#cccccc"
             returnKeyType="done"
             keyboardType="number-pad"

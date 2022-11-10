@@ -97,7 +97,7 @@ export default function ContactPresenter({ contactMutation, loading }) {
             labelExtractor={(item) =>
               i18n.language === "vn"
                 ? item.valueVn
-                : i18n === "en"
+                : i18n.language === "en"
                 ? item.valueEn
                 : item.valueKo
             }
@@ -108,7 +108,7 @@ export default function ContactPresenter({ contactMutation, loading }) {
                 value:
                   i18n.language === "vn"
                     ? item.valueVn
-                    : i18n === "en"
+                    : i18n.language === "en"
                     ? item.valueEn
                     : item.valueKo,
               });

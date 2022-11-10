@@ -90,7 +90,7 @@ export default function EditContactNumberPresenter({
           }}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              placeholder="03411112222"
+              placeholder="0341112222"
               placeholderTextColor="#cccccc"
               textAlignVertical={"top"}
               maxLength={20}

@@ -3,6 +3,7 @@ import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { gql, useMutation } from "@apollo/client";
 import styled from "styled-components/native";
+import { useTranslation } from "react-i18next";
 import ScreenLayout from "../../../Components/ScreenLayout";
 import { userReportAry } from "../../../Constant";
 import { colors } from "../../../Colors";
@@ -43,9 +44,10 @@ const Separator = styled.View`
 const ReportText = styled.Text``;
 
 export default function UserReportForm({ route: { params } }) {
+  const { t, i18n } = useTranslation();
   const navigation = useNavigation();
   const goReportUser = () => {
-    Alert.alert("신고해주셔서 감사합니다.");
+    Alert.alert(t("userPostReportForm.3"));
     navigation.pop();
   };
   const [reportUserMutation, { loading }] = useMutation(REPORT_MUTATION, {
@@ -61,10 +63,10 @@ export default function UserReportForm({ route: { params } }) {
     });
   };
   const handleReport = (item) => {
-    Alert.alert("신고하시겠습니까?", "", [
-      { text: "Cancel" },
+    Alert.alert(t("userPostReportForm.2"), "", [
+      { text: t("share.2") },
       {
-        text: "Ok",
+        text: t("share.1"),
         onPress: () => goToReport(item),
       },
     ]);
@@ -74,12 +76,18 @@ export default function UserReportForm({ route: { params } }) {
     <ScreenLayout>
       <Container>
         <TitleView>
-          <TitleText>유저를 신고하는 이유를 선택해 주세요.</TitleText>
+          <TitleText>{t("userReportForm.1")}</TitleText>
         </TitleView>
         {userReportAry.map((item, index) => (
           <ReportContainer key={index}>
-            <ReportView onPress={() => handleReport(item)}>
-              <ReportText>{item}</ReportText>
+            <ReportView onPress={() => handleReport(item.valueEn)}>
+              <ReportText>
+                {i18n.language === "vn"
+                  ? item.valueVn
+                  : i18n.language === "en"
+                  ? item.valueEn
+                  : item.valueKo}
+              </ReportText>
             </ReportView>
             <Separator />
           </ReportContainer>

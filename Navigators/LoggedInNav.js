@@ -206,6 +206,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="UserReportForm"
         options={{
+          title: t("header.userReportForm"),
           headerBackTitleVisible: false,
         }}
         component={UserReportForm}
@@ -237,6 +238,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="CompanyPostCommentReportForm"
         options={{
+          title: t("header.companyPostCommentReportForm"),
           headerBackTitleVisible: false,
         }}
         component={CompanyPostCommentReportForm}
@@ -244,6 +246,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="CompanyPostReCommentReportForm"
         options={{
+          title: t("header.companyPostReCommentReportForm"),
           headerBackTitleVisible: false,
         }}
         component={CompanyPostReCommentReportForm}
@@ -251,6 +254,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="CompanyPostReportForm"
         options={{
+          title: t("header.companyPostReportForm"),
           headerBackTitleVisible: false,
         }}
         component={CompanyPostReportForm}
@@ -258,6 +262,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="EditCompanyPostCommentForm"
         options={{
+          title: t("header.editCompanyPostCommentForm"),
           headerBackTitleVisible: false,
         }}
         component={EditCompanyPostCommentForm}
@@ -265,6 +270,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="EditCompanyPostReCommentForm"
         options={{
+          title: t("header.editCompanyPostReCommentForm"),
           headerBackTitleVisible: false,
         }}
         component={EditCompanyPostReCommentForm}
@@ -280,6 +286,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="EditCompanyPostForm"
         options={{
+          title: t("header.editCompanyPostForm"),
           headerBackTitleVisible: false,
         }}
         component={EditCompanyPostForm}
@@ -374,6 +381,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="EditPostCategory"
         options={{
+          title: t("header.editPostCategory"),
           headerBackTitleVisible: false,
         }}
         component={EditPostCategory}
@@ -381,6 +389,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="EditUserPostForm"
         options={{
+          title: t("header.editUserPostForm"),
           headerBackTitleVisible: false,
         }}
         component={EditUserPostForm}
@@ -388,6 +397,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="EditUserPostCommentForm"
         options={{
+          title: t("header.editUserPostCommentForm"),
           headerBackTitleVisible: false,
         }}
         component={EditUserPostCommentForm}
@@ -395,18 +405,11 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="EditUserPostReCommentForm"
         options={{
+          title: t("header.editUserPostReCommentForm"),
           headerBackTitleVisible: false,
         }}
         component={EditUserPostReCommentForm}
       />
-      {/* <Stack.Screen
-        name="CategoryBoard"
-        options={({ route: { params } }) => ({
-          title: params.categoryId,
-          headerBackTitleVisible: false,
-        })}
-        component={CategoryBoard}
-      /> */}
       <Stack.Screen
         name="CategoryBoard"
         options={{
@@ -425,6 +428,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="UserPostReportForm"
         options={{
+          title: t("header.userPostReportForm"),
           headerBackTitleVisible: false,
         }}
         component={UserPostReportForm}
@@ -432,6 +436,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="UserPostCommentReportForm"
         options={{
+          title: t("header.userPostCommentReportForm"),
           headerBackTitleVisible: false,
         }}
         component={UserPostCommentReportForm}
@@ -439,6 +444,7 @@ export default function LoggedInNav() {
       <Stack.Screen
         name="UserPostReCommentReportForm"
         options={{
+          title: t("header.userPostReCommentReportForm"),
           headerBackTitleVisible: false,
         }}
         component={UserPostReCommentReportForm}
