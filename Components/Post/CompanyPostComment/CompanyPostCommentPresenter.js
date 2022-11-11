@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../../Colors";
 import UserAvatar from "../../UserAvatar";
 import CompanyReCommentPaint from "../CompanyReCommentPaint";
@@ -63,6 +64,7 @@ export default function UserPostCommentPresenter({
   reComments,
   companyPostId,
 }) {
+  const { t } = useTranslation();
   return (
     <Container>
       <HeaderContainer>
@@ -82,7 +84,7 @@ export default function UserPostCommentPresenter({
         <Date>{time}</Date>
         {!reCommentScreen ? (
           <ReplyButton onPress={goToReComment}>
-            <ReplyText>답글 쓰기</ReplyText>
+            <ReplyText>{t("userPostListDetail.6")}</ReplyText>
           </ReplyButton>
         ) : null}
       </SubContainer>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, Platform, Alert, Text } from "react-native";
+import { Image, Platform, Alert } from "react-native";
 import styled from "styled-components/native";
 import Checkbox from "expo-checkbox";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
@@ -14,7 +14,6 @@ import { ReactNativeFile } from "apollo-upload-client";
 import { colors } from "../../../../Colors";
 import { time } from "../../../../Constant";
 import { typeOfWage } from "../../../../Constant";
-import FormError from "../../../../Components/Auth/FormError";
 import AuthButton from "../../../../Components/Auth/AuthButton";
 import { emailRule } from "../../../../RegExp";
 
@@ -120,6 +119,13 @@ const Day = styled.TouchableOpacity`
 const DayText = styled.Text`
   font-weight: bold;
   color: ${(props) => (props.selected ? "white" : "black")};
+`;
+
+const FormError = styled.Text`
+  color: ${colors.error};
+  font-weight: 600;
+  font-size: 12px;
+  margin-top: 10px;
 `;
 
 const TimeTextContainer = styled.View`
@@ -230,7 +236,10 @@ export default function CompanyPostUploadFormPresenter({
   const [startTime, setStartTime] = useState({ label: "09:00", value: 540 });
   const [finishTime, setFinishTime] = useState({ label: "18:00", value: 1080 });
   const [timeOption, setTimeOption] = useState(false);
-  const [wageType, setWageType] = useState();
+  const [wageType, setWageType] = useState({
+    id: 3,
+    value: t("companyPostUploadForm.32"),
+  });
   const [wageNum, setWageNum] = useState();
   const [photo, setPhoto] = useState([]);
   const [countPhoto, setCountPhoto] = useState(0);
@@ -285,7 +294,7 @@ export default function CompanyPostUploadFormPresenter({
             startTime: parseInt(startTime.value),
             finishTime: parseInt(finishTime.value),
             timeOption,
-            wageType,
+            wageTypeId: wageType.id,
             wage: wageNum,
             contactNumber,
             email,
@@ -529,7 +538,10 @@ export default function CompanyPostUploadFormPresenter({
                 </DayText>
               </Day>
             </DayContainer>
-            <FormError message={errors?.day?.message} />
+
+            {errors?.day?.message ? (
+              <FormError>{errors?.day?.message}</FormError>
+            ) : null}
             <CheckContainer>
               <Checkbox
                 value={dayOption}
@@ -615,18 +627,20 @@ export default function CompanyPostUploadFormPresenter({
                   }
                   accessible={true}
                   onChange={(item) => {
-                    setWageType(
-                      i18n.language === "vn"
-                        ? item.valueVn
-                        : i18n.language === "en"
-                        ? item.valueEn
-                        : item.valueKo
-                    );
+                    setWageType({
+                      id: item.id,
+                      value:
+                        i18n.language === "vn"
+                          ? item.valueVn
+                          : i18n.language === "en"
+                          ? item.valueEn
+                          : item.valueKo,
+                    });
                   }}
                   // optionContainerStyle={{ height: 180 }}
                 >
                   <TimeContainer>
-                    <SelectBox value={wageType} />
+                    <SelectBox value={wageType.value} />
                     <Ionicons
                       name="chevron-forward"
                       color="black"

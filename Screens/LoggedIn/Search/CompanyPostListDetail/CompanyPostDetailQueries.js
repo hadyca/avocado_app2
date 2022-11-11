@@ -44,7 +44,7 @@ export const POST_DETAIL_QUERY = gql`
       startTime
       finishTime
       timeOption
-      wageType
+      wageTypeId
       wage
       contactNumber
       email

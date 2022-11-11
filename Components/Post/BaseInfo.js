@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components/native";
 import { FontAwesome, MaterialIcons, Entypo } from "@expo/vector-icons";
-import { time } from "../../Constant";
+import { useTranslation } from "react-i18next";
+import { time, typeOfWage } from "../../Constant";
 import { colors } from "../../Colors";
 
 const BaseDataContainer = styled.View`
@@ -21,7 +22,7 @@ const BaseText = styled.Text`
 `;
 
 export default function BaseInfo({
-  wageType,
+  wageTypeId,
   wage,
   workingDay,
   dayOption,
@@ -31,6 +32,7 @@ export default function BaseInfo({
   contactNumber,
   email,
 }) {
+  const { t, i18n } = useTranslation();
   const [commaWage, setCommaWage] = useState();
   const [dayArray, setDayArray] = useState([]);
   const [start, setStart] = useState();
@@ -38,15 +40,15 @@ export default function BaseInfo({
 
   useEffect(() => {
     let newAry = [];
-    workingDay.mon && newAry.push("월");
-    workingDay.tue && newAry.push("화");
-    workingDay.wed && newAry.push("수");
-    workingDay.thu && newAry.push("목");
-    workingDay.fri && newAry.push("금");
-    workingDay.sat && newAry.push("토");
-    workingDay.sun && newAry.push("일");
+    workingDay.mon && newAry.push(t("companyPostAll.16"));
+    workingDay.tue && newAry.push(t("companyPostAll.17"));
+    workingDay.wed && newAry.push(t("companyPostAll.18"));
+    workingDay.thu && newAry.push(t("companyPostAll.19"));
+    workingDay.fri && newAry.push(t("companyPostAll.20"));
+    workingDay.sat && newAry.push(t("companyPostAll.21"));
+    workingDay.sun && newAry.push(t("companyPostAll.22"));
     setDayArray(newAry);
-  }, [workingDay]);
+  }, [i18n.language, workingDay]);
 
   useEffect(() => {
     const startTimeTrans = time.filter((item) => item.value === startTime);
@@ -70,7 +72,17 @@ export default function BaseInfo({
           color={colors.greyText}
           style={{ width: 25 }}
         />
-        <BaseText>{wageType}</BaseText>
+        {typeOfWage.map((item, index) => {
+          if (wageTypeId === item.id) {
+            return i18n.language === "vn" ? (
+              <BaseText key={index}>{item.valueVn}</BaseText>
+            ) : i18n.language === "en" ? (
+              <BaseText key={index}>{item.valueEn}</BaseText>
+            ) : (
+              <BaseText key={index}>{item.valueKo}</BaseText>
+            );
+          }
+        })}
         <BaseText>₫ {commaWage}</BaseText>
       </DataContainer>
       <DataContainer>
@@ -87,20 +99,26 @@ export default function BaseInfo({
         workingDay.fri &&
         workingDay.sat &&
         workingDay.sun ? (
-          <BaseText>월~일</BaseText>
+          <BaseText>
+            {`${t("companyPostAll.16")}~${t("companyPostAll.22")}`}
+          </BaseText>
         ) : workingDay.mon &&
           workingDay.tue &&
           workingDay.wed &&
           workingDay.thu &&
           workingDay.fri &&
           workingDay.sat ? (
-          <BaseText>월~토</BaseText>
+          <BaseText>
+            {`${t("companyPostAll.16")}~${t("companyPostAll.21")}`}
+          </BaseText>
         ) : workingDay.mon &&
           workingDay.tue &&
           workingDay.wed &&
           workingDay.thu &&
           workingDay.fri ? (
-          <BaseText>월~금</BaseText>
+          <BaseText>
+            {`${t("companyPostAll.16")}~${t("companyPostAll.20")}`}
+          </BaseText>
         ) : (
           dayArray.map((item, index) => {
             if (index === 0) {
@@ -110,7 +128,7 @@ export default function BaseInfo({
             }
           })
         )}
-        {dayOption ? <BaseText>협의</BaseText> : null}
+        {dayOption ? <BaseText>{t("companyPostAll.23")}</BaseText> : null}
       </DataContainer>
       <DataContainer>
         <MaterialIcons
@@ -122,7 +140,7 @@ export default function BaseInfo({
         <BaseText>
           {start}~{finish}
         </BaseText>
-        {timeOption ? <BaseText>협의</BaseText> : null}
+        {timeOption ? <BaseText>{t("companyPostAll.23")}</BaseText> : null}
       </DataContainer>
       <DataContainer>
         <Entypo

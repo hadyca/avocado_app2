@@ -16,7 +16,7 @@ export const EDIT_COMPANYPOST_MUTATION = gql`
     $startTime: Int!
     $finishTime: Int!
     $timeOption: Boolean!
-    $wageType: String!
+    $wageTypeId: Int!
     $wage: String!
     $contactNumber: String!
     $email: String!
@@ -37,7 +37,7 @@ export const EDIT_COMPANYPOST_MUTATION = gql`
       startTime: $startTime
       finishTime: $finishTime
       timeOption: $timeOption
-      wageType: $wageType
+      wageTypeId: $wageTypeId
       wage: $wage
       contactNumber: $contactNumber
       email: $email

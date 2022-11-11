@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../Colors";
 import { timeForToday } from "../../Utils";
 import UserAvatar from "../UserAvatar";
@@ -71,7 +72,7 @@ function CompanyPost({
   company,
   title,
   wage,
-  wageType,
+  wageTypeId,
   workingDay,
   dayOption,
   startTime,
@@ -83,6 +84,7 @@ function CompanyPost({
   totalCompanyPostComments,
   createdAt,
 }) {
+  const { t, i18n } = useTranslation();
   const time = timeForToday(parseInt(createdAt));
 
   const navigation = useNavigation();
@@ -108,28 +110,16 @@ function CompanyPost({
             uri={company.user.avatarUrl}
           />
           <CompanyName>
-            {company.companyName} · {company.addressStep1} ·{" "}
-            {company.addressStep2}
+            {`${company.companyName} · ${company.addressStep1} · ${company.addressStep2}`}
           </CompanyName>
         </Header>
       </HeaderContainer>
       <Contents onPress={goToPostDetail}>
-        {/* {title.length >= 50 ? (
-          <Content>
-            <ContentText>{title.substring(0, 50)}</ContentText>
-            <MoreText>...more</MoreText>
-          </Content>
-        ) : (
-          <Content>
-            <ContentText>{title}</ContentText>
-          </Content>
-        )} */}
-
         <Content>
           <ContentText>{title}</ContentText>
         </Content>
         <BaseInfo
-          wageType={wageType}
+          wageTypeId={wageTypeId}
           wage={wage}
           workingDay={workingDay}
           dayOption={dayOption}
@@ -142,14 +132,14 @@ function CompanyPost({
       </Contents>
       <LikeComment>
         <Likes>
-          {totalCompanyPostLikes > 1
-            ? `${totalCompanyPostLikes} likes`
-            : `${totalCompanyPostLikes} like`}
+          {i18n.language === "en" && totalCompanyPostLikes > 1
+            ? `${totalCompanyPostLikes} ${t("userPostList.2")}s`
+            : `${totalCompanyPostLikes} ${t("userPostList.2")}`}
         </Likes>
         <Comments>
-          {totalCompanyPostComments > 1
-            ? `${totalCompanyPostComments} comments`
-            : `${totalCompanyPostComments} comment`}
+          {i18n.language === "en" && totalCompanyPostComments > 1
+            ? `${totalCompanyPostComments} ${t("userPostList.3")}s`
+            : `${totalCompanyPostComments} ${t("userPostList.3")}`}
         </Comments>
       </LikeComment>
       <Date>{time}</Date>

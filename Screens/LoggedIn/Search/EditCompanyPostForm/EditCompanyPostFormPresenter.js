@@ -9,6 +9,7 @@ import NumberFormat from "react-number-format";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import * as ImagePicker from "expo-image-picker";
 import { manipulateAsync } from "expo-image-manipulator";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../../../Colors";
 import { ReactNativeFile } from "apollo-upload-client";
 import { time } from "../../../../Constant";
@@ -220,7 +221,7 @@ export default function EditCompanyPostFormPresenter({
   originStartTime,
   originFinishTime,
   originTimeOption,
-  originWageType,
+  originWageTypeId,
   originWage,
   originContactNumber,
   originEmail,
@@ -230,6 +231,7 @@ export default function EditCompanyPostFormPresenter({
   file,
   fileLength,
 }) {
+  const { t, i18n } = useTranslation();
   const [mon, setMon] = useState(originWorkingDay.mon);
   const [tue, setTue] = useState(originWorkingDay.tue);
   const [wed, setWed] = useState(originWorkingDay.wed);
@@ -241,7 +243,7 @@ export default function EditCompanyPostFormPresenter({
   const [startTime, setStartTime] = useState({});
   const [finishTime, setFinishTime] = useState({});
   const [timeOption, setTimeOption] = useState(originTimeOption);
-  const [wageType, setWageType] = useState(originWageType);
+  const [wageType, setWageType] = useState({});
   const [wageNum, setWageNum] = useState(originWage);
   const [photo, setPhoto] = useState([]);
   const [countPhoto, setCountPhoto] = useState(0);
@@ -265,17 +267,17 @@ export default function EditCompanyPostFormPresenter({
 
   const onValid = async ({ title, contactNumber, email, content }) => {
     if (!title) {
-      Alert.alert("제목을 입력해주세요.");
+      Alert.alert(t("companyPostUploadForm.25"));
     } else if (!contactNumber) {
-      Alert.alert("연락처를 입력해주세요.");
+      Alert.alert(t("companyPostUploadForm.26"));
     } else if (!email) {
-      Alert.alert("이메일을 입력해주세요.");
+      Alert.alert(t("companyPostUploadForm.27"));
     } else if (!emailRule.test(email)) {
-      Alert.alert("이메일 형식이 잘못 되었습니다.");
+      Alert.alert(t("companyPostUploadForm.28"));
     } else if (!wageNum) {
-      Alert.alert("임금을 입력해주세요.");
+      Alert.alert(t("companyPostUploadForm.29"));
     } else if (!content) {
-      Alert.alert("세부 내용을 입력해주세요.");
+      Alert.alert(t("companyPostUploadForm.30"));
     } else {
       const editedFileUrl = photo.map((item, index) => {
         return new ReactNativeFile({
@@ -301,7 +303,7 @@ export default function EditCompanyPostFormPresenter({
             startTime: parseInt(startTime.value),
             finishTime: parseInt(finishTime.value),
             timeOption,
-            wageType,
+            wageTypeId: wageType.id,
             wage: wageNum,
             contactNumber,
             email,
@@ -370,7 +372,7 @@ export default function EditCompanyPostFormPresenter({
 
   useEffect(() => {
     if (!mon && !tue && !wed && !thu && !fri && !sat && !sun) {
-      setError("day", { message: "최소 1개 이상 요일을 넣어주세요." });
+      setError("day", { message: t("companyPostUploadForm.31") });
     }
   }, [mon, tue, wed, thu, fri, sat, sun]);
 
@@ -385,20 +387,26 @@ export default function EditCompanyPostFormPresenter({
         setFinishTime({ label: i.label, value: i.value });
       }
     });
+    typeOfWage.map((item) => {
+      if (originWageTypeId === item.id) {
+        i18n.language === "vn"
+          ? setWageType({ id: item.id, value: item.valueVn })
+          : i18n.language === "en"
+          ? setWageType({ id: item.id, value: item.valueEn })
+          : setWageType({ id: item.id, value: item.valueKo });
+      }
+    });
   }, []);
-
   return (
     <>
       <Container>
         <KeyboardAwareScrollView extraScrollHeight={50}>
           <ImageTop>
             <PictureContainer>
-              <PictureTitle>사진 </PictureTitle>
-              <Opt>(선택)</Opt>
+              <PictureTitle>{t("companyPostUploadForm.1")} </PictureTitle>
+              <Opt>{t("companyPostUploadForm.2")}</Opt>
             </PictureContainer>
-            <PictureSub>
-              구인글에 사진이 있으면 더 많은 사람들이 확인해요.
-            </PictureSub>
+            <PictureSub>{t("companyPostUploadForm.3")}</PictureSub>
             <ImageScroll
               horizontal={true}
               showsHorizontalScrollIndicator={false}
@@ -434,18 +442,18 @@ export default function EditCompanyPostFormPresenter({
                   size={21}
                   color={colors.error}
                 />
-                <ErrorText>사진은 5장까지만 가능합니다.</ErrorText>
+                <ErrorText>{t("companyPostUploadForm.4")}</ErrorText>
               </ErrorContainer>
             )}
           </ImageTop>
           <InputBottom>
-            <Title>제목</Title>
+            <Title>{t("companyPostUploadForm.5")}</Title>
             <Controller
               name="title"
               control={control}
               render={({ field: { onChange, value } }) => (
                 <TitleInput
-                  placeholder="공고 내용을 요약해서 적어주세요."
+                  placeholder={t("companyPostUploadForm.6")}
                   placeholderTextColor="#cccccc"
                   autoCapitalize="none"
                   maxLength={100}
@@ -456,13 +464,13 @@ export default function EditCompanyPostFormPresenter({
                 />
               )}
             />
-            <Title>연락처</Title>
+            <Title>{t("companyPostUploadForm.7")}</Title>
             <Controller
               name="contactNumber"
               control={control}
               render={({ field: { onChange, value } }) => (
                 <TitleInput
-                  placeholder={"0941112222"}
+                  placeholder="0341112222"
                   placeholderTextColor="#cccccc"
                   autoCapitalize="none"
                   returnKeyType="done"
@@ -473,13 +481,13 @@ export default function EditCompanyPostFormPresenter({
                 />
               )}
             />
-            <Title>이메일</Title>
+            <Title>{t("companyPostUploadForm.8")}</Title>
             <Controller
               name="email"
               control={control}
               render={({ field: { onChange, value } }) => (
                 <TitleInput
-                  placeholder="abc@gamil.com"
+                  placeholder="vinaarba@gamil.com"
                   placeholderTextColor="#cccccc"
                   autoCapitalize="none"
                   maxLength={100}
@@ -490,7 +498,7 @@ export default function EditCompanyPostFormPresenter({
                 />
               )}
             />
-            <Title>근무 요일</Title>
+            <Title>{t("companyPostUploadForm.9")}</Title>
             <DayContainer>
               <Day
                 selected={mon}
@@ -499,7 +507,9 @@ export default function EditCompanyPostFormPresenter({
                   clearErrors("day");
                 }}
               >
-                <DayText selected={mon}>월</DayText>
+                <DayText selected={mon}>
+                  {t("companyPostUploadForm.10")}
+                </DayText>
               </Day>
               <Day
                 selected={tue}
@@ -508,7 +518,9 @@ export default function EditCompanyPostFormPresenter({
                   clearErrors("day");
                 }}
               >
-                <DayText selected={tue}>화</DayText>
+                <DayText selected={tue}>
+                  {t("companyPostUploadForm.11")}
+                </DayText>
               </Day>
               <Day
                 selected={wed}
@@ -517,7 +529,9 @@ export default function EditCompanyPostFormPresenter({
                   clearErrors("day");
                 }}
               >
-                <DayText selected={wed}>수</DayText>
+                <DayText selected={wed}>
+                  {t("companyPostUploadForm.12")}
+                </DayText>
               </Day>
               <Day
                 selected={thu}
@@ -526,7 +540,9 @@ export default function EditCompanyPostFormPresenter({
                   clearErrors("day");
                 }}
               >
-                <DayText selected={thu}>목</DayText>
+                <DayText selected={thu}>
+                  {t("companyPostUploadForm.13")}
+                </DayText>
               </Day>
               <Day
                 selected={fri}
@@ -535,7 +551,9 @@ export default function EditCompanyPostFormPresenter({
                   clearErrors("day");
                 }}
               >
-                <DayText selected={fri}>금</DayText>
+                <DayText selected={fri}>
+                  {t("companyPostUploadForm.14")}
+                </DayText>
               </Day>
               <Day
                 selected={sat}
@@ -544,7 +562,9 @@ export default function EditCompanyPostFormPresenter({
                   clearErrors("day");
                 }}
               >
-                <DayText selected={sat}>토</DayText>
+                <DayText selected={sat}>
+                  {t("companyPostUploadForm.15")}
+                </DayText>
               </Day>
               <Day
                 selected={sun}
@@ -553,22 +573,27 @@ export default function EditCompanyPostFormPresenter({
                   clearErrors("day");
                 }}
               >
-                <DayText selected={sun}>일</DayText>
+                <DayText selected={sun}>
+                  {t("companyPostUploadForm.16")}
+                </DayText>
               </Day>
             </DayContainer>
-            <FormError message={errors?.day?.message} />
+
+            {errors?.day?.message ? (
+              <FormError>{errors?.day?.message}</FormError>
+            ) : null}
             <CheckContainer>
               <Checkbox
                 value={dayOption}
                 onValueChange={setDayOption}
                 color={dayOption ? colors.buttonBackground : colors.borderThick}
               />
-              <CheckText>협의 가능</CheckText>
+              <CheckText>{t("companyPostUploadForm.17")}</CheckText>
             </CheckContainer>
-            <Title>근무 시간</Title>
+            <Title>{t("companyPostUploadForm.18")}</Title>
             <TimeTextContainer>
-              <Time>시작</Time>
-              <Time>종료</Time>
+              <Time>{t("companyPostUploadForm.19")}</Time>
+              <Time>{t("companyPostUploadForm.20")}</Time>
             </TimeTextContainer>
             <ModalContainer>
               <ModalView>
@@ -625,23 +650,37 @@ export default function EditCompanyPostFormPresenter({
                   timeOption ? colors.buttonBackground : colors.borderThick
                 }
               />
-              <CheckText>협의 가능</CheckText>
+              <CheckText>{t("companyPostUploadForm.17")}</CheckText>
             </CheckContainer>
-            <Title>임금</Title>
+            <Title>{t("companyPostUploadForm.21")}</Title>
             <WageContainer>
               <ModalView>
                 <ModalSelector
                   data={typeOfWage}
                   keyExtractor={(item) => item.id}
-                  labelExtractor={(item) => item.value}
+                  labelExtractor={(item) =>
+                    i18n.language === "vn"
+                      ? item.valueVn
+                      : i18n.language === "en"
+                      ? item.valueEn
+                      : item.valueKo
+                  }
                   accessible={true}
                   onChange={(item) => {
-                    setWageType(item.value);
+                    setWageType({
+                      id: item.id,
+                      value:
+                        i18n.language === "vn"
+                          ? item.valueVn
+                          : i18n.language === "en"
+                          ? item.valueEn
+                          : item.valueKo,
+                    });
                   }}
                   // optionContainerStyle={{ height: 180 }}
                 >
                   <TimeContainer>
-                    <SelectBox value={wageType} />
+                    <SelectBox value={wageType.value} />
                     <Ionicons
                       name="chevron-forward"
                       color="black"
@@ -681,7 +720,7 @@ export default function EditCompanyPostFormPresenter({
                 )}
               />
             </WageContainer>
-            <Title>세부 내용</Title>
+            <Title>{t("companyPostUploadForm.22")}</Title>
             <Controller
               name="content"
               control={control}
@@ -694,9 +733,7 @@ export default function EditCompanyPostFormPresenter({
                   autoCapitalize="none"
                   onChangeText={(text) => onChange(text)}
                   value={value || ""}
-                  placeholder={
-                    "예) 업무 예시, 사내 복지, 근무 여건, 지원자가 갖추어야 할 능력, 우대 사항 등"
-                  }
+                  placeholder={t("companyPostUploadForm.23")}
                   placeholderTextColor="#cccccc"
                 />
               )}
@@ -706,7 +743,7 @@ export default function EditCompanyPostFormPresenter({
       </Container>
       <SubmitContainer>
         <AuthButton
-          text={"작성 완료"}
+          text={t("companyPostUploadForm.24")}
           onPress={handleSubmit(onValid)}
           loading={loading}
         />

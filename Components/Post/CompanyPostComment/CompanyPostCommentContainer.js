@@ -2,8 +2,9 @@ import React, { useRef } from "react";
 import { useMutation } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import { Alert } from "react-native";
-import CompanyPostCommentPresenter from "./CompanyPostCommentPresenter";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
+import { useTranslation } from "react-i18next";
+import CompanyPostCommentPresenter from "./CompanyPostCommentPresenter";
 import { DELETE_COMMENT_MUTATION } from "./CompanyPostCommentQueries";
 import { timeForToday } from "../../../Utils";
 
@@ -17,6 +18,7 @@ export default function ({
   reComments,
   reCommentScreen,
 }) {
+  const { t } = useTranslation();
   const deleteCompanyComment = (cache, result) => {
     const {
       data: {
@@ -51,8 +53,15 @@ export default function ({
   let myActionsheet = useRef();
   let notMeActionsheet = useRef();
 
-  let myOptionArray = ["수정", "삭제", "취소"];
-  let notMineOptionArray = ["신고", "취소"];
+  let myOptionArray = [
+    t("userPostListDetail.2"),
+    t("userPostListDetail.3"),
+    t("userPostListDetail.4"),
+  ];
+  let notMineOptionArray = [
+    t("userPostListDetail.8"),
+    t("userPostListDetail.4"),
+  ];
 
   const navigation = useNavigation();
 
@@ -89,10 +98,10 @@ export default function ({
     if (index === 0) {
       goToEditCommentForm();
     } else if (index === 1) {
-      Alert.alert("댓글을 삭제하시겠어요?", "", [
-        { text: "Cancel" },
+      Alert.alert(t("userPostListDetail.15"), "", [
+        { text: t("userPostListDetail.4") },
         {
-          text: "Ok",
+          text: t("userPostListDetail.14"),
           onPress: () => goToDeleteComment(),
         },
       ]);

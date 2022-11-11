@@ -2,11 +2,11 @@ import React from "react";
 import { ActivityIndicator } from "react-native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import UserAvatar from "../UserAvatar";
 import Separator from "../Separator";
 import ImageSlider from "./ImageSlider";
-import { useNavigation } from "@react-navigation/native";
 import { colors } from "../../Colors";
 import { categories } from "../../Constant";
 
@@ -58,7 +58,7 @@ export default function PostContents({
   likeLoading,
   isLiked,
 }) {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const navigation = useNavigation();
 
   const goToCategoryScreen = (categoryId) => {
