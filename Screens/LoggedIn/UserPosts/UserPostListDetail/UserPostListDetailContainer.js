@@ -120,6 +120,14 @@ export default function ({ route: { params } }) {
     variables: {
       userPostId: parseInt(params.id),
     },
+    onError: (error) => {
+      if (error.message === "100") {
+        Alert.alert(t("alert.1"));
+      } else {
+        Alert.alert(t("alert.4"));
+      }
+      navigation.pop();
+    },
   });
 
   const [deleteUserPostMutation] = useMutation(DELETE_USERPOST_MUTATION, {
@@ -133,14 +141,30 @@ export default function ({ route: { params } }) {
         userPostId: parseInt(params.id),
       },
       update: updateToggleLike,
+
+      onError: (error) => {
+        if (error.message === "100") {
+          Alert.alert(t("alert.1"));
+        } else {
+          Alert.alert(t("alert.4"));
+        }
+        navigation.pop();
+      },
     }
   );
 
-  const [toggleUserPostFavoriteMutation, { error }] = useMutation(
+  const [toggleUserPostFavoriteMutation] = useMutation(
     TOGGLE_USERPOST_FAVORITE_MUTATION,
     {
       update: updateToggleFavorite,
-      onError: (error) => Alert.alert(error.message),
+      onError: (error) => {
+        if (error.message === "100") {
+          Alert.alert(t("alert.1"));
+        } else {
+          Alert.alert(t("alert.4"));
+        }
+        navigation.pop();
+      },
     }
   );
 

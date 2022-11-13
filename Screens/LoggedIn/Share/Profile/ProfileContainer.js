@@ -17,6 +17,14 @@ export default function ({ route: { params } }) {
     variables: {
       userId: parseInt(params.id),
     },
+    onError: (error) => {
+      if (error.message === "100") {
+        Alert.alert(t("alert.2"));
+      } else {
+        Alert.alert(t("alert.4"));
+      }
+      navigation.pop();
+    },
   });
 
   const refresh = async () => {

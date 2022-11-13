@@ -68,6 +68,8 @@ const resources = {
         10: "이미 사용중인 사용자 이름이 있습니다.",
         11: "필수 항목 입니다.",
         12: "VinaArba에 오신 것을 환영합니다!",
+        13: "핸드폰 번호",
+        14: "국가명 입력",
       },
       confirmSecret: {
         1: "이메일을 확인해 주세요",
@@ -362,6 +364,13 @@ const resources = {
         2: "취소",
         3: "완료",
       },
+      alert: {
+        1: "삭제된 게시글 입니다.",
+        2: "존재 하지 않는 사용자입니다.",
+        3: "삭제된 댓글 입니다.",
+        4: "나중에 다시 시도해 주세요.",
+        5: "사진첩 승인이 필요합니다.",
+      },
     },
   },
   en: {
@@ -430,6 +439,8 @@ const resources = {
         10: "There is already have an username in use.",
         11: "Required.",
         12: "Welcome to VinaArba!",
+        13: "Phone number",
+        14: "Enter country name",
       },
       confirmSecret: {
         1: "Please check in your email",
@@ -724,6 +735,13 @@ const resources = {
         2: "Cancel",
         3: "Done",
       },
+      alert: {
+        1: "The post has been deleted.",
+        2: "User does not exist.",
+        3: "Comment have been deleted.",
+        4: "Try again later.",
+        5: "Sorry, we need camera roll permissions to make this work!",
+      },
     },
   },
   vn: {
@@ -792,6 +810,8 @@ const resources = {
         10: "Tên người dùng đã được sử dụng.",
         11: "Bắt buộc",
         12: "Chào mừng bạn đến VinaArba!",
+        13: "Số điện thoại",
+        14: "Tìm kiếm",
       },
       confirmSecret: {
         1: "Hãy kiểm tra địa chỉ email.",
@@ -1085,6 +1105,13 @@ const resources = {
         1: "Xác nhận",
         2: "Hủy",
         3: "Xong",
+      },
+      alert: {
+        1: "번역 필요",
+        2: "번역 필요",
+        3: "번역 필요",
+        4: "번역 필요",
+        5: "번역 필요",
       },
     },
   },

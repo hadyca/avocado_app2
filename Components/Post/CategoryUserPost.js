@@ -110,7 +110,7 @@ function CategoryUserPost({
     <Container>
       <HeaderContainer>
         <Header onPress={goToProfile}>
-          <UserAvatar username={user.username} uri={user.avatarUrl} />
+          <UserAvatar username={user?.username} uri={user?.avatarUrl} />
         </Header>
       </HeaderContainer>
       {file?.length > 0 ? (

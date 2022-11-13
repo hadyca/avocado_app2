@@ -50,6 +50,14 @@ export default function CompanyPostReportForm({ route: { params } }) {
   };
   const [reportPostMutation, { loading }] = useMutation(REPORT_MUTATION, {
     onCompleted: goReportCompanyPost,
+    onError: (error) => {
+      if (error.message === "100") {
+        Alert.alert(t("alert.1"));
+      } else {
+        Alert.alert(t("alert.4"));
+      }
+      navigation.pop();
+    },
   });
 
   const goToReport = (item) => {

@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
+import CreateCompanyLayout from "../../../../Components/CreateCompanyLayout";
 import {
   TextInput_Company,
   UnderBar,
@@ -28,7 +28,7 @@ export default function AskTotalEmployees({ route: { params } }) {
   };
 
   return (
-    <CreatCompanyLayout step={"3"}>
+    <CreateCompanyLayout step={"3"}>
       <ProgressCreateCompany title={t("askTotalEmployees.1")} />
       <Controller
         name="totalEmployees"
@@ -61,6 +61,6 @@ export default function AskTotalEmployees({ route: { params } }) {
         loading={false}
         onPress={goToAskEmail}
       />
-    </CreatCompanyLayout>
+    </CreateCompanyLayout>
   );
 }

@@ -126,7 +126,7 @@ export default function UserPostUploadFormPresenter({
       const { status } =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== "granted") {
-        alert("Sorry, we need camera roll permissions to make this work!");
+        alert(t("alert.5"));
       } else {
         if (countPhoto < 5) {
           let result = await ImagePicker.launchImageLibraryAsync({
@@ -134,9 +134,9 @@ export default function UserPostUploadFormPresenter({
             allowsMultipleSelection: true,
             allowsEditing: false,
           });
-          if (!result.cancelled) {
-            if (countPhoto + result?.selected?.length <= 5) {
-              result.selected.map(async (item) => {
+          if (!result.canceled) {
+            if (countPhoto + result?.assets?.length <= 5) {
+              result.assets.map(async (item) => {
                 const manipResult = await manipulateAsync(
                   item.uri,
                   [
@@ -150,7 +150,7 @@ export default function UserPostUploadFormPresenter({
                 );
                 setPhoto((photo) => [...photo, { uri: manipResult.uri }]);
               });
-              setCountPhoto(countPhoto + result.selected.length);
+              setCountPhoto(countPhoto + result.assets.length);
               setIsOver(false);
             } else {
               setIsOver(true);

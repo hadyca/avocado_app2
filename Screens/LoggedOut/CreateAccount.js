@@ -3,12 +3,15 @@ import { gql, useMutation } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import PhoneInput from "react-native-phone-number-input";
 import AuthButton from "../../Components/Auth/AuthButton";
 import AuthLayout from "../../Components/Auth/AuthLayout";
 import FormError from "../../Components/Auth/FormError";
 import { Subtitle } from "../../Components/Auth/Subtitle";
 import { TextInput } from "../../Components/Auth/AuthShared";
 import { emailRule, passwordRule, usernameRule } from "../../RegExp";
+import { Text, TouchableOpacity, View } from "react-native";
+import { colors } from "../../Colors";
 
 const CREATE_ACCOUNT_MUTATION = gql`
   mutation createAccount($email: String!, $username: String!) {
@@ -21,6 +24,14 @@ const CREATE_ACCOUNT_MUTATION = gql`
 
 export default function CreateAccount({ route: { params } }) {
   const { t } = useTranslation();
+  const [value, setValue] = useState("");
+  const [formattedValue, setFormattedValue] = useState("");
+  const [valid, setValid] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
+  const [focus1, setFocus1] = useState(false);
+  const [focus2, setFocus2] = useState(false);
+  const [focus3, setFocus3] = useState(false);
+  const [focus4, setFocus4] = useState(false);
   const navigation = useNavigation();
   const { control, handleSubmit, getValues, formState, setError, clearErrors } =
     useForm({
@@ -54,6 +65,7 @@ export default function CreateAccount({ route: { params } }) {
     }
   );
 
+  const phoneInput = useRef();
   const usernameRef = useRef();
   const passwordRef = useRef();
   const password2Ref = useRef();
@@ -76,14 +88,45 @@ export default function CreateAccount({ route: { params } }) {
     clearErrors("result");
   };
 
-  const [focus1, setFocus1] = useState(false);
-  const [focus2, setFocus2] = useState(false);
-  const [focus3, setFocus3] = useState(false);
-  const [focus4, setFocus4] = useState(false);
-
   return (
     <AuthLayout>
       <Subtitle>{t("createAccount.12")}</Subtitle>
+      {showMessage && (
+        <View>
+          <Text>Value : {value}</Text>
+          <Text>Formatted Value : {formattedValue}</Text>
+          <Text>Valid : {valid ? "true" : "false"}</Text>
+        </View>
+      )}
+      <PhoneInput
+        containerStyle={{
+          width: "100%",
+          backgroundColor: colors.greyBackround,
+        }}
+        // textInputStyle={{ color: "blue" }}
+        // textContainerStyle={{ backgroundColor: "red" }}
+        filterProps={{ placeholder: t("createAccount.14") }}
+        ref={phoneInput}
+        defaultValue={value}
+        placeholder={t("createAccount.13")}
+        defaultCode="VN"
+        layout="first"
+        onChangeText={(text) => {
+          setValue(text);
+        }}
+        onChangeFormattedText={(text) => {
+          setFormattedValue(text);
+        }}
+      />
+      <TouchableOpacity
+        onPress={() => {
+          const checkValid = phoneInput.current?.isValidNumber(value);
+          setShowMessage(true);
+          setValid(checkValid ? checkValid : false);
+        }}
+      >
+        <Text>Check</Text>
+      </TouchableOpacity>
       <Controller
         name="email"
         rules={{

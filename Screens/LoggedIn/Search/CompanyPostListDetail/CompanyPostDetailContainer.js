@@ -118,8 +118,15 @@ export default function ({ route: { params } }) {
     variables: {
       companyPostId: parseInt(params.id),
     },
+    onError: (error) => {
+      if (error.message === "100") {
+        Alert.alert(t("alert.1"));
+      } else {
+        Alert.alert(t("alert.4"));
+      }
+      navigation.pop();
+    },
   });
-
   const [deleteCompanyPostMutation] = useMutation(DELETE_COMPANYPOST_MUTATION, {
     update: updateDeleteCompanyPost,
   });
@@ -131,6 +138,14 @@ export default function ({ route: { params } }) {
         companyPostId: parseInt(params.id),
       },
       update: updateToggleLike,
+      onError: (error) => {
+        if (error.message === "100") {
+          Alert.alert(t("alert.1"));
+        } else {
+          Alert.alert(t("alert.4"));
+        }
+        navigation.pop();
+      },
     }
   );
 
@@ -138,6 +153,14 @@ export default function ({ route: { params } }) {
     TOGGLE_COMPANYPOST_FAVORITE_MUTATION,
     {
       update: updateToggleFavorite,
+      onError: (error) => {
+        if (error.message === "100") {
+          Alert.alert(t("alert.1"));
+        } else {
+          Alert.alert(t("alert.4"));
+        }
+        navigation.pop();
+      },
     }
   );
 

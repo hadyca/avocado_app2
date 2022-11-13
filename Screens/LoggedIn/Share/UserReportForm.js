@@ -52,6 +52,15 @@ export default function UserReportForm({ route: { params } }) {
   };
   const [reportUserMutation, { loading }] = useMutation(REPORT_MUTATION, {
     onCompleted: goReportUser,
+
+    onError: (error) => {
+      if (error.message === "100") {
+        Alert.alert(t("alert.2"));
+      } else {
+        Alert.alert(t("alert.4"));
+      }
+      navigation.pop();
+    },
   });
 
   const goToReport = (item) => {

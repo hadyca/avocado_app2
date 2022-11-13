@@ -1,9 +1,11 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 import { TOGGLE_FOLLOWING_MUTATION } from "./FollowingListQueries";
 import FollowingListPresenter from "./FollowingListPresenter";
 import useMe from "../../../Hooks/useMe";
+import { Alert } from "react-native";
 
 export default function ({
   id,
@@ -13,6 +15,7 @@ export default function ({
   isFollowing,
   isMe,
 }) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const { data: userData } = useMe();
   const updateToggleFollowing = (cache, result) => {
@@ -59,6 +62,14 @@ export default function ({
         userId: parseInt(id),
       },
       update: updateToggleFollowing,
+      onError: (error) => {
+        if (error.message === "100") {
+          Alert.alert(t("alert.2"));
+        } else {
+          Alert.alert(t("alert.4"));
+        }
+        navigation.pop();
+      },
     }
   );
 

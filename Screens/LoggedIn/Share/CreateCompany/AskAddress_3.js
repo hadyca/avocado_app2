@@ -3,7 +3,7 @@ import { gql, useMutation } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { useForm, Controller } from "react-hook-form";
-import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
+import CreateCompanyLayout from "../../../../Components/CreateCompanyLayout";
 import {
   TextInput_Company,
   UnderBar,
@@ -62,7 +62,7 @@ export default function AskAddress_3({ route: { params } }) {
   };
 
   return (
-    <CreatCompanyLayout step={"8"}>
+    <CreateCompanyLayout step={"8"}>
       <ProgressCreateCompany title={t("askAddressThree.1")} />
       <Controller
         name="addressStep3"
@@ -92,6 +92,6 @@ export default function AskAddress_3({ route: { params } }) {
         loading={false}
         onPress={goToFinish}
       />
-    </CreatCompanyLayout>
+    </CreateCompanyLayout>
   );
 }

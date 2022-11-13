@@ -11,7 +11,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import client, { isLoggedInVar, tokenVar, logUserOut } from "./apollo";
 import { Text } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import i18n, { loadLng } from "./i18n";
+import { loadLng } from "./i18n";
 
 import * as SplashScreen from "expo-splash-screen";
 

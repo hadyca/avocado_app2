@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import styled from "styled-components/native";
 import { useTranslation } from "react-i18next";
-import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
+import CreateCompanyLayout from "../../../../Components/CreateCompanyLayout";
 import {
   TextInput_Company,
   UnderBar,
@@ -42,7 +42,7 @@ export default function AskAboutUs({ route: { params } }) {
   };
 
   return (
-    <CreatCompanyLayout step={"2"}>
+    <CreateCompanyLayout step={"2"}>
       <ProgressCreateCompany title={t("askAboutUs.1")} />
       <Controller
         name="aboutUs"
@@ -80,6 +80,6 @@ export default function AskAboutUs({ route: { params } }) {
         loading={false}
         onPress={goToAskTotalEmployees}
       />
-    </CreatCompanyLayout>
+    </CreateCompanyLayout>
   );
 }

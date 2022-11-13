@@ -40,22 +40,22 @@ export default function BaseInfo({
 
   useEffect(() => {
     let newAry = [];
-    workingDay.mon && newAry.push(t("companyPostAll.16"));
-    workingDay.tue && newAry.push(t("companyPostAll.17"));
-    workingDay.wed && newAry.push(t("companyPostAll.18"));
-    workingDay.thu && newAry.push(t("companyPostAll.19"));
-    workingDay.fri && newAry.push(t("companyPostAll.20"));
-    workingDay.sat && newAry.push(t("companyPostAll.21"));
-    workingDay.sun && newAry.push(t("companyPostAll.22"));
+    workingDay?.mon && newAry.push(t("companyPostAll.16"));
+    workingDay?.tue && newAry.push(t("companyPostAll.17"));
+    workingDay?.wed && newAry.push(t("companyPostAll.18"));
+    workingDay?.thu && newAry.push(t("companyPostAll.19"));
+    workingDay?.fri && newAry.push(t("companyPostAll.20"));
+    workingDay?.sat && newAry.push(t("companyPostAll.21"));
+    workingDay?.sun && newAry.push(t("companyPostAll.22"));
     setDayArray(newAry);
   }, [i18n.language, workingDay]);
 
   useEffect(() => {
     const startTimeTrans = time.filter((item) => item.value === startTime);
-    setStart(startTimeTrans[0].label);
+    setStart(startTimeTrans[0]?.label);
 
     const finishTimeTrans = time.filter((item) => item.value === finishTime);
-    setFinish(finishTimeTrans[0].label);
+    setFinish(finishTimeTrans[0]?.label);
   }, [startTime, finishTime]);
 
   useEffect(() => {
@@ -92,30 +92,30 @@ export default function BaseInfo({
           color={colors.greyText}
           style={{ width: 25 }}
         />
-        {workingDay.mon &&
-        workingDay.tue &&
-        workingDay.wed &&
-        workingDay.thu &&
-        workingDay.fri &&
-        workingDay.sat &&
-        workingDay.sun ? (
+        {workingDay?.mon &&
+        workingDay?.tue &&
+        workingDay?.wed &&
+        workingDay?.thu &&
+        workingDay?.fri &&
+        workingDay?.sat &&
+        workingDay?.sun ? (
           <BaseText>
             {`${t("companyPostAll.16")}~${t("companyPostAll.22")}`}
           </BaseText>
-        ) : workingDay.mon &&
-          workingDay.tue &&
-          workingDay.wed &&
-          workingDay.thu &&
-          workingDay.fri &&
-          workingDay.sat ? (
+        ) : workingDay?.mon &&
+          workingDay?.tue &&
+          workingDay?.wed &&
+          workingDay?.thu &&
+          workingDay?.fri &&
+          workingDay?.sat ? (
           <BaseText>
             {`${t("companyPostAll.16")}~${t("companyPostAll.21")}`}
           </BaseText>
-        ) : workingDay.mon &&
-          workingDay.tue &&
-          workingDay.wed &&
-          workingDay.thu &&
-          workingDay.fri ? (
+        ) : workingDay?.mon &&
+          workingDay?.tue &&
+          workingDay?.wed &&
+          workingDay?.thu &&
+          workingDay?.fri ? (
           <BaseText>
             {`${t("companyPostAll.16")}~${t("companyPostAll.20")}`}
           </BaseText>

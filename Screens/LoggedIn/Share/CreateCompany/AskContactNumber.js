@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
+import CreateCompanyLayout from "../../../../Components/CreateCompanyLayout";
 import {
   TextInput_Company,
   UnderBar,
@@ -30,7 +30,7 @@ export default function AskContactNumber({ route: { params } }) {
   };
 
   return (
-    <CreatCompanyLayout step={"5"}>
+    <CreateCompanyLayout step={"5"}>
       <ProgressCreateCompany title={t("askContactNumber.1")} />
 
       <Controller
@@ -64,6 +64,6 @@ export default function AskContactNumber({ route: { params } }) {
         loading={false}
         onPress={goToAskAddress}
       />
-    </CreatCompanyLayout>
+    </CreateCompanyLayout>
   );
 }

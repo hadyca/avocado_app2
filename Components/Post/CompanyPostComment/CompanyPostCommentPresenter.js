@@ -69,7 +69,7 @@ export default function UserPostCommentPresenter({
     <Container>
       <HeaderContainer>
         <Header onPress={goToProfile}>
-          <UserAvatar username={user.username} uri={user.avatarUrl} />
+          <UserAvatar username={user?.username} uri={user?.avatarUrl} />
         </Header>
         {!reCommentScreen ? (
           <IconView onPress={showActionSheet}>
@@ -88,7 +88,7 @@ export default function UserPostCommentPresenter({
           </ReplyButton>
         ) : null}
       </SubContainer>
-      {reComments.length > 0
+      {reComments?.length > 0
         ? reComments.map((item, index) => (
             <CompanyReCommentPaint
               key={index}
