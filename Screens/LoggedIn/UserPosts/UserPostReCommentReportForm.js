@@ -51,6 +51,14 @@ export default function UserPostReCommentReportForm({ route: { params } }) {
   };
   const [reportReCommentMutation, { loading }] = useMutation(REPORT_MUTATION, {
     onCompleted: goReportUserPostComment,
+    onError: (error) => {
+      if (error.message === "100") {
+        Alert.alert(t("alert.3"));
+      } else {
+        Alert.alert(t("alert.4"));
+      }
+      navigation.pop();
+    },
   });
 
   const goToReport = (item) => {

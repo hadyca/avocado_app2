@@ -101,9 +101,24 @@ export const categories = [
 ];
 
 export const userReportAry = [
-  "부적절한 프로필 정보",
-  "다른 사람으로 가장",
-  "기타",
+  {
+    id: 1,
+    valueKo: "부적절한 프로필 정보",
+    valueEn: "Inappropriate profile information",
+    valueVn: "Thông tin hồ sơ không phù hợp",
+  },
+  {
+    id: 2,
+    valueKo: "다른 사람으로 가장",
+    valueEn: "She/He is different person",
+    valueVn: "번역필요",
+  },
+  {
+    id: 3,
+    valueKo: "기타",
+    valueEn: "Etc",
+    valueVn: "Khác",
+  },
 ];
 
 export const userPostReportAry = [
@@ -221,16 +236,66 @@ export const userPostCommentReportAry = [
 ];
 
 export const companyPostReportAry = [
-  "광고·홍보 글이에요",
-  "누군가를 비방하는 글이에요",
-  "중복·도배 글이에요",
-  "정치·종교 관련 글이에요",
-  "금전을 요구하는 글이에요",
-  "불쾌감을 줄 수 있는 글이에요",
-  "불법·음란성 글이 포함 되어 있어요",
-  "다른 채팅 앱이나 사이트로 유도 해요",
-  "채용 관련 게시글이 아니에요",
-  "기타",
+  {
+    id: 1,
+    valueKo: "광고·홍보 글이에요",
+    valueEn: "It's an ad·a promotional post",
+    valueVn: "Bài viết quảng cáo",
+  },
+  {
+    id: 2,
+    valueKo: "누군가를 비방하는 글이에요",
+    valueEn: "It's a slanderous post",
+    valueVn: "Bài viết này phỉ báng ai đó",
+  },
+  {
+    id: 3,
+    valueKo: "중복·도배 글이에요",
+    valueEn: "It's a repetitive post",
+    valueVn: "Bài viết che mất màn hình",
+  },
+  {
+    id: 4,
+    valueKo: "정치·종교 관련 글이에요",
+    valueEn: "It's about politics·religion post",
+    valueVn: "Bài viết liên qua đến tôn giáo-chính trị",
+  },
+  {
+    id: 5,
+    valueKo: "금전을 요구하는 글이에요",
+    valueEn: "It's a phishing post",
+    valueVn: "Bài viết đòi tiền",
+  },
+  {
+    id: 6,
+    valueKo: "불쾌감을 줄 수 있는 글이에요",
+    valueEn: "It can make you feel uncomfortable",
+    valueVn: "Bài viết có nội dung không lành mạnh",
+  },
+  {
+    id: 7,
+    valueKo: "불법·음란성 내용이 포함 되어 있어요",
+    valueEn: "Illegal·obscene contents are included",
+    valueVn: "Bài viết có phi pháp, khiêu dâm",
+  },
+  {
+    id: 8,
+    valueKo: "다른 채팅 앱이나 사이트로 유도 해요",
+    valueEn: "lure to another chat app or site",
+    valueVn: "Bài viết dẫn đến trang web hay ứng dụng khác",
+  },
+  {
+    id: 9,
+    valueKo: "채용 관련 게시글이 아니에요",
+    valueEn: "It's not a job posting",
+    valueVn: "Không phải là bài viết liên quan đến tuyển dụng",
+  },
+  {
+    id: 10,
+    valueKo: "기타",
+    valueEn: "Etc",
+    valueVn: "Khác",
+  },
 ];
 
 export const ScreenNames = {
@@ -293,10 +358,15 @@ export const time = [
 ];
 
 export const typeOfWage = [
-  { id: 1, value: "시급" },
-  { id: 2, value: "일급" },
-  { id: 3, value: "월급" },
-  { id: 4, value: "건당" },
+  { id: 1, valueKo: "시급", valueEn: "Hourly wage", valueVn: "Lương giờ" },
+  { id: 2, valueKo: "일급", valueEn: "Daily wage", valueVn: "Lương ngày" },
+  {
+    id: 3,
+    valueKo: "월급",
+    valueEn: "Monthly wage",
+    valueVn: "Lương tháng",
+  },
+  { id: 4, valueKo: "건당", valueEn: "Per case", valueVn: "Mỗi lần" },
 ];
 
 export const questionType = [

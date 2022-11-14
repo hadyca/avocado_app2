@@ -55,9 +55,9 @@ export default function EditUsernamePresenter({
     } else {
       if (!loading) {
         Alert.alert(t("editUsername.1"), "", [
-          { text: "Cancel" },
+          { text: t("share.2") },
           {
-            text: "Ok",
+            text: t("share.1"),
             onPress: () =>
               editUsernameMutation({
                 variables: {

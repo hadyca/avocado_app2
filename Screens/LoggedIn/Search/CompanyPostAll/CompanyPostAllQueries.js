@@ -31,7 +31,7 @@ export const COMPANYPOST_QUERY = gql`
       startTime
       finishTime
       timeOption
-      wageType
+      wageTypeId
       wage
       contactNumber
       email
@@ -97,7 +97,7 @@ export const COMPANYPOST_DISTRICT_QUERY = gql`
       startTime
       finishTime
       timeOption
-      wageType
+      wageTypeId
       wage
       contactNumber
       email

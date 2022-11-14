@@ -6,12 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import ScreenLayout from "../../../Components/ScreenLayout";
 import styled from "styled-components/native";
 import { useTranslation } from "react-i18next";
-import {
-  useWindowDimensions,
-  Alert,
-  TouchableOpacity,
-  Text,
-} from "react-native";
+import { useWindowDimensions, Alert } from "react-native";
 import AutoHeightImage from "react-native-auto-height-image";
 import { colors } from "../../../Colors";
 import { useNavigation } from "@react-navigation/native";
@@ -145,15 +140,6 @@ export default function Home() {
             </Button>
           </CompanyView>
           <Contents>
-            <TouchableOpacity onPress={changelanguageToKo}>
-              <Text>한국어</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={changelanguageToEn}>
-              <Text>영어</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={changelanguageToVn}>
-              <Text>베트남어</Text>
-            </TouchableOpacity>
             <AutoHeightImage
               width={width}
               source={

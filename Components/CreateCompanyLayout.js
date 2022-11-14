@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  Keyboard,
-  Platform,
-  Text,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { Keyboard, Platform, TouchableWithoutFeedback } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../Colors";
 
@@ -37,7 +32,7 @@ const Count = styled.Text`
   color: ${colors.borderThick};
 `;
 
-export default function CreatCompanyLayout({ step, children }) {
+export default function CreateCompanyLayout({ step, children }) {
   const dismissKeyboard = () => {
     Keyboard.dismiss();
   };

@@ -77,9 +77,9 @@ export default function Account({ route: { params } }) {
       <Button
         onPress={() =>
           Alert.alert(t("account.3"), "", [
-            { text: "Cancel" },
+            { text: t("share.2") },
             {
-              text: "Ok",
+              text: t("share.1"),
               onPress: async () => {
                 const pushToken = (await Notifications.getExpoPushTokenAsync())
                   .data;
@@ -105,9 +105,9 @@ export default function Account({ route: { params } }) {
       <Button
         onPress={() =>
           Alert.alert(t("account.5"), "", [
-            { text: "Cancel" },
+            { text: t("share.2") },
             {
-              text: "Ok",
+              text: t("share.1"),
               onPress: async () => {
                 await deleteUserMutation({
                   variables: {

@@ -71,7 +71,7 @@ function FavoriteCompanyPost({
   company,
   title,
   wage,
-  wageType,
+  wageTypeId,
   workingDay,
   dayOption,
   startTime,
@@ -129,7 +129,7 @@ function FavoriteCompanyPost({
           <ContentText>{title}</ContentText>
         </Content>
         <BaseInfo
-          wageType={wageType}
+          wageTypeId={wageTypeId}
           wage={wage}
           workingDay={workingDay}
           dayOption={dayOption}

@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
+import CreateCompanyLayout from "../../../../Components/CreateCompanyLayout";
 import {
   TextInput_Company,
   UnderBar,
@@ -35,7 +35,7 @@ export default function AskEmail({ route: { params } }) {
   };
 
   return (
-    <CreatCompanyLayout step={"4"}>
+    <CreateCompanyLayout step={"4"}>
       <ProgressCreateCompany title={t("askEmail.1")} />
       <Controller
         name="email"
@@ -73,6 +73,6 @@ export default function AskEmail({ route: { params } }) {
         disabled={!formState.isValid}
         onPress={goToContactNumber}
       />
-    </CreatCompanyLayout>
+    </CreateCompanyLayout>
   );
 }

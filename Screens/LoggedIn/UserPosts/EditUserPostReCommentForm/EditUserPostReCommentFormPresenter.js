@@ -3,6 +3,7 @@ import { TouchableOpacity, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import styled from "styled-components/native";
+import { useTranslation } from "react-i18next";
 import DismissKeyboard from "../../../../Components/DismissKeyBoard";
 import { colors } from "../../../../Colors";
 
@@ -32,6 +33,7 @@ export default function EditUserPostReCommentFormPresenter({
   editUserPostCommentMutation,
   handlePayload,
 }) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const { control, handleSubmit, formState } = useForm({
     defaultValues: {
@@ -59,7 +61,7 @@ export default function EditUserPostReCommentFormPresenter({
       onPress={handleSubmit(onValid)}
       style={{ marginRight: 10, opacity: 0.5 }}
     >
-      <HeaderRightText>완료</HeaderRightText>
+      <HeaderRightText>{t("share.3")}</HeaderRightText>
     </TouchableOpacity>
   );
 
@@ -69,7 +71,7 @@ export default function EditUserPostReCommentFormPresenter({
       onPress={handleSubmit(onValid)}
       style={{ marginRight: 10, opacity: 1 }}
     >
-      <HeaderRightText ok={true}>완료</HeaderRightText>
+      <HeaderRightText ok={true}>{t("share.3")}</HeaderRightText>
     </TouchableOpacity>
   );
   useEffect(() => {
@@ -93,7 +95,6 @@ export default function EditUserPostReCommentFormPresenter({
           control={control}
           render={({ field: { onChange, value } }) => (
             <TextInput
-              placeholder="Please Write Comment"
               placeholderTextColor="#cccccc"
               multiline={true}
               textAlignVertical={"top"}

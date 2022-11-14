@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@apollo/client";
 import * as ImagePicker from "expo-image-picker";
 import { manipulateAsync } from "expo-image-manipulator";
+import { useTranslation } from "react-i18next";
 import ScreenLayout from "../../../../Components/ScreenLayout";
 import {
   EDIT_AVATAR_MUTATION,
@@ -11,6 +12,7 @@ import {
 import EditProfilePresenter from "./EditProfilePresenter";
 
 export default function ({ route: { params } }) {
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const [isEdited, setIsEdited] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState("");
@@ -49,25 +51,33 @@ export default function ({ route: { params } }) {
   );
 
   const goToSelectAvatar = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsMultipleSelection: false,
-      allowsEditing: false,
-    });
-    if (!result.cancelled) {
-      const manipResult = await manipulateAsync(
-        result.uri,
-        [
-          {
-            resize: {
-              width: 1080,
-            },
-          },
-        ],
-        { compress: 0.5 }
-      );
-      setAvatarUrl(manipResult.uri);
-      setIsEdited(true);
+    if (Platform.OS !== "web") {
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        alert(t("alert.5"));
+      } else {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsMultipleSelection: false,
+          allowsEditing: false,
+        });
+        if (!result.canceled) {
+          const manipResult = await manipulateAsync(
+            result.assets[0].uri,
+            [
+              {
+                resize: {
+                  width: 1080,
+                },
+              },
+            ],
+            { compress: 0.5 }
+          );
+          setAvatarUrl(manipResult.uri);
+          setIsEdited(true);
+        }
+      }
     }
   };
 
@@ -134,18 +144,6 @@ export default function ({ route: { params } }) {
       myCompany: params.myCompany,
     });
   };
-
-  useEffect(() => {
-    (async () => {
-      if (Platform.OS !== "web") {
-        const { status } =
-          await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== "granted") {
-          alert("Sorry, we need camera roll permissions to make this work!");
-        }
-      }
-    })();
-  }, []);
 
   useEffect(() => {
     if (params.avatarUrl) {

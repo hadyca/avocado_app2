@@ -38,7 +38,7 @@ export default function ({ route: { params } }) {
       originStartTime={params.startTime}
       originFinishTime={params.finishTime}
       originTimeOption={params.timeOption}
-      originWageType={params.wageType}
+      originWageTypeId={params.wageTypeId}
       originWage={params.wage}
       originContactNumber={params.contactNumber}
       originEmail={params.email}

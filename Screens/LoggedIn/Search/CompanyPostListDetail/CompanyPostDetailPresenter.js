@@ -6,6 +6,7 @@ import {
   Keyboard,
 } from "react-native";
 import styled from "styled-components/native";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../../../Colors";
 import CompanyCommentForm from "../../../../Components/Post/CompanyCommentForm";
 import CompanyPostContents from "../../../../Components/Post/CompanyPostContents";
@@ -32,6 +33,7 @@ export default function CompanyPostDetailPresenter({
   statusBarHeight,
   companyPostId,
 }) {
+  const { t } = useTranslation();
   const [commentUploading, setCommentUploading] = useState(false);
 
   let detailRef = useRef();
@@ -61,7 +63,7 @@ export default function CompanyPostDetailPresenter({
                   title={data?.seeCompanyPost?.title}
                   content={data?.seeCompanyPost?.content}
                   wage={data?.seeCompanyPost?.wage}
-                  wageType={data?.seeCompanyPost?.wageType}
+                  wageTypeId={data?.seeCompanyPost?.wageTypeId}
                   workingDay={data?.seeCompanyPost?.workingDay}
                   dayOption={data?.seeCompanyPost?.dayOption}
                   startTime={data?.seeCompanyPost?.startTime}
@@ -106,7 +108,7 @@ export default function CompanyPostDetailPresenter({
                   title={data?.seeCompanyPost?.title}
                   content={data?.seeCompanyPost?.content}
                   wage={data?.seeCompanyPost?.wage}
-                  wageType={data?.seeCompanyPost?.wageType}
+                  wageTypeId={data?.seeCompanyPost?.wageTypeId}
                   workingDay={data?.seeCompanyPost?.workingDay}
                   dayOption={data?.seeCompanyPost?.dayOption}
                   startTime={data?.seeCompanyPost?.startTime}
@@ -121,9 +123,7 @@ export default function CompanyPostDetailPresenter({
               }
               ListFooterComponent={
                 <NoCommentView>
-                  <NoComment>
-                    There is no comment. Please write a comment.
-                  </NoComment>
+                  <NoComment>{t("userPostListDetail.1")}</NoComment>
                 </NoCommentView>
               }
               refreshing={refreshing}

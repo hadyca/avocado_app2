@@ -4,7 +4,7 @@ import styled from "styled-components/native";
 import { useForm } from "react-hook-form";
 import { gql, useMutation } from "@apollo/client";
 import { useTranslation } from "react-i18next";
-import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
+import CreateCompanyLayout from "../../../../Components/CreateCompanyLayout";
 import AuthButton from "../../../../Components/Auth/AuthButton";
 import useMe from "../../../../Hooks/useMe";
 
@@ -94,7 +94,7 @@ export default function CreateCompanyFinish({ route: { params } }) {
   };
 
   return (
-    <CreatCompanyLayout>
+    <CreateCompanyLayout>
       <Container>
         <TopContainer>
           <Title>{t("createCompanyFinish.1")}</Title>
@@ -111,6 +111,6 @@ export default function CreateCompanyFinish({ route: { params } }) {
           />
         </BottomContainer>
       </Container>
-    </CreatCompanyLayout>
+    </CreateCompanyLayout>
   );
 }

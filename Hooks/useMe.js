@@ -44,6 +44,14 @@ export default function useMe() {
   const hasToken = useReactiveVar(isLoggedInVar);
   const { data, loading, refetch } = useQuery(ME_QUERY, {
     skip: !hasToken,
+    onError: (error) => {
+      if (error.message === "100") {
+        Alert.alert(t("alert.2"));
+      } else {
+        Alert.alert(t("alert.4"));
+      }
+      navigation.pop();
+    },
   });
 
   useEffect(() => {

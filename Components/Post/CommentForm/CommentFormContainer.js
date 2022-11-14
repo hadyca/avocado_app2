@@ -2,6 +2,7 @@ import React from "react";
 import { gql, useMutation } from "@apollo/client";
 import { Alert, Keyboard } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 import {
   CREATE_COMMENT_MUTATION,
   CREATE_RECOMMENT_MUTATION,
@@ -17,6 +18,7 @@ export default function ({
   handleReComment,
   commentUploading,
 }) {
+  const { t } = useTranslation();
   const { data: userData } = useMe();
   const navigation = useNavigation();
   const updateComment = async (cache, result) => {
@@ -126,6 +128,14 @@ export default function ({
     CREATE_COMMENT_MUTATION,
     {
       update: updateComment,
+      onError: (error) => {
+        if (error.message === "100") {
+          Alert.alert(t("alert.1"));
+        } else {
+          Alert.alert(t("alert.4"));
+        }
+        navigation.pop();
+      },
     }
   );
 
@@ -133,8 +143,12 @@ export default function ({
     CREATE_RECOMMENT_MUTATION,
     {
       update: updateReComment,
-      onError: (e) => {
-        Alert.alert("존재하지 않는 코멘트 입니다.");
+      onError: (error) => {
+        if (error.message === "100") {
+          Alert.alert(t("alert.3"));
+        } else {
+          Alert.alert(t("alert.4"));
+        }
         navigation.pop();
       },
     }

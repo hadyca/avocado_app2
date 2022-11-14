@@ -4,7 +4,7 @@ import styled from "styled-components/native";
 import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
 import { bigDistrict } from "../../../../DistrictList";
-import CreatCompanyLayout from "../../../../Components/CreatCompanyLayout";
+import CreateCompanyLayout from "../../../../Components/CreateCompanyLayout";
 import {
   TextInput_Company,
   UnderBar,
@@ -36,7 +36,7 @@ export default function AskAddress_1({ route: { params } }) {
   };
 
   return (
-    <CreatCompanyLayout step={"6"}>
+    <CreateCompanyLayout step={"6"}>
       <ProgressCreateCompany title={t("askAddressOne.1")} />
       <ModalSelector
         data={bigDistrict}
@@ -70,6 +70,6 @@ export default function AskAddress_1({ route: { params } }) {
         loading={false}
         onPress={goToAddress_2}
       />
-    </CreatCompanyLayout>
+    </CreateCompanyLayout>
   );
 }

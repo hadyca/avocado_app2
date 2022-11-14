@@ -1,20 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { Alert, NativeModules, Text } from "react-native";
+import { Alert, NativeModules } from "react-native";
 import { useQuery } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
-
+import { useTranslation } from "react-i18next";
 import ReCommentPresenter from "./ReCommentPresenter";
 import ScreenLayout from "../../../../Components/ScreenLayout";
 import { COMMENT_QUERY } from "./ReCommentQueries";
 
 export default function ({ route: { params } }) {
+  const { t } = useTranslation();
   const [refreshing, setRefreshing] = useState(false);
   const [statusBarHeight, setStatusBarHeight] = useState(0);
   const { StatusBarManager } = NativeModules;
   const navigation = useNavigation();
-  const { data, refetch, loading, error } = useQuery(COMMENT_QUERY, {
+  const { data, refetch, loading } = useQuery(COMMENT_QUERY, {
     variables: {
       userPostCommentId: parseInt(params.id),
+    },
+    onError: (error) => {
+      if (error.message === "100") {
+        Alert.alert(t("alert.3"));
+      } else {
+        Alert.alert(t("alert.4"));
+      }
+      navigation.pop();
     },
   });
   useEffect(() => {
@@ -30,13 +39,6 @@ export default function ({ route: { params } }) {
     refetch();
     setRefreshing(false);
   };
-
-  useEffect(() => {
-    if (error) {
-      Alert.alert("코멘트가 삭제되었습니다.");
-      navigation.pop();
-    }
-  }, [error]);
 
   return (
     <ScreenLayout loading={loading}>

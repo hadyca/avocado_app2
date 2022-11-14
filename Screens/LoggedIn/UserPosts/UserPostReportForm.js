@@ -2,9 +2,9 @@ import React from "react";
 import { Alert } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
+import { gql, useMutation } from "@apollo/client";
 import { useTranslation } from "react-i18next";
 import ScreenLayout from "../../../Components/ScreenLayout";
-import { gql, useMutation } from "@apollo/client";
 import { userPostReportAry } from "../../../Constant";
 import { colors } from "../../../Colors";
 
@@ -51,6 +51,14 @@ export default function UserPostReportForm({ route: { params } }) {
   };
   const [reportPostMutation, { loading }] = useMutation(REPORT_MUTATION, {
     onCompleted: goReportUserPost,
+    onError: (error) => {
+      if (error.message === "100") {
+        Alert.alert(t("alert.1"));
+      } else {
+        Alert.alert(t("alert.4"));
+      }
+      navigation.pop();
+    },
   });
 
   const goToReport = (item) => {

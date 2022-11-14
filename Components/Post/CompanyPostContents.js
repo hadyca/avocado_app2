@@ -1,11 +1,11 @@
 import React from "react";
 import { ActivityIndicator, View } from "react-native";
 import styled from "styled-components/native";
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import UserAvatar from "../UserAvatar";
 import Separator from "../Separator";
-import { Ionicons } from "@expo/vector-icons";
 import ImageSlider from "./ImageSlider";
-import { useNavigation } from "@react-navigation/native";
 import BaseInfo from "./BaseInfo";
 
 const Container = styled.View`
@@ -40,7 +40,7 @@ export default function CompanyPostContents({
   title,
   content,
   wage,
-  wageType,
+  wageTypeId,
   workingDay,
   dayOption,
   startTime,
@@ -70,7 +70,7 @@ export default function CompanyPostContents({
         <Separator />
         <Title>{title}</Title>
         <BaseInfo
-          wageType={wageType}
+          wageTypeId={wageTypeId}
           wage={wage}
           workingDay={workingDay}
           dayOption={dayOption}

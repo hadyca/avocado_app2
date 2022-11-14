@@ -1,11 +1,12 @@
 import React from "react";
 import { Alert } from "react-native";
-import ScreenLayout from "../../../Components/ScreenLayout";
-import { gql, useMutation } from "@apollo/client";
-import { companyPostReportAry } from "../../../Constant";
-import styled from "styled-components/native";
-import { colors } from "../../../Colors";
 import { useNavigation } from "@react-navigation/native";
+import { gql, useMutation } from "@apollo/client";
+import styled from "styled-components/native";
+import { useTranslation } from "react-i18next";
+import ScreenLayout from "../../../Components/ScreenLayout";
+import { companyPostReportAry } from "../../../Constant";
+import { colors } from "../../../Colors";
 
 const REPORT_MUTATION = gql`
   mutation companyPostReport($companyPostId: Int!, $reason: String!) {
@@ -41,13 +42,22 @@ const Separator = styled.View`
 const ReportText = styled.Text``;
 
 export default function CompanyPostReportForm({ route: { params } }) {
+  const { t, i18n } = useTranslation();
   const navigation = useNavigation();
   const goReportCompanyPost = () => {
-    Alert.alert("신고해주셔서 감사합니다.");
+    Alert.alert(t("userPostReportForm.3"));
     navigation.pop();
   };
   const [reportPostMutation, { loading }] = useMutation(REPORT_MUTATION, {
     onCompleted: goReportCompanyPost,
+    onError: (error) => {
+      if (error.message === "100") {
+        Alert.alert(t("alert.1"));
+      } else {
+        Alert.alert(t("alert.4"));
+      }
+      navigation.pop();
+    },
   });
 
   const goToReport = (item) => {
@@ -59,10 +69,10 @@ export default function CompanyPostReportForm({ route: { params } }) {
     });
   };
   const handleReport = (item) => {
-    Alert.alert("신고하시겠습니까?", "", [
-      { text: "Cancel" },
+    Alert.alert(t("userPostReportForm.2"), "", [
+      { text: t("share.2") },
       {
-        text: "Ok",
+        text: t("share.1"),
         onPress: () => goToReport(item),
       },
     ]);
@@ -72,12 +82,18 @@ export default function CompanyPostReportForm({ route: { params } }) {
     <ScreenLayout>
       <Container>
         <TitleView>
-          <TitleText>게시글을 신고하는 이유를 선택해 주세요.</TitleText>
+          <TitleText>{t("userPostReportForm.1")}</TitleText>
         </TitleView>
         {companyPostReportAry.map((item, index) => (
           <ReportContainer key={index}>
-            <ReportView onPress={() => handleReport(item)}>
-              <ReportText>{item}</ReportText>
+            <ReportView onPress={() => handleReport(item.valueEn)}>
+              <ReportText>
+                {i18n.language === "vn"
+                  ? item.valueVn
+                  : i18n.language === "en"
+                  ? item.valueEn
+                  : item.valueKo}
+              </ReportText>
             </ReportView>
             <Separator />
           </ReportContainer>

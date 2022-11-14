@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, Platform, Alert, Text } from "react-native";
+import { Image, Platform, Alert } from "react-native";
 import styled from "styled-components/native";
 import Checkbox from "expo-checkbox";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
@@ -9,11 +9,11 @@ import NumberFormat from "react-number-format";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import * as ImagePicker from "expo-image-picker";
 import { manipulateAsync } from "expo-image-manipulator";
-import { colors } from "../../../../Colors";
+import { useTranslation } from "react-i18next";
 import { ReactNativeFile } from "apollo-upload-client";
+import { colors } from "../../../../Colors";
 import { time } from "../../../../Constant";
 import { typeOfWage } from "../../../../Constant";
-import FormError from "../../../../Components/Auth/FormError";
 import AuthButton from "../../../../Components/Auth/AuthButton";
 import { emailRule } from "../../../../RegExp";
 
@@ -121,6 +121,13 @@ const DayText = styled.Text`
   color: ${(props) => (props.selected ? "white" : "black")};
 `;
 
+const FormError = styled.Text`
+  color: ${colors.error};
+  font-weight: 600;
+  font-size: 12px;
+  margin-top: 10px;
+`;
+
 const TimeTextContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
@@ -217,6 +224,7 @@ export default function CompanyPostUploadFormPresenter({
   uploadCompanyPostMutation,
   userData,
 }) {
+  const { t, i18n } = useTranslation();
   const [mon, setMon] = useState(true);
   const [tue, setTue] = useState(true);
   const [wed, setWed] = useState(true);
@@ -228,12 +236,14 @@ export default function CompanyPostUploadFormPresenter({
   const [startTime, setStartTime] = useState({ label: "09:00", value: 540 });
   const [finishTime, setFinishTime] = useState({ label: "18:00", value: 1080 });
   const [timeOption, setTimeOption] = useState(false);
-  const [wageType, setWageType] = useState("월급");
+  const [wageType, setWageType] = useState({
+    id: 3,
+    value: t("companyPostUploadForm.32"),
+  });
   const [wageNum, setWageNum] = useState();
   const [photo, setPhoto] = useState([]);
   const [countPhoto, setCountPhoto] = useState(0);
   const [isOver, setIsOver] = useState(false);
-
   const {
     control,
     handleSubmit,
@@ -249,17 +259,17 @@ export default function CompanyPostUploadFormPresenter({
 
   const onValid = async ({ title, contactNumber, email, content }) => {
     if (!title) {
-      Alert.alert("제목을 입력해주세요.");
+      Alert.alert(t("companyPostUploadForm.25"));
     } else if (!contactNumber) {
-      Alert.alert("연락처를 입력해주세요.");
+      Alert.alert(t("companyPostUploadForm.26"));
     } else if (!email) {
-      Alert.alert("이메일을 입력해주세요.");
+      Alert.alert(t("companyPostUploadForm.27"));
     } else if (!emailRule.test(email)) {
-      Alert.alert("이메일 형식이 잘못 되었습니다.");
+      Alert.alert(t("companyPostUploadForm.28"));
     } else if (!wageNum) {
-      Alert.alert("임금을 입력해주세요.");
+      Alert.alert(t("companyPostUploadForm.29"));
     } else if (!content) {
-      Alert.alert("세부 내용을 입력해주세요.");
+      Alert.alert(t("companyPostUploadForm.30"));
     } else {
       const fileUrl = await photo.map((item, index) => {
         return new ReactNativeFile({
@@ -284,7 +294,7 @@ export default function CompanyPostUploadFormPresenter({
             startTime: parseInt(startTime.value),
             finishTime: parseInt(finishTime.value),
             timeOption,
-            wageType,
+            wageTypeId: wageType.id,
             wage: wageNum,
             contactNumber,
             email,
@@ -300,7 +310,7 @@ export default function CompanyPostUploadFormPresenter({
       const { status } =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== "granted") {
-        alert("Sorry, we need camera roll permissions to make this work!");
+        alert(t("alert.5"));
       } else {
         if (countPhoto < 5) {
           let result = await ImagePicker.launchImageLibraryAsync({
@@ -308,9 +318,9 @@ export default function CompanyPostUploadFormPresenter({
             allowsMultipleSelection: true,
             allowsEditing: false,
           });
-          if (!result.cancelled) {
-            if (countPhoto + result.selected.length <= 5) {
-              result.selected.map(async (item) => {
+          if (!result.canceled) {
+            if (countPhoto + result.assets.length <= 5) {
+              result.assets.map(async (item) => {
                 const manipResult = await manipulateAsync(
                   item.uri,
                   [
@@ -324,7 +334,7 @@ export default function CompanyPostUploadFormPresenter({
                 );
                 setPhoto((photo) => [...photo, { uri: manipResult.uri }]);
               });
-              setCountPhoto(countPhoto + result.selected.length);
+              setCountPhoto(countPhoto + result.assets.length);
               setIsOver(false);
             } else {
               setIsOver(true);
@@ -343,7 +353,7 @@ export default function CompanyPostUploadFormPresenter({
 
   useEffect(() => {
     if (!mon && !tue && !wed && !thu && !fri && !sat && !sun) {
-      setError("day", { message: "최소 1개 이상 요일을 넣어주세요." });
+      setError("day", { message: t("companyPostUploadForm.31") });
     }
   }, [mon, tue, wed, thu, fri, sat, sun]);
 
@@ -353,12 +363,10 @@ export default function CompanyPostUploadFormPresenter({
         <KeyboardAwareScrollView extraScrollHeight={50}>
           <ImageTop>
             <PictureContainer>
-              <PictureTitle>사진 </PictureTitle>
-              <Opt>(선택)</Opt>
+              <PictureTitle>{t("companyPostUploadForm.1")} </PictureTitle>
+              <Opt>{t("companyPostUploadForm.2")}</Opt>
             </PictureContainer>
-            <PictureSub>
-              구인글에 사진이 있으면 더 많은 사람들이 확인해요.
-            </PictureSub>
+            <PictureSub>{t("companyPostUploadForm.3")}</PictureSub>
             <ImageScroll
               horizontal={true}
               showsHorizontalScrollIndicator={false}
@@ -394,18 +402,18 @@ export default function CompanyPostUploadFormPresenter({
                   size={21}
                   color={colors.error}
                 />
-                <ErrorText>사진은 5장까지만 가능합니다.</ErrorText>
+                <ErrorText>{t("companyPostUploadForm.4")}</ErrorText>
               </ErrorContainer>
             )}
           </ImageTop>
           <InputBottom>
-            <Title>제목</Title>
+            <Title>{t("companyPostUploadForm.5")}</Title>
             <Controller
               name="title"
               control={control}
               render={({ field: { onChange, value } }) => (
                 <TitleInput
-                  placeholder="공고 내용을 요약해서 적어주세요."
+                  placeholder={t("companyPostUploadForm.6")}
                   placeholderTextColor="#cccccc"
                   autoCapitalize="none"
                   maxLength={100}
@@ -416,13 +424,13 @@ export default function CompanyPostUploadFormPresenter({
                 />
               )}
             />
-            <Title>연락처</Title>
+            <Title>{t("companyPostUploadForm.7")}</Title>
             <Controller
               name="contactNumber"
               control={control}
               render={({ field: { onChange, value } }) => (
                 <TitleInput
-                  placeholder={"0941112222"}
+                  placeholder="0341112222"
                   placeholderTextColor="#cccccc"
                   autoCapitalize="none"
                   returnKeyType="done"
@@ -433,13 +441,13 @@ export default function CompanyPostUploadFormPresenter({
                 />
               )}
             />
-            <Title>이메일</Title>
+            <Title>{t("companyPostUploadForm.8")}</Title>
             <Controller
               name="email"
               control={control}
               render={({ field: { onChange, value } }) => (
                 <TitleInput
-                  placeholder="abc@gamil.com"
+                  placeholder="vinaarba@gamil.com"
                   placeholderTextColor="#cccccc"
                   autoCapitalize="none"
                   maxLength={100}
@@ -450,7 +458,7 @@ export default function CompanyPostUploadFormPresenter({
                 />
               )}
             />
-            <Title>근무 요일</Title>
+            <Title>{t("companyPostUploadForm.9")}</Title>
             <DayContainer>
               <Day
                 selected={mon}
@@ -459,7 +467,9 @@ export default function CompanyPostUploadFormPresenter({
                   clearErrors("day");
                 }}
               >
-                <DayText selected={mon}>월</DayText>
+                <DayText selected={mon}>
+                  {t("companyPostUploadForm.10")}
+                </DayText>
               </Day>
               <Day
                 selected={tue}
@@ -468,7 +478,9 @@ export default function CompanyPostUploadFormPresenter({
                   clearErrors("day");
                 }}
               >
-                <DayText selected={tue}>화</DayText>
+                <DayText selected={tue}>
+                  {t("companyPostUploadForm.11")}
+                </DayText>
               </Day>
               <Day
                 selected={wed}
@@ -477,7 +489,9 @@ export default function CompanyPostUploadFormPresenter({
                   clearErrors("day");
                 }}
               >
-                <DayText selected={wed}>수</DayText>
+                <DayText selected={wed}>
+                  {t("companyPostUploadForm.12")}
+                </DayText>
               </Day>
               <Day
                 selected={thu}
@@ -486,7 +500,9 @@ export default function CompanyPostUploadFormPresenter({
                   clearErrors("day");
                 }}
               >
-                <DayText selected={thu}>목</DayText>
+                <DayText selected={thu}>
+                  {t("companyPostUploadForm.13")}
+                </DayText>
               </Day>
               <Day
                 selected={fri}
@@ -495,7 +511,9 @@ export default function CompanyPostUploadFormPresenter({
                   clearErrors("day");
                 }}
               >
-                <DayText selected={fri}>금</DayText>
+                <DayText selected={fri}>
+                  {t("companyPostUploadForm.14")}
+                </DayText>
               </Day>
               <Day
                 selected={sat}
@@ -504,7 +522,9 @@ export default function CompanyPostUploadFormPresenter({
                   clearErrors("day");
                 }}
               >
-                <DayText selected={sat}>토</DayText>
+                <DayText selected={sat}>
+                  {t("companyPostUploadForm.15")}
+                </DayText>
               </Day>
               <Day
                 selected={sun}
@@ -513,22 +533,27 @@ export default function CompanyPostUploadFormPresenter({
                   clearErrors("day");
                 }}
               >
-                <DayText selected={sun}>일</DayText>
+                <DayText selected={sun}>
+                  {t("companyPostUploadForm.16")}
+                </DayText>
               </Day>
             </DayContainer>
-            <FormError message={errors?.day?.message} />
+
+            {errors?.day?.message ? (
+              <FormError>{errors?.day?.message}</FormError>
+            ) : null}
             <CheckContainer>
               <Checkbox
                 value={dayOption}
                 onValueChange={setDayOption}
                 color={dayOption ? colors.buttonBackground : colors.borderThick}
               />
-              <CheckText>협의 가능</CheckText>
+              <CheckText>{t("companyPostUploadForm.17")}</CheckText>
             </CheckContainer>
-            <Title>근무 시간</Title>
+            <Title>{t("companyPostUploadForm.18")}</Title>
             <TimeTextContainer>
-              <Time>시작</Time>
-              <Time>종료</Time>
+              <Time>{t("companyPostUploadForm.19")}</Time>
+              <Time>{t("companyPostUploadForm.20")}</Time>
             </TimeTextContainer>
             <ModalContainer>
               <ModalView>
@@ -585,23 +610,37 @@ export default function CompanyPostUploadFormPresenter({
                   timeOption ? colors.buttonBackground : colors.borderThick
                 }
               />
-              <CheckText>협의 가능</CheckText>
+              <CheckText>{t("companyPostUploadForm.17")}</CheckText>
             </CheckContainer>
-            <Title>임금</Title>
+            <Title>{t("companyPostUploadForm.21")}</Title>
             <WageContainer>
               <ModalView>
                 <ModalSelector
                   data={typeOfWage}
                   keyExtractor={(item) => item.id}
-                  labelExtractor={(item) => item.value}
+                  labelExtractor={(item) =>
+                    i18n.language === "vn"
+                      ? item.valueVn
+                      : i18n.language === "en"
+                      ? item.valueEn
+                      : item.valueKo
+                  }
                   accessible={true}
                   onChange={(item) => {
-                    setWageType(item.value);
+                    setWageType({
+                      id: item.id,
+                      value:
+                        i18n.language === "vn"
+                          ? item.valueVn
+                          : i18n.language === "en"
+                          ? item.valueEn
+                          : item.valueKo,
+                    });
                   }}
                   // optionContainerStyle={{ height: 180 }}
                 >
                   <TimeContainer>
-                    <SelectBox value={wageType} />
+                    <SelectBox value={wageType.value} />
                     <Ionicons
                       name="chevron-forward"
                       color="black"
@@ -641,7 +680,7 @@ export default function CompanyPostUploadFormPresenter({
                 )}
               />
             </WageContainer>
-            <Title>세부 내용</Title>
+            <Title>{t("companyPostUploadForm.22")}</Title>
             <Controller
               name="content"
               control={control}
@@ -654,9 +693,7 @@ export default function CompanyPostUploadFormPresenter({
                   autoCapitalize="none"
                   onChangeText={(text) => onChange(text)}
                   value={value || ""}
-                  placeholder={
-                    "예) 업무 예시, 사내 복지, 근무 여건, 지원자가 갖추어야 할 능력, 우대 사항 등"
-                  }
+                  placeholder={t("companyPostUploadForm.23")}
                   placeholderTextColor="#cccccc"
                 />
               )}
@@ -666,7 +703,7 @@ export default function CompanyPostUploadFormPresenter({
       </Container>
       <SubmitContainer>
         <AuthButton
-          text={"작성 완료"}
+          text={t("companyPostUploadForm.24")}
           onPress={handleSubmit(onValid)}
           loading={loading}
         />

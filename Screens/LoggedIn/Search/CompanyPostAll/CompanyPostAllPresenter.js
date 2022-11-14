@@ -5,13 +5,13 @@ import {
   Modal,
   View,
   TouchableOpacity,
-  Text,
   Alert,
   ScrollView,
   RefreshControl,
 } from "react-native";
 import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
 import PostFormButton from "../../../../Components/Post/PostFormButton";
 import { colors } from "../../../../Colors";
 import { bigDistrict, smallDistrict } from "../../../../DistrictList";
@@ -177,6 +177,18 @@ const SearchText = styled.Text`
   font-weight: 700;
 `;
 
+const PlaceHolder = styled.Text`
+  font-size: 12px;
+  font-weight: 700;
+  color: ${colors.borderThick};
+`;
+
+const NoPostText = styled.Text`
+  text-align: center;
+  margin: 50px auto;
+  font-size: 16px;
+`;
+
 export default function CompanyPostAllPresenter({
   goToCompanyPostForm,
   handleFetch,
@@ -207,6 +219,7 @@ export default function CompanyPostAllPresenter({
   realVnAll,
   setRealVnAll,
 }) {
+  const { t, i18n } = useTranslation();
   const scrollViewRef = useRef();
   const [modalVisible, setModalVisible] = useState(false);
   const [districtCode, setDistrictCode] = useState();
@@ -221,7 +234,7 @@ export default function CompanyPostAllPresenter({
     if (isAddress2(value)) {
       setList(list.filter((el) => el.value !== value));
     } else if (list.length > 4) {
-      Alert.alert("5개까지만 가능해요");
+      Alert.alert(t("companyPostAll.10"));
     } else {
       setList([...list, { id: districtCode, value: value }]);
     }
@@ -273,15 +286,15 @@ export default function CompanyPostAllPresenter({
           <ModalView>
             <ModalTop>
               <TopContainer>
-                <TopText>희망근무지 선택</TopText>
+                <TopText>{t("companyPostAll.1")}</TopText>
                 <CountingContainer>
                   <Counting>{vnAll ? "1" : list.length}</Counting>
                   <Counting2>/5</Counting2>
                 </CountingContainer>
               </TopContainer>
               <TopContainer2>
-                <DistrictText>지역1</DistrictText>
-                <DistrictText2>지역2</DistrictText2>
+                <DistrictText>{t("companyPostAll.5")}</DistrictText>
+                <DistrictText2>{t("companyPostAll.6")}</DistrictText2>
               </TopContainer2>
             </ModalTop>
             <DistrictContainer>
@@ -302,7 +315,7 @@ export default function CompanyPostAllPresenter({
                 >
                   <BtnTextContainer>
                     <ButtonText selected={vnAll} isAll={true}>
-                      전체
+                      {t("companyPostAll.2")}
                     </ButtonText>
                     {vnAll ? (
                       <CheckView>
@@ -360,7 +373,7 @@ export default function CompanyPostAllPresenter({
                             },
                           ]);
                         } else if (list.length > 4) {
-                          Alert.alert("5개까지만 가능해요");
+                          Alert.alert(t("companyPostAll.10"));
                         } else {
                           setVnAll(false);
                           setList([
@@ -375,7 +388,7 @@ export default function CompanyPostAllPresenter({
                     >
                       <BtnTextContainer>
                         <ButtonText selected={existAll} isAll={true}>
-                          전체
+                          {t("companyPostAll.2")}
                         </ButtonText>
                         {existAll ? (
                           <CheckView>
@@ -438,7 +451,7 @@ export default function CompanyPostAllPresenter({
               <ListContainer>
                 {vnAll ? (
                   <DistrictSet>
-                    <ListText>VN전체</ListText>
+                    <ListText>VN {t("companyPostAll.2")}</ListText>
                     <TouchableOpacity onPress={() => setVnAll(false)}>
                       <Ionicons name="close-outline" size={20} color="black" />
                     </TouchableOpacity>
@@ -455,7 +468,9 @@ export default function CompanyPostAllPresenter({
                   {list.map((item, index) => (
                     <DistrictSet key={index}>
                       {item.id > 100 ? (
-                        <ListText>{item.value} 전체</ListText>
+                        <ListText>
+                          {item.value} {t("companyPostAll.2")}
+                        </ListText>
                       ) : (
                         <ListText>{item.value}</ListText>
                       )}
@@ -482,7 +497,7 @@ export default function CompanyPostAllPresenter({
                     setList(realList);
                   }}
                 >
-                  <CloseText>닫기</CloseText>
+                  <CloseText>{t("companyPostAll.3")}</CloseText>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
@@ -490,7 +505,7 @@ export default function CompanyPostAllPresenter({
                     handleSubmit();
                   }}
                 >
-                  <OkText>확인</OkText>
+                  <OkText>{t("companyPostAll.4")}</OkText>
                 </TouchableOpacity>
               </FinalContainer>
             </BottomContainer>
@@ -505,21 +520,35 @@ export default function CompanyPostAllPresenter({
         >
           <SearchContainer>
             {realVnAll ? (
-              <SearchText>VN 전체</SearchText>
+              <SearchText>VN {t("companyPostAll.2")}</SearchText>
             ) : realList.length === 1 && realList[0].id > 100 ? (
-              <SearchText>{realList[0].value} 전체</SearchText>
+              <SearchText>
+                {realList[0].value} {t("companyPostAll.2")}
+              </SearchText>
             ) : realList.length === 1 && realList[0].id < 100 ? (
               <SearchText>{realList[0].value} </SearchText>
             ) : realList.length > 1 && realList[0].id > 100 ? (
               <SearchText>
-                {realList[0].value} 전체 외 {realList.length - 1}건
+                {i18n.language === "vn"
+                  ? `${t("companyPostAll.7")} ${realList[0].value} ${t(
+                      "companyPostAll.2"
+                    )} ${realList.length - 1}${t("companyPostAll.8")}`
+                  : `${realList[0].value} ${t("companyPostAll.2")} ${t(
+                      "companyPostAll.7"
+                    )} ${realList.length - 1}${t("companyPostAll.8")}`}
               </SearchText>
             ) : realList.length > 1 && realList[0].id < 100 ? (
               <SearchText>
-                {realList[0].value} 외 {realList.length - 1}건
+                {i18n.language === "vn"
+                  ? `${t("companyPostAll.7")} ${realList[0].value} ${
+                      realList.length - 1
+                    }${t("companyPostAll.8")}`
+                  : `${realList[0].value} ${t("companyPostAll.7")} ${
+                      realList.length - 1
+                    }${t("companyPostAll.8")}`}
               </SearchText>
             ) : (
-              <SearchText>지역 찾기</SearchText>
+              <PlaceHolder>{t("companyPostAll.11")}</PlaceHolder>
             )}
             <Ionicons name="chevron-down" size={16} color="black" />
           </SearchContainer>
@@ -568,7 +597,7 @@ export default function CompanyPostAllPresenter({
             <RefreshControl refreshing={refreshing} onRefresh={FRefresh} />
           }
         >
-          <Text>해당 지역에 구인글이 없어요 😂</Text>
+          <NoPostText>{t("companyPostAll.9")}</NoPostText>
         </ScrollView>
       )}
       {fetchLoading ? (

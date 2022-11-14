@@ -15,7 +15,7 @@ export const UPLOAD_COMPANY_POST_MUTATION = gql`
     $startTime: Int!
     $finishTime: Int!
     $timeOption: Boolean!
-    $wageType: String!
+    $wageTypeId: Int!
     $wage: String!
     $contactNumber: String!
     $email: String!
@@ -35,7 +35,7 @@ export const UPLOAD_COMPANY_POST_MUTATION = gql`
       startTime: $startTime
       finishTime: $finishTime
       timeOption: $timeOption
-      wageType: $wageType
+      wageTypeId: $wageTypeId
       wage: $wage
       contactNumber: $contactNumber
       email: $email
@@ -68,7 +68,7 @@ export const UPLOAD_COMPANY_POST_MUTATION = gql`
       startTime
       finishTime
       timeOption
-      wageType
+      wageTypeId
       wage
       contactNumber
       email

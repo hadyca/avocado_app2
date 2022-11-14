@@ -22,7 +22,6 @@ export default function () {
   const [followingState, setFollowingState] = useState();
 
   const { data, loading, refetch } = useQuery(NOTIFICATION_QUERY);
-
   const [noticeMutation] = useMutation(NOTI_NOTICE_MUTATION);
   const [userPostLikeMutation] = useMutation(NOTI_USER_POST_LIKE_MUTATION);
   const [userPostCommentMutation] = useMutation(
@@ -85,7 +84,6 @@ export default function () {
       },
     });
   };
-
   useEffect(() => {
     if (data?.seeNotificationTypeState) {
       refetch();
