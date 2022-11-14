@@ -1,96 +1,115 @@
 import React, { useRef, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import PhoneInput from "react-native-phone-number-input";
 import AuthButton from "../../Components/Auth/AuthButton";
-import AuthLayout from "../../Components/Auth/AuthLayout";
 import FormError from "../../Components/Auth/FormError";
-import { Subtitle } from "../../Components/Auth/Subtitle";
-import { TextInput } from "../../Components/Auth/AuthShared";
-import { emailRule, passwordRule, usernameRule } from "../../RegExp";
-import { Text, TouchableOpacity, View } from "react-native";
 import { colors } from "../../Colors";
 import ProgressCreateCompany from "../../Components/Auth/ProgressCreateCompany";
 import CreateAccountLayout from "../../Components/CreateAccountLayout";
+import styled from "styled-components/native";
+
+const CHECK_ACCOUNT_MUTATION = gql`
+  mutation checkAccount($accountNumber: String!) {
+    checkAccount(accountNumber: $accountNumber) {
+      ok
+    }
+  }
+`;
+
+const InputContainer = styled.View`
+  margin-bottom: 25px;
+`;
 
 export default function AskPhoneNumber({ route: { params } }) {
   const { t } = useTranslation();
   const [value, setValue] = useState("");
   const [formattedValue, setFormattedValue] = useState("");
-  const [valid, setValid] = useState(false);
-  const [showMessage, setShowMessage] = useState(false);
-
+  const [valid, setValid] = useState(true);
   const phoneInput = useRef();
+  const navigation = useNavigation();
+
+  const { setError, clearErrors, formState } = useForm({
+    mode: "onChange",
+  });
+
+  const clearLoginError = () => {
+    clearErrors("result");
+  };
+
+  const onCompleted = (data) => {
+    const {
+      checkAccount: { ok, error },
+    } = data;
+    if (!ok) {
+      return setError("result", {
+        message: error === "100" ? t("askPhoneNumber.4") : null,
+      });
+    } else {
+      return navigation.navigate("ConfirmSecret", {
+        pushToken: params.pushToken,
+        language: params.language,
+      });
+    }
+  };
+
+  const [createAccountMutation, { loading }] = useMutation(
+    CHECK_ACCOUNT_MUTATION,
+    {
+      variables: {
+        accountNumber: formattedValue.substring(1),
+      },
+      onCompleted,
+    }
+  );
+  console.log(formattedValue.substring(1));
+  console.log(phoneInput.current?.getCallingCode());
 
   return (
-    // <AuthLayout>
-    //   <Subtitle>{t("createAccount.12")}</Subtitle>
-    //   {showMessage && (
-    //     <View>
-    //       <Text>Value : {value}</Text>
-    //       <Text>Formatted Value : {formattedValue}</Text>
-    //       <Text>Valid : {valid ? "true" : "false"}</Text>
-    //     </View>
-    //   )}
-    //   <PhoneInput
-    //     containerStyle={{
-    //       width: "100%",
-    //       backgroundColor: colors.greyBackround,
-    //     }}
-    //     // textInputStyle={{ color: "blue" }}
-    //     // textContainerStyle={{ backgroundColor: "red" }}
-    //     filterProps={{ placeholder: t("createAccount.14") }}
-    //     ref={phoneInput}
-    //     defaultValue={value}
-    //     placeholder={t("createAccount.13")}
-    //     defaultCode="VN"
-    //     layout="first"
-    //     onChangeText={(text) => {
-    //       setValue(text);
-    //     }}
-    //     onChangeFormattedText={(text) => {
-    //       setFormattedValue(text);
-    //     }}
-    //   />
-    //   <TouchableOpacity
-    //     onPress={() => {
-    //       const checkValid = phoneInput.current?.isValidNumber(value);
-    //       setShowMessage(true);
-    //       setValid(checkValid ? checkValid : false);
-    //     }}
-    //   >
-    //     <Text>Check</Text>
-    //   </TouchableOpacity>
-    // </AuthLayout>
     <CreateAccountLayout step={"1"}>
-      <ProgressCreateCompany title={t("askCompanyName.1")} />
-      <PhoneInput
-        containerStyle={{
-          width: "100%",
-          backgroundColor: colors.greyBackround,
-        }}
-        // textInputStyle={{ color: "blue" }}
-        // textContainerStyle={{ backgroundColor: "red" }}
-        filterProps={{ placeholder: t("createAccount.14") }}
-        ref={phoneInput}
-        defaultValue={value}
-        placeholder={t("createAccount.13")}
-        defaultCode="VN"
-        layout="first"
-        onChangeText={(text) => {
-          setValue(text);
-        }}
-        onChangeFormattedText={(text) => {
-          setFormattedValue(text);
-        }}
-      />
+      <ProgressCreateCompany title={t("askPhoneNumber.1")} />
+      {!valid ? <FormError message={t("askPhoneNumber.2")} /> : null}
+      {!formState.isValid ? (
+        <FormError message={t("askPhoneNumber.4")} />
+      ) : null}
+      <InputContainer>
+        <PhoneInput
+          containerStyle={{
+            width: "100%",
+            backgroundColor: colors.greyBackround,
+          }}
+          // textInputStyle={{ color: "blue" }}
+          // textContainerStyle={{ backgroundColor: "red" }}
+          filterProps={{ placeholder: t("askPhoneNumber.3") }}
+          ref={phoneInput}
+          defaultValue={value}
+          placeholder={t("createAccount.1")}
+          defaultCode="VN"
+          layout="first"
+          onChangeText={(text) => {
+            setValue(text);
+            setValid(true);
+            clearLoginError();
+          }}
+          onChangeFormattedText={(text) => {
+            setFormattedValue(text);
+            setValid(true);
+            clearLoginError();
+          }}
+        />
+      </InputContainer>
       <AuthButton
-        text={t("askCompanyName.2")}
-        // disabled={!formState.isValid}
-        loading={false}
-        onPress={() => console.log("Hehe")}
+        text={t("share.4")}
+        loading={loading}
+        onPress={() => {
+          const checkValid = phoneInput.current?.isValidNumber(value);
+          setValid(checkValid ? checkValid : false);
+          if (checkValid) {
+            createAccountMutation();
+          }
+        }}
       />
     </CreateAccountLayout>
   );

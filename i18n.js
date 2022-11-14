@@ -55,8 +55,14 @@ const resources = {
         3: "계정이 존재하지 않거나 잘못된 암호입니다.",
         4: "로그인",
       },
+      askPhoneNumber: {
+        1: "핸드폰 번호",
+        2: "핸드폰 번호를 다시 확인해주세요.",
+        3: "검색",
+        4: "이미 사용중인 핸드폰 번호가 있습니다.",
+      },
       createAccount: {
-        1: "이메일",
+        1: "핸드폰 번호",
         2: "사용자 이름",
         3: "비밀번호",
         4: "비밀번호 재입력",
@@ -72,7 +78,7 @@ const resources = {
         14: "국가명 입력",
       },
       confirmSecret: {
-        1: "이메일을 확인해 주세요",
+        1: "핸드폰 문자를 확인해주세요.",
         2: "인증번호",
         3: "인증번호 확인",
         4: "인증번호 다시 받기",
@@ -363,6 +369,7 @@ const resources = {
         1: "확인",
         2: "취소",
         3: "완료",
+        4: "다음",
       },
       alert: {
         1: "삭제된 게시글 입니다.",
@@ -426,8 +433,14 @@ const resources = {
         3: "The account does not exist or is an invalid password.",
         4: "Log In",
       },
+      askPhoneNumber: {
+        1: "Phone Number",
+        2: "Please check your phone number again.",
+        3: "Search",
+        4: "There is already have a phone number in use",
+      },
       createAccount: {
-        1: "Email",
+        1: "Phone Number",
         2: "Username",
         3: "Password",
         4: "Retype password",
@@ -443,7 +456,7 @@ const resources = {
         14: "Enter country name",
       },
       confirmSecret: {
-        1: "Please check in your email",
+        1: "Please check your SMS",
         2: "Authentication code",
         3: "Confirm",
         4: "Get again",
@@ -734,6 +747,7 @@ const resources = {
         1: "Ok",
         2: "Cancel",
         3: "Done",
+        4: "Next",
       },
       alert: {
         1: "The post has been deleted.",
@@ -797,8 +811,14 @@ const resources = {
         3: "Tài khoản không tồn tại hoặc là mật khẩu không chính xác.",
         4: "Đăng nhập",
       },
+      askPhoneNumber: {
+        1: "số điện thoại",
+        2: "번역 필요",
+        3: "Tìm kiếm",
+        4: "Số điện thoại này đã được sử dụng.",
+      },
       createAccount: {
-        1: "Email",
+        1: "Số điện thoại",
         2: "Tên người dùng",
         3: "Mật khẩu",
         4: "Nhập lại mật khẩu",
@@ -814,7 +834,7 @@ const resources = {
         14: "Tìm kiếm",
       },
       confirmSecret: {
-        1: "Hãy kiểm tra địa chỉ email.",
+        1: "Hãy kiểm tra tin nhắn điện thoại.",
         2: "Mã xác nhận",
         3: "Xác nhận",
         4: "Yêu cầu lại mã xác nhận",
@@ -1105,6 +1125,7 @@ const resources = {
         1: "Xác nhận",
         2: "Hủy",
         3: "Xong",
+        4: "Tiếp theo",
       },
       alert: {
         1: "번역 필요",

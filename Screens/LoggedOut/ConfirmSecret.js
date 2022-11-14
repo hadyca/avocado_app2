@@ -9,10 +9,12 @@ import { TextInput } from "../../Components/Auth/AuthShared";
 import { logUserIn } from "../../apollo";
 import FormError from "../../Components/Auth/FormError";
 import { Subtitle } from "../../Components/Auth/Subtitle";
+import CreateAccountLayout from "../../Components/CreateAccountLayout";
+import ProgressCreateCompany from "../../Components/Auth/ProgressCreateCompany";
 
 const REQUEST_SECRET_MUTATION = gql`
-  mutation requestSecret($email: String!) {
-    requestSecret(email: $email) {
+  mutation requestSecret($phoneNumber: String!) {
+    requestSecret(phoneNumber: $phoneNumber) {
       ok
       error
     }
@@ -20,25 +22,10 @@ const REQUEST_SECRET_MUTATION = gql`
 `;
 
 const CONFIRM_SECRET = gql`
-  mutation confirmSecret(
-    $email: String!
-    $username: String!
-    $password: String!
-    $secret: String!
-    $pushToken: String!
-    $language: String!
-  ) {
-    confirmSecret(
-      email: $email
-      username: $username
-      password: $password
-      secret: $secret
-      pushToken: $pushToken
-      language: $language
-    ) {
+  mutation confirmSecret($phoneNumber: String!, $secret: String!) {
+    confirmSecret(phoneNumber: $phoneNumber, secret: $secret) {
       ok
       error
-      token
     }
   }
 `;
@@ -82,12 +69,8 @@ export default function ConfirmSecret({ route: { params } }) {
     if (!loading) {
       await confirmSecretMutation({
         variables: {
-          email: params.email,
-          username: params.username,
-          password: params.password,
+          phoneNumber: params.phoneNumber,
           secret: data.secret,
-          pushToken: params.pushToken,
-          language: params.language,
         },
       });
     }
@@ -101,7 +84,7 @@ export default function ConfirmSecret({ route: { params } }) {
       if (!loading) {
         requestSecretMutation({
           variables: {
-            email: params.email,
+            phoneNumber: params.phoneNumber,
           },
         });
         Alert.alert(t("confirmSecret.9"));
@@ -136,8 +119,8 @@ export default function ConfirmSecret({ route: { params } }) {
   };
 
   return (
-    <AuthLayout>
-      <Subtitle>{t("confirmSecret.1")}</Subtitle>
+    <CreateAccountLayout step={"2"}>
+      <ProgressCreateCompany title={t("confirmSecret.1")} />
       <Controller
         name="secret"
         rules={{
@@ -186,6 +169,6 @@ export default function ConfirmSecret({ route: { params } }) {
         loading={false}
         lastOne={true}
       />
-    </AuthLayout>
+    </CreateAccountLayout>
   );
 }

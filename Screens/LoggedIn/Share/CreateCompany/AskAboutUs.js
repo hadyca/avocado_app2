@@ -73,7 +73,6 @@ export default function AskAboutUs({ route: { params } }) {
           </AboutUsView>
         )}
       />
-
       <AuthButton
         text={t("askAboutUs.4")}
         disabled={!formState.isValid}
