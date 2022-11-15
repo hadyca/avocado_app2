@@ -6,6 +6,7 @@ export const TextInput = styled.TextInput`
   padding: 15px 7px;
   border-radius: 4px;
   color: black;
+  height: 55px;
   border: 1px solid
     ${(props) =>
       props.hasError

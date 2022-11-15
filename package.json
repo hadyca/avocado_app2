@@ -28,7 +28,7 @@
     "expo-image-picker": "~14.0.1",
     "expo-media-library": "~15.0.0",
     "expo-notifications": "~0.17.0",
-    "expo-splash-screen": "~0.17.4",
+    "expo-splash-screen": "~0.17.5",
     "expo-status-bar": "~1.4.2",
     "graphql": "^15.5.1",
     "i18next": "^22.0.4",

@@ -4,17 +4,27 @@ import { Alert } from "react-native";
 import { gql, useMutation } from "@apollo/client";
 import { useTranslation } from "react-i18next";
 import AuthButton from "../../Components/Auth/AuthButton";
-import AuthLayout from "../../Components/Auth/AuthLayout";
+import { useNavigation } from "@react-navigation/native";
 import { TextInput } from "../../Components/Auth/AuthShared";
-import { logUserIn } from "../../apollo";
 import FormError from "../../Components/Auth/FormError";
-import { Subtitle } from "../../Components/Auth/Subtitle";
 import CreateAccountLayout from "../../Components/CreateAccountLayout";
 import ProgressCreateCompany from "../../Components/Auth/ProgressCreateCompany";
+import styled from "styled-components/native";
+import { colors } from "../../Colors";
 
 const REQUEST_SECRET_MUTATION = gql`
-  mutation requestSecret($accountNumber: String!) {
-    requestSecret(accountNumber: $accountNumber) {
+  mutation requestSecret(
+    $language: String!
+    $countryCode: String!
+    $phoneNumber: String!
+    $accountNumber: String!
+  ) {
+    requestSecret(
+      language: $language
+      countryCode: $countryCode
+      phoneNumber: $phoneNumber
+      accountNumber: $accountNumber
+    ) {
       ok
       error
     }
@@ -30,29 +40,23 @@ const CONFIRM_SECRET = gql`
   }
 `;
 
+const TimeText = styled.Text`
+  color: ${colors.error};
+  font-weight: 600;
+  font-size: 12px;
+  margin: 0px 0px 25px 0px;
+`;
+
 export default function ConfirmSecret({ route: { params } }) {
   const { t } = useTranslation();
   const [minutes, setMinutes] = useState(3);
   const [seconds, setSeconds] = useState(0);
   const [waitingMail, setWaitingMail] = useState(true);
-  const [focus1, setFocus1] = useState(false);
+  const navigation = useNavigation();
 
   const { handleSubmit, formState, control, setError, clearErrors } = useForm({
     mode: "onChange",
   });
-
-  // const onCompleted = async (data) => {
-  //   const {
-  //     confirmSecret: { ok, error, token },
-  //   } = data;
-  //   if (!ok) {
-  //     return setError("result", {
-  //       message: error === "100" ? t("confirmSecret.7") : t("confirmSecret.8"),
-  //     });
-  //   } else {
-  //     await logUserIn(token);
-  //   }
-  // };
 
   const onCompleted = async (data) => {
     const {
@@ -61,6 +65,14 @@ export default function ConfirmSecret({ route: { params } }) {
     if (!ok) {
       return setError("result", {
         message: error === "100" ? t("confirmSecret.7") : t("confirmSecret.8"),
+      });
+    } else {
+      navigation.navigate("AskUsername", {
+        countryCode: params.countryCode,
+        phoneNumber: params.phoneNumber,
+        accountNumber: params.accountNumber,
+        pushToken: params.pushToken,
+        language: params.language,
       });
     }
   };
@@ -80,7 +92,7 @@ export default function ConfirmSecret({ route: { params } }) {
     if (!loading) {
       await confirmSecretMutation({
         variables: {
-          phoneNumber: params.phoneNumber,
+          accountNumber: params.accountNumber,
           secret: data.secret,
         },
       });
@@ -95,7 +107,10 @@ export default function ConfirmSecret({ route: { params } }) {
       if (!loading) {
         requestSecretMutation({
           variables: {
+            language: params.language,
+            countryCode: params.countryCode,
             phoneNumber: params.phoneNumber,
+            accountNumber: params.accountNumber,
           },
         });
         Alert.alert(t("confirmSecret.9"));
@@ -132,6 +147,7 @@ export default function ConfirmSecret({ route: { params } }) {
   return (
     <CreateAccountLayout step={"2"}>
       <ProgressCreateCompany title={t("confirmSecret.1")} />
+      <FormError message={formState.errors?.result?.message} />
       <Controller
         name="secret"
         rules={{
@@ -148,29 +164,19 @@ export default function ConfirmSecret({ route: { params } }) {
             onSubmitEditing={handleSubmit(onValid)}
             onChangeText={(text) => onChange(text)}
             value={value || ""}
-            onFocus={() => {
-              setFocus1(true);
-            }}
-            onBlur={() => {
-              setFocus1(false);
-            }}
-            focus={focus1}
           />
         )}
       />
-      <FormError message={formState.errors?.result?.message} />
-      <FormError
-        message={
-          minutes === 0 && seconds === 0
-            ? t("confirmSecret.6")
-            : seconds >= 10
-            ? `${t("confirmSecret.5")} 0${minutes}:${seconds}`
-            : `${t("confirmSecret.5")} 0${minutes}:0${seconds}`
-        }
-      />
+      <TimeText>
+        {minutes === 0 && seconds === 0
+          ? t("confirmSecret.6")
+          : seconds >= 10
+          ? `${t("confirmSecret.5")} 0${minutes}:${seconds}`
+          : `${t("confirmSecret.5")} 0${minutes}:0${seconds}`}
+      </TimeText>
       <AuthButton
         text={t("confirmSecret.3")}
-        disabled={!formState.isValid}
+        disabled={!formState.isValid || (minutes === 0 && seconds === 0)}
         onPress={handleSubmit(onValid)}
         loading={confirmLoading}
       />

@@ -1,5 +1,8 @@
 import { gql, useQuery, useReactiveVar } from "@apollo/client";
 import { useEffect } from "react";
+import { Alert } from "react-native";
+import { useTranslation } from "react-i18next";
+import { useNavigation } from "@react-navigation/native";
 import { isLoggedInVar, logUserOut } from "../apollo";
 
 const ME_QUERY = gql`
@@ -7,7 +10,9 @@ const ME_QUERY = gql`
     me {
       id
       username
-      email
+      countryCode
+      phoneNumber
+      accountNumber
       avatarUrl
       bio
       isMe
@@ -41,6 +46,8 @@ const ME_QUERY = gql`
 `;
 
 export default function useMe() {
+  const { t } = useTranslation();
+  const navigation = useNavigation();
   const hasToken = useReactiveVar(isLoggedInVar);
   const { data, loading, refetch } = useQuery(ME_QUERY, {
     skip: !hasToken,
@@ -50,7 +57,7 @@ export default function useMe() {
       } else {
         Alert.alert(t("alert.4"));
       }
-      navigation.pop();
+      navigation.navigate("Home");
     },
   });
 

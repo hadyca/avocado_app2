@@ -50,7 +50,7 @@ const resources = {
         2: "로그인",
       },
       logIn: {
-        1: "이메일",
+        1: "핸드폰 번호",
         2: "비밀번호",
         3: "계정이 존재하지 않거나 잘못된 암호입니다.",
         4: "로그인",
@@ -84,10 +84,21 @@ const resources = {
         4: "인증번호 다시 받기",
         5: "남은시간",
         6: "시간이 만료 되었습니다. 다시 받기 버튼을 눌러주세요.",
-        7: "다시 시도해 주세요.",
+        7: "다시 시도해주세요.",
         8: "인증번호가 일치 하지 않습니다.",
         9: "인증번호가 발송 되었습니다.",
-        10: "30초 후에 다시 시도해 주세요.",
+        10: "30초 후에 다시 시도해주세요.",
+      },
+      askUsername: {
+        1: "사용자 이름",
+        2: "특수문자는 사용할 수 없으며, 20자를 넘을 수 없습니다.",
+        3: "이미 사용중인 사용자 이름이 있습니다.",
+      },
+      askPassword: {
+        1: "비밀번호",
+        2: "비밀번호 재입력",
+        3: "숫자, 영문, 특수문자 각 1자리 이상이면서 최소 8자리를 넣어주세요.",
+        4: "비밀번호 불일치",
       },
       home: {
         1: "기업 회원이세요?",
@@ -370,12 +381,13 @@ const resources = {
         2: "취소",
         3: "완료",
         4: "다음",
+        5: "다시 시도해주세요.",
       },
       alert: {
         1: "삭제된 게시글 입니다.",
         2: "존재 하지 않는 사용자입니다.",
         3: "삭제된 댓글 입니다.",
-        4: "나중에 다시 시도해 주세요.",
+        4: "나중에 다시 시도해주세요.",
         5: "사진첩 승인이 필요합니다.",
       },
     },
@@ -428,19 +440,19 @@ const resources = {
         2: "Log In",
       },
       logIn: {
-        1: "Email",
+        1: "Phone number",
         2: "Password",
         3: "The account does not exist or is an invalid password.",
         4: "Log In",
       },
       askPhoneNumber: {
-        1: "Phone Number",
+        1: "Phone number",
         2: "Please check your phone number again.",
         3: "Search",
         4: "There is already have a phone number in use",
       },
       createAccount: {
-        1: "Phone Number",
+        1: "Phone number",
         2: "Username",
         3: "Password",
         4: "Retype password",
@@ -466,6 +478,17 @@ const resources = {
         8: "The authentication code does not match.",
         9: "The authentication code has been sent.",
         10: "Try again 30seconds later.",
+      },
+      askUsername: {
+        1: "Username",
+        2: "Special characters cannot be used, and cannot exceed 20 characters.",
+        3: "This username is in use.",
+      },
+      askPassword: {
+        1: "Password",
+        2: "Re-enter password",
+        3: "Please include at least one digit each of the numbers, English, and special characters, and at least 8 digits.",
+        4: "Password mismatch",
       },
       home: {
         1: "Are you a corporate member?",
@@ -748,6 +771,7 @@ const resources = {
         2: "Cancel",
         3: "Done",
         4: "Next",
+        5: "Please try again.",
       },
       alert: {
         1: "The post has been deleted.",
@@ -806,7 +830,7 @@ const resources = {
         2: "Đăng nhập",
       },
       logIn: {
-        1: "Email",
+        1: "Số điện thoại",
         2: "Mật khẩu",
         3: "Tài khoản không tồn tại hoặc là mật khẩu không chính xác.",
         4: "Đăng nhập",
@@ -844,6 +868,17 @@ const resources = {
         8: "Sai mã xác nhận",
         9: "Đã gửi mã xác nhận.",
         10: "Hãy thử lại sau 30 giây nữa.",
+      },
+      askUsername: {
+        1: "Tên người dùng",
+        2: "Không thể sử dụng ký tự đặc biệt, không vượt quá 20 ký tự.",
+        3: "Tên người dùng đã được sử dụng.",
+      },
+      askPassword: {
+        1: "Mật khẩu",
+        2: "Nhập lại mật khẩu",
+        3: "Hãy đặt ít nhất 8 chữ số trong đó có ít nhất trên 1 chữ số, chữ cái tiếng Anh, và chữ số đặc biệt.",
+        4: "Sai mật khẩu",
       },
       home: {
         1: "bạn là nhà tuyển dụng phải không?",
@@ -1126,6 +1161,7 @@ const resources = {
         2: "Hủy",
         3: "Xong",
         4: "Tiếp theo",
+        5: "Hãy thử lại",
       },
       alert: {
         1: "번역 필요",

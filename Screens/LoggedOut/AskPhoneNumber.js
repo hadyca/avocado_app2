@@ -9,7 +9,6 @@ import FormError from "../../Components/Auth/FormError";
 import { colors } from "../../Colors";
 import ProgressCreateCompany from "../../Components/Auth/ProgressCreateCompany";
 import CreateAccountLayout from "../../Components/CreateAccountLayout";
-import styled from "styled-components/native";
 
 const CHECK_ACCOUNT_MUTATION = gql`
   mutation checkAccount(
@@ -25,12 +24,9 @@ const CHECK_ACCOUNT_MUTATION = gql`
       accountNumber: $accountNumber
     ) {
       ok
+      error
     }
   }
-`;
-
-const InputContainer = styled.View`
-  margin-bottom: 25px;
 `;
 
 export default function AskPhoneNumber({ route: { params } }) {
@@ -38,6 +34,7 @@ export default function AskPhoneNumber({ route: { params } }) {
   const [value, setValue] = useState("");
   const [formattedValue, setFormattedValue] = useState("");
   const [valid, setValid] = useState(true);
+
   const phoneInput = useRef();
   const navigation = useNavigation();
 
@@ -55,7 +52,7 @@ export default function AskPhoneNumber({ route: { params } }) {
     } = data;
     if (!ok) {
       return setError("result", {
-        message: error === "100" ? t("askPhoneNumber.4") : null,
+        message: error === "100" ? t("askPhoneNumber.4") : t("share.5"),
       });
     } else {
       return navigation.navigate("ConfirmSecret", {
@@ -68,7 +65,7 @@ export default function AskPhoneNumber({ route: { params } }) {
     }
   };
 
-  const [createAccountMutation, { loading }] = useMutation(
+  const [checkAccountMutation, { loading }] = useMutation(
     CHECK_ACCOUNT_MUTATION,
     {
       variables: {
@@ -85,35 +82,38 @@ export default function AskPhoneNumber({ route: { params } }) {
     <CreateAccountLayout step={"1"}>
       <ProgressCreateCompany title={t("askPhoneNumber.1")} />
       {!valid ? <FormError message={t("askPhoneNumber.2")} /> : null}
-      {!formState.isValid ? (
-        <FormError message={t("askPhoneNumber.4")} />
-      ) : null}
-      <InputContainer>
-        <PhoneInput
-          containerStyle={{
-            width: "100%",
-            backgroundColor: colors.greyBackround,
-          }}
-          // textInputStyle={{ color: "blue" }}
-          // textContainerStyle={{ backgroundColor: "red" }}
-          filterProps={{ placeholder: t("askPhoneNumber.3") }}
-          ref={phoneInput}
-          defaultValue={value}
-          placeholder={t("createAccount.1")}
-          defaultCode="VN"
-          layout="first"
-          onChangeText={(text) => {
-            setValue(text);
-            setValid(true);
-            clearLoginError();
-          }}
-          onChangeFormattedText={(text) => {
-            setFormattedValue(text);
-            setValid(true);
-            clearLoginError();
-          }}
-        />
-      </InputContainer>
+      <FormError message={formState?.errors?.result?.message} />
+      <PhoneInput
+        containerStyle={{
+          width: "100%",
+          backgroundColor: "white",
+          borderWidth: 1,
+          borderStyle: "solid",
+          borderColor: colors.borderThick,
+          borderRadius: 4,
+          paddingRight: 5,
+          marginBottom: 25,
+        }}
+        textContainerStyle={{
+          backgroundColor: "white",
+        }}
+        filterProps={{ placeholder: t("askPhoneNumber.3") }}
+        ref={phoneInput}
+        defaultValue={value}
+        placeholder={t("createAccount.1")}
+        defaultCode="VN"
+        layout="first"
+        onChangeText={(text) => {
+          setValue(text);
+          setValid(true);
+          clearLoginError();
+        }}
+        onChangeFormattedText={(text) => {
+          setFormattedValue(text);
+          setValid(true);
+          clearLoginError();
+        }}
+      />
       <AuthButton
         text={t("share.4")}
         loading={loading}
@@ -121,7 +121,7 @@ export default function AskPhoneNumber({ route: { params } }) {
           const checkValid = phoneInput.current?.isValidNumber(value);
           setValid(checkValid ? checkValid : false);
           if (checkValid) {
-            createAccountMutation();
+            checkAccountMutation();
           }
         }}
       />

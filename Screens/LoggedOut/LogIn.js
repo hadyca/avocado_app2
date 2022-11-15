@@ -2,21 +2,24 @@ import { gql, useMutation } from "@apollo/client";
 import React, { useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import PhoneInput from "react-native-phone-number-input";
 import { logUserIn } from "../../apollo";
+import { colors } from "../../Colors";
 import AuthButton from "../../Components/Auth/AuthButton";
-import AuthLayout from "../../Components/Auth/AuthLayout";
 import { TextInput } from "../../Components/Auth/AuthShared";
 import FormError from "../../Components/Auth/FormError";
+import ProgressCreateCompany from "../../Components/Auth/ProgressCreateCompany";
+import CreateAccountLayout from "../../Components/CreateAccountLayout";
 
 const LOGIN_MUTATION = gql`
   mutation login(
-    $email: String!
+    $accountNumber: String!
     $password: String!
     $pushToken: String!
     $language: String!
   ) {
     login(
-      email: $email
+      accountNumber: $accountNumber
       password: $password
       pushToken: $pushToken
       language: $language
@@ -30,9 +33,10 @@ const LOGIN_MUTATION = gql`
 
 export default function Login({ route: { params } }) {
   const { t } = useTranslation();
-
-  const [focus1, setFocus1] = useState(false);
-  const [focus2, setFocus2] = useState(false);
+  const [value, setValue] = useState("");
+  const [formattedValue, setFormattedValue] = useState("");
+  const [valid, setValid] = useState(true);
+  const phoneInput = useRef();
 
   const { handleSubmit, watch, control, setError, clearErrors, formState } =
     useForm();
@@ -41,11 +45,11 @@ export default function Login({ route: { params } }) {
 
   const onCompleted = async (data) => {
     const {
-      login: { ok, token },
+      login: { ok, error, token },
     } = data;
     if (!ok) {
       return setError("result", {
-        message: t("logIn.3"),
+        message: error === "200" ? t("logIn.3") : t("share.5"),
       });
     } else {
       await logUserIn(token);
@@ -59,11 +63,11 @@ export default function Login({ route: { params } }) {
     nextOne?.current?.focus();
   };
 
-  const onValid = async ({ email, password }) => {
+  const onValid = async ({ password }) => {
     if (!loading) {
       await logInMutation({
         variables: {
-          email,
+          accountNumber: formattedValue.substring(1),
           password,
           pushToken: params.pushToken,
           language: params.language,
@@ -77,34 +81,40 @@ export default function Login({ route: { params } }) {
   };
 
   return (
-    <AuthLayout>
-      <Controller
-        name="email"
-        rules={{
-          required: true,
+    <CreateAccountLayout>
+      <ProgressCreateCompany title={"haha"} />
+      <FormError message={formState?.errors?.result?.message} />
+      <PhoneInput
+        containerStyle={{
+          width: "100%",
+          backgroundColor: "white",
+          borderWidth: 1,
+          borderStyle: "solid",
+          borderColor: colors.borderThick,
+          borderRadius: 4,
+          paddingRight: 5,
+          marginBottom: 8,
+          height: 55,
         }}
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <TextInput
-            placeholder={t("logIn.1")}
-            placeholderTextColor="#cccccc"
-            autoCapitalize="none"
-            keyboardType="email-address"
-            returnKeyType="next"
-            onSubmitEditing={() => onNext(passwordRef)}
-            onChangeText={(text) => onChange(text)}
-            value={value || ""}
-            onChange={clearLoginError}
-            hasError={Boolean(formState.errors?.email?.message)}
-            onFocus={() => {
-              setFocus1(true);
-            }}
-            onBlur={() => {
-              setFocus1(false);
-            }}
-            focus={focus1}
-          />
-        )}
+        textContainerStyle={{
+          backgroundColor: "white",
+        }}
+        filterProps={{ placeholder: t("askPhoneNumber.3") }}
+        ref={phoneInput}
+        defaultValue={value}
+        placeholder={t("createAccount.1")}
+        defaultCode="VN"
+        layout="first"
+        onChangeText={(text) => {
+          setValue(text);
+          setValid(true);
+          clearLoginError();
+        }}
+        onChangeFormattedText={(text) => {
+          setFormattedValue(text);
+          setValid(true);
+          clearLoginError();
+        }}
       />
       <Controller
         name="password"
@@ -114,6 +124,7 @@ export default function Login({ route: { params } }) {
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextInput
+            lastOne={true}
             value={value || ""}
             ref={passwordRef}
             placeholder={t("logIn.2")}
@@ -124,23 +135,15 @@ export default function Login({ route: { params } }) {
             onSubmitEditing={handleSubmit(onValid)}
             onChangeText={(text) => onChange(text)}
             onChange={clearLoginError}
-            onFocus={() => {
-              setFocus2(true);
-            }}
-            onBlur={() => {
-              setFocus2(false);
-            }}
-            focus={focus2}
           />
         )}
       />
-      <FormError message={formState?.errors?.result?.message} />
       <AuthButton
         text={t("logIn.4")}
         loading={loading}
-        disabled={!watch("email") || !watch("password")}
+        disabled={!valid || !watch("password")}
         onPress={handleSubmit(onValid)}
       />
-    </AuthLayout>
+    </CreateAccountLayout>
   );
 }
