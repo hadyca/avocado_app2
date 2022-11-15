@@ -158,7 +158,7 @@ export default function PrivacyPolicy() {
           책임지고, 개인정보 처리와 관련한 정보주체의 불만처리 및 피해구제 등을
           위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.
         </Text>
-        <Text>담당자: 김제형 대표 / vinaarba@gmail.com</Text>
+        <Text>담당자: 김제형 대표 / ceo@vinaarba.com</Text>
         <Text>
           2. 정보주체는 별보는캐리어(‘VinaArba’)의 서비스(또는 사업)을
           이용하면서 발생한 모든 개인정보 보호 관련 문의, 불만처리, 피해구제
