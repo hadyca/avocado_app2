@@ -100,7 +100,7 @@ export default function AskPhoneNumber({ route: { params } }) {
         filterProps={{ placeholder: t("askPhoneNumber.3") }}
         ref={phoneInput}
         defaultValue={value}
-        placeholder={t("createAccount.1")}
+        placeholder={t("askPhoneNumber.1")}
         defaultCode="VN"
         layout="first"
         onChangeText={(text) => {

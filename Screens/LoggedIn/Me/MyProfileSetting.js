@@ -34,7 +34,8 @@ export default function MyProfileSetting({ route: { params } }) {
       <Button
         onPress={() =>
           navigation.navigate("Account", {
-            email: params.email,
+            countryCode: params.countryCode,
+            phoneNumber: params.phoneNumber,
             userId: params.userId,
           })
         }

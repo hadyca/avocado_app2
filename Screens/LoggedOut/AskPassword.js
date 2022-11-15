@@ -1,11 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { useForm, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import AuthButton from "../../Components/Auth/AuthButton";
 import { logUserIn } from "../../apollo";
 import FormError from "../../Components/Auth/FormError";
-import { TextInput, TextInput2 } from "../../Components/Auth/AuthShared";
+import { TextInput } from "../../Components/Auth/AuthShared";
 import { passwordRule } from "../../RegExp";
 import CreateAccountLayout from "../../Components/CreateAccountLayout";
 import ProgressCreateCompany from "../../Components/Auth/ProgressCreateCompany";
@@ -75,10 +75,9 @@ export default function AskPassword({ route: { params } }) {
     }
   };
 
-  const { control, handleSubmit, getValues, formState, setError, clearErrors } =
-    useForm({
-      mode: "onChange",
-    });
+  const { control, handleSubmit, getValues, formState, setError } = useForm({
+    mode: "onChange",
+  });
 
   const passwordRef = useRef();
   const password2Ref = useRef();
@@ -89,6 +88,7 @@ export default function AskPassword({ route: { params } }) {
   return (
     <CreateAccountLayout step={4}>
       <ProgressCreateCompany title={t("askPassword.1")} />
+      <FormError message={formState?.errors?.result?.message} />
       <FormError message={formState?.errors?.password?.message} />
       <Controller
         name="password"

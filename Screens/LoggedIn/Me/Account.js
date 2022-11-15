@@ -70,9 +70,9 @@ export default function Account({ route: { params } }) {
   });
   return (
     <ScreenLayout loading={loading}>
-      <AccountText>
-        {t("account.1")} {params.email}
-      </AccountText>
+      <AccountText>{`${t("account.1")}   (+${params.countryCode}) ${
+        params.phoneNumber
+      }`}</AccountText>
       <Separator />
       <Button
         onPress={() =>

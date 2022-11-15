@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../../Colors";
 
 const Container = styled.View`
@@ -72,17 +73,18 @@ export default function FollowingListPresenter({
   isMe,
   toggleFollowingMutation,
 }) {
+  const { t } = useTranslation();
   const getButton = (isFollowing) => {
     if (isFollowing) {
       return (
         <FollowBtn backgroundColor={false} onPress={toggleFollowingMutation}>
-          <FollowText backgroundColor={false}>Following</FollowText>
+          <FollowText backgroundColor={false}>{t("profile.3")}</FollowText>
         </FollowBtn>
       );
     } else {
       return (
         <FollowBtn backgroundColor={true} onPress={toggleFollowingMutation}>
-          <FollowText backgroundColor={true}>Follow</FollowText>
+          <FollowText backgroundColor={true}>{t("profile.5")}</FollowText>
         </FollowBtn>
       );
     }

@@ -5,7 +5,6 @@ export const PROFILE_QUERY = gql`
     seeProfile(userId: $userId) {
       id
       username
-      email
       avatarUrl
       bio
       isMe

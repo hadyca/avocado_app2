@@ -82,7 +82,7 @@ export default function Login({ route: { params } }) {
 
   return (
     <CreateAccountLayout>
-      <ProgressCreateCompany title={"haha"} />
+      <ProgressCreateCompany title={t("logIn.4")} />
       <FormError message={formState?.errors?.result?.message} />
       <PhoneInput
         containerStyle={{
@@ -102,7 +102,7 @@ export default function Login({ route: { params } }) {
         filterProps={{ placeholder: t("askPhoneNumber.3") }}
         ref={phoneInput}
         defaultValue={value}
-        placeholder={t("createAccount.1")}
+        placeholder={t("askPhoneNumber.1")}
         defaultCode="VN"
         layout="first"
         onChangeText={(text) => {
