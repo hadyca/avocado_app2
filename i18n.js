@@ -622,7 +622,7 @@ const resources = {
         1: "Current Account",
         2: "Log out",
         3: "Are you sure?",
-        4: "Account Withdrawal",
+        4: "Delete account",
         5: "Are you sure?",
       },
       contact: {
@@ -804,7 +804,7 @@ const resources = {
         4: "Đăng nhập",
       },
       askPhoneNumber: {
-        1: "số điện thoại",
+        1: "Số điện thoại",
         2: "번역 필요",
         3: "Tìm kiếm",
         4: "Số điện thoại này đã được sử dụng.",

@@ -1,5 +1,10 @@
 import React from "react";
-import { Keyboard, Platform, TouchableWithoutFeedback } from "react-native";
+import {
+  Keyboard,
+  Platform,
+  TouchableWithoutFeedback,
+  useWindowDimensions,
+} from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../Colors";
 
@@ -11,7 +16,7 @@ const Container = styled.View`
 
 const TopContainer = styled.View`
   justify-content: center;
-  flex: 0.4;
+  height: ${(props) => props.height * 0.3}px;
 `;
 
 const Logo = styled.Image`
@@ -33,6 +38,8 @@ const Count = styled.Text`
 `;
 
 export default function CreateCompanyLayout({ step, children }) {
+  const { height } = useWindowDimensions();
+
   const dismissKeyboard = () => {
     Keyboard.dismiss();
   };
@@ -44,7 +51,7 @@ export default function CreateCompanyLayout({ step, children }) {
       disabled={Platform.OS === "web"}
     >
       <Container>
-        <TopContainer>
+        <TopContainer height={height}>
           <Logo resizeMode="contain" source={require("../assets/logo.png")} />
           {step ? (
             <ProgressContainer>

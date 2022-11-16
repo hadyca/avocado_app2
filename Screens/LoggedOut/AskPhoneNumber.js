@@ -97,7 +97,11 @@ export default function AskPhoneNumber({ route: { params } }) {
         textContainerStyle={{
           backgroundColor: "white",
         }}
-        filterProps={{ placeholder: t("askPhoneNumber.3") }}
+        filterProps={{
+          placeholder: t("askPhoneNumber.3"),
+          placeholderTextColor: "#cccccc",
+        }}
+        textInputProps={{ placeholderTextColor: "#cccccc" }}
         ref={phoneInput}
         defaultValue={value}
         placeholder={t("askPhoneNumber.1")}

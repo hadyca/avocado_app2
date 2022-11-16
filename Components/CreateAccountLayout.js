@@ -6,7 +6,6 @@ import {
   useWindowDimensions,
 } from "react-native";
 import styled from "styled-components/native";
-
 import { colors } from "../Colors";
 
 const Container = styled.View`

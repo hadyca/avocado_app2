@@ -59,10 +59,6 @@ export default function Login({ route: { params } }) {
     onCompleted,
   });
 
-  const onNext = (nextOne) => {
-    nextOne?.current?.focus();
-  };
-
   const onValid = async ({ password }) => {
     if (!loading) {
       await logInMutation({
@@ -99,7 +95,11 @@ export default function Login({ route: { params } }) {
         textContainerStyle={{
           backgroundColor: "white",
         }}
-        filterProps={{ placeholder: t("askPhoneNumber.3") }}
+        filterProps={{
+          placeholder: t("askPhoneNumber.3"),
+          placeholderTextColor: "#cccccc",
+        }}
+        textInputProps={{ placeholderTextColor: "#cccccc" }}
         ref={phoneInput}
         defaultValue={value}
         placeholder={t("askPhoneNumber.1")}
