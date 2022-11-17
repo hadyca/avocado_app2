@@ -30,7 +30,7 @@ export default function TermsOfService() {
         <Title>제1장 총칙</Title>
         <SubTitle>제1조 (목적)</SubTitle>
         <Text>
-          1. VinaArba서비스 약관(이하 "본 약관")은 VinaArba(이하 "Vina Arba")이
+          1. VinaArba서비스 약관(이하 "본 약관")은 VinaArba(이하 "VinaArba")이
           제공하는 VinaArba및 VinaArba관련 모든 서비스와 관련하여 VinaArba와
           회원의 권리⋅의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로
           합니다.

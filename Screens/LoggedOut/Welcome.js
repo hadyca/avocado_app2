@@ -87,7 +87,7 @@ export default function Welcome({ navigation }) {
   };
 
   const goToCreateAccount = () =>
-    navigation.navigate("AskPhoneNumber", {
+    navigation.navigate("AskUserEmail", {
       pushToken,
       language: lng,
     });

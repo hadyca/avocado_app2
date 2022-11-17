@@ -9,19 +9,21 @@ import ScreenLayout from "../../../Components/ScreenLayout";
 import { colors } from "../../../Colors";
 import { logUserOut } from "../../../apollo";
 
+const Container = styled.View`
+  margin-left: 10px;
+`;
+const AccountView = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+`;
 const AccountText = styled.Text`
   background-color: ${colors.backgraound};
-  width: 100%;
-  border-bottom-width: 1px;
-  border-bottom-color: ${colors.borderThin};
-  margin-left: 10px;
   font-size: 15px;
   padding: 15px 2px 15px 2px;
 `;
 const Button = styled.TouchableOpacity`
   background-color: ${colors.backgraound};
   width: 100%;
-  margin-left: 10px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -70,64 +72,68 @@ export default function Account({ route: { params } }) {
   });
   return (
     <ScreenLayout loading={loading}>
-      <AccountText>{`${t("account.1")}   (+${params.countryCode}) ${
-        params.phoneNumber
-      }`}</AccountText>
-      <Separator />
-      <Button
-        onPress={() =>
-          Alert.alert(t("account.3"), "", [
-            { text: t("share.2") },
-            {
-              text: t("share.1"),
-              onPress: async () => {
-                const pushToken = (await Notifications.getExpoPushTokenAsync())
-                  .data;
-                await deletePushTokenMutation({
-                  variables: {
-                    pushToken,
-                  },
-                });
+      <Container>
+        <AccountView>
+          <AccountText>{t("account.1")} </AccountText>
+          <AccountText style={{ marginRight: 25 }}>{params.email}</AccountText>
+        </AccountView>
+        <Separator />
+        <Button
+          onPress={() =>
+            Alert.alert(t("account.3"), "", [
+              { text: t("share.2") },
+              {
+                text: t("share.1"),
+                onPress: async () => {
+                  const pushToken = (
+                    await Notifications.getExpoPushTokenAsync()
+                  ).data;
+                  await deletePushTokenMutation({
+                    variables: {
+                      pushToken,
+                    },
+                  });
+                },
               },
-            },
-          ])
-        }
-      >
-        <ButtonText>{t("account.2")}</ButtonText>
-        <Ionicons
-          name="chevron-forward"
-          color="black"
-          size={17}
-          style={{ marginRight: 20 }}
-        />
-      </Button>
-      <Separator />
-      <Button
-        onPress={() =>
-          Alert.alert(t("account.5"), "", [
-            { text: t("share.2") },
-            {
-              text: t("share.1"),
-              onPress: async () => {
-                await deleteUserMutation({
-                  variables: {
-                    userId: params.userId,
-                  },
-                });
+            ])
+          }
+        >
+          <ButtonText>{t("account.2")}</ButtonText>
+          <Ionicons
+            name="chevron-forward"
+            color="black"
+            size={17}
+            style={{ marginRight: 20 }}
+          />
+        </Button>
+        <Separator />
+        <Button
+          onPress={() =>
+            Alert.alert(t("account.5"), "", [
+              { text: t("share.2") },
+              {
+                text: t("share.1"),
+                onPress: async () => {
+                  await deleteUserMutation({
+                    variables: {
+                      userId: params.userId,
+                    },
+                  });
+                },
               },
-            },
-          ])
-        }
-      >
-        <ButtonText>{t("account.4")}</ButtonText>
-        <Ionicons
-          name="chevron-forward"
-          color="black"
-          size={17}
-          style={{ marginRight: 20 }}
-        />
-      </Button>
-      <Separator />
+            ])
+          }
+        >
+          <ButtonText>{t("account.4")}</ButtonText>
+          <Ionicons
+            name="chevron-forward"
+            color="black"
+            size={17}
+            style={{ marginRight: 20 }}
+          />
+        </Button>
+        <Separator />
+      </Container>
     </ScreenLayout>
   );
 }

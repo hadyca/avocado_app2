@@ -63,10 +63,6 @@ export default function Home() {
   const lastNotificationResponse = Notifications.useLastNotificationResponse();
   const { data: userData } = useMe();
 
-  const changelanguageToKo = () => i18n.changeLanguage("ko");
-  const changelanguageToEn = () => i18n.changeLanguage("en");
-  const changelanguageToVn = () => i18n.changeLanguage("vn");
-
   const ref = useRef(null);
   useScrollToTop(ref);
 

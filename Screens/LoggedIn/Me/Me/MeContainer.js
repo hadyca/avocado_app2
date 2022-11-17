@@ -26,8 +26,7 @@ export default function () {
 
   const goToSetting = () => {
     navigation.navigate("MyProfileSetting", {
-      countryCode: data?.me.countryCode,
-      phoneNumber: data?.me.phoneNumber,
+      email: data?.me.email,
       userId: data?.me.id,
     });
   };

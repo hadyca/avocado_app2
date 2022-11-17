@@ -6,54 +6,51 @@ import { useTranslation } from "react-i18next";
 import AuthButton from "../../Components/Auth/AuthButton";
 import FormError from "../../Components/Auth/FormError";
 import { TextInput } from "../../Components/Auth/AuthShared";
-import { usernameRule } from "../../RegExp";
+import { emailRule } from "../../RegExp";
 import CreateAccountLayout from "../../Components/CreateAccountLayout";
 import ProgressCreateCompany from "../../Components/Auth/ProgressCreateCompany";
 
-const CHECK_USERNAME__MUTATION = gql`
-  mutation checkUsername($username: String!) {
-    checkUsername(username: $username) {
+const CHECK_EMAIL__MUTATION = gql`
+  mutation checkEmail($email: String!, $language: String!) {
+    checkEmail(email: $email, language: $language) {
       ok
       error
     }
   }
 `;
 
-export default function AskUsername({ route: { params } }) {
+export default function AskUserEmail({ route: { params } }) {
   const { t } = useTranslation();
   const navigation = useNavigation();
 
   const onCompleted = (data) => {
+    const { email } = getValues();
     const {
-      checkUsername: { ok, error },
+      checkEmail: { ok, error },
     } = data;
     if (!ok) {
       return setError("result", {
-        message: error === "100" ? t("askUsername.3") : t("share.5"),
+        message: error === "100" ? t("askUserEmail.2") : t("share.5"),
       });
     } else {
-      const { username } = getValues();
-      return navigation.navigate("AskPassword", {
-        username,
-        email: params.email,
+      return navigation.navigate("ConfirmSecret", {
         pushToken: params.pushToken,
         language: params.language,
+        email,
       });
     }
   };
 
-  const [checkUsernameMutation, { loading }] = useMutation(
-    CHECK_USERNAME__MUTATION,
-    {
-      onCompleted,
-    }
-  );
+  const [checkEmail, { loading }] = useMutation(CHECK_EMAIL__MUTATION, {
+    onCompleted,
+  });
 
-  const onValid = ({ username }) => {
+  const onValid = ({ email }) => {
     if (!loading) {
-      checkUsernameMutation({
+      checkEmail({
         variables: {
-          username,
+          email,
+          language: params.language,
         },
       });
     }
@@ -67,34 +64,33 @@ export default function AskUsername({ route: { params } }) {
     clearErrors("result");
   };
   return (
-    <CreateAccountLayout step={3}>
-      <ProgressCreateCompany title={t("askUsername.1")} />
-      <FormError message={formState?.errors?.username?.message} />
+    <CreateAccountLayout step={1}>
+      <ProgressCreateCompany title={t("askUserEmail.1")} />
       <FormError message={formState?.errors?.result?.message} />
       <Controller
-        name="username"
+        name="email"
         rules={{
           required: true,
           pattern: {
-            value: usernameRule,
-            message: t("askUsername.2"),
+            value: emailRule,
           },
         }}
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextInput
             lastOne={true}
-            placeholder={t("askUsername.1")}
+            placeholder="vinaarba@gmail.com"
             placeholderTextColor="#cccccc"
             autoCapitalize="none"
+            keyboardType="email-address"
             returnKeyType="next"
+            onSubmitEditing={handleSubmit(onValid)}
             onChangeText={(text) => onChange(text)}
-            value={value}
+            value={value || ""}
             onChange={clearLoginError}
           />
         )}
       />
-
       <AuthButton
         text={t("share.4")}
         disabled={!formState.isValid}

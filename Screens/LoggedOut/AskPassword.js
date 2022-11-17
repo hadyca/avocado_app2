@@ -13,19 +13,15 @@ import ProgressCreateCompany from "../../Components/Auth/ProgressCreateCompany";
 const CREATE_PASSWORD_MUTATION = gql`
   mutation createPassword(
     $password: String!
-    $accountNumber: String!
+    $email: String!
     $username: String!
-    $countryCode: String!
-    $phoneNumber: String!
     $language: String!
     $pushToken: String!
   ) {
     createPassword(
       password: $password
-      accountNumber: $accountNumber
+      email: $email
       username: $username
-      countryCode: $countryCode
-      phoneNumber: $phoneNumber
       language: $language
       pushToken: $pushToken
     ) {
@@ -64,10 +60,8 @@ export default function AskPassword({ route: { params } }) {
       confirmSecretMutation({
         variables: {
           password: data.password,
-          accountNumber: params.accountNumber,
+          email: params.email,
           username: params.username,
-          countryCode: params.countryCode,
-          phoneNumber: params.phoneNumber,
           language: params.language,
           pushToken: params.pushToken,
         },

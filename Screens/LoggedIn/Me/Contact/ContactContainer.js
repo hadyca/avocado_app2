@@ -1,15 +1,17 @@
-import React, { useEffect, useState, useRef } from "react";
+import React from "react";
 import { useMutation } from "@apollo/client";
 import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 import { CONTACT_MUTATION } from "./ContactQueries";
 import ContactPresenter from "./ContactPresenter";
 
-export default function ({ route: { params } }) {
+export default function () {
+  const { t } = useTranslation();
   const navigation = useNavigation();
 
   const goToBack = () => {
-    Alert.alert("접수 되었습니다. \n빠른 시일 내에 답변 드리겠습니다.");
+    Alert.alert(t("contact.11"));
     navigation.pop();
   };
 

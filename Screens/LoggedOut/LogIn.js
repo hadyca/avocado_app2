@@ -1,25 +1,24 @@
 import { gql, useMutation } from "@apollo/client";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import PhoneInput from "react-native-phone-number-input";
 import { logUserIn } from "../../apollo";
-import { colors } from "../../Colors";
 import AuthButton from "../../Components/Auth/AuthButton";
 import { TextInput } from "../../Components/Auth/AuthShared";
 import FormError from "../../Components/Auth/FormError";
 import ProgressCreateCompany from "../../Components/Auth/ProgressCreateCompany";
 import CreateAccountLayout from "../../Components/CreateAccountLayout";
+import { emailRule } from "../../RegExp";
 
 const LOGIN_MUTATION = gql`
   mutation login(
-    $accountNumber: String!
+    $email: String!
     $password: String!
     $pushToken: String!
     $language: String!
   ) {
     login(
-      accountNumber: $accountNumber
+      email: $email
       password: $password
       pushToken: $pushToken
       language: $language
@@ -33,15 +32,17 @@ const LOGIN_MUTATION = gql`
 
 export default function Login({ route: { params } }) {
   const { t } = useTranslation();
-  const [value, setValue] = useState("");
-  const [formattedValue, setFormattedValue] = useState("");
-  const [valid, setValid] = useState(true);
-  const phoneInput = useRef();
 
   const { handleSubmit, watch, control, setError, clearErrors, formState } =
-    useForm();
+    useForm({
+      mode: "onChange",
+    });
 
   const passwordRef = useRef();
+
+  const onNext = (nextOne) => {
+    nextOne?.current?.focus();
+  };
 
   const onCompleted = async (data) => {
     const {
@@ -59,11 +60,11 @@ export default function Login({ route: { params } }) {
     onCompleted,
   });
 
-  const onValid = async ({ password }) => {
+  const onValid = async ({ email, password }) => {
     if (!loading) {
       await logInMutation({
         variables: {
-          accountNumber: formattedValue.substring(1),
+          email,
           password,
           pushToken: params.pushToken,
           language: params.language,
@@ -78,48 +79,33 @@ export default function Login({ route: { params } }) {
 
   return (
     <CreateAccountLayout>
-      <ProgressCreateCompany title={t("logIn.4")} />
+      <ProgressCreateCompany title={""} />
+      <FormError message={formState?.errors?.email?.message} />
       <FormError message={formState?.errors?.result?.message} />
-      <PhoneInput
-        containerStyle={{
-          width: "100%",
-          backgroundColor: "white",
-          borderWidth: 1,
-          borderStyle: "solid",
-          borderColor: colors.borderThick,
-          borderRadius: 4,
-          paddingRight: 5,
-          marginBottom: 8,
-          height: 55,
+      <Controller
+        name="email"
+        rules={{
+          required: true,
         }}
-        textContainerStyle={{
-          backgroundColor: "white",
-        }}
-        filterProps={{
-          placeholder: t("askPhoneNumber.3"),
-          placeholderTextColor: "#cccccc",
-        }}
-        textInputProps={{ placeholderTextColor: "#cccccc" }}
-        ref={phoneInput}
-        defaultValue={value}
-        placeholder={t("askPhoneNumber.1")}
-        defaultCode="VN"
-        layout="first"
-        onChangeText={(text) => {
-          setValue(text);
-          setValid(true);
-          clearLoginError();
-        }}
-        onChangeFormattedText={(text) => {
-          setFormattedValue(text);
-          setValid(true);
-          clearLoginError();
-        }}
+        control={control}
+        render={({ field: { onChange, value } }) => (
+          <TextInput
+            placeholder="vinaarba@gmail.com"
+            placeholderTextColor="#cccccc"
+            autoCapitalize="none"
+            keyboardType="email-address"
+            returnKeyType="next"
+            onSubmitEditing={() => onNext(passwordRef)}
+            onChangeText={(text) => onChange(text)}
+            value={value || ""}
+            onChange={clearLoginError}
+          />
+        )}
       />
       <Controller
         name="password"
         rules={{
-          required: "비밀번호를 입력 해주세요.",
+          required: true,
         }}
         control={control}
         render={({ field: { onChange, value } }) => (
@@ -141,7 +127,7 @@ export default function Login({ route: { params } }) {
       <AuthButton
         text={t("logIn.4")}
         loading={loading}
-        disabled={!valid || !watch("password")}
+        disabled={!watch("email") || !watch("password")}
         onPress={handleSubmit(onValid)}
       />
     </CreateAccountLayout>

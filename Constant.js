@@ -111,7 +111,7 @@ export const userReportAry = [
     id: 2,
     valueKo: "다른 사람으로 가장",
     valueEn: "She/He is different person",
-    valueVn: "번역필요",
+    valueVn: "Giả mạo người khác",
   },
   {
     id: 3,
@@ -379,7 +379,7 @@ export const questionType = [
   {
     id: 2,
     valueKo: "서비스 오류 제보",
-    valueEn: "Service Error",
+    valueEn: "Service error",
     valueVn: "Thông báo lỗi dịch vụ",
   },
   {
@@ -391,7 +391,7 @@ export const questionType = [
   {
     id: 4,
     valueKo: "서비스 개선 의견",
-    valueEn: "Service Improvement",
+    valueEn: "Service improvement",
     valueVn: "Ý kiến cải thiện dịch vụ",
   },
   {

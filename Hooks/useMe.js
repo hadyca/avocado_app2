@@ -10,9 +10,7 @@ const ME_QUERY = gql`
     me {
       id
       username
-      countryCode
-      phoneNumber
-      accountNumber
+      email
       avatarUrl
       bio
       isMe

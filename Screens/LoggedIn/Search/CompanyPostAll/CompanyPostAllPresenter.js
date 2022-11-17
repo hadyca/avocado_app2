@@ -219,7 +219,7 @@ export default function CompanyPostAllPresenter({
   realVnAll,
   setRealVnAll,
 }) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const scrollViewRef = useRef();
   const [modalVisible, setModalVisible] = useState(false);
   const [districtCode, setDistrictCode] = useState();
@@ -529,23 +529,15 @@ export default function CompanyPostAllPresenter({
               <SearchText>{realList[0].value} </SearchText>
             ) : realList.length > 1 && realList[0].id > 100 ? (
               <SearchText>
-                {i18n.language === "vn"
-                  ? `${t("companyPostAll.7")} ${realList[0].value} ${t(
-                      "companyPostAll.2"
-                    )} ${realList.length - 1}${t("companyPostAll.8")}`
-                  : `${realList[0].value} ${t("companyPostAll.2")} ${t(
-                      "companyPostAll.7"
-                    )} ${realList.length - 1}${t("companyPostAll.8")}`}
+                {`${realList[0].value} ${t("companyPostAll.2")} ${t(
+                  "companyPostAll.7"
+                )} ${realList.length - 1}${t("companyPostAll.8")}`}
               </SearchText>
             ) : realList.length > 1 && realList[0].id < 100 ? (
               <SearchText>
-                {i18n.language === "vn"
-                  ? `${t("companyPostAll.7")} ${realList[0].value} ${
-                      realList.length - 1
-                    }${t("companyPostAll.8")}`
-                  : `${realList[0].value} ${t("companyPostAll.7")} ${
-                      realList.length - 1
-                    }${t("companyPostAll.8")}`}
+                {`${realList[0].value} ${t("companyPostAll.7")} ${
+                  realList.length - 1
+                }${t("companyPostAll.8")}`}
               </SearchText>
             ) : (
               <PlaceHolder>{t("companyPostAll.11")}</PlaceHolder>

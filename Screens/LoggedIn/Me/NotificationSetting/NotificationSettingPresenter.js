@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Switch, SwitchBase, Text } from "react-native";
+import React from "react";
+import { Switch } from "react-native";
 import styled from "styled-components/native";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../../../Colors";
 const Container = styled.View``;
 
@@ -35,10 +36,12 @@ export default function NotificationSettingPresenter({
   followingState,
   isCompany,
 }) {
+  const { t } = useTranslation();
+
   return (
     <Container>
       <StateView>
-        <StateText>공지 / 이벤트</StateText>
+        <StateText>{t("notificationSetting.1")}</StateText>
         <Switch
           trackColor={{
             false: colors.greyBackround,
@@ -53,7 +56,7 @@ export default function NotificationSettingPresenter({
       </StateView>
       <Separator />
       <StateView>
-        <StateText>일반게시판 좋아요</StateText>
+        <StateText>{t("notificationSetting.2")}</StateText>
         <Switch
           trackColor={{
             false: colors.greyBackround,
@@ -68,7 +71,7 @@ export default function NotificationSettingPresenter({
       </StateView>
       <Separator />
       <StateView>
-        <StateText>일반게시판 코멘트</StateText>
+        <StateText>{t("notificationSetting.3")}</StateText>
         <Switch
           trackColor={{
             false: colors.greyBackround,
@@ -85,7 +88,7 @@ export default function NotificationSettingPresenter({
       {isCompany && (
         <>
           <StateView>
-            <StateText>채용게시판 좋아요</StateText>
+            <StateText>{t("notificationSetting.4")}</StateText>
             <Switch
               trackColor={{
                 false: colors.greyBackround,
@@ -100,7 +103,7 @@ export default function NotificationSettingPresenter({
           </StateView>
           <Separator />
           <StateView>
-            <StateText>채용게시판 코멘트</StateText>
+            <StateText>{t("notificationSetting.5")}</StateText>
             <Switch
               trackColor={{
                 false: colors.greyBackround,
@@ -117,7 +120,7 @@ export default function NotificationSettingPresenter({
         </>
       )}
       <StateView>
-        <StateText>팔로잉</StateText>
+        <StateText>{t("notificationSetting.6")}</StateText>
         <Switch
           trackColor={{
             false: colors.greyBackround,

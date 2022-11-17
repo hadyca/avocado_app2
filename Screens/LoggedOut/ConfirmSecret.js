@@ -13,18 +13,8 @@ import styled from "styled-components/native";
 import { colors } from "../../Colors";
 
 const REQUEST_SECRET_MUTATION = gql`
-  mutation requestSecret(
-    $language: String!
-    $countryCode: String!
-    $phoneNumber: String!
-    $accountNumber: String!
-  ) {
-    requestSecret(
-      language: $language
-      countryCode: $countryCode
-      phoneNumber: $phoneNumber
-      accountNumber: $accountNumber
-    ) {
+  mutation requestSecret($language: String!, $email: String!) {
+    requestSecret(language: $language, email: $email) {
       ok
       error
     }
@@ -32,8 +22,8 @@ const REQUEST_SECRET_MUTATION = gql`
 `;
 
 const CONFIRM_SECRET = gql`
-  mutation confirmSecret($accountNumber: String!, $secret: String!) {
-    confirmSecret(accountNumber: $accountNumber, secret: $secret) {
+  mutation confirmSecret($email: String!, $secret: String!) {
+    confirmSecret(email: $email, secret: $secret) {
       ok
       error
     }
@@ -68,9 +58,7 @@ export default function ConfirmSecret({ route: { params } }) {
       });
     } else {
       navigation.navigate("AskUsername", {
-        countryCode: params.countryCode,
-        phoneNumber: params.phoneNumber,
-        accountNumber: params.accountNumber,
+        email: params.email,
         pushToken: params.pushToken,
         language: params.language,
       });
@@ -88,12 +76,12 @@ export default function ConfirmSecret({ route: { params } }) {
     }
   );
 
-  const onValid = async (data) => {
+  const onValid = async ({ secret }) => {
     if (!loading) {
       await confirmSecretMutation({
         variables: {
-          accountNumber: params.accountNumber,
-          secret: data.secret,
+          email: params.email,
+          secret,
         },
       });
     }
@@ -108,9 +96,7 @@ export default function ConfirmSecret({ route: { params } }) {
         requestSecretMutation({
           variables: {
             language: params.language,
-            countryCode: params.countryCode,
-            phoneNumber: params.phoneNumber,
-            accountNumber: params.accountNumber,
+            email: params.email,
           },
         });
         Alert.alert(t("confirmSecret.9"));

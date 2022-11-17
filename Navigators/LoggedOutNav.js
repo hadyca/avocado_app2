@@ -3,9 +3,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Welcome from "../Screens/LoggedOut/Welcome";
 import Login from "../Screens/LoggedOut/LogIn";
 import ConfirmSecret from "../Screens/LoggedOut/ConfirmSecret";
-import AskPhoneNumber from "../Screens/LoggedOut/AskPhoneNumber";
 import AskUsername from "../Screens/LoggedOut/AskUsername";
 import AskPassword from "../Screens/LoggedOut/AskPassword";
+import AskUserEmail from "../Screens/LoggedOut/AskUserEmail";
 
 const Stack = createStackNavigator();
 
@@ -27,7 +27,7 @@ export default function LoggedOutNav() {
         component={Welcome}
       />
       <Stack.Screen name="LogIn" component={Login} />
-      <Stack.Screen name="AskPhoneNumber" component={AskPhoneNumber} />
+      <Stack.Screen name="AskUserEmail" component={AskUserEmail} />
       <Stack.Screen name="ConfirmSecret" component={ConfirmSecret} />
       <Stack.Screen name="AskUsername" component={AskUsername} />
       <Stack.Screen name="AskPassword" component={AskPassword} />
