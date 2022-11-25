@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import * as WebBrowser from "expo-web-browser";
 import ScreenLayout from "../../../Components/ScreenLayout";
 import { colors } from "../../../Colors";
 
@@ -31,6 +32,10 @@ export default function MyProfileSetting({ route: { params } }) {
 
   return (
     <ScreenLayout>
+      <Button
+        title="Open URL with the system browser"
+        onPress={() => Linking.openURL("https://expo.dev")}
+      />
       <Button
         onPress={() =>
           navigation.navigate("Account", {
@@ -78,7 +83,13 @@ export default function MyProfileSetting({ route: { params } }) {
         />
       </Button>
       <Separator />
-      <Button onPress={() => navigation.navigate("TermsOfService")}>
+      <Button
+        onPress={() =>
+          WebBrowser.openBrowserAsync(
+            "https://vinaarba.notion.site/4b8d0b7e8b8043e3aeea3d93609ab847"
+          )
+        }
+      >
         <ButtonText>{t("myProfileSetting.5")}</ButtonText>
         <Ionicons
           name="chevron-forward"
@@ -88,7 +99,13 @@ export default function MyProfileSetting({ route: { params } }) {
         />
       </Button>
       <Separator />
-      <Button onPress={() => navigation.navigate("PrivacyPolicy")}>
+      <Button
+        onPress={() =>
+          WebBrowser.openBrowserAsync(
+            "https://vinaarba.notion.site/a2a0189d63f4445c9f2b3ee632a0a1e2"
+          )
+        }
+      >
         <ButtonText>{t("myProfileSetting.6")}</ButtonText>
         <Ionicons
           name="chevron-forward"

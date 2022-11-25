@@ -45,8 +45,16 @@ export const handleDistrict = async (userId, ...list) => {
 // });
 // for simulator
 
+// const uploadHttpLink = createUploadLink({
+//   uri: "https://7fc7-182-160-125-147.in.ngrok.io/graphql",
+// });
+
+// const uploadHttpLink = createUploadLink({
+//   uri: "https://vinaarba3.herokuapp.com/graphql",
+// });
+
 const uploadHttpLink = createUploadLink({
-  uri: "https://4462-203-76-100-126.ap.ngrok.io/graphql",
+  uri: "http://vinaarba-backend-dev.ap-southeast-1.elasticbeanstalk.com/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {

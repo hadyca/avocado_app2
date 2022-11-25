@@ -51,8 +51,6 @@ import Account from "../Screens/LoggedIn/Me/Account";
 import Contact from "../Screens/LoggedIn/Me/Contact";
 import Notification from "../Screens/LoggedIn/Me/Notification";
 import NotificationSetting from "../Screens/LoggedIn/Me/NotificationSetting";
-import TermsOfService from "../Screens/LoggedIn/Me/TermsOfService";
-import PrivacyPolicy from "../Screens/LoggedIn/Me/PrivacyPolicy";
 import Language from "../Screens/LoggedIn/Me/Language";
 
 const Stack = createStackNavigator();
@@ -76,22 +74,6 @@ export default function LoggedInNav() {
           headerBackTitleVisible: false,
         }}
         component={FollowNav}
-      />
-      <Stack.Screen
-        name="TermsOfService"
-        options={{
-          title: t("header.termsOfService"),
-          headerBackTitleVisible: false,
-        }}
-        component={TermsOfService}
-      />
-      <Stack.Screen
-        name="PrivacyPolicy"
-        options={{
-          title: t("header.privacyPolicy"),
-          headerBackTitleVisible: false,
-        }}
-        component={PrivacyPolicy}
       />
       <Stack.Screen
         name="Contact"
