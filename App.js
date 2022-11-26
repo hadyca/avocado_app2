@@ -35,7 +35,7 @@ export default function App() {
   Text.defaultProps.allowFontScaling = false;
 
   const preload = async () => {
-    logUserOut();
+    // logUserOut();
     const token = await AsyncStorage.getItem("token");
     if (token) {
       isLoggedInVar(true);
