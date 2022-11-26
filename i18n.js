@@ -473,7 +473,7 @@ const resources = {
       },
       askPassword: {
         1: "Password",
-        2: "Re-enter password",
+        2: "Confirm password",
         3: "Please include at least one digit each of the numbers, English, and special characters, and at least 8 digits.",
         4: "Password mismatch",
       },
