@@ -54,7 +54,7 @@ export const handleDistrict = async (userId, ...list) => {
 // });
 
 const uploadHttpLink = createUploadLink({
-  uri: "http://vinaarba-backend-dev.ap-southeast-1.elasticbeanstalk.com/graphql",
+  uri: "http://vinaarba-backend-dev.ap-southeast-1.elasticbeanstalk.com/",
 });
 
 const authLink = setContext((_, { headers }) => {

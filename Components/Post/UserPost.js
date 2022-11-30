@@ -50,19 +50,13 @@ const MainImg = styled.Image`
   height: ${(props) => Math.ceil(props.height / 3)}px;
 `;
 
-const Content = styled.View`
-  margin-top: 5px;
-  flex-direction: row;
-  align-items: flex-end;
-`;
-
 const ContentText = styled.Text`
+  margin-top: 5px;
   font-size: 14px;
   color: ${colors.black};
 `;
 
 const MoreText = styled.Text`
-  margin-left: 5px;
   font-size: 12px;
   color: ${colors.greyText};
 `;
@@ -168,15 +162,13 @@ function UserPost({
         </ImgContainer>
       ) : null}
       <Contents onPress={goToPostDetail}>
-        {content.length >= 20 ? (
-          <Content>
-            <ContentText>{content.substring(0, 20)}</ContentText>
-            <MoreText>{`...${t("userPostList.1")}`}</MoreText>
-          </Content>
+        {content.length >= 60 ? (
+          <ContentText>
+            {content.substring(0, 60)}
+            <MoreText> ...{t("userPostList.1")}</MoreText>
+          </ContentText>
         ) : (
-          <Content>
-            <ContentText>{content}</ContentText>
-          </Content>
+          <ContentText>{content}</ContentText>
         )}
       </Contents>
       <LikeComment>
