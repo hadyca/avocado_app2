@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useScrollToTop } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 import * as Notifications from "expo-notifications";
@@ -6,14 +6,12 @@ import { Ionicons } from "@expo/vector-icons";
 import ScreenLayout from "../../../Components/ScreenLayout";
 import styled from "styled-components/native";
 import { useTranslation } from "react-i18next";
-import { useWindowDimensions, Alert } from "react-native";
-import AutoHeightImage from "react-native-auto-height-image";
+import { useWindowDimensions, Alert, Image } from "react-native";
 import { colors } from "../../../Colors";
 import { useNavigation } from "@react-navigation/native";
 import useMe from "../../../Hooks/useMe";
 
 const Container = styled.View``;
-
 const CompanyView = styled.View`
   background-color: ${colors.buttonBackground};
   justify-content: space-around;
@@ -47,6 +45,11 @@ const Contents = styled.View`
   align-items: center;
 `;
 
+const BtmImg = styled.ImageBackground`
+  /* width: 100%;
+  height: 100%; */
+`;
+
 const FooterView = styled.View`
   justify-content: flex-end;
   align-items: center;
@@ -59,6 +62,8 @@ const FooterText = styled.Text`
 `;
 
 export default function Home() {
+  const [topHeight, setTopHeight] = useState();
+  const [btmHeight, setBtmHeight] = useState();
   const { t, i18n } = useTranslation();
   const lastNotificationResponse = Notifications.useLastNotificationResponse();
   const { data: userData } = useMe();
@@ -103,26 +108,31 @@ export default function Home() {
       });
     }
   }, [lastNotificationResponse]);
+
+  useEffect(() => {
+    const topRatio = width / 640;
+    const btmRatio = width / 1477;
+    setTopHeight(293 * topRatio);
+    setBtmHeight(4571 * btmRatio);
+  }, [width]);
+
   return (
     <ScreenLayout>
       <ScrollView ref={ref} showsVerticalScrollIndicator={false}>
         <Container>
-          <AutoHeightImage
-            width={width}
-            source={require("../../../assets/top_main.png")}
-            style={{ justifyContent: "center", alignItems: "center" }}
-          >
-            <AutoHeightImage
-              width={width * 0.8}
-              source={
-                i18n.language === "vn"
-                  ? require("../../../assets/top_vn_text.png")
-                  : i18n.language === "en"
-                  ? require("../../../assets/top_en_text.png")
-                  : require("../../../assets/top_ko_text.png")
-              }
-            />
-          </AutoHeightImage>
+          <Image
+            source={
+              i18n.language === "vn"
+                ? require("../../../assets/vn_top.png")
+                : i18n.language === "en"
+                ? require("../../../assets/en_top.png")
+                : require("../../../assets/ko_top.png")
+            }
+            style={{
+              width,
+              height: topHeight,
+            }}
+          />
           <CompanyView>
             <HelloText>{t("home.1")}</HelloText>
             <Button onPress={goToCreateCompany}>
@@ -136,8 +146,7 @@ export default function Home() {
             </Button>
           </CompanyView>
           <Contents>
-            <AutoHeightImage
-              width={width}
+            <Image
               source={
                 i18n.language === "vn"
                   ? require("../../../assets/vn_btm.png")
@@ -145,6 +154,10 @@ export default function Home() {
                   ? require("../../../assets/en_btm.png")
                   : require("../../../assets/ko_btm.png")
               }
+              style={{
+                width,
+                height: btmHeight,
+              }}
             />
           </Contents>
           <FooterView>
