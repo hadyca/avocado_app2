@@ -40,9 +40,9 @@ export const handleDistrict = async (userId, ...list) => {
 // });
 // for web
 
-// const uploadHttpLink = createUploadLink({
-//   uri: "http://10.0.2.2:4000/graphql",
-// });
+const uploadHttpLink = createUploadLink({
+  uri: "http://10.0.2.2:4000/graphql",
+});
 // for simulator
 
 // const uploadHttpLink = createUploadLink({
@@ -53,9 +53,9 @@ export const handleDistrict = async (userId, ...list) => {
 //   uri: "https://vinaarba3.herokuapp.com/graphql",
 // });
 
-const uploadHttpLink = createUploadLink({
-  uri: "http://vinaarba-backend-dev.ap-southeast-1.elasticbeanstalk.com/",
-});
+// const uploadHttpLink = createUploadLink({
+//   uri: "http://vinaarba-backend-dev.ap-southeast-1.elasticbeanstalk.com/",
+// });
 
 const authLink = setContext((_, { headers }) => {
   return {

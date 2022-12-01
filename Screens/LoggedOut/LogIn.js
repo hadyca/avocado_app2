@@ -8,7 +8,6 @@ import { TextInput } from "../../Components/Auth/AuthShared";
 import FormError from "../../Components/Auth/FormError";
 import ProgressCreateCompany from "../../Components/Auth/ProgressCreateCompany";
 import CreateAccountLayout from "../../Components/CreateAccountLayout";
-import { emailRule } from "../../RegExp";
 
 const LOGIN_MUTATION = gql`
   mutation login(

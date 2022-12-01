@@ -69,7 +69,7 @@ export default function Welcome({ navigation }) {
       if (existingStatus !== "granted") {
         await Notifications.requestPermissionsAsync();
       }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
+      token = (await Notifications.getDevicePushTokenAsync()).data;
       setPushToken(token);
     } else {
       alert("Must use physical device for Push Notifications");
