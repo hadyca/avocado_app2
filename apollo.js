@@ -4,7 +4,6 @@ import { setContext } from "@apollo/client/link/context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { offsetLimitPagination } from "@apollo/client/utilities";
 import { createUploadLink } from "apollo-upload-client";
-import { NativeModules } from "react-native";
 
 export const isLoggedInVar = makeVar(false);
 
@@ -19,10 +18,10 @@ export const logUserIn = async (token) => {
 };
 
 export const logUserOut = async () => {
+  await client.clearStore();
   await AsyncStorage.removeItem(TOKEN);
   isLoggedInVar(false);
   tokenVar(null);
-  NativeModules.DevSettings.reload();
 };
 
 export const handleAllVn = async (userId, boolean) => {
@@ -109,4 +108,5 @@ const client = new ApolloClient({
   link: authLink.concat(onErrorLink).concat(uploadHttpLink),
   cache,
 });
+
 export default client;

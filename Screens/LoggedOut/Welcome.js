@@ -71,7 +71,6 @@ export default function Welcome({ navigation }) {
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
       setPushToken(token);
-      console.log("token값", token);
     } else {
       alert("Must use physical device for Push Notifications");
     }
