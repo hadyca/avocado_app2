@@ -63,6 +63,16 @@ export default function MyProfileSetting({ route: { params } }) {
         />
       </Button>
       <Separator />
+      <Button onPress={() => navigation.navigate("BlockUserList")}>
+        <ButtonText>{t("myProfileSetting.9")}</ButtonText>
+        <Ionicons
+          name="chevron-forward"
+          color="black"
+          size={17}
+          style={{ marginRight: 20 }}
+        />
+      </Button>
+      <Separator />
       <Button onPress={() => navigation.navigate("Language")}>
         <ButtonText>{t("myProfileSetting.3")}</ButtonText>
         <Ionicons

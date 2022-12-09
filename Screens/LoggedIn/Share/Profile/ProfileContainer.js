@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Alert, TouchableOpacity } from "react-native";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
 import { useTranslation } from "react-i18next";
 import ScreenLayout from "../../../../Components/ScreenLayout";
-import { PROFILE_QUERY } from "./ProfileQueries";
+import { PROFILE_QUERY, TOGGLE_BLOCKING_MUTATION } from "./ProfileQueries";
 import ProfilePresenter from "./ProfilePresenter";
 
 export default function ({ route: { params } }) {
@@ -17,6 +17,38 @@ export default function ({ route: { params } }) {
     variables: {
       userId: parseInt(params.id),
     },
+    onError: (error) => {
+      if (error.message === "100") {
+        Alert.alert(t("alert.2"));
+      } else {
+        Alert.alert(t("alert.4"));
+      }
+      navigation.pop();
+    },
+  });
+
+  const updateToggleBlocking = (cache, result) => {
+    const {
+      data: { toggleBlocking },
+    } = result;
+    if (toggleBlocking.id) {
+      const UserId = `User:${params.id}`;
+      cache.modify({
+        id: UserId,
+        fields: {
+          isBlocking(prev) {
+            return !prev;
+          },
+        },
+      });
+    }
+  };
+
+  const [toggleBlockingMutation] = useMutation(TOGGLE_BLOCKING_MUTATION, {
+    variables: {
+      userId: parseInt(params.id),
+    },
+    update: updateToggleBlocking,
     onError: (error) => {
       if (error.message === "100") {
         Alert.alert(t("alert.2"));
@@ -40,15 +72,35 @@ export default function ({ route: { params } }) {
   };
 
   let actionSheet = useRef();
-  let optionArray = [t("profile.14"), t("profile.12")];
+  let optionArray = [t("profile.14"), t("profile.15"), t("profile.12")];
+  let actionSheet2 = useRef();
+  let optionArray2 = [t("profile.14"), t("profile.16"), t("profile.12")];
 
   const showActionSheet = () => {
-    return actionSheet.current.show();
+    if (data?.seeProfile?.isBlocking) {
+      return actionSheet2.current.show();
+    } else {
+      return actionSheet.current.show();
+    }
   };
 
-  const handleIndex = (index) => {
+  const handleIndex = async (index) => {
     if (index === 0) {
       goToReportForm();
+    } else if (index === 1) {
+      await toggleBlockingMutation();
+      Alert.alert("차단 되었습니다.(번역필요)");
+    } else {
+      return;
+    }
+  };
+
+  const handleIndex2 = async (index) => {
+    if (index === 0) {
+      goToReportForm();
+    } else if (index === 1) {
+      await toggleBlockingMutation();
+      Alert.alert("차단 해제 되었습니다.(번역필요)");
     } else {
       return;
     }
@@ -82,9 +134,16 @@ export default function ({ route: { params } }) {
       <ActionSheet
         ref={actionSheet}
         options={optionArray}
-        cancelButtonIndex={1}
+        cancelButtonIndex={2}
         destructiveButtonIndex={0}
         onPress={(index) => handleIndex(index)}
+      />
+      <ActionSheet
+        ref={actionSheet2}
+        options={optionArray2}
+        cancelButtonIndex={2}
+        destructiveButtonIndex={0}
+        onPress={(index) => handleIndex2(index)}
       />
     </ScreenLayout>
   );

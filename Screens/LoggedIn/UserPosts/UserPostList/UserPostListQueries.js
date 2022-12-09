@@ -12,6 +12,7 @@ export const POST_QUERY = gql`
       content
       categoryId
       createdAt
+      isBlocking
       file {
         id
         fileUrl

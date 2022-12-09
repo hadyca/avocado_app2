@@ -17,6 +17,7 @@ export const PROFILE_QUERY = gql`
         id
         username
       }
+      isBlocking
       totalUserPosts
       totalCompanyPosts
       totalFollowers
@@ -32,6 +33,14 @@ export const PROFILE_QUERY = gql`
         contactNumber
         totalEmployees
       }
+    }
+  }
+`;
+
+export const TOGGLE_BLOCKING_MUTATION = gql`
+  mutation toggleBlocking($userId: Int!) {
+    toggleBlocking(userId: $userId) {
+      id
     }
   }
 `;

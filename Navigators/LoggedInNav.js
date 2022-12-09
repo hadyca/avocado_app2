@@ -51,6 +51,7 @@ import Account from "../Screens/LoggedIn/Me/Account";
 import Contact from "../Screens/LoggedIn/Me/Contact";
 import Notification from "../Screens/LoggedIn/Me/Notification";
 import NotificationSetting from "../Screens/LoggedIn/Me/NotificationSetting";
+import BlockUserList from "../Screens/LoggedIn/Me/BlockUserList";
 import Language from "../Screens/LoggedIn/Me/Language";
 
 const Stack = createStackNavigator();
@@ -98,6 +99,14 @@ export default function LoggedInNav() {
           headerBackTitleVisible: false,
         }}
         component={NotificationSetting}
+      />
+      <Stack.Screen
+        name="BlockUserList"
+        options={{
+          title: t("header.blockUserList"),
+          headerBackTitleVisible: false,
+        }}
+        component={BlockUserList}
       />
       <Stack.Screen
         name="Notification"

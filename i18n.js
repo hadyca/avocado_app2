@@ -44,6 +44,7 @@ const resources = {
         editCompanyPostCommentForm: "편집",
         editCompanyPostReCommentForm: "편집",
         editPostCategory: "주제",
+        blockUserList: "차단",
       },
       welcome: {
         1: "계정 생성",
@@ -175,6 +176,7 @@ const resources = {
         6: "개인정보처리방침",
         7: "현재",
         8: "최신",
+        9: "차단",
       },
       profile: {
         1: "일반글",
@@ -191,6 +193,8 @@ const resources = {
         12: "취소",
         13: "명",
         14: "신고",
+        15: "차단",
+        16: "차단 해제",
       },
       editProfile: {
         1: "사용자 이름",
@@ -374,6 +378,10 @@ const resources = {
         5: "채용글 댓글",
         6: "팔로잉",
       },
+      block: {
+        1: "차단 중",
+        2: "차단",
+      },
       share: {
         1: "확인",
         2: "취소",
@@ -432,6 +440,7 @@ const resources = {
         editCompanyPostCommentForm: "Edit",
         editCompanyPostReCommentForm: "Edit",
         editPostCategory: "Topic",
+        blockUserList: "Block",
       },
       welcome: {
         1: "Create Account",
@@ -563,6 +572,7 @@ const resources = {
         6: "Privacy policy",
         7: "Current",
         8: "Latest",
+        9: "Block",
       },
       profile: {
         1: "Post",
@@ -579,6 +589,8 @@ const resources = {
         12: "Cancel",
         13: "Worker",
         14: "Report",
+        15: "Block",
+        16: "Unblock",
       },
       editProfile: {
         1: "Username",
@@ -762,6 +774,10 @@ const resources = {
         5: "Job Post Comment",
         6: "Following",
       },
+      block: {
+        1: "Blocking",
+        2: "Block",
+      },
       share: {
         1: "Ok",
         2: "Cancel",
@@ -820,6 +836,7 @@ const resources = {
         editCompanyPostCommentForm: "Chỉnh sửa",
         editCompanyPostReCommentForm: "Chỉnh sửa",
         editPostCategory: "Chủ đề",
+        blockUserList: "Chặn",
       },
       welcome: {
         1: "Thiết lập tài khoản",
@@ -951,6 +968,7 @@ const resources = {
         6: "Chính sách quyền riêng tư",
         7: "Hiện tại",
         8: "Gần đây",
+        9: "Chặn",
       },
       profile: {
         1: "Bài viết",
@@ -967,6 +985,8 @@ const resources = {
         12: "Hủy",
         13: "Người",
         14: "Báo cáo",
+        15: "Chặn",
+        16: "Bỏ chặn",
       },
       editProfile: {
         1: "Tên người dùng",
@@ -1149,6 +1169,10 @@ const resources = {
         4: "Thích bài viết tuyển dụng",
         5: "Bình luận bài viết tuyển dụng",
         6: "Đang theo dõi",
+      },
+      block: {
+        1: "Đang chặn",
+        2: "Chặn",
       },
       share: {
         1: "Xác nhận",

@@ -16,7 +16,6 @@ export default function ({ route: { params } }) {
       offset: 0,
     },
   });
-
   const goToUserPostForm = () => {
     return navigation.navigate("UserPostUploadForm", {
       screenName: ScreenNames.USER_POST_LIST,
@@ -50,7 +49,11 @@ export default function ({ route: { params } }) {
   };
 
   const renderPost = ({ item }) => {
-    return <UserPost {...item} />;
+    if (!item.isBlocking) {
+      return <UserPost {...item} />;
+    } else {
+      return;
+    }
   };
 
   useEffect(() => {

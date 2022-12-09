@@ -1,11 +1,11 @@
 import React from "react";
+import { Alert } from "react-native";
 import { useMutation } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { TOGGLE_FOLLOWING_MUTATION } from "./ProfileContentsQueries";
 import ProfileContentsPresenter from "./ProfileContentsPresenter";
 import useMe from "../../../Hooks/useMe";
-import { Alert } from "react-native";
 
 export default function ({ data }) {
   const { t } = useTranslation();
