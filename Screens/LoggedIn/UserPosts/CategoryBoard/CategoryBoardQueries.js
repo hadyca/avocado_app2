@@ -5,6 +5,7 @@ export const CATEGORY_BOARD_QUERY = gql`
   query seeUserCategoryPost($categoryId: Int!, $offset: Int!) {
     seeUserCategoryPost(categoryId: $categoryId, offset: $offset) {
       ...UserPostFragment
+      isBlocking
       totalUserPostLikes
       totalUserPostComments
     }

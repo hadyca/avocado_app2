@@ -27,6 +27,7 @@ export const COMPANYPOST_QUERY = gql`
         sat
         sun
       }
+      isBlocking
       dayOption
       startTime
       finishTime
@@ -81,6 +82,7 @@ export const COMPANYPOST_DISTRICT_QUERY = gql`
           avatarUrl
         }
       }
+      isBlocking
       title
       content
       workingDay {

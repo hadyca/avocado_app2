@@ -63,7 +63,13 @@ export default function MyProfileSetting({ route: { params } }) {
         />
       </Button>
       <Separator />
-      <Button onPress={() => navigation.navigate("BlockUserList")}>
+      <Button
+        onPress={() =>
+          navigation.navigate("BlockUserList", {
+            userId: params.userId,
+          })
+        }
+      >
         <ButtonText>{t("myProfileSetting.9")}</ButtonText>
         <Ionicons
           name="chevron-forward"

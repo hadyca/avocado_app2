@@ -45,7 +45,7 @@ export const handleDistrict = async (userId, ...list) => {
 // for simulator
 
 const uploadHttpLink = createUploadLink({
-  uri: "https://03ae-182-160-125-147.in.ngrok.io",
+  uri: "https://afd1-182-160-125-147.in.ngrok.io",
 });
 
 // const uploadHttpLink = createUploadLink({

@@ -10,7 +10,7 @@ export default function ({ route: { params } }) {
   const [fetchLoading, setFetchLoading] = useState(false);
   const { data, loading, refetch, fetchMore } = useQuery(BLOCKING_QUERY, {
     variables: {
-      userId: parseInt(params.id),
+      userId: parseInt(params.userId),
       offset: 0,
     },
   });

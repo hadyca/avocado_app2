@@ -71,7 +71,11 @@ export default function ({ route: { params } }) {
   });
 
   const renderPost = ({ item }) => {
-    return <CompanyPost {...item} />;
+    if (!item.isBlocking) {
+      return <CompanyPost {...item} />;
+    } else {
+      return;
+    }
   };
 
   const refresh = async () => {
@@ -157,14 +161,12 @@ export default function ({ route: { params } }) {
     }
   }, [userData]);
 
-  const userId = userData?.me?.id;
-
   useEffect(() => {
     const loadData = async () => {
       if (userData) {
         setCheck(false);
-        const userDistrict = `${userId}District`;
-        const userVnAll = `${userId}VnAll`;
+        const userDistrict = `${userData?.me?.id}District`;
+        const userVnAll = `${userData?.me?.id}VnAll`;
         const resultVnAll = await AsyncStorage.getItem(userVnAll);
         const getVnAll = JSON.parse(resultVnAll);
         const resultDistrict = await AsyncStorage.getItem(userDistrict);
@@ -220,7 +222,7 @@ export default function ({ route: { params } }) {
         isInit={isInit}
         isAllPost={isAllPost}
         companyOwner={companyOwner}
-        userId={userId}
+        userId={userData?.me?.id}
         list={list}
         setList={setList}
         setCheck={setCheck}

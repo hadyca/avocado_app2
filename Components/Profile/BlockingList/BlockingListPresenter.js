@@ -103,7 +103,7 @@ export default function BlockingListPresenter({
             <Username>{username}</Username>
           </NameView>
         </AvatarContainer>
-        <FollowView>{!isMe ? getButton(isBlocking) : null}</FollowView>
+        <FollowView>{getButton(isBlocking)}</FollowView>
       </SubContainer>
     </Container>
   );

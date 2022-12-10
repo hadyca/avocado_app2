@@ -23,7 +23,11 @@ export default function ({ route: { params } }) {
   const { width, height } = useWindowDimensions();
 
   const renderPost = ({ item }) => {
-    return <CategoryUserPost {...item} />;
+    if (!item.isBlocking) {
+      return <CategoryUserPost {...item} />;
+    } else {
+      return;
+    }
   };
 
   const refresh = async () => {
