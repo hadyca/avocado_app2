@@ -56,7 +56,7 @@ export default function CreateAccountLayout({ step, children }) {
           {step ? (
             <ProgressContainer>
               <Progress>{step}</Progress>
-              <Count>/4</Count>
+              <Count>/5</Count>
             </ProgressContainer>
           ) : null}
         </TopContainer>

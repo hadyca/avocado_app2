@@ -114,17 +114,6 @@ function FavoriteCompanyPost({
         </Header>
       </HeaderContainer>
       <Contents onPress={goToPostDetail}>
-        {/* {title.length >= 50 ? (
-          <Content>
-            <ContentText>{title.substring(0, 50)}</ContentText>
-            <MoreText>...more</MoreText>
-          </Content>
-        ) : (
-          <Content>
-            <ContentText>{title}</ContentText>
-          </Content>
-        )} */}
-
         <Content>
           <ContentText>{title}</ContentText>
         </Content>

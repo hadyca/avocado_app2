@@ -1,75 +1,29 @@
 import React, { useRef } from "react";
-import { gql, useMutation } from "@apollo/client";
 import { useForm, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { useNavigation } from "@react-navigation/native";
 import AuthButton from "../../Components/Auth/AuthButton";
-import { logUserIn } from "../../apollo";
 import FormError from "../../Components/Auth/FormError";
 import { TextInput } from "../../Components/Auth/AuthShared";
 import { passwordRule } from "../../RegExp";
 import CreateAccountLayout from "../../Components/CreateAccountLayout";
 import ProgressCreateCompany from "../../Components/Auth/ProgressCreateCompany";
 
-const CREATE_PASSWORD_MUTATION = gql`
-  mutation createPassword(
-    $password: String!
-    $email: String!
-    $username: String!
-    $language: String!
-    $pushToken: String!
-  ) {
-    createPassword(
-      password: $password
-      email: $email
-      username: $username
-      language: $language
-      pushToken: $pushToken
-    ) {
-      ok
-      error
-      token
-    }
-  }
-`;
-
 export default function AskPassword({ route: { params } }) {
   const { t } = useTranslation();
-
-  const onCompleted = async (data) => {
-    const {
-      createPassword: { ok, token },
-    } = data;
-    if (!ok) {
-      return setError("result", {
-        message: t("share.5"),
-      });
-    } else {
-      await logUserIn(token);
-    }
-  };
-
-  const [confirmSecretMutation, { loading }] = useMutation(
-    CREATE_PASSWORD_MUTATION,
-    {
-      onCompleted,
-    }
-  );
+  const navigation = useNavigation();
 
   const onValid = (data) => {
-    if (!loading) {
-      confirmSecretMutation({
-        variables: {
-          password: data.password,
-          email: params.email,
-          username: params.username,
-          language: params.language,
-          pushToken: params.pushToken,
-        },
-      });
-    }
+    return navigation.navigate("AcceptTerms", {
+      email: params.email,
+      username: params.username,
+      password: data.password,
+      pushToken: params.pushToken,
+      language: params.language,
+    });
   };
 
-  const { control, handleSubmit, getValues, formState, setError } = useForm({
+  const { control, handleSubmit, getValues, formState } = useForm({
     mode: "onChange",
   });
 
@@ -139,9 +93,8 @@ export default function AskPassword({ route: { params } }) {
         )}
       />
       <AuthButton
-        text={t("share.3")}
+        text={t("share.4")}
         disabled={!formState.isValid}
-        loading={loading}
         onPress={handleSubmit(onValid)}
       />
     </CreateAccountLayout>

@@ -33,10 +33,6 @@ export default function MyProfileSetting({ route: { params } }) {
   return (
     <ScreenLayout>
       <Button
-        title="Open URL with the system browser"
-        onPress={() => Linking.openURL("https://expo.dev")}
-      />
-      <Button
         onPress={() =>
           navigation.navigate("Account", {
             email: params.email,

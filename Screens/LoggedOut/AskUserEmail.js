@@ -9,7 +9,6 @@ import { TextInput } from "../../Components/Auth/AuthShared";
 import { emailRule } from "../../RegExp";
 import CreateAccountLayout from "../../Components/CreateAccountLayout";
 import ProgressCreateCompany from "../../Components/Auth/ProgressCreateCompany";
-import { Text } from "react-native";
 
 const CHECK_EMAIL__MUTATION = gql`
   mutation checkEmail($email: String!, $language: String!) {

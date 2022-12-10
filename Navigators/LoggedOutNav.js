@@ -6,6 +6,7 @@ import ConfirmSecret from "../Screens/LoggedOut/ConfirmSecret";
 import AskUsername from "../Screens/LoggedOut/AskUsername";
 import AskPassword from "../Screens/LoggedOut/AskPassword";
 import AskUserEmail from "../Screens/LoggedOut/AskUserEmail";
+import AcceptTerms from "../Screens/LoggedOut/AcceptTerms";
 
 const Stack = createStackNavigator();
 
@@ -31,6 +32,7 @@ export default function LoggedOutNav() {
       <Stack.Screen name="ConfirmSecret" component={ConfirmSecret} />
       <Stack.Screen name="AskUsername" component={AskUsername} />
       <Stack.Screen name="AskPassword" component={AskPassword} />
+      <Stack.Screen name="AcceptTerms" component={AcceptTerms} />
     </Stack.Navigator>
   );
 }
