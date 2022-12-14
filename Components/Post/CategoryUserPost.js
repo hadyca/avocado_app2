@@ -2,6 +2,7 @@ import React from "react";
 import { useWindowDimensions } from "react-native";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 import { colors } from "../../Colors";
 import { timeForToday } from "../../Utils";
 import UserAvatar from "../UserAvatar";
@@ -88,6 +89,8 @@ function CategoryUserPost({
   totalUserPostComments,
   createdAt,
 }) {
+  const { t } = useTranslation();
+
   const { width, height } = useWindowDimensions();
 
   const time = timeForToday(parseInt(createdAt));
@@ -124,15 +127,13 @@ function CategoryUserPost({
         </ImgContainer>
       ) : null}
       <Contents onPress={goToPostDetail}>
-        {content.length >= 20 ? (
-          <Content>
-            <ContentText>{content.substring(0, 20)}</ContentText>
-            <MoreText>...more</MoreText>
-          </Content>
+        {content.length >= 60 ? (
+          <ContentText>
+            {content.substring(0, 60)}
+            <MoreText> ...{t("userPostList.1")}</MoreText>
+          </ContentText>
         ) : (
-          <Content>
-            <ContentText>{content}</ContentText>
-          </Content>
+          <ContentText>{content}</ContentText>
         )}
       </Contents>
       <LikeComment>

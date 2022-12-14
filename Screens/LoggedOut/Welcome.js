@@ -86,16 +86,16 @@ export default function Welcome({ navigation }) {
     return token;
   };
 
-  // const goToCreateAccount = () =>
-  //   navigation.navigate("AskUserEmail", {
-  //     pushToken,
-  //     language: lng,
-  //   });
   const goToCreateAccount = () =>
-    navigation.navigate("AcceptTerms", {
+    navigation.navigate("AskUserEmail", {
       pushToken,
       language: lng,
     });
+  // const goToCreateAccount = () =>
+  //   navigation.navigate("AcceptTerms", {
+  //     pushToken,
+  //     language: lng,
+  //   });
   const goToLogIn = () =>
     navigation.navigate("LogIn", {
       pushToken,

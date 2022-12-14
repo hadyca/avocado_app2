@@ -68,7 +68,7 @@ const resources = {
       //   4: "이미 사용중인 핸드폰 번호가 있습니다.",
       // },
       confirmSecret: {
-        1: "이메일을 확인해주세요.💌",
+        1: "이메일을 확인해주세요.",
         2: "인증번호",
         3: "인증번호 확인",
         4: "인증번호 다시 받기",
@@ -195,6 +195,8 @@ const resources = {
         14: "신고",
         15: "차단",
         16: "차단 해제",
+        17: "차단 되었습니다",
+        18: "차단 해제 되었습니다",
       },
       editProfile: {
         1: "사용자 이름",
@@ -383,8 +385,7 @@ const resources = {
         2: "차단",
       },
       acceptTerms: {
-        1: "이용 약관",
-        2: "개인정보처리방침",
+        1: "약관 동의",
       },
       share: {
         1: "확인",
@@ -468,7 +469,7 @@ const resources = {
       //   4: "There is already have a phone number in use",
       // },
       confirmSecret: {
-        1: "Please check your Email.💌",
+        1: "Please check your Email.",
         2: "Authentication number",
         3: "Confirm",
         4: "Get again",
@@ -595,6 +596,8 @@ const resources = {
         14: "Report",
         15: "Block",
         16: "Unblock",
+        17: "Blcoked",
+        18: "Unblcked",
       },
       editProfile: {
         1: "Username",
@@ -782,6 +785,9 @@ const resources = {
         1: "Blocking",
         2: "Block",
       },
+      acceptTerms: {
+        1: "Agree to the terms",
+      },
       share: {
         1: "Ok",
         2: "Cancel",
@@ -864,7 +870,7 @@ const resources = {
       //   4: "Số điện thoại này đã được sử dụng.",
       // },
       confirmSecret: {
-        1: "Hãy kiểm tra Email.💌",
+        1: "Hãy kiểm tra Email.",
         2: "Mã xác nhận",
         3: "Xác nhận",
         4: "Yêu cầu lại mã xác nhận",
@@ -991,6 +997,8 @@ const resources = {
         14: "Báo cáo",
         15: "Chặn",
         16: "Bỏ chặn",
+        17: "Đã chặn",
+        18: "Đã bỏ chặn",
       },
       editProfile: {
         1: "Tên người dùng",
@@ -1177,6 +1185,9 @@ const resources = {
       block: {
         1: "Đang chặn",
         2: "Chặn",
+      },
+      acceptTerms: {
+        1: "Đồng ý điều khoản",
       },
       share: {
         1: "Xác nhận",

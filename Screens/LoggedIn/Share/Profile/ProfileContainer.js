@@ -89,7 +89,7 @@ export default function ({ route: { params } }) {
       goToReportForm();
     } else if (index === 1) {
       await toggleBlockingMutation();
-      Alert.alert("차단 되었습니다.(번역필요)");
+      Alert.alert(t("profile.17"));
     } else {
       return;
     }
@@ -100,7 +100,7 @@ export default function ({ route: { params } }) {
       goToReportForm();
     } else if (index === 1) {
       await toggleBlockingMutation();
-      Alert.alert("차단 해제 되었습니다.(번역필요)");
+      Alert.alert(t("profile.18"));
     } else {
       return;
     }

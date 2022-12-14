@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "react-native";
 import { gql, useMutation } from "@apollo/client";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components/native";
@@ -31,13 +32,13 @@ const CREATE_ACCOUNT_MUTATION = gql`
 `;
 
 const Contents = styled.View`
-  flex-direction: row;
+  margin-bottom: 25px;
 `;
 
 const Content = styled.Text``;
-const Button = styled.TouchableOpacity``;
+
 const ButtonText = styled.Text`
-  font-size: 50px;
+  font-weight: bold;
   text-decoration: underline;
 `;
 
@@ -80,20 +81,85 @@ export default function AcceptTerms({ route: { params } }) {
 
   return (
     <CreateAccountLayout step={5}>
-      <ProgressCreateCompany title={t("askPassword.1")} />
-      <Contents>
-        <Content>내용 내용</Content>
-        <Button
-          onPress={() =>
-            WebBrowser.openBrowserAsync(
-              "https://vinaarba.notion.site/4b8d0b7e8b8043e3aeea3d93609ab847"
-            )
-          }
-        >
-          <ButtonText>랄랄라</ButtonText>
-        </Button>
-        <Content>내용 내용</Content>
-      </Contents>
+      <ProgressCreateCompany title={t("acceptTerms.1")} />
+      {i18n.language === "vn" ? (
+        <Contents>
+          <Content>
+            {`Tôi đồng ý với `}
+            <ButtonText
+              onPress={() =>
+                WebBrowser.openBrowserAsync(
+                  "https://vinaarba.notion.site/4b8d0b7e8b8043e3aeea3d93609ab847"
+                )
+              }
+            >
+              điều khoản sử dụng
+            </ButtonText>
+            {` và `}
+            <ButtonText
+              onPress={() =>
+                WebBrowser.openBrowserAsync(
+                  "https://vinaarba.notion.site/a2a0189d63f4445c9f2b3ee632a0a1e2"
+                )
+              }
+            >
+              chính sách quyền riêng tư
+            </ButtonText>
+            {` của VinaArba.`}
+          </Content>
+        </Contents>
+      ) : i18n.language === "en" ? (
+        <Contents>
+          <Content>
+            {`I agree to VinaArba's `}
+            <ButtonText
+              onPress={() =>
+                WebBrowser.openBrowserAsync(
+                  "https://vinaarba.notion.site/4b8d0b7e8b8043e3aeea3d93609ab847"
+                )
+              }
+            >
+              terms of service
+            </ButtonText>
+            {` and `}
+            <ButtonText
+              onPress={() =>
+                WebBrowser.openBrowserAsync(
+                  "https://vinaarba.notion.site/a2a0189d63f4445c9f2b3ee632a0a1e2"
+                )
+              }
+            >
+              privacy policy.
+            </ButtonText>
+          </Content>
+        </Contents>
+      ) : (
+        <Contents>
+          <Content>
+            {`VinaArba의 `}
+            <ButtonText
+              onPress={() =>
+                WebBrowser.openBrowserAsync(
+                  "https://vinaarba.notion.site/4b8d0b7e8b8043e3aeea3d93609ab847"
+                )
+              }
+            >
+              이용약관
+            </ButtonText>
+            {` 및 `}
+            <ButtonText
+              onPress={() =>
+                WebBrowser.openBrowserAsync(
+                  "https://vinaarba.notion.site/a2a0189d63f4445c9f2b3ee632a0a1e2"
+                )
+              }
+            >
+              개인정보처리방침
+            </ButtonText>
+            {`에 동의 합니다.`}
+          </Content>
+        </Contents>
+      )}
       <AuthButton
         text={t("share.3")}
         disabled={false}
