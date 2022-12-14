@@ -2,7 +2,7 @@
   "expo": {
     "name": "VinaArba",
     "slug": "my-app",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -16,7 +16,8 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.rlawpgud.vinaarba"
+      "bundleIdentifier": "com.rlawpgud.vinaarba",
+      "buildNumber": "2"
     },
     "android": {
       "googleServicesFile": "./google-services.json",
@@ -24,7 +25,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.rlawpgud.vinaarba"
+      "package": "com.rlawpgud.vinaarba",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"
