@@ -44,13 +44,13 @@ export const handleDistrict = async (userId, ...list) => {
 // });
 // for simulator
 
-const uploadHttpLink = createUploadLink({
-  uri: "https://a04f-182-160-125-147.in.ngrok.io",
-});
-
 // const uploadHttpLink = createUploadLink({
-//   uri: "http://vinaarba-backend-dev.ap-southeast-1.elasticbeanstalk.com/",
+//   uri: "https://4f83-182-160-125-147.in.ngrok.io",
 // });
+
+const uploadHttpLink = createUploadLink({
+  uri: "http://vinaarba-backend-dev.ap-southeast-1.elasticbeanstalk.com/",
+});
 
 const authLink = setContext((_, { headers }) => {
   return {
