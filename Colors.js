@@ -5,7 +5,6 @@ export const colors = {
   footerBackground: "#F7F7F7",
   backgraound: "#FFFFFF",
   buttonBackground: "#f08450",
-  // buttonBackground: "#7DA2FF", 이건 범구 컬러
   linkText: "#22DA93",
   borderThick: "#B0B0B0",
   borderThin: "#f1f3f6",
