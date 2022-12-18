@@ -45,11 +45,6 @@ const Contents = styled.View`
   align-items: center;
 `;
 
-const BtmImg = styled.ImageBackground`
-  /* width: 100%;
-  height: 100%; */
-`;
-
 const FooterView = styled.View`
   justify-content: flex-end;
   align-items: center;
