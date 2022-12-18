@@ -18,7 +18,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.rlawpgud.vinaarba",
       "infoPlist": {
-        "NSPhotoLibraryUsageDescription": "Access your photo library for photo selection."
+        "NSPhotoLibraryUsageDescription": "Access your photo library for upload photo."
       },
       "buildNumber": "4"
     },
