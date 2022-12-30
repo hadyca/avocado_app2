@@ -893,8 +893,8 @@ const resources = {
         4: "Sai mật khẩu",
       },
       home: {
-        1: "bạn là nhà tuyển dụng phải không?",
-        2: "gia nhập",
+        1: "Bạn là nhà tuyển dụng phải không?",
+        2: "Gia nhập",
         3: "Bạn đã là hội viên.",
       },
       askCompanyName: {
