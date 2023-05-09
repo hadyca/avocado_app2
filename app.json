@@ -11,9 +11,12 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/ec7916d1-6132-49e7-a208-4df20191c37a"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.rlawpgud.vinaarba",
@@ -38,6 +41,9 @@
       "eas": {
         "projectId": "ec7916d1-6132-49e7-a208-4df20191c37a"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }
