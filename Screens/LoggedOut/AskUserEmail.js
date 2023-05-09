@@ -10,7 +10,7 @@ import { emailRule } from "../../RegExp";
 import CreateAccountLayout from "../../Components/CreateAccountLayout";
 import ProgressCreateCompany from "../../Components/Auth/ProgressCreateCompany";
 
-const CHECK_EMAIL__MUTATION = gql`
+const CHECK_EMAIL_MUTATION = gql`
   mutation checkEmail($email: String!, $language: String!) {
     checkEmail(email: $email, language: $language) {
       ok
@@ -41,7 +41,7 @@ export default function AskUserEmail({ route: { params } }) {
     }
   };
 
-  const [checkEmail, { loading }] = useMutation(CHECK_EMAIL__MUTATION, {
+  const [checkEmail, { loading }] = useMutation(CHECK_EMAIL_MUTATION, {
     onCompleted,
   });
 
