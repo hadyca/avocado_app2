@@ -45,11 +45,11 @@ export const handleDistrict = async (userId, ...list) => {
 // for simulator
 
 // const uploadHttpLink = createUploadLink({
-//   uri: "https://4f89-182-160-125-147.jp.ngrok.io",
+//   uri: "https://fd3e-182-160-125-147.in.ngrok.io",
 // });
 
 const uploadHttpLink = createUploadLink({
-  uri: "http://vinaarba-backend-dev.ap-southeast-1.elasticbeanstalk.com/",
+  uri: "http://vinaarba-backend4-dev.ap-southeast-1.elasticbeanstalk.com/",
 });
 
 const authLink = setContext((_, { headers }) => {
