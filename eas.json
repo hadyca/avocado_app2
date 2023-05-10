@@ -17,6 +17,9 @@
   },
   "submit": {
     "production": {
+      "android": {
+        "serviceAccountKeyPath": "../pc-api-6386908736686269170-641-624034c40f5e.json"
+      },
       "ios": {
         "appleId": "vinaarba@gmail.com",
         "ascAppId": "1658685408",
