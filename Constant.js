@@ -7,7 +7,7 @@ export const categories = [
     contentKo: "여러 사람들과 일과 관련된 이야기를 해보세요.",
     contentEn: "Share work related stories with many people.",
     contentVn: "Hãy nói chuyện liên quan về công việc và người khác.",
-    url: "https://avocadotalkbucket.s3.ap-northeast-2.amazonaws.com/asset/work.jpg",
+    url: "https://images.unsplash.com/photo-1500898335608-a4b6696f81a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
   },
   {
     id: 2,
