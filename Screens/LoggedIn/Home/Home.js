@@ -156,7 +156,7 @@ export default function Home() {
             />
           </Contents>
           <FooterView>
-            <FooterText>©별보는캐리어. All rights reserved</FooterText>
+            <FooterText>©별보는캐리어 All rights reserved</FooterText>
           </FooterView>
         </Container>
       </ScrollView>
