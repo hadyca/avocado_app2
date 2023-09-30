@@ -89,7 +89,7 @@ export default function Login({ route: { params } }) {
         control={control}
         render={({ field: { onChange, value } }) => (
           <TextInput
-            placeholder="vinaarba@gmail.com"
+            placeholder="vinaarba333@gmail.com"
             placeholderTextColor="#cccccc"
             autoCapitalize="none"
             keyboardType="email-address"

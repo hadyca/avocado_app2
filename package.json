@@ -7,6 +7,10 @@
     "web": "npx expo start --web",
     "eject": "npx expo eject"
   },
+  "overrides": {
+    "@expo/config-plugins": "~7.2.2",
+    "@expo/prebuild-config": "~6.2.4"
+  },
   "dependencies": {
     "@alessiocancian/react-native-actionsheet": "^3.1.1",
     "@apollo/client": "^3.4.9",
