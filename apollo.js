@@ -49,7 +49,7 @@ export const handleDistrict = async (userId, ...list) => {
 // });
 
 const uploadHttpLink = createUploadLink({
-  uri: "http://vinaarba-backend-env2.eba-2mvwe7wn.ap-southeast-1.elasticbeanstalk.com/",
+  uri: "https://api.vinaarbaserver.store/",
 });
 
 const authLink = setContext((_, { headers }) => {
